@@ -27,10 +27,12 @@ namespace CashBook
             this.Loaded += MainWindow_Loaded;
         }
 
+    
+
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             ChangeContent(ContentTypes.CashBook);
-            
+
         }
 
         private void ChangeContent(object contentType)
@@ -48,5 +50,21 @@ namespace CashBook
                     break;
             }
         }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
     }
 }
