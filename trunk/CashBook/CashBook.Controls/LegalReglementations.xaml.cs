@@ -1,5 +1,4 @@
-﻿using CashBook.Data.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,21 +16,18 @@ using System.Windows.Shapes;
 namespace CashBook.Controls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LegalReglementations.xaml
     /// </summary>
-    public partial class MainContent : UserControl
+    public partial class LegalReglementations : UserControl
     {
-        public MainContent()
+        public LegalReglementations()
         {
             InitializeComponent();
-          this.Loaded+=MainContent_Loaded;
-
         }
 
-        void MainContent_Loaded(object sender, RoutedEventArgs e)
+        private void btnSave_Click_1(object sender, RoutedEventArgs e)
         {
 
         }
-
     }
 }

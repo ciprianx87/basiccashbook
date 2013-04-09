@@ -12,9 +12,9 @@
                 <MenuItem Header="Iesire"></MenuItem>
             </MenuItem>
             <MenuItem Header="Cataloage">
-                <MenuItem Header="Date Societate"></MenuItem>
-                <MenuItem Header="Definire registre de casa"></MenuItem>
-                <MenuItem Header="Reglementari legale"></MenuItem>
+                <MenuItem Header="Date Societate" Click="MenuItem_Click_1"></MenuItem>
+                <MenuItem Header="Definire registre de casa" Click="MenuItem_Click_2"></MenuItem>
+                <MenuItem Header="Reglementari legale" Click="MenuItem_Click_3"></MenuItem>
             </MenuItem>
             <MenuItem Header="Registre de casa">
                 <MenuItem Header="Registru de casa in lei"></MenuItem>
