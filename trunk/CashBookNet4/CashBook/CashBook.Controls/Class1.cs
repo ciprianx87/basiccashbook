@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CashBook.Common
+namespace CashBook.Controls
 {
     public class Class1
     {

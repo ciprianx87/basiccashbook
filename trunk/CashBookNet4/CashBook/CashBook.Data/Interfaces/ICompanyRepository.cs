@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CashBook.Common
+namespace CashBook.Data.Interfaces
 {
-    public class Class1
+    public interface ICompanyRepository
     {
+        void EditDetails(string name, string cui, string address);
     }
 }
