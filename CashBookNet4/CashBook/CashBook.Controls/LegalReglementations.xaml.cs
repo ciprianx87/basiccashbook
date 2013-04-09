@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,13 +16,18 @@ using System.Windows.Shapes;
 namespace CashBook.Controls
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for LegalReglementations.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class LegalReglementations : UserControl
     {
-        public UserControl1()
+        public LegalReglementations()
         {
             InitializeComponent();
+        }
+
+        private void btnSave_Click_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

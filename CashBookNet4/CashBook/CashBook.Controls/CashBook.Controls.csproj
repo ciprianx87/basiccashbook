@@ -49,16 +49,19 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UserControl1.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="CashBookWindow.xaml.cs">
+      <DependentUpon>CashBookWindow.xaml</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="CompanyDataWindow.xaml.cs">
+      <DependentUpon>CompanyDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LegalReglementations.xaml.cs">
+      <DependentUpon>LegalReglementations.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainContent.xaml.cs">
+      <DependentUpon>MainContent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -72,6 +75,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="UIConstants.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -81,6 +85,38 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CashBook.Data.Model\CashBook.Data.Model.csproj">
+      <Project>{5C77ACAD-62CE-4019-B630-7F792E6EAD44}</Project>
+      <Name>CashBook.Data.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CashBook.Data\CashBook.Data.csproj">
+      <Project>{948DBEAC-7871-48BA-897A-74B0B4D66C51}</Project>
+      <Name>CashBook.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CashBook.ViewModels\CashBook.ViewModels.csproj">
+      <Project>{598E5A95-BD21-4721-B3D8-EE9E7E1C74D5}</Project>
+      <Name>CashBook.ViewModels</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="CashBookWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CompanyDataWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LegalReglementations.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

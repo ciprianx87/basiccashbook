@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CashBook.Common
+namespace CashBook.Data.Model
 {
-    public class Class1
+    public enum ContentTypes
     {
+        CashBook,
+        MainContent,
+        CompanyDetails
     }
 }
