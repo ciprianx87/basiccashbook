@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cbab38aa577b4a38b990fd8c7b0c80fe" Name="Diagram1" >
+      <Diagram DiagramId="cbab38aa577b4a38b990fd8c7b0c80fe" Name="Diagram1" DisplayType="true" >
         <EntityTypeShape EntityType="CashBookModel.RegistruCasaIntrare" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="CashBookModel.RegistruCasa" Width="1.5" PointX="6.625" PointY="0.5" />
         <EntityTypeShape EntityType="CashBookModel.Societate" Width="1.5" PointX="2.625" PointY="0.5" />
-        <EntityTypeShape EntityType="CashBookModel.Setari" Width="1.5" PointX="4.375" PointY="0.5" />
+        <EntityTypeShape EntityType="CashBookModel.Setari" Width="1.5" PointX="5.625" PointY="4.875" />
         <AssociationConnector Association="CashBookModel.SocietateRegistruCasa" />
         <EntityTypeShape EntityType="CashBookModel.RegistruCasaZi" Width="1.5" PointX="8.625" PointY="0.5" />
         <AssociationConnector Association="CashBookModel.RegistruCasaRegistruCasaZi" />

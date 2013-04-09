@@ -31,7 +31,7 @@ namespace CashBook
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            ChangeContent(ContentTypes.CashBook);
+            ChangeContent(ContentTypes.CompanyDetails);
 
         }
 
@@ -46,6 +46,9 @@ namespace CashBook
                 case ContentTypes.MainContent:
                     contentControl.Content = new CashBook.Controls.MainContent();
                     break;
+                case ContentTypes.CompanyDetails:
+                    contentControl.Content = new CashBook.Controls.CompanyDataWindow();
+                    break;
                 default:
                     break;
             }
@@ -53,7 +56,7 @@ namespace CashBook
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-
+            ChangeContent(ContentTypes.CompanyDetails);
         }
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)

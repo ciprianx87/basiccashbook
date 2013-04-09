@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 03/30/2013 20:57:36
+-- Date Created: 04/09/2013 13:48:16
 -- Generated from EDMX file: D:\Dropbox\Dropbox\proiecte\work\CashBook\CashBook.Data.Model\CashBookModel.edmx
 -- --------------------------------------------------
 
@@ -128,6 +128,7 @@ ADD CONSTRAINT [FK_SocietateRegistruCasa]
     REFERENCES [Societates]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_SocietateRegistruCasa'
 CREATE INDEX [IX_FK_SocietateRegistruCasa]
@@ -142,6 +143,7 @@ ADD CONSTRAINT [FK_RegistruCasaRegistruCasaZi]
     REFERENCES [RegistruCasas]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_RegistruCasaRegistruCasaZi'
 CREATE INDEX [IX_FK_RegistruCasaRegistruCasaZi]
@@ -156,6 +158,7 @@ ADD CONSTRAINT [FK_RegistruCasaZiRegistruCasaIntrare]
     REFERENCES [RegistruCasaZis]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_RegistruCasaZiRegistruCasaIntrare'
 CREATE INDEX [IX_FK_RegistruCasaZiRegistruCasaIntrare]
