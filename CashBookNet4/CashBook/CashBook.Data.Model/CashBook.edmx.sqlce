@@ -1,0 +1,169 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server Compact Edition
+-- --------------------------------------------------
+-- Date Created: 04/10/2013 00:23:25
+-- Generated from EDMX file: D:\Dropbox\Dropbox\proiecte\work\Vs2010\CashBook\CashBook.Data.Model\CashBook.edmx
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- NOTE: if the constraint does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    ALTER TABLE [RegistruCasas] DROP CONSTRAINT [FK_SocietateRegistruCasa];
+GO
+    ALTER TABLE [RegistruCasaIntrares] DROP CONSTRAINT [FK_RegistruCasaZiRegistruCasaIntrare];
+GO
+    ALTER TABLE [RegistruCasaZis] DROP CONSTRAINT [FK_RegistruCasaRegistruCasaZi];
+GO
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- NOTE: if the table does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    DROP TABLE [Settings];
+GO
+    DROP TABLE [RegistruCasas];
+GO
+    DROP TABLE [Societates];
+GO
+    DROP TABLE [RegistruCasaIntrares];
+GO
+    DROP TABLE [RegistruCasaZis];
+GO
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'Settings'
+CREATE TABLE [Settings] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Key] nvarchar(4000)  NOT NULL,
+    [Value] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'RegistruCasas'
+CREATE TABLE [RegistruCasas] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [SocietateId] int  NOT NULL
+);
+GO
+
+-- Creating table 'Societates'
+CREATE TABLE [Societates] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Nume] nvarchar(4000)  NOT NULL,
+    [Adresa] nvarchar(4000)  NOT NULL,
+    [CUI] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'RegistruCasaIntrares'
+CREATE TABLE [RegistruCasaIntrares] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [NrCrt] int  NOT NULL,
+    [NrActCasa] nvarchar(4000)  NOT NULL,
+    [NrAnexe] int  NOT NULL,
+    [Explicatii] nvarchar(4000)  NOT NULL,
+    [Incasari] decimal(18,0)  NOT NULL,
+    [Plati] decimal(18,0)  NOT NULL,
+    [RegistruCasaZiId] int  NOT NULL
+);
+GO
+
+-- Creating table 'RegistruCasaZis'
+CREATE TABLE [RegistruCasaZis] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Data] datetime  NOT NULL,
+    [RegistruCasaId] int  NOT NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [Id] in table 'Settings'
+ALTER TABLE [Settings]
+ADD CONSTRAINT [PK_Settings]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'RegistruCasas'
+ALTER TABLE [RegistruCasas]
+ADD CONSTRAINT [PK_RegistruCasas]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Societates'
+ALTER TABLE [Societates]
+ADD CONSTRAINT [PK_Societates]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'RegistruCasaIntrares'
+ALTER TABLE [RegistruCasaIntrares]
+ADD CONSTRAINT [PK_RegistruCasaIntrares]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'RegistruCasaZis'
+ALTER TABLE [RegistruCasaZis]
+ADD CONSTRAINT [PK_RegistruCasaZis]
+    PRIMARY KEY ([Id] );
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- Creating foreign key on [SocietateId] in table 'RegistruCasas'
+ALTER TABLE [RegistruCasas]
+ADD CONSTRAINT [FK_SocietateRegistruCasa]
+    FOREIGN KEY ([SocietateId])
+    REFERENCES [Societates]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_SocietateRegistruCasa'
+CREATE INDEX [IX_FK_SocietateRegistruCasa]
+ON [RegistruCasas]
+    ([SocietateId]);
+GO
+
+-- Creating foreign key on [RegistruCasaZiId] in table 'RegistruCasaIntrares'
+ALTER TABLE [RegistruCasaIntrares]
+ADD CONSTRAINT [FK_RegistruCasaZiRegistruCasaIntrare]
+    FOREIGN KEY ([RegistruCasaZiId])
+    REFERENCES [RegistruCasaZis]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_RegistruCasaZiRegistruCasaIntrare'
+CREATE INDEX [IX_FK_RegistruCasaZiRegistruCasaIntrare]
+ON [RegistruCasaIntrares]
+    ([RegistruCasaZiId]);
+GO
+
+-- Creating foreign key on [RegistruCasaId] in table 'RegistruCasaZis'
+ALTER TABLE [RegistruCasaZis]
+ADD CONSTRAINT [FK_RegistruCasaRegistruCasaZi]
+    FOREIGN KEY ([RegistruCasaId])
+    REFERENCES [RegistruCasas]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_RegistruCasaRegistruCasaZi'
+CREATE INDEX [IX_FK_RegistruCasaRegistruCasaZi]
+ON [RegistruCasaZis]
+    ([RegistruCasaId]);
+GO
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------

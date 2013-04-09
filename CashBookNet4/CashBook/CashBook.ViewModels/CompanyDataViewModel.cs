@@ -55,7 +55,7 @@ namespace CashBook.ViewModels
         }
 
         #endregion
-
+        
         public void Save(object param)
         {
             try

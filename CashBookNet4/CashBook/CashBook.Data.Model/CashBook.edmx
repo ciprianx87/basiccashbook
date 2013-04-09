@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CashBook.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="CashBookStoreContainer">
+    <EntitySet Name="Settings" EntityType="CashBook.Store.Settings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RegistruCasas" EntityType="CashBook.Store.RegistruCasas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Societates" EntityType="CashBook.Store.Societates" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RegistruCasaIntrares" EntityType="CashBook.Store.RegistruCasaIntrares" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RegistruCasaZis" EntityType="CashBook.Store.RegistruCasaZis" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="SocietateRegistruCasa" Association="CashBook.Store.SocietateRegistruCasa">
+      <End Role="Societate" EntitySet="Societates" />
+      <End Role="RegistruCasa" EntitySet="RegistruCasas" />
+    </AssociationSet>
+    <AssociationSet Name="RegistruCasaZiRegistruCasaIntrare" Association="CashBook.Store.RegistruCasaZiRegistruCasaIntrare">
+      <End Role="RegistruCasaZi" EntitySet="RegistruCasaZis" />
+      <End Role="RegistruCasaIntrare" EntitySet="RegistruCasaIntrares" />
+    </AssociationSet>
+    <AssociationSet Name="RegistruCasaRegistruCasaZi" Association="CashBook.Store.RegistruCasaRegistruCasaZi">
+      <End Role="RegistruCasa" EntitySet="RegistruCasas" />
+      <End Role="RegistruCasaZi" EntitySet="RegistruCasaZis" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Settings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Key" Type="nvarchar" Nullable="false" />
+    <Property Name="Value" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RegistruCasas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SocietateId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Societates">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nume" Type="nvarchar" Nullable="false" />
+    <Property Name="Adresa" Type="nvarchar" Nullable="false" />
+    <Property Name="CUI" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RegistruCasaIntrares">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NrCrt" Type="int" Nullable="false" />
+    <Property Name="NrActCasa" Type="nvarchar" Nullable="false" />
+    <Property Name="NrAnexe" Type="int" Nullable="false" />
+    <Property Name="Explicatii" Type="nvarchar" Nullable="false" />
+    <Property Name="Incasari" Type="decimal" Nullable="false" />
+    <Property Name="Plati" Type="decimal" Nullable="false" />
+    <Property Name="RegistruCasaZiId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RegistruCasaZis">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Data" Type="datetime" Nullable="false" />
+    <Property Name="RegistruCasaId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="SocietateRegistruCasa">
+    <End Role="Societate" Type="CashBook.Store.Societates" Multiplicity="1" />
+    <End Role="RegistruCasa" Type="CashBook.Store.RegistruCasas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Societate">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistruCasa">
+        <PropertyRef Name="SocietateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RegistruCasaZiRegistruCasaIntrare">
+    <End Role="RegistruCasaZi" Type="CashBook.Store.RegistruCasaZis" Multiplicity="1" />
+    <End Role="RegistruCasaIntrare" Type="CashBook.Store.RegistruCasaIntrares" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RegistruCasaZi">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistruCasaIntrare">
+        <PropertyRef Name="RegistruCasaZiId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RegistruCasaRegistruCasaZi">
+    <End Role="RegistruCasa" Type="CashBook.Store.RegistruCasas" Multiplicity="1" />
+    <End Role="RegistruCasaZi" Type="CashBook.Store.RegistruCasaZis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RegistruCasa">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RegistruCasaZi">
+        <PropertyRef Name="RegistruCasaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="CashBook" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="CashBookContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Settings" EntityType="CashBook.Settings" />
+          <EntitySet Name="RegistruCasas" EntityType="CashBook.RegistruCasa" />
+          <EntitySet Name="Societates" EntityType="CashBook.Societate" />
+          <EntitySet Name="RegistruCasaIntrares" EntityType="CashBook.RegistruCasaIntrare" />
+          <EntitySet Name="RegistruCasaZis" EntityType="CashBook.RegistruCasaZi" />
+          <AssociationSet Name="SocietateRegistruCasa" Association="CashBook.SocietateRegistruCasa">
+            <End Role="Societate" EntitySet="Societates" />
+            <End Role="RegistruCasa" EntitySet="RegistruCasas" />
+          </AssociationSet>
+          <AssociationSet Name="RegistruCasaZiRegistruCasaIntrare" Association="CashBook.RegistruCasaZiRegistruCasaIntrare">
+            <End Role="RegistruCasaZi" EntitySet="RegistruCasaZis" />
+            <End Role="RegistruCasaIntrare" EntitySet="RegistruCasaIntrares" />
+          </AssociationSet>
+          <AssociationSet Name="RegistruCasaRegistruCasaZi" Association="CashBook.RegistruCasaRegistruCasaZi">
+            <End Role="RegistruCasa" EntitySet="RegistruCasas" />
+            <End Role="RegistruCasaZi" EntitySet="RegistruCasaZis" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Key" Nullable="false" />
+          <Property Type="String" Name="Value" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RegistruCasa">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SocietateId" Nullable="false" />
+          <NavigationProperty Name="Societate" Relationship="CashBook.SocietateRegistruCasa" FromRole="RegistruCasa" ToRole="Societate" />
+          <NavigationProperty Name="RegistruCasaZis" Relationship="CashBook.RegistruCasaRegistruCasaZi" FromRole="RegistruCasa" ToRole="RegistruCasaZi" />
+        </EntityType>
+        <EntityType Name="Societate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Nume" Nullable="false" />
+          <Property Type="String" Name="Adresa" Nullable="false" />
+          <Property Type="String" Name="CUI" Nullable="false" />
+          <NavigationProperty Name="RegistreCasa" Relationship="CashBook.SocietateRegistruCasa" FromRole="Societate" ToRole="RegistruCasa" />
+        </EntityType>
+        <EntityType Name="RegistruCasaIntrare">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="NrCrt" Nullable="false" />
+          <Property Type="String" Name="NrActCasa" Nullable="false" />
+          <Property Type="Int32" Name="NrAnexe" Nullable="false" />
+          <Property Type="String" Name="Explicatii" Nullable="false" />
+          <Property Type="Decimal" Name="Incasari" Nullable="false" />
+          <Property Type="Decimal" Name="Plati" Nullable="false" />
+          <Property Type="Int32" Name="RegistruCasaZiId" Nullable="false" />
+          <NavigationProperty Name="RegistruCasaZi" Relationship="CashBook.RegistruCasaZiRegistruCasaIntrare" FromRole="RegistruCasaIntrare" ToRole="RegistruCasaZi" />
+        </EntityType>
+        <EntityType Name="RegistruCasaZi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="Data" Nullable="false" />
+          <Property Type="Int32" Name="RegistruCasaId" Nullable="false" />
+          <NavigationProperty Name="RegistruCasaIntrares" Relationship="CashBook.RegistruCasaZiRegistruCasaIntrare" FromRole="RegistruCasaZi" ToRole="RegistruCasaIntrare" />
+          <NavigationProperty Name="RegistruCasa" Relationship="CashBook.RegistruCasaRegistruCasaZi" FromRole="RegistruCasaZi" ToRole="RegistruCasa" />
+        </EntityType>
+        <Association Name="SocietateRegistruCasa">
+          <End Type="CashBook.Societate" Role="Societate" Multiplicity="1" />
+          <End Type="CashBook.RegistruCasa" Role="RegistruCasa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Societate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegistruCasa">
+              <PropertyRef Name="SocietateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RegistruCasaZiRegistruCasaIntrare">
+          <End Type="CashBook.RegistruCasaZi" Role="RegistruCasaZi" Multiplicity="1" />
+          <End Type="CashBook.RegistruCasaIntrare" Role="RegistruCasaIntrare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegistruCasaZi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegistruCasaIntrare">
+              <PropertyRef Name="RegistruCasaZiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RegistruCasaRegistruCasaZi">
+          <End Type="CashBook.RegistruCasa" Role="RegistruCasa" Multiplicity="1" />
+          <End Type="CashBook.RegistruCasaZi" Role="RegistruCasaZi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegistruCasa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegistruCasaZi">
+              <PropertyRef Name="RegistruCasaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CashBookStoreContainer" CdmEntityContainer="CashBookContainer">
+    <EntitySetMapping Name="Settings">
+      <EntityTypeMapping TypeName="IsTypeOf(CashBook.Settings)">
+        <MappingFragment StoreEntitySet="Settings">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegistruCasas">
+      <EntityTypeMapping TypeName="IsTypeOf(CashBook.RegistruCasa)">
+        <MappingFragment StoreEntitySet="RegistruCasas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SocietateId" ColumnName="SocietateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Societates">
+      <EntityTypeMapping TypeName="IsTypeOf(CashBook.Societate)">
+        <MappingFragment StoreEntitySet="Societates">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nume" ColumnName="Nume" />
+          <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+          <ScalarProperty Name="CUI" ColumnName="CUI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegistruCasaIntrares">
+      <EntityTypeMapping TypeName="IsTypeOf(CashBook.RegistruCasaIntrare)">
+        <MappingFragment StoreEntitySet="RegistruCasaIntrares">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NrCrt" ColumnName="NrCrt" />
+          <ScalarProperty Name="NrActCasa" ColumnName="NrActCasa" />
+          <ScalarProperty Name="NrAnexe" ColumnName="NrAnexe" />
+          <ScalarProperty Name="Explicatii" ColumnName="Explicatii" />
+          <ScalarProperty Name="Incasari" ColumnName="Incasari" />
+          <ScalarProperty Name="Plati" ColumnName="Plati" />
+          <ScalarProperty Name="RegistruCasaZiId" ColumnName="RegistruCasaZiId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegistruCasaZis">
+      <EntityTypeMapping TypeName="IsTypeOf(CashBook.RegistruCasaZi)">
+        <MappingFragment StoreEntitySet="RegistruCasaZis">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="RegistruCasaId" ColumnName="RegistruCasaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="CashBook" >
+        <EntityTypeShape EntityType="CashBook.Settings" Width="1.5" PointX="3.5" PointY="3.75" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="CashBook.RegistruCasa" Width="1.5" PointX="8.4053307401041177" PointY="18.671117239944227" />
+        <EntityTypeShape EntityType="CashBook.Societate" Width="1.5" PointX="6.4101919543045529" PointY="8.17887786411628" />
+        <EntityTypeShape EntityType="CashBook.RegistruCasaIntrare" Width="1.5" PointX="6.92727551186796" PointY="19.726837361104245" />
+        <EntityTypeShape EntityType="CashBook.RegistruCasaZi" Width="1.5" PointX="2.2576358589612116" PointY="7.7903391457117808" />
+        <AssociationConnector Association="CashBook.SocietateRegistruCasa" />
+        <AssociationConnector Association="CashBook.RegistruCasaZiRegistruCasaIntrare" />
+        <AssociationConnector Association="CashBook.RegistruCasaRegistruCasaZi" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
