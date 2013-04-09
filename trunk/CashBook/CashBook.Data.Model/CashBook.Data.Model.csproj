@@ -99,7 +99,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CashBook.sdf">
+    <Content Include="Data\CashBook.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CashBook.Data.Model
+namespace CashBook.Data.Interfaces
 {
-    public enum ContentTypes
+    public interface ICompanyRepository
     {
-        CashBook,
-        MainContent,
-        CompanyDetails
+        void EditDetails(string name, string cui, string address);
     }
 }
