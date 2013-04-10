@@ -52,7 +52,6 @@
     <Compile Include="CashBook\CashBook.xaml.cs">
       <DependentUpon>CashBook.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="CompanyDataWindow.xaml.cs">
       <DependentUpon>CompanyDataWindow.xaml</DependentUpon>
     </Compile>

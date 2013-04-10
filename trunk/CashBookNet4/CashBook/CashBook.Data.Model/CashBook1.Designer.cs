@@ -220,11 +220,25 @@ namespace CashBook.Data.Model
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="societateId">Initial value of the SocietateId property.</param>
-        public static RegistruCasa CreateRegistruCasa(global::System.Int64 id, global::System.Int64 societateId)
+        /// <param name="coinType">Initial value of the CoinType property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="coinDecimals">Initial value of the CoinDecimals property.</param>
+        /// <param name="initialBalance">Initial value of the InitialBalance property.</param>
+        /// <param name="location">Initial value of the Location property.</param>
+        /// <param name="account">Initial value of the Account property.</param>
+        /// <param name="cashierName">Initial value of the CashierName property.</param>
+        public static RegistruCasa CreateRegistruCasa(global::System.Int64 id, global::System.Int64 societateId, global::System.String coinType, global::System.String name, global::System.Byte coinDecimals, global::System.Decimal initialBalance, global::System.String location, global::System.String account, global::System.String cashierName)
         {
             RegistruCasa registruCasa = new RegistruCasa();
             registruCasa.Id = id;
             registruCasa.SocietateId = societateId;
+            registruCasa.CoinType = coinType;
+            registruCasa.Name = name;
+            registruCasa.CoinDecimals = coinDecimals;
+            registruCasa.InitialBalance = initialBalance;
+            registruCasa.Location = location;
+            registruCasa.Account = account;
+            registruCasa.CashierName = cashierName;
             return registruCasa;
         }
 
@@ -282,6 +296,174 @@ namespace CashBook.Data.Model
         private global::System.Int64 _SocietateId;
         partial void OnSocietateIdChanging(global::System.Int64 value);
         partial void OnSocietateIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CoinType
+        {
+            get
+            {
+                return _CoinType;
+            }
+            set
+            {
+                OnCoinTypeChanging(value);
+                ReportPropertyChanging("CoinType");
+                _CoinType = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CoinType");
+                OnCoinTypeChanged();
+            }
+        }
+        private global::System.String _CoinType;
+        partial void OnCoinTypeChanging(global::System.String value);
+        partial void OnCoinTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Byte CoinDecimals
+        {
+            get
+            {
+                return _CoinDecimals;
+            }
+            set
+            {
+                OnCoinDecimalsChanging(value);
+                ReportPropertyChanging("CoinDecimals");
+                _CoinDecimals = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CoinDecimals");
+                OnCoinDecimalsChanged();
+            }
+        }
+        private global::System.Byte _CoinDecimals;
+        partial void OnCoinDecimalsChanging(global::System.Byte value);
+        partial void OnCoinDecimalsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal InitialBalance
+        {
+            get
+            {
+                return _InitialBalance;
+            }
+            set
+            {
+                OnInitialBalanceChanging(value);
+                ReportPropertyChanging("InitialBalance");
+                _InitialBalance = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("InitialBalance");
+                OnInitialBalanceChanged();
+            }
+        }
+        private global::System.Decimal _InitialBalance;
+        partial void OnInitialBalanceChanging(global::System.Decimal value);
+        partial void OnInitialBalanceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Location
+        {
+            get
+            {
+                return _Location;
+            }
+            set
+            {
+                OnLocationChanging(value);
+                ReportPropertyChanging("Location");
+                _Location = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Location");
+                OnLocationChanged();
+            }
+        }
+        private global::System.String _Location;
+        partial void OnLocationChanging(global::System.String value);
+        partial void OnLocationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Account
+        {
+            get
+            {
+                return _Account;
+            }
+            set
+            {
+                OnAccountChanging(value);
+                ReportPropertyChanging("Account");
+                _Account = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Account");
+                OnAccountChanged();
+            }
+        }
+        private global::System.String _Account;
+        partial void OnAccountChanging(global::System.String value);
+        partial void OnAccountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CashierName
+        {
+            get
+            {
+                return _CashierName;
+            }
+            set
+            {
+                OnCashierNameChanging(value);
+                ReportPropertyChanging("CashierName");
+                _CashierName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CashierName");
+                OnCashierNameChanged();
+            }
+        }
+        private global::System.String _CashierName;
+        partial void OnCashierNameChanging(global::System.String value);
+        partial void OnCashierNameChanged();
 
         #endregion
 

@@ -9,21 +9,24 @@ using System.Windows.Input;
 using CashBook.Common;
 using CashBook.Data.Model;
 using System.Collections.ObjectModel;
+using CashBook.Common.Mediator;
 
 namespace CashBook.ViewModels
 {
     public class CashBookListViewModel : BaseViewModel
     {
-        ISettingsRepository settingsRepository;
+        ICashBookRepository cashBookRepository;
 
         public ICommand SaveCommand { get; set; }
+        public ICommand CreateCommand { get; set; }
         public CashBookListViewModel()
         {
             SaveCommand = new DelegateCommand(Save, CanSave);
-            settingsRepository = new SettingsRepository();
+            CreateCommand = new DelegateCommand(Create, CanCreate);
+            cashBookRepository = new CashBookRepository();
 
             LoadData();
-            
+
         }
 
         #region properties
@@ -39,27 +42,25 @@ namespace CashBook.ViewModels
             }
         }
 
-
-        private string legalReglementationsText;
-        public string LegalReglementationsText
-        {
-            get { return legalReglementationsText; }
-            set
-            {
-                legalReglementationsText = value;
-                NotifyPropertyChanged("LegalReglementationsText");
-            }
-        }
-
         #endregion
 
         #region methods
         private void LoadData()
         {
-            var currentSetting = settingsRepository.GetSetting(Constants.LegalRelementationsKey);
-            if (currentSetting != null)
+            try
             {
-                this.LegalReglementationsText = currentSetting;
+                CashBooks = new ObservableCollection<RegistruCasa>();
+                var existingCashBooks = cashBookRepository.GetAll();
+                if (existingCashBooks != null)
+                {
+                    foreach (var item in existingCashBooks)
+                    {
+                        CashBooks.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
             }
         }
 
@@ -67,7 +68,7 @@ namespace CashBook.ViewModels
         {
             try
             {
-                settingsRepository.AddOrUpdateSetting(Constants.LegalRelementationsKey, LegalReglementationsText);
+                //settingsRepository.AddOrUpdateSetting(Constants.LegalRelementationsKey, LegalReglementationsText);
             }
             catch (Exception ex)
             {
@@ -76,6 +77,23 @@ namespace CashBook.ViewModels
         }
 
         public bool CanSave(object param)
+        {
+            return true;
+        }
+
+        public void Create(object param)
+        {
+            try
+            {
+                Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.CreateCashBook);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public bool CanCreate(object param)
         {
             return true;
         }

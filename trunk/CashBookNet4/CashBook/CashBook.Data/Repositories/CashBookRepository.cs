@@ -10,14 +10,6 @@ namespace CashBook.Data.Repositories
 {
     public class CashBookRepository : BaseRepository, ICashBookRepository
     {
-        public Societate GetCompany()
-        {
-            var context = new CashBookContainer();
-            var existingCompany = context.Societates.FirstOrDefault();
-            return existingCompany;
-        }
-
-
         public RegistruCasa Get(long id)
         {
             var context = GetContext();
@@ -33,9 +25,15 @@ namespace CashBook.Data.Repositories
 
         public void Create(RegistruCasa item)
         {
-            var context = GetContext();
-            item.Id = DbIdHelper.GetNextID();
-            context.RegistruCasas.AddObject(item);
+            using (var context = GetContext())
+            {
+                var existingCompany=context.Societates.First();
+                item.Id = DbIdHelper.GetNextID();
+                item.RegistruCasaZis = new System.Data.Objects.DataClasses.EntityCollection<RegistruCasaZi>();
+                item.Societate = existingCompany;
+                context.RegistruCasas.AddObject(item);
+                Commit(context);
+            }
         }
 
         public void Edit(long id, RegistruCasa item)
@@ -45,7 +43,13 @@ namespace CashBook.Data.Repositories
                 var existingEntity = Get(id);
                 if (existingEntity != null)
                 {
-                   // existingEntity.Name
+                    existingEntity.Name = item.Name;
+                    existingEntity.Account = item.Account;
+                    existingEntity.CashierName = item.CashierName;
+                    existingEntity.CoinDecimals = item.CoinDecimals;
+                    existingEntity.CoinType = item.CoinType;
+                    existingEntity.InitialBalance = item.InitialBalance;
+                    existingEntity.Location = item.Location;
                 }
                 Commit(context);
             }
@@ -53,11 +57,14 @@ namespace CashBook.Data.Repositories
 
         public void Delete(long id)
         {
-            var context = GetContext();
-            var existingEntity = Get(id);
-            if (existingEntity != null)
+            using (var context = GetContext())
             {
-                context.RegistruCasas.DeleteObject(existingEntity);
+                var existingEntity = Get(id);
+                if (existingEntity != null)
+                {
+                    context.RegistruCasas.DeleteObject(existingEntity);
+                }
+                Commit(context);
             }
         }
     }

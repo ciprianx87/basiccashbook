@@ -13,13 +13,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CashBook.ViewModels;
 
 namespace CashBook.Controls
 {
     /// <summary>
     /// Interaction logic for CashBook.xaml
     /// </summary>
-    public partial class CashBook : UserControl
+    public partial class CashBook : UserControl, IDisposable
     {
         public CashBook()
         {
@@ -47,6 +48,12 @@ namespace CashBook.Controls
         {
             //CashBooks.Add(new Data.Model.CashBook());
 
+        }
+
+        public void Dispose()
+        {
+            (this.DataContext as BaseViewModel).Dispose();
+            
         }
     }
 }

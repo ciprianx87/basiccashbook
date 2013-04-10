@@ -28,14 +28,14 @@ namespace CashBook.Controls
         public CashBookList()
         {
             InitializeComponent();
-            this.Loaded += CompanyDataWindow_Loaded;
+            this.Loaded += CashBookList_Loaded;
 
         }
 
-        void CompanyDataWindow_Loaded(object sender, RoutedEventArgs e)
+        void CashBookList_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= CompanyDataWindow_Loaded;
-            this.DataContext = new CompanyDataViewModel();          
+            this.Loaded -= CashBookList_Loaded;
+            this.DataContext = new CashBookListViewModel();          
         }
 
 
