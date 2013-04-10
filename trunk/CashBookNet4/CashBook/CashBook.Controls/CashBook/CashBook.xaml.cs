@@ -19,9 +19,9 @@ namespace CashBook.Controls
     /// <summary>
     /// Interaction logic for CashBook.xaml
     /// </summary>
-    public partial class CashBookWindow : UserControl
+    public partial class CashBook : UserControl
     {
-        public CashBookWindow()
+        public CashBook()
         {
             InitializeComponent();
             this.Loaded += CashBook_Loaded;
