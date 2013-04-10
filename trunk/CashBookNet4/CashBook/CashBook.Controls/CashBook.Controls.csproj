@@ -67,6 +67,13 @@
     <Compile Include="MainContent.xaml.cs">
       <DependentUpon>MainContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Popups\DeleteDialog.xaml.cs">
+      <DependentUpon>DeleteDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popups\InformationPopup.xaml.cs">
+      <DependentUpon>InformationPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popups\PopupManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -92,6 +99,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CashBook.Common\CashBook.Common.csproj">
+      <Project>{1C683AE9-2318-4693-B048-55EF3B64A37B}</Project>
+      <Name>CashBook.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CashBook.Data.Model\CashBook.Data.Model.csproj">
       <Project>{5C77ACAD-62CE-4019-B630-7F792E6EAD44}</Project>
       <Name>CashBook.Data.Model</Name>
@@ -127,6 +138,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popups\DeleteDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popups\InformationPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

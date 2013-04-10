@@ -9,6 +9,12 @@ namespace CashBook.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged, IDisposable, IDataErrorInfo
     {
+          public Guid Guid { get; set; }
+          public BaseViewModel()
+        {
+            this.Guid = Guid.NewGuid();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         
         public void NotifyPropertyChanged(string propertyName)
