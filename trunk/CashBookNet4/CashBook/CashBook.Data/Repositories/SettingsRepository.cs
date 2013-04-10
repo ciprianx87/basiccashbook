@@ -11,14 +11,6 @@ namespace CashBook.Data.Repositories
     public class SettingsRepository : ISettingsRepository
     {
 
-
-        public Societate GetCompany()
-        {
-            var context = new CashBookContainer();
-            var existingCompany = context.Societates.FirstOrDefault();
-            return existingCompany;
-        }
-
         public string GetSetting(string key)
         {
             var context = new CashBookContainer();
