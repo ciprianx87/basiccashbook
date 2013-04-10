@@ -49,12 +49,18 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CashBookWindow.xaml.cs">
-      <DependentUpon>CashBookWindow.xaml</DependentUpon>
+    <Compile Include="CashBook\CashBook.xaml.cs">
+      <DependentUpon>CashBook.xaml</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
     <Compile Include="CompanyDataWindow.xaml.cs">
       <DependentUpon>CompanyDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CashBook\CashBookList.xaml.cs">
+      <DependentUpon>CashBookList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CashBook\CreateCashBook.xaml.cs">
+      <DependentUpon>CreateCashBook.xaml</DependentUpon>
     </Compile>
     <Compile Include="LegalReglementations.xaml.cs">
       <DependentUpon>LegalReglementations.xaml</DependentUpon>
@@ -101,13 +107,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="CashBookWindow.xaml">
+    <Page Include="CashBook\CashBook.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CompanyDataWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CashBook\CashBookList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CashBook\CreateCashBook.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LegalReglementations.xaml">
       <Generator>MSBuild:Compile</Generator>
