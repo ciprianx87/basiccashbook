@@ -94,6 +94,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CashBook.Common\CashBook.Common.csproj">
+      <Project>{1C683AE9-2318-4693-B048-55EF3B64A37B}</Project>
+      <Name>CashBook.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CashBook.Controls\CashBook.Controls.csproj">
       <Project>{F6213E6C-A0FA-4321-B4D3-97F9F8861CB9}</Project>
       <Name>CashBook.Controls</Name>

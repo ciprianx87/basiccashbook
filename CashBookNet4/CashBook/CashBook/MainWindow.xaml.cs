@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CashBook.Common.Mediator;
 
 namespace CashBook
 {
@@ -27,11 +28,12 @@ namespace CashBook
             this.Loaded += MainWindow_Loaded;
         }
 
-    
+
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            ChangeContent(ContentTypes.CompanyDetails);
+            Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
+            ChangeContent(ContentTypes.CashBookList);
 
         }
 
@@ -52,6 +54,12 @@ namespace CashBook
                     break;
                 case ContentTypes.LegalReglementations:
                     contentControl.Content = new CashBook.Controls.LegalReglementations();
+                    break;
+                case ContentTypes.CashBookList:
+                    contentControl.Content = new CashBook.Controls.CashBookList();
+                    break;
+                case ContentTypes.CreateCashBook:
+                    contentControl.Content = new CashBook.Controls.CreateCashBook();
                     break;
                 default:
                     MessageBox.Show("invalid contentType: " + type);
@@ -74,6 +82,7 @@ namespace CashBook
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
+            ChangeContent(ContentTypes.CashBookList);
 
         }
 
@@ -81,6 +90,6 @@ namespace CashBook
         {
             ChangeContent(ContentTypes.LegalReglementations);
         }
-        
+
     }
 }

@@ -38,13 +38,13 @@
     </Key>
     <Property Name="Id" Type="bigint" Nullable="false" />
     <Property Name="SocietateId" Type="bigint" Nullable="false" />
-    <Property Name="CoinType" Type="nvarchar" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="CoinType" Type="nchar" Nullable="false" MaxLength="200" />
+    <Property Name="Name" Type="nchar" Nullable="false" MaxLength="200" />
     <Property Name="CoinDecimals" Type="tinyint" Nullable="false" />
     <Property Name="InitialBalance" Type="decimal" Nullable="false" />
-    <Property Name="Location" Type="nvarchar" Nullable="false" />
-    <Property Name="Account" Type="nvarchar" Nullable="false" />
-    <Property Name="CashierName" Type="nvarchar" Nullable="false" />
+    <Property Name="Location" Type="nchar" Nullable="false" MaxLength="200" />
+    <Property Name="Account" Type="nchar" Nullable="false" MaxLength="200" />
+    <Property Name="CashierName" Type="nchar" Nullable="false" MaxLength="200" />
   </EntityType>
   <EntityType Name="Societates">
     <Key>
@@ -151,13 +151,13 @@
           <Property Type="Int64" Name="SocietateId" Nullable="false" />
           <NavigationProperty Name="Societate" Relationship="CashBook.SocietateRegistruCasa" FromRole="RegistruCasa" ToRole="Societate" />
           <NavigationProperty Name="RegistruCasaZis" Relationship="CashBook.RegistruCasaRegistruCasaZi" FromRole="RegistruCasa" ToRole="RegistruCasaZi" />
-          <Property Type="String" Name="CoinType" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="CoinType" Nullable="false" FixedLength="true" MaxLength="200" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="true" />
           <Property Type="Byte" Name="CoinDecimals" Nullable="false" />
           <Property Type="Decimal" Name="InitialBalance" Nullable="false" />
-          <Property Type="String" Name="Location" Nullable="false" />
-          <Property Type="String" Name="Account" Nullable="false" />
-          <Property Type="String" Name="CashierName" Nullable="false" />
+          <Property Type="String" Name="Location" Nullable="false" MaxLength="200" FixedLength="true" />
+          <Property Type="String" Name="Account" Nullable="false" MaxLength="200" FixedLength="true" />
+          <Property Type="String" Name="CashierName" Nullable="false" MaxLength="200" FixedLength="true" />
         </EntityType>
         <EntityType Name="Societate">
           <Key>

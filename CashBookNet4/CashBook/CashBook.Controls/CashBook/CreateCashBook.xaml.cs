@@ -11,17 +11,33 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CashBook.ViewModels;
 
 namespace CashBook.Controls
 {
     /// <summary>
     /// Interaction logic for CreateCashBook.xaml
     /// </summary>
-    public partial class CreateCashBook : UserControl
+    public partial class CreateCashBook : UserControl, IDisposable
     {
         public CreateCashBook()
         {
             InitializeComponent();
+            this.Loaded += CreateCashBook_Loaded;
+
+        }
+
+        void CreateCashBook_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Loaded -= CreateCashBook_Loaded;
+            this.DataContext = new CreateCashBookViewModel();
+        }
+
+
+
+        public void Dispose()
+        {
+            (this.DataContext as BaseViewModel).Dispose();
         }
     }
 }
