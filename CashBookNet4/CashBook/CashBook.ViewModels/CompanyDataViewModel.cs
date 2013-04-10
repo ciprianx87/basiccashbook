@@ -18,6 +18,9 @@ namespace CashBook.ViewModels
         {
             SaveCommand = new DelegateCommand(Save, CanSave);
             companyRepository = new CompanyRepository();
+
+            LoadData();
+
         }
 
         #region properties
@@ -55,7 +58,19 @@ namespace CashBook.ViewModels
         }
 
         #endregion
-        
+
+        #region methods
+        private void LoadData()
+        {
+            var currentCompany = companyRepository.GetCompany();
+            if (currentCompany != null)
+            {
+                this.CompanyName=currentCompany.Nume;
+                this.CompanyAddress = currentCompany.Adresa;
+                this.CompanyCui = currentCompany.CUI;
+            }
+        }
+
         public void Save(object param)
         {
             try
@@ -77,5 +92,7 @@ namespace CashBook.ViewModels
         {
             base.Dispose();
         }
+
+        #endregion
     }
 }

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 04/10/2013 00:23:25
+-- Date Created: 04/10/2013 21:57:18
 -- Generated from EDMX file: D:\Dropbox\Dropbox\proiecte\work\Vs2010\CashBook\CashBook.Data.Model\CashBook.edmx
 -- --------------------------------------------------
 
@@ -41,7 +41,7 @@ GO
 
 -- Creating table 'Settings'
 CREATE TABLE [Settings] (
-    [Id] int IDENTITY(1,1) NOT NULL,
+    [Id] bigint  NOT NULL,
     [Key] nvarchar(4000)  NOT NULL,
     [Value] nvarchar(4000)  NOT NULL
 );
@@ -49,14 +49,14 @@ GO
 
 -- Creating table 'RegistruCasas'
 CREATE TABLE [RegistruCasas] (
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [SocietateId] int  NOT NULL
+    [Id] bigint  NOT NULL,
+    [SocietateId] bigint  NOT NULL
 );
 GO
 
 -- Creating table 'Societates'
 CREATE TABLE [Societates] (
-    [Id] int IDENTITY(1,1) NOT NULL,
+    [Id] bigint  NOT NULL,
     [Nume] nvarchar(4000)  NOT NULL,
     [Adresa] nvarchar(4000)  NOT NULL,
     [CUI] nvarchar(4000)  NOT NULL
@@ -65,22 +65,22 @@ GO
 
 -- Creating table 'RegistruCasaIntrares'
 CREATE TABLE [RegistruCasaIntrares] (
-    [Id] int IDENTITY(1,1) NOT NULL,
+    [Id] bigint  NOT NULL,
     [NrCrt] int  NOT NULL,
     [NrActCasa] nvarchar(4000)  NOT NULL,
     [NrAnexe] int  NOT NULL,
     [Explicatii] nvarchar(4000)  NOT NULL,
     [Incasari] decimal(18,0)  NOT NULL,
     [Plati] decimal(18,0)  NOT NULL,
-    [RegistruCasaZiId] int  NOT NULL
+    [RegistruCasaZiId] bigint  NOT NULL
 );
 GO
 
 -- Creating table 'RegistruCasaZis'
 CREATE TABLE [RegistruCasaZis] (
-    [Id] int IDENTITY(1,1) NOT NULL,
+    [Id] bigint  NOT NULL,
     [Data] datetime  NOT NULL,
-    [RegistruCasaId] int  NOT NULL
+    [RegistruCasaId] bigint  NOT NULL
 );
 GO
 

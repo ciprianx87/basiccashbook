@@ -60,7 +60,7 @@
   <ItemGroup>
     <EntityDeploy Include="CashBook.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CashBook.Designer.cs</LastGenOutput>
+      <LastGenOutput>CashBook1.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>

@@ -28,7 +28,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="bigint" Nullable="false" />
     <Property Name="Key" Type="nvarchar" Nullable="false" />
     <Property Name="Value" Type="nvarchar" Nullable="false" />
   </EntityType>
@@ -36,14 +36,14 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SocietateId" Type="int" Nullable="false" />
+    <Property Name="Id" Type="bigint" Nullable="false" />
+    <Property Name="SocietateId" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="Societates">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="bigint" Nullable="false" />
     <Property Name="Nume" Type="nvarchar" Nullable="false" />
     <Property Name="Adresa" Type="nvarchar" Nullable="false" />
     <Property Name="CUI" Type="nvarchar" Nullable="false" />
@@ -52,22 +52,22 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="bigint" Nullable="false" />
     <Property Name="NrCrt" Type="int" Nullable="false" />
     <Property Name="NrActCasa" Type="nvarchar" Nullable="false" />
     <Property Name="NrAnexe" Type="int" Nullable="false" />
     <Property Name="Explicatii" Type="nvarchar" Nullable="false" />
     <Property Name="Incasari" Type="decimal" Nullable="false" />
     <Property Name="Plati" Type="decimal" Nullable="false" />
-    <Property Name="RegistruCasaZiId" Type="int" Nullable="false" />
+    <Property Name="RegistruCasaZiId" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="RegistruCasaZis">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="bigint" Nullable="false" />
     <Property Name="Data" Type="datetime" Nullable="false" />
-    <Property Name="RegistruCasaId" Type="int" Nullable="false" />
+    <Property Name="RegistruCasaId" Type="bigint" Nullable="false" />
   </EntityType>
   <Association Name="SocietateRegistruCasa">
     <End Role="Societate" Type="CashBook.Store.Societates" Multiplicity="1" />
@@ -132,7 +132,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="String" Name="Key" Nullable="false" />
           <Property Type="String" Name="Value" Nullable="false" />
         </EntityType>
@@ -140,8 +140,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="SocietateId" Nullable="false" />
+          <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Int64" Name="SocietateId" Nullable="false" />
           <NavigationProperty Name="Societate" Relationship="CashBook.SocietateRegistruCasa" FromRole="RegistruCasa" ToRole="Societate" />
           <NavigationProperty Name="RegistruCasaZis" Relationship="CashBook.RegistruCasaRegistruCasaZi" FromRole="RegistruCasa" ToRole="RegistruCasaZi" />
         </EntityType>
@@ -149,7 +149,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="String" Name="Nume" Nullable="false" />
           <Property Type="String" Name="Adresa" Nullable="false" />
           <Property Type="String" Name="CUI" Nullable="false" />
@@ -159,23 +159,23 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="Int32" Name="NrCrt" Nullable="false" />
           <Property Type="String" Name="NrActCasa" Nullable="false" />
           <Property Type="Int32" Name="NrAnexe" Nullable="false" />
           <Property Type="String" Name="Explicatii" Nullable="false" />
           <Property Type="Decimal" Name="Incasari" Nullable="false" />
           <Property Type="Decimal" Name="Plati" Nullable="false" />
-          <Property Type="Int32" Name="RegistruCasaZiId" Nullable="false" />
+          <Property Type="Int64" Name="RegistruCasaZiId" Nullable="false" />
           <NavigationProperty Name="RegistruCasaZi" Relationship="CashBook.RegistruCasaZiRegistruCasaIntrare" FromRole="RegistruCasaIntrare" ToRole="RegistruCasaZi" />
         </EntityType>
         <EntityType Name="RegistruCasaZi">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="DateTime" Name="Data" Nullable="false" />
-          <Property Type="Int32" Name="RegistruCasaId" Nullable="false" />
+          <Property Type="Int64" Name="RegistruCasaId" Nullable="false" />
           <NavigationProperty Name="RegistruCasaIntrares" Relationship="CashBook.RegistruCasaZiRegistruCasaIntrare" FromRole="RegistruCasaZi" ToRole="RegistruCasaIntrare" />
           <NavigationProperty Name="RegistruCasa" Relationship="CashBook.RegistruCasaRegistruCasaZi" FromRole="RegistruCasaZi" ToRole="RegistruCasa" />
         </EntityType>
@@ -289,15 +289,26 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram Name="CashBook" >
-        <EntityTypeShape EntityType="CashBook.Settings" Width="1.5" PointX="3.5" PointY="3.75" Height="1.5956835937499996" />
-        <EntityTypeShape EntityType="CashBook.RegistruCasa" Width="1.5" PointX="8.4053307401041177" PointY="18.671117239944227" />
-        <EntityTypeShape EntityType="CashBook.Societate" Width="1.5" PointX="6.4101919543045529" PointY="8.17887786411628" />
-        <EntityTypeShape EntityType="CashBook.RegistruCasaIntrare" Width="1.5" PointX="6.92727551186796" PointY="19.726837361104245" />
-        <EntityTypeShape EntityType="CashBook.RegistruCasaZi" Width="1.5" PointX="2.2576358589612116" PointY="7.7903391457117808" />
-        <AssociationConnector Association="CashBook.SocietateRegistruCasa" />
-        <AssociationConnector Association="CashBook.RegistruCasaZiRegistruCasaIntrare" />
-        <AssociationConnector Association="CashBook.RegistruCasaRegistruCasaZi" />
+      <Diagram Name="CashBook" ZoomLevel="105" >
+        <EntityTypeShape EntityType="CashBook.Settings" Width="1.5" PointX="6.375" PointY="3.375" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="CashBook.RegistruCasa" Width="1.5" PointX="3.5" PointY="1.5" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="CashBook.Societate" Width="1.5" PointX="4.625" PointY="5.625" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="CashBook.RegistruCasaIntrare" Width="1.5" PointX="2" PointY="2.625" Height="2.7494921875000031" />
+        <EntityTypeShape EntityType="CashBook.RegistruCasaZi" Width="1.5" PointX="0.5" PointY="5.25" Height="1.9802864583333335" />
+        <AssociationConnector Association="CashBook.SocietateRegistruCasa" >
+          <ConnectorPoint PointX="4.8125" PointY="5.625" />
+          <ConnectorPoint PointX="4.8125" PointY="3.2879850260416674" />
+        </AssociationConnector>
+        <AssociationConnector Association="CashBook.RegistruCasaZiRegistruCasaIntrare" >
+          <ConnectorPoint PointX="1.2499995" PointY="5.25" />
+          <ConnectorPoint PointX="1.2499995" PointY="3.9374995" />
+          <ConnectorPoint PointX="2" PointY="3.9374995" />
+        </AssociationConnector>
+        <AssociationConnector Association="CashBook.RegistruCasaRegistruCasaZi" >
+          <ConnectorPoint PointX="4.0625" PointY="3.2879850260416674" />
+          <ConnectorPoint PointX="4.0625" PointY="5.4997460937500016" />
+          <ConnectorPoint PointX="2" PointY="5.4997460937500016" />
+        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

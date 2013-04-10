@@ -34,6 +34,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,9 +47,14 @@
     <Compile Include="Base\DelegateCommand.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="CompanyDataViewModel.cs" />
+    <Compile Include="LegalReglementationsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CashBook.Common\CashBook.Common.csproj">
+      <Project>{1C683AE9-2318-4693-B048-55EF3B64A37B}</Project>
+      <Name>CashBook.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CashBook.Data.Model\CashBook.Data.Model.csproj">
       <Project>{5C77ACAD-62CE-4019-B630-7F792E6EAD44}</Project>
       <Name>CashBook.Data.Model</Name>
