@@ -37,6 +37,7 @@ namespace CashBook
 
         private void ChangeContent(object contentType)
         {
+            DisposeCurrentContent();
             ContentTypes type = (ContentTypes)contentType;
             switch (type)
             {
@@ -49,8 +50,20 @@ namespace CashBook
                 case ContentTypes.CompanyDetails:
                     contentControl.Content = new CashBook.Controls.CompanyDataWindow();
                     break;
-                default:
+                case ContentTypes.LegalReglementations:
+                    contentControl.Content = new CashBook.Controls.LegalReglementations();
                     break;
+                default:
+                    MessageBox.Show("invalid contentType: " + type);
+                    break;
+            }
+        }
+
+        private void DisposeCurrentContent()
+        {
+            if (contentControl.Content != null)
+            {
+                (contentControl.Content as IDisposable).Dispose();
             }
         }
 
@@ -66,7 +79,7 @@ namespace CashBook
 
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
-
+            ChangeContent(ContentTypes.LegalReglementations);
         }
         
     }

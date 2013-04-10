@@ -220,7 +220,7 @@ namespace CashBook.Data.Model
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="societateId">Initial value of the SocietateId property.</param>
-        public static RegistruCasa CreateRegistruCasa(global::System.Int32 id, global::System.Int32 societateId)
+        public static RegistruCasa CreateRegistruCasa(global::System.Int64 id, global::System.Int64 societateId)
         {
             RegistruCasa registruCasa = new RegistruCasa();
             registruCasa.Id = id;
@@ -237,7 +237,7 @@ namespace CashBook.Data.Model
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 Id
+        public global::System.Int64 Id
         {
             get
             {
@@ -255,8 +255,8 @@ namespace CashBook.Data.Model
                 }
             }
         }
-        private global::System.Int32 _Id;
-        partial void OnIdChanging(global::System.Int32 value);
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
         partial void OnIdChanged();
     
         /// <summary>
@@ -264,7 +264,7 @@ namespace CashBook.Data.Model
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 SocietateId
+        public global::System.Int64 SocietateId
         {
             get
             {
@@ -279,8 +279,8 @@ namespace CashBook.Data.Model
                 OnSocietateIdChanged();
             }
         }
-        private global::System.Int32 _SocietateId;
-        partial void OnSocietateIdChanging(global::System.Int32 value);
+        private global::System.Int64 _SocietateId;
+        partial void OnSocietateIdChanging(global::System.Int64 value);
         partial void OnSocietateIdChanged();
 
         #endregion
@@ -373,7 +373,7 @@ namespace CashBook.Data.Model
         /// <param name="incasari">Initial value of the Incasari property.</param>
         /// <param name="plati">Initial value of the Plati property.</param>
         /// <param name="registruCasaZiId">Initial value of the RegistruCasaZiId property.</param>
-        public static RegistruCasaIntrare CreateRegistruCasaIntrare(global::System.Int32 id, global::System.Int32 nrCrt, global::System.String nrActCasa, global::System.Int32 nrAnexe, global::System.String explicatii, global::System.Decimal incasari, global::System.Decimal plati, global::System.Int32 registruCasaZiId)
+        public static RegistruCasaIntrare CreateRegistruCasaIntrare(global::System.Int64 id, global::System.Int32 nrCrt, global::System.String nrActCasa, global::System.Int32 nrAnexe, global::System.String explicatii, global::System.Decimal incasari, global::System.Decimal plati, global::System.Int64 registruCasaZiId)
         {
             RegistruCasaIntrare registruCasaIntrare = new RegistruCasaIntrare();
             registruCasaIntrare.Id = id;
@@ -396,7 +396,7 @@ namespace CashBook.Data.Model
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 Id
+        public global::System.Int64 Id
         {
             get
             {
@@ -414,8 +414,8 @@ namespace CashBook.Data.Model
                 }
             }
         }
-        private global::System.Int32 _Id;
-        partial void OnIdChanging(global::System.Int32 value);
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
         partial void OnIdChanged();
     
         /// <summary>
@@ -567,7 +567,7 @@ namespace CashBook.Data.Model
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 RegistruCasaZiId
+        public global::System.Int64 RegistruCasaZiId
         {
             get
             {
@@ -582,8 +582,8 @@ namespace CashBook.Data.Model
                 OnRegistruCasaZiIdChanged();
             }
         }
-        private global::System.Int32 _RegistruCasaZiId;
-        partial void OnRegistruCasaZiIdChanging(global::System.Int32 value);
+        private global::System.Int64 _RegistruCasaZiId;
+        partial void OnRegistruCasaZiIdChanging(global::System.Int64 value);
         partial void OnRegistruCasaZiIdChanged();
 
         #endregion
@@ -649,7 +649,7 @@ namespace CashBook.Data.Model
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="data">Initial value of the Data property.</param>
         /// <param name="registruCasaId">Initial value of the RegistruCasaId property.</param>
-        public static RegistruCasaZi CreateRegistruCasaZi(global::System.Int32 id, global::System.DateTime data, global::System.Int32 registruCasaId)
+        public static RegistruCasaZi CreateRegistruCasaZi(global::System.Int64 id, global::System.DateTime data, global::System.Int64 registruCasaId)
         {
             RegistruCasaZi registruCasaZi = new RegistruCasaZi();
             registruCasaZi.Id = id;
@@ -667,7 +667,7 @@ namespace CashBook.Data.Model
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 Id
+        public global::System.Int64 Id
         {
             get
             {
@@ -685,8 +685,8 @@ namespace CashBook.Data.Model
                 }
             }
         }
-        private global::System.Int32 _Id;
-        partial void OnIdChanging(global::System.Int32 value);
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
         partial void OnIdChanged();
     
         /// <summary>
@@ -718,7 +718,7 @@ namespace CashBook.Data.Model
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 RegistruCasaId
+        public global::System.Int64 RegistruCasaId
         {
             get
             {
@@ -733,8 +733,8 @@ namespace CashBook.Data.Model
                 OnRegistruCasaIdChanged();
             }
         }
-        private global::System.Int32 _RegistruCasaId;
-        partial void OnRegistruCasaIdChanging(global::System.Int32 value);
+        private global::System.Int64 _RegistruCasaId;
+        partial void OnRegistruCasaIdChanging(global::System.Int64 value);
         partial void OnRegistruCasaIdChanged();
 
         #endregion
@@ -822,7 +822,7 @@ namespace CashBook.Data.Model
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="key">Initial value of the Key property.</param>
         /// <param name="value">Initial value of the Value property.</param>
-        public static Settings CreateSettings(global::System.Int32 id, global::System.String key, global::System.String value)
+        public static Settings CreateSettings(global::System.Int64 id, global::System.String key, global::System.String value)
         {
             Settings settings = new Settings();
             settings.Id = id;
@@ -840,7 +840,7 @@ namespace CashBook.Data.Model
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 Id
+        public global::System.Int64 Id
         {
             get
             {
@@ -858,8 +858,8 @@ namespace CashBook.Data.Model
                 }
             }
         }
-        private global::System.Int32 _Id;
-        partial void OnIdChanging(global::System.Int32 value);
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
         partial void OnIdChanged();
     
         /// <summary>
@@ -932,7 +932,7 @@ namespace CashBook.Data.Model
         /// <param name="nume">Initial value of the Nume property.</param>
         /// <param name="adresa">Initial value of the Adresa property.</param>
         /// <param name="cUI">Initial value of the CUI property.</param>
-        public static Societate CreateSocietate(global::System.Int32 id, global::System.String nume, global::System.String adresa, global::System.String cUI)
+        public static Societate CreateSocietate(global::System.Int64 id, global::System.String nume, global::System.String adresa, global::System.String cUI)
         {
             Societate societate = new Societate();
             societate.Id = id;
@@ -951,7 +951,7 @@ namespace CashBook.Data.Model
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 Id
+        public global::System.Int64 Id
         {
             get
             {
@@ -969,8 +969,8 @@ namespace CashBook.Data.Model
                 }
             }
         }
-        private global::System.Int32 _Id;
-        partial void OnIdChanging(global::System.Int32 value);
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
         partial void OnIdChanged();
     
         /// <summary>

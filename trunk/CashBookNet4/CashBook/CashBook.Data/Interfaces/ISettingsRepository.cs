@@ -7,9 +7,9 @@ using CashBook.Data.Model;
 
 namespace CashBook.Data.Interfaces
 {
-    public interface ICompanyRepository
+    public interface ISettingsRepository
     {
-        void EditDetails(string name, string cui, string address);
-        Societate GetCompany();
+        string GetSetting(string key);
+        void AddOrUpdateSetting(string key,string value);
     }
 }

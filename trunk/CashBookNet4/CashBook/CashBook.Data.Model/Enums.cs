@@ -10,6 +10,7 @@ namespace CashBook.Data.Model
     {
         CashBook,
         MainContent,
-        CompanyDetails
+        CompanyDetails,
+        LegalReglementations
     }
 }

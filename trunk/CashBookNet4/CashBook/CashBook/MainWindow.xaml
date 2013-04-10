@@ -22,6 +22,6 @@
             </MenuItem>
 
         </Menu>
-        <ContentControl Grid.Row="1" x:Name="contentControl" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ContentControl Grid.Row="1" x:Name="contentControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </Window>

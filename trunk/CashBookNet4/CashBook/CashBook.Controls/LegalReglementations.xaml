@@ -4,15 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-            Width="600" Height="500" Background="White">
+             Height="500" Width="800" Background="White">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Reglementari Legale"/>
-        <TextBox x:Name="txtLegalReglementations"  Grid.Row="1"/>
-        <Button Grid.Row="2" Content="Salvare" x:Name="btnSave" Click="btnSave_Click_1"></Button>
+        <TextBlock Text="Reglementari legale:" FontSize="30" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
+        <TextBox  Grid.Row="1" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" Text="{Binding LegalReglementationsText}"/>
+        <Button Grid.Row="2" Content="Salvare" Command="{Binding SaveCommand}"></Button>
     </Grid>
 </UserControl>

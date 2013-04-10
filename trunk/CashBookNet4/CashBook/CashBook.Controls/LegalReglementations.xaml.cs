@@ -12,22 +12,30 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CashBook.ViewModels;
 
 namespace CashBook.Controls
 {
     /// <summary>
     /// Interaction logic for LegalReglementations.xaml
     /// </summary>
-    public partial class LegalReglementations : UserControl
+    public partial class LegalReglementations : UserControl, IDisposable
     {
         public LegalReglementations()
         {
             InitializeComponent();
+            this.Loaded += new RoutedEventHandler(LegalReglementations_Loaded);
         }
 
-        private void btnSave_Click_1(object sender, RoutedEventArgs e)
+        void LegalReglementations_Loaded(object sender, RoutedEventArgs e)
         {
+            this.DataContext = new LegalReglementationsViewModel();
+        }
 
+        public void Dispose()
+        {
+            (this.DataContext as BaseViewModel).Dispose();
+            
         }
     }
 }
