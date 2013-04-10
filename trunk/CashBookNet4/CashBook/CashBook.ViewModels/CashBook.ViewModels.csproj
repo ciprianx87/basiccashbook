@@ -45,8 +45,8 @@
   <ItemGroup>
     <Compile Include="Base\BaseViewModel.cs" />
     <Compile Include="Base\DelegateCommand.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="CompanyDataViewModel.cs" />
+    <Compile Include="CashBookListViewModel.cs" />
     <Compile Include="LegalReglementationsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

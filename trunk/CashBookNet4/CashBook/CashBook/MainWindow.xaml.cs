@@ -42,7 +42,7 @@ namespace CashBook
             switch (type)
             {
                 case ContentTypes.CashBook:
-                    contentControl.Content = new CashBook.Controls.CashBookWindow();
+                    contentControl.Content = new CashBook.Controls.CashBook();
                     break;
                 case ContentTypes.MainContent:
                     contentControl.Content = new CashBook.Controls.MainContent();
