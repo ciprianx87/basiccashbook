@@ -10,12 +10,12 @@ namespace CashBook.Common.Mediator
         OpenWindow,
         CloseWindow,
         SetMainContent,
-        
+        SetActionToDelete,
+
     }
     public enum PopupType
     {
-        NewAction,
-        NewTimer,
+        NewCashBook,
         DeleteDialog,
         Information
     }
