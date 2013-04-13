@@ -6,13 +6,14 @@ using System.Windows.Input;
 using CashBook.ViewModels;
 using CashBook.Common.Mediator;
 using CashBook.Data.Model;
+using CashBook.Data;
 
 namespace CashBook.ViewModels
 {
     public class DeleteDialogVM : BaseViewModel, IDisposable
     {
         #region Fields
-        private RegistruCasa actionToDelete;
+        private RegistruCasa entityToDelete;
         #endregion
 
         #region Constructor
@@ -20,7 +21,7 @@ namespace CashBook.ViewModels
         public DeleteDialogVM()
         {
             InitializeCommands();
-            Mediator.Instance.Register(MediatorActionType.SetActionToDelete, SetActionToDelete);
+            Mediator.Instance.Register(MediatorActionType.SetEntityToDelete, SetEntityToDelete);
         }
 
         private void InitializeCommands()
@@ -56,7 +57,7 @@ namespace CashBook.ViewModels
 
         private void OK(object parameter)
         {
-            //ModelHelper.Instance.DeleteUserAction(actionToDelete);
+            DeleteEntity();
             Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
         }
 
@@ -70,17 +71,29 @@ namespace CashBook.ViewModels
         private void Cancel(object parameter)
         {
             Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
-
         }
         #endregion
 
         #region Methods
-        public void SetActionToDelete(object param)
+
+        private void DeleteEntity()
+        {
+            EntityDeleter.DeleteEntity(entityToDelete);
+            RefreshList();
+        }
+
+        private void RefreshList()
+        {
+            Mediator.Instance.SendMessage(MediatorActionType.RefreshList, null);
+
+        }
+
+        public void SetEntityToDelete(object param)
         {
             if (param is RegistruCasa)
             {
-                actionToDelete = param as RegistruCasa;
-                this.Message = "Sunteti sigur ca doriti sa stergeti " + actionToDelete.Name + " ?";
+                entityToDelete = param as RegistruCasa;
+                this.Message = "Sunteti sigur ca doriti sa stergeti " + entityToDelete.Name + " ?".Replace(Environment.NewLine, "");
             }
         }
         #endregion
@@ -89,6 +102,7 @@ namespace CashBook.ViewModels
 
         public void Dispose()
         {
+            Mediator.Instance.Unregister(MediatorActionType.SetEntityToDelete, SetEntityToDelete);
         }
 
         #endregion

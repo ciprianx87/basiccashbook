@@ -19,10 +19,17 @@ namespace CashBook.ViewModels
 
         public ICommand SaveCommand { get; set; }
         public ICommand CreateCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
+        public ICommand EditCommand { get; set; }
         public CashBookListViewModel()
         {
             SaveCommand = new DelegateCommand(Save, CanSave);
             CreateCommand = new DelegateCommand(Create, CanCreate);
+            DeleteCommand = new DelegateCommand(Delete, CanDelete);
+            EditCommand = new DelegateCommand(Edit, CanEdit);
+
+            Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
+            
             cashBookRepository = new CashBookRepository();
 
             LoadData();
@@ -45,6 +52,10 @@ namespace CashBook.ViewModels
         #endregion
 
         #region methods
+        public void RefreshList(object param)
+        {
+            LoadData();
+        }
         private void LoadData()
         {
             try
@@ -85,7 +96,25 @@ namespace CashBook.ViewModels
         {
             try
             {
-                Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.CreateCashBook);
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CreateOrEditCashBook);
+                Mediator.Instance.SendMessage(MediatorActionType.SetEntityToEdit, null);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public bool CanEdit(object param)
+        {
+            return true;
+        }
+        public void Edit(object param)
+        {
+            try
+            {
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CreateOrEditCashBook);
+                Mediator.Instance.SendMessage(MediatorActionType.SetEntityToEdit, param);
             }
             catch (Exception ex)
             {
@@ -98,11 +127,25 @@ namespace CashBook.ViewModels
             return true;
         }
 
+
+        public void Delete(object param)
+        {
+            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.DeleteDialog);
+            Mediator.Instance.SendMessage(MediatorActionType.SetEntityToDelete, param);
+        }
+
+        public bool CanDelete(object param)
+        {
+            return true;
+        }
+
         public override void Dispose()
         {
+            Mediator.Instance.Unregister(MediatorActionType.RefreshList, RefreshList);
             base.Dispose();
         }
 
         #endregion
+
     }
 }

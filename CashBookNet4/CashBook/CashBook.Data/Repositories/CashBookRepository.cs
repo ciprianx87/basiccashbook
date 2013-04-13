@@ -27,7 +27,7 @@ namespace CashBook.Data.Repositories
         {
             using (var context = GetContext())
             {
-                var existingCompany=context.Societates.First();
+                var existingCompany = context.Societates.First();
                 item.Id = DbIdHelper.GetNextID();
                 item.RegistruCasaZis = new System.Data.Objects.DataClasses.EntityCollection<RegistruCasaZi>();
                 item.Societate = existingCompany;
@@ -40,7 +40,7 @@ namespace CashBook.Data.Repositories
         {
             using (var context = GetContext())
             {
-                var existingEntity = Get(id);
+                var existingEntity = GetCashBook(id, context);
                 if (existingEntity != null)
                 {
                     existingEntity.Name = item.Name;
@@ -59,13 +59,19 @@ namespace CashBook.Data.Repositories
         {
             using (var context = GetContext())
             {
-                var existingEntity = Get(id);
+                //the same context needs to load this entity
+                var existingEntity = GetCashBook(id, context);
                 if (existingEntity != null)
                 {
                     context.RegistruCasas.DeleteObject(existingEntity);
                 }
                 Commit(context);
             }
+        }
+
+        private RegistruCasa GetCashBook(long id, CashBookContainer context)
+        {
+            return context.RegistruCasas.FirstOrDefault(p => p.Id == id);
         }
     }
 }

@@ -13,14 +13,16 @@ using CashBook.Common.Mediator;
 
 namespace CashBook.ViewModels
 {
-    public class CreateCashBookViewModel : BaseViewModel
+    public class CreateOrEditCashBookViewModel : BaseViewModel
     {
         ICashBookRepository cashBookRepository;
 
         public ICommand SaveCommand { get; set; }
-        public CreateCashBookViewModel()
+        public CreateOrEditCashBookViewModel()
         {
+            Mediator.Instance.Register(MediatorActionType.SetEntityToEdit, SetEntityToEdit);
             SaveCommand = new DelegateCommand(Save, CanSave);
+            this.CancelCommand = new DelegateCommand(Cancel, CanCancel);
             cashBookRepository = new CashBookRepository();
 
             CoinDecimals = 2;
@@ -111,30 +113,66 @@ namespace CashBook.ViewModels
         #endregion
 
         #region methods
+        RegistruCasa currentEntity;
+        public void SetEntityToEdit(object param)
+        {
+            if (param is RegistruCasa)
+            {
+                currentEntity = param as RegistruCasa;
+                Account = currentEntity.Account;
+                CashierName = currentEntity.CashierName;
+                Location = currentEntity.Location;
+                CoinType = currentEntity.CoinType;
+                CoinDecimals = currentEntity.CoinDecimals;
+                Name = currentEntity.Name;
+                InitialBalance = currentEntity.InitialBalance;
+            }
+        }
+
         private void LoadData()
         {
 
+        }
+
+        private void UpdateFields()
+        {
+
+            currentEntity.Account = Account;
+            currentEntity.CashierName = CashierName;
+            currentEntity.Location = Location;
+            currentEntity.CoinType = CoinType;
+            currentEntity.CoinDecimals = CoinDecimals;
+            currentEntity.Name = Name;
+            currentEntity.InitialBalance = InitialBalance;
         }
 
         public void Save(object param)
         {
             try
             {
-
-                RegistruCasa cashBook = new RegistruCasa()
+                //create
+                if (currentEntity == null)
                 {
-                    Account = Account != null ? Account : "",
-                    CashierName = CashierName != null ? CashierName : "",
-                    Location = Location != null ? Location : "",
-                    CoinType = CoinType,
-                    CoinDecimals = CoinDecimals,
-                    Name = Name != null ? Name : "",
-                    InitialBalance = InitialBalance,
-                };
-                cashBookRepository.Create(cashBook);
-
-                Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.CashBookList);
-
+                    RegistruCasa cashBook = new RegistruCasa()
+                    {
+                        Account = Account != null ? Account : "",
+                        CashierName = CashierName != null ? CashierName : "",
+                        Location = Location != null ? Location : "",
+                        CoinType = CoinType,
+                        CoinDecimals = CoinDecimals,
+                        Name = Name != null ? Name : "",
+                        InitialBalance = InitialBalance,
+                    };
+                    cashBookRepository.Create(cashBook);
+                }
+                //edit
+                else
+                {
+                    UpdateFields();
+                    cashBookRepository.Edit(currentEntity.Id, currentEntity);
+                }
+                Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
+                Mediator.Instance.SendMessage(MediatorActionType.RefreshList, this.Guid);
             }
             catch (Exception ex)
             {
@@ -147,9 +185,23 @@ namespace CashBook.ViewModels
             return true;
         }
 
+        public ICommand CancelCommand { get; set; }
+
+        private bool CanCancel(object parameter)
+        {
+            return true;
+        }
+
+        private void Cancel(object parameter)
+        {
+            Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
+        }
+
         public override void Dispose()
         {
             base.Dispose();
+            Mediator.Instance.Unregister(MediatorActionType.SetEntityToEdit, SetEntityToEdit);
+
         }
 
         #endregion
