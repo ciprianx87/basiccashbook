@@ -12,7 +12,8 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Reglementari legale:" FontSize="30" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
-        <TextBox  Grid.Row="1" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" Text="{Binding LegalReglementationsText}"/>
+        <TextBox  Grid.Row="1" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" Text="{Binding LegalReglementationsText}" AcceptsReturn="True"/>
+        
         <Button Grid.Row="2" Content="Salvare" Command="{Binding SaveCommand}"></Button>
     </Grid>
 </UserControl>

@@ -13,6 +13,7 @@ namespace CashBook.Common.Mediator
         SetEntityToDelete,
         SetEntityToEdit,
         RefreshList,
+        SetCashBookData,
 
     }
     public enum PopupType

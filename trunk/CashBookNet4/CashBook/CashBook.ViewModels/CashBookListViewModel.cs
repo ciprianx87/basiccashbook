@@ -21,15 +21,17 @@ namespace CashBook.ViewModels
         public ICommand CreateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand SelectCommand { get; set; }
         public CashBookListViewModel()
         {
             SaveCommand = new DelegateCommand(Save, CanSave);
             CreateCommand = new DelegateCommand(Create, CanCreate);
             DeleteCommand = new DelegateCommand(Delete, CanDelete);
             EditCommand = new DelegateCommand(Edit, CanEdit);
+            SelectCommand = new DelegateCommand(Select, CanSelect);
 
             Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
-            
+
             cashBookRepository = new CashBookRepository();
 
             LoadData();
@@ -120,6 +122,17 @@ namespace CashBook.ViewModels
             {
 
             }
+        }
+
+        public bool CanSelect(object param)
+        {
+            return true;
+        }
+
+        public void Select(object param)
+        {
+            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.CashBook);
+            Mediator.Instance.SendMessage(MediatorActionType.SetCashBookData, param);
         }
 
         public bool CanCreate(object param)
