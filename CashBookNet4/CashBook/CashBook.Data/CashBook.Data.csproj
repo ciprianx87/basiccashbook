@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="DbIdHelper.cs" />
     <Compile Include="EntityDeleter.cs" />
     <Compile Include="Interfaces\ICashBookRepository.cs" />

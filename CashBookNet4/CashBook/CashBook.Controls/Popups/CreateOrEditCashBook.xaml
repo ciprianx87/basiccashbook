@@ -37,12 +37,14 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Text="Creare Registru de casa:" FontSize="30" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
-        <TextBlock Grid.Row="1" Text="Moneda:" />
-        <TextBox Grid.Row="1" Grid.Column="1"  Text="{Binding CoinType}"/>
-        <TextBlock Grid.Row="2" Text="Zecimale Moneda:"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CoinDecimals}"/>
-        <TextBlock Grid.Row="3" Text="Nume:"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Name}"/>
+        <TextBlock Grid.Row="1" Text="Nume:"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
+
+        <TextBlock Grid.Row="2" Text="Moneda:" />
+        <TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding CoinType}"/>
+        <TextBlock Grid.Row="3" Text="Zecimale Moneda:"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CoinDecimals}"/>
+       
         
         <TextBlock Grid.Row="4" Text="Locatie:"/>
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Location}"/>

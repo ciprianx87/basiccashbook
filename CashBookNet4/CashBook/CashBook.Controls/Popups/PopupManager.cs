@@ -62,11 +62,31 @@ namespace CashBook.Controls.Popups
                 if (popup != null)
                 {
                     popup.Loaded += Popup_Loaded;
+                    popup.Closed += popup_Closed;
                     popup.Tag = popupType;
                     popup.Show();
                 }
             }
         }
+
+        void popup_Closed(object sender, EventArgs e)
+        {
+            try
+            {
+                var type = (PopupType)(sender as Window).Tag;
+                if (existingPopups.ContainsValue(type))
+                {
+                    var existingPopup = existingPopups.FirstOrDefault(p => p.Value == type);
+
+                    existingPopups.Remove(existingPopup.Key);
+
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
 
         void Popup_Loaded(object sender, RoutedEventArgs e)
         {

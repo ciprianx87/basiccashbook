@@ -30,7 +30,7 @@
         <TextBlock Text="Registre casa:" FontSize="30" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
 
         <Button Grid.Row="1" Content="Creare" Margin="20,20,0,0"  Command="{Binding CreateCommand}" Width="100" HorizontalAlignment="Left"/>
-        <DataGrid Grid.Row="2" ItemsSource="{Binding CashBooks}" AutoGenerateColumns="False" Margin="0,15,0,0">
+        <DataGrid Grid.Row="2" ItemsSource="{Binding CashBooks}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False">
             <DataGrid.Resources>
                 <Style TargetType="TextBlock" >
                     <Setter Property="TextAlignment" Value="Center"/>
@@ -38,6 +38,13 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
+                <DataGridTemplateColumn Width="Auto" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <Button Content="Selecteaza" Margin="0" Command="{Binding DataContext.SelectCommand, ElementName=root}" CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="200">
                     <DataGridTemplateColumn.HeaderTemplate>
                         <DataTemplate>
