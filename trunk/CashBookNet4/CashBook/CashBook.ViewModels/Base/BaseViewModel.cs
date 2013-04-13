@@ -35,6 +35,18 @@ namespace CashBook.ViewModels
                 NotifyPropertyChanged("IsBusy");
             }
         }
+
+        private string title;
+        public string Title
+        {
+            get { return title; }
+            set
+            {
+                title = value;
+                NotifyPropertyChanged("Title");
+            }
+        }
+
         public virtual void Dispose()
         {
             

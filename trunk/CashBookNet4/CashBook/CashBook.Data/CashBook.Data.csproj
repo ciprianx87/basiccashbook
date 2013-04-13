@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="DbIdHelper.cs" />
+    <Compile Include="EntityDeleter.cs" />
     <Compile Include="Interfaces\ICashBookRepository.cs" />
     <Compile Include="Interfaces\ISettingsRepository.cs" />
     <Compile Include="Interfaces\ICompanyRepository.cs" />

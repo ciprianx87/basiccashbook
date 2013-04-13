@@ -17,7 +17,7 @@
             <Setter  Property="Margin" Value="15,0,0,0"/>
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid x:Name="root">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -30,6 +30,75 @@
         <TextBlock Text="Registre casa:" FontSize="30" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
 
         <Button Grid.Row="1" Content="Creare" Margin="20,20,0,0"  Command="{Binding CreateCommand}" Width="100" HorizontalAlignment="Left"/>
-        <DataGrid Grid.Row="2" ItemsSource="{Binding CashBooks}" AutoGenerateColumns="True"></DataGrid>
+        <DataGrid Grid.Row="2" ItemsSource="{Binding CashBooks}" AutoGenerateColumns="False" Margin="0,15,0,0">
+            <DataGrid.Resources>
+                <Style TargetType="TextBlock" >
+                    <Setter Property="TextAlignment" Value="Center"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="200">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <StackPanel.Resources>
+                                    <Style TargetType="TextBlock" >
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <TextBlock Text="Nume" TextAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="150" Header="Locatie">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock Text="{Binding Location}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="150" Header="Nume Casier">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock Text="{Binding CashierName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="80" Header="Tip Moneda">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock Text="{Binding CoinType}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="70" Header="Cont">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock Text="{Binding Account}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="*" Header="Actiuni">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Sterge" Margin="0,0,10,0" Command="{Binding DataContext.DeleteCommand, ElementName=root}" CommandParameter="{Binding}"/>
+                                <Button Content="Editeaza" Command="{Binding DataContext.EditCommand, ElementName=root}" CommandParameter="{Binding}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.Items>
+            </DataGrid.Items>
+        </DataGrid>
     </Grid>
 </UserControl>

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 04/11/2013 00:03:52
+-- Date Created: 04/14/2013 01:48:10
 -- Generated from EDMX file: D:\Dropbox\Dropbox\proiecte\work\Vs2010\CashBook\CashBook.Data.Model\CashBook.edmx
 -- --------------------------------------------------
 
@@ -51,13 +51,13 @@ GO
 CREATE TABLE [RegistruCasas] (
     [Id] bigint  NOT NULL,
     [SocietateId] bigint  NOT NULL,
-    [CoinType] nchar(200)  NOT NULL,
-    [Name] nchar(200)  NOT NULL,
+    [CoinType] nvarchar(200)  NOT NULL,
+    [Name] nvarchar(200)  NOT NULL,
     [CoinDecimals] tinyint  NOT NULL,
     [InitialBalance] decimal(18,0)  NOT NULL,
-    [Location] nchar(200)  NOT NULL,
-    [Account] nchar(200)  NOT NULL,
-    [CashierName] nchar(200)  NOT NULL
+    [Location] nvarchar(200)  NOT NULL,
+    [Account] nvarchar(200)  NOT NULL,
+    [CashierName] nvarchar(200)  NOT NULL
 );
 GO
 

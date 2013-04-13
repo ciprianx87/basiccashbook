@@ -58,8 +58,8 @@
     <Compile Include="CashBook\CashBookList.xaml.cs">
       <DependentUpon>CashBookList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CashBook\CreateCashBook.xaml.cs">
-      <DependentUpon>CreateCashBook.xaml</DependentUpon>
+    <Compile Include="Popups\CreateOrEditCashBook.xaml.cs">
+      <DependentUpon>CreateOrEditCashBook.xaml</DependentUpon>
     </Compile>
     <Compile Include="LegalReglementations.xaml.cs">
       <DependentUpon>LegalReglementations.xaml</DependentUpon>
@@ -129,7 +129,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CashBook\CreateCashBook.xaml">
+    <Page Include="Popups\CreateOrEditCashBook.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

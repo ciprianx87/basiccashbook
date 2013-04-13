@@ -10,13 +10,16 @@ namespace CashBook.Common.Mediator
         OpenWindow,
         CloseWindow,
         SetMainContent,
-        SetActionToDelete,
+        SetEntityToDelete,
+        SetEntityToEdit,
+        RefreshList,
 
     }
     public enum PopupType
     {
         NewCashBook,
         DeleteDialog,
-        Information
+        Information,
+        CreateOrEditCashBook
     }
 }

@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CashBook.Common.Mediator;
+using CashBook.Controls.Popups;
 
 namespace CashBook
 {
@@ -32,6 +33,7 @@ namespace CashBook
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            PopupManager.Instance.Init();
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ChangeContent(ContentTypes.CashBookList);
 
@@ -58,9 +60,9 @@ namespace CashBook
                 case ContentTypes.CashBookList:
                     contentControl.Content = new CashBook.Controls.CashBookList();
                     break;
-                case ContentTypes.CreateCashBook:
-                    contentControl.Content = new CashBook.Controls.CreateCashBook();
-                    break;
+                //case ContentTypes.CreateCashBook:
+                //    //contentControl.Content = new CashBook.Controls.CreateCashBook();
+                //    break;
                 default:
                     MessageBox.Show("invalid contentType: " + type);
                     break;

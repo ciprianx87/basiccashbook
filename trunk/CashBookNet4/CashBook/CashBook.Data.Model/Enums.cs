@@ -12,7 +12,6 @@ namespace CashBook.Data.Model
         MainContent,
         CompanyDetails,
         LegalReglementations,
-        CreateCashBook,
         CashBookList
     }
 }

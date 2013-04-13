@@ -13,14 +13,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CashBook.ViewModels;
 
-namespace CashBook.Controls
+namespace CashBook.Controls.Popups
 {
     /// <summary>
     /// Interaction logic for CreateCashBook.xaml
     /// </summary>
-    public partial class CreateCashBook : UserControl, IDisposable
+    public partial class CreateOrEditCashBook : Window, IDisposable
     {
-        public CreateCashBook()
+        public CreateOrEditCashBook()
         {
             InitializeComponent();
             this.Loaded += CreateCashBook_Loaded;
@@ -30,7 +30,7 @@ namespace CashBook.Controls
         void CreateCashBook_Loaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= CreateCashBook_Loaded;
-            this.DataContext = new CreateCashBookViewModel();
+            this.DataContext = new CreateOrEditCashBookViewModel();
         }
 
 
