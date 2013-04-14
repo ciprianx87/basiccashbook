@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 04/14/2013 01:48:10
+-- Date Created: 04/14/2013 17:47:45
 -- Generated from EDMX file: D:\Dropbox\Dropbox\proiecte\work\Vs2010\CashBook\CashBook.Data.Model\CashBook.edmx
 -- --------------------------------------------------
 
@@ -12,11 +12,11 @@
 -- NOTE: if the constraint does not exist, an ignorable error will be reported.
 -- --------------------------------------------------
 
-    ALTER TABLE [RegistruCasas] DROP CONSTRAINT [FK_SocietateRegistruCasa];
+    ALTER TABLE [UserCashBooks] DROP CONSTRAINT [FK_SocietateRegistruCasa];
 GO
-    ALTER TABLE [RegistruCasaIntrares] DROP CONSTRAINT [FK_RegistruCasaZiRegistruCasaIntrare];
+    ALTER TABLE [CashBookEntries] DROP CONSTRAINT [FK_RegistruCasaZiRegistruCasaIntrare];
 GO
-    ALTER TABLE [RegistruCasaZis] DROP CONSTRAINT [FK_RegistruCasaRegistruCasaZi];
+    ALTER TABLE [DailyCashBooks] DROP CONSTRAINT [FK_RegistruCasaRegistruCasaZi];
 GO
 
 -- --------------------------------------------------
@@ -26,13 +26,13 @@ GO
 
     DROP TABLE [Settings];
 GO
-    DROP TABLE [RegistruCasas];
+    DROP TABLE [UserCashBooks];
 GO
-    DROP TABLE [Societates];
+    DROP TABLE [Companies];
 GO
-    DROP TABLE [RegistruCasaIntrares];
+    DROP TABLE [CashBookEntries];
 GO
-    DROP TABLE [RegistruCasaZis];
+    DROP TABLE [DailyCashBooks];
 GO
 
 -- --------------------------------------------------
@@ -47,8 +47,8 @@ CREATE TABLE [Settings] (
 );
 GO
 
--- Creating table 'RegistruCasas'
-CREATE TABLE [RegistruCasas] (
+-- Creating table 'UserCashBooks'
+CREATE TABLE [UserCashBooks] (
     [Id] bigint  NOT NULL,
     [SocietateId] bigint  NOT NULL,
     [CoinType] nvarchar(200)  NOT NULL,
@@ -61,8 +61,8 @@ CREATE TABLE [RegistruCasas] (
 );
 GO
 
--- Creating table 'Societates'
-CREATE TABLE [Societates] (
+-- Creating table 'Companies'
+CREATE TABLE [Companies] (
     [Id] bigint  NOT NULL,
     [Nume] nvarchar(4000)  NOT NULL,
     [Adresa] nvarchar(4000)  NOT NULL,
@@ -70,8 +70,8 @@ CREATE TABLE [Societates] (
 );
 GO
 
--- Creating table 'RegistruCasaIntrares'
-CREATE TABLE [RegistruCasaIntrares] (
+-- Creating table 'CashBookEntries'
+CREATE TABLE [CashBookEntries] (
     [Id] bigint  NOT NULL,
     [NrCrt] int  NOT NULL,
     [NrActCasa] nvarchar(4000)  NOT NULL,
@@ -83,8 +83,8 @@ CREATE TABLE [RegistruCasaIntrares] (
 );
 GO
 
--- Creating table 'RegistruCasaZis'
-CREATE TABLE [RegistruCasaZis] (
+-- Creating table 'DailyCashBooks'
+CREATE TABLE [DailyCashBooks] (
     [Id] bigint  NOT NULL,
     [Data] datetime  NOT NULL,
     [RegistruCasaId] bigint  NOT NULL
@@ -101,27 +101,27 @@ ADD CONSTRAINT [PK_Settings]
     PRIMARY KEY ([Id] );
 GO
 
--- Creating primary key on [Id] in table 'RegistruCasas'
-ALTER TABLE [RegistruCasas]
-ADD CONSTRAINT [PK_RegistruCasas]
+-- Creating primary key on [Id] in table 'UserCashBooks'
+ALTER TABLE [UserCashBooks]
+ADD CONSTRAINT [PK_UserCashBooks]
     PRIMARY KEY ([Id] );
 GO
 
--- Creating primary key on [Id] in table 'Societates'
-ALTER TABLE [Societates]
-ADD CONSTRAINT [PK_Societates]
+-- Creating primary key on [Id] in table 'Companies'
+ALTER TABLE [Companies]
+ADD CONSTRAINT [PK_Companies]
     PRIMARY KEY ([Id] );
 GO
 
--- Creating primary key on [Id] in table 'RegistruCasaIntrares'
-ALTER TABLE [RegistruCasaIntrares]
-ADD CONSTRAINT [PK_RegistruCasaIntrares]
+-- Creating primary key on [Id] in table 'CashBookEntries'
+ALTER TABLE [CashBookEntries]
+ADD CONSTRAINT [PK_CashBookEntries]
     PRIMARY KEY ([Id] );
 GO
 
--- Creating primary key on [Id] in table 'RegistruCasaZis'
-ALTER TABLE [RegistruCasaZis]
-ADD CONSTRAINT [PK_RegistruCasaZis]
+-- Creating primary key on [Id] in table 'DailyCashBooks'
+ALTER TABLE [DailyCashBooks]
+ADD CONSTRAINT [PK_DailyCashBooks]
     PRIMARY KEY ([Id] );
 GO
 
@@ -129,45 +129,45 @@ GO
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
 
--- Creating foreign key on [SocietateId] in table 'RegistruCasas'
-ALTER TABLE [RegistruCasas]
+-- Creating foreign key on [SocietateId] in table 'UserCashBooks'
+ALTER TABLE [UserCashBooks]
 ADD CONSTRAINT [FK_SocietateRegistruCasa]
     FOREIGN KEY ([SocietateId])
-    REFERENCES [Societates]
+    REFERENCES [Companies]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_SocietateRegistruCasa'
 CREATE INDEX [IX_FK_SocietateRegistruCasa]
-ON [RegistruCasas]
+ON [UserCashBooks]
     ([SocietateId]);
 GO
 
--- Creating foreign key on [RegistruCasaZiId] in table 'RegistruCasaIntrares'
-ALTER TABLE [RegistruCasaIntrares]
+-- Creating foreign key on [RegistruCasaZiId] in table 'CashBookEntries'
+ALTER TABLE [CashBookEntries]
 ADD CONSTRAINT [FK_RegistruCasaZiRegistruCasaIntrare]
     FOREIGN KEY ([RegistruCasaZiId])
-    REFERENCES [RegistruCasaZis]
+    REFERENCES [DailyCashBooks]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_RegistruCasaZiRegistruCasaIntrare'
 CREATE INDEX [IX_FK_RegistruCasaZiRegistruCasaIntrare]
-ON [RegistruCasaIntrares]
+ON [CashBookEntries]
     ([RegistruCasaZiId]);
 GO
 
--- Creating foreign key on [RegistruCasaId] in table 'RegistruCasaZis'
-ALTER TABLE [RegistruCasaZis]
+-- Creating foreign key on [RegistruCasaId] in table 'DailyCashBooks'
+ALTER TABLE [DailyCashBooks]
 ADD CONSTRAINT [FK_RegistruCasaRegistruCasaZi]
     FOREIGN KEY ([RegistruCasaId])
-    REFERENCES [RegistruCasas]
+    REFERENCES [UserCashBooks]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_RegistruCasaRegistruCasaZi'
 CREATE INDEX [IX_FK_RegistruCasaRegistruCasaZi]
-ON [RegistruCasaZis]
+ON [DailyCashBooks]
     ([RegistruCasaId]);
 GO
 

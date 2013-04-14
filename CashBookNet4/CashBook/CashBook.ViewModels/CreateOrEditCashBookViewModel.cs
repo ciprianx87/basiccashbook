@@ -113,12 +113,12 @@ namespace CashBook.ViewModels
         #endregion
 
         #region methods
-        RegistruCasa currentEntity;
+        UserCashBook currentEntity;
         public void SetEntityToEdit(object param)
         {
-            if (param is RegistruCasa)
+            if (param is UserCashBook)
             {
-                currentEntity = param as RegistruCasa;
+                currentEntity = param as UserCashBook;
                 Account = currentEntity.Account;
                 CashierName = currentEntity.CashierName;
                 Location = currentEntity.Location;
@@ -153,7 +153,7 @@ namespace CashBook.ViewModels
                 //create
                 if (currentEntity == null)
                 {
-                    RegistruCasa cashBook = new RegistruCasa()
+                    UserCashBook cashBook = new UserCashBook()
                     {
                         Account = Account != null ? Account : "",
                         CashierName = CashierName != null ? CashierName : "",

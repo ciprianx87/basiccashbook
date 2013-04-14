@@ -10,33 +10,33 @@ namespace CashBook.Data.Repositories
 {
     public class CashBookRepository : BaseRepository, ICashBookRepository
     {
-        public RegistruCasa Get(long id)
+        public UserCashBook Get(long id)
         {
             var context = GetContext();
-            var existingEntity = context.RegistruCasas.FirstOrDefault(p => p.Id == id);
+            var existingEntity = context.UserCashBooks.FirstOrDefault(p => p.Id == id);
             return existingEntity;
         }
 
-        public List<RegistruCasa> GetAll()
+        public List<UserCashBook> GetAll()
         {
             var context = GetContext();
-            return context.RegistruCasas.ToList();
+            return context.UserCashBooks.ToList();
         }
 
-        public void Create(RegistruCasa item)
+        public void Create(UserCashBook item)
         {
             using (var context = GetContext())
             {
-                var existingCompany = context.Societates.First();
+                var existingCompany = context.Companies.First();
                 item.Id = DbIdHelper.GetNextID();
-                item.RegistruCasaZis = new System.Data.Objects.DataClasses.EntityCollection<RegistruCasaZi>();
+                item.RegistruCasaZis = new System.Data.Objects.DataClasses.EntityCollection<DailyCashBook>();
                 item.Societate = existingCompany;
-                context.RegistruCasas.AddObject(item);
+                context.UserCashBooks.AddObject(item);
                 Commit(context);
             }
         }
 
-        public void Edit(long id, RegistruCasa item)
+        public void Edit(long id, UserCashBook item)
         {
             using (var context = GetContext())
             {
@@ -63,15 +63,15 @@ namespace CashBook.Data.Repositories
                 var existingEntity = GetCashBook(id, context);
                 if (existingEntity != null)
                 {
-                    context.RegistruCasas.DeleteObject(existingEntity);
+                    context.UserCashBooks.DeleteObject(existingEntity);
                 }
                 Commit(context);
             }
         }
 
-        private RegistruCasa GetCashBook(long id, CashBookContainer context)
+        private UserCashBook GetCashBook(long id, CashBookContainer context)
         {
-            return context.RegistruCasas.FirstOrDefault(p => p.Id == id);
+            return context.UserCashBooks.FirstOrDefault(p => p.Id == id);
         }
     }
 }

@@ -14,17 +14,17 @@ namespace CashBook.Data.Repositories
         {
             //only allow one company to exist
             var context = new CashBookContainer();
-            var existingCompany = context.Societates.FirstOrDefault();
+            var existingCompany = context.Companies.FirstOrDefault();
             if (existingCompany == null)
-            {              
-                Societate soc = new Societate()
+            {
+                Company soc = new Company()
                 {
                     Id=DbIdHelper.GetNextID(),
                     Adresa = address,
                     Nume = name,
                     CUI = cui
                 };
-                context.Societates.AddObject(soc);
+                context.Companies.AddObject(soc);
             }
             else
             {
@@ -36,10 +36,10 @@ namespace CashBook.Data.Repositories
         }
 
 
-        public Societate GetCompany()
+        public Company GetCompany()
         {
             var context = new CashBookContainer();
-            var existingCompany = context.Societates.FirstOrDefault();
+            var existingCompany = context.Companies.FirstOrDefault();
             return existingCompany;
         }
     }

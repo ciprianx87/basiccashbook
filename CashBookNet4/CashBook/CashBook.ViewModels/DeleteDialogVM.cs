@@ -13,7 +13,7 @@ namespace CashBook.ViewModels
     public class DeleteDialogVM : BaseViewModel, IDisposable
     {
         #region Fields
-        private RegistruCasa entityToDelete;
+        private UserCashBook entityToDelete;
         #endregion
 
         #region Constructor
@@ -90,9 +90,9 @@ namespace CashBook.ViewModels
 
         public void SetEntityToDelete(object param)
         {
-            if (param is RegistruCasa)
+            if (param is UserCashBook)
             {
-                entityToDelete = param as RegistruCasa;
+                entityToDelete = param as UserCashBook;
                 this.Message = "Sunteti sigur ca doriti sa stergeti " + entityToDelete.Name + " ?".Replace(Environment.NewLine, "");
             }
         }

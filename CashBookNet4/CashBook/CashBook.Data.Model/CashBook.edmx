@@ -7,21 +7,21 @@
     <Schema Namespace="CashBook.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
   <EntityContainer Name="CashBookStoreContainer">
     <EntitySet Name="Settings" EntityType="CashBook.Store.Settings" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="RegistruCasas" EntityType="CashBook.Store.RegistruCasas" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Societates" EntityType="CashBook.Store.Societates" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="RegistruCasaIntrares" EntityType="CashBook.Store.RegistruCasaIntrares" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="RegistruCasaZis" EntityType="CashBook.Store.RegistruCasaZis" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserCashBooks" EntityType="CashBook.Store.UserCashBooks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Companies" EntityType="CashBook.Store.Companies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CashBookEntries" EntityType="CashBook.Store.CashBookEntries" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DailyCashBooks" EntityType="CashBook.Store.DailyCashBooks" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="SocietateRegistruCasa" Association="CashBook.Store.SocietateRegistruCasa">
-      <End Role="Societate" EntitySet="Societates" />
-      <End Role="RegistruCasa" EntitySet="RegistruCasas" />
+      <End Role="Societate" EntitySet="Companies" />
+      <End Role="RegistruCasa" EntitySet="UserCashBooks" />
     </AssociationSet>
     <AssociationSet Name="RegistruCasaZiRegistruCasaIntrare" Association="CashBook.Store.RegistruCasaZiRegistruCasaIntrare">
-      <End Role="RegistruCasaZi" EntitySet="RegistruCasaZis" />
-      <End Role="RegistruCasaIntrare" EntitySet="RegistruCasaIntrares" />
+      <End Role="RegistruCasaZi" EntitySet="DailyCashBooks" />
+      <End Role="RegistruCasaIntrare" EntitySet="CashBookEntries" />
     </AssociationSet>
     <AssociationSet Name="RegistruCasaRegistruCasaZi" Association="CashBook.Store.RegistruCasaRegistruCasaZi">
-      <End Role="RegistruCasa" EntitySet="RegistruCasas" />
-      <End Role="RegistruCasaZi" EntitySet="RegistruCasaZis" />
+      <End Role="RegistruCasa" EntitySet="UserCashBooks" />
+      <End Role="RegistruCasaZi" EntitySet="DailyCashBooks" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Settings">
@@ -32,7 +32,7 @@
     <Property Name="Key" Type="nvarchar" Nullable="false" />
     <Property Name="Value" Type="nvarchar" Nullable="false" />
   </EntityType>
-  <EntityType Name="RegistruCasas">
+  <EntityType Name="UserCashBooks">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -46,7 +46,7 @@
     <Property Name="Account" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="CashierName" Type="nvarchar" Nullable="false" MaxLength="200" />
   </EntityType>
-  <EntityType Name="Societates">
+  <EntityType Name="Companies">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -55,7 +55,7 @@
     <Property Name="Adresa" Type="nvarchar" Nullable="false" />
     <Property Name="CUI" Type="nvarchar" Nullable="false" />
   </EntityType>
-  <EntityType Name="RegistruCasaIntrares">
+  <EntityType Name="CashBookEntries">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -68,7 +68,7 @@
     <Property Name="Plati" Type="decimal" Nullable="false" />
     <Property Name="RegistruCasaZiId" Type="bigint" Nullable="false" />
   </EntityType>
-  <EntityType Name="RegistruCasaZis">
+  <EntityType Name="DailyCashBooks">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -77,8 +77,8 @@
     <Property Name="RegistruCasaId" Type="bigint" Nullable="false" />
   </EntityType>
   <Association Name="SocietateRegistruCasa">
-    <End Role="Societate" Type="CashBook.Store.Societates" Multiplicity="1" />
-    <End Role="RegistruCasa" Type="CashBook.Store.RegistruCasas" Multiplicity="*" />
+    <End Role="Societate" Type="CashBook.Store.Companies" Multiplicity="1" />
+    <End Role="RegistruCasa" Type="CashBook.Store.UserCashBooks" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Societate">
         <PropertyRef Name="Id" />
@@ -89,8 +89,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="RegistruCasaZiRegistruCasaIntrare">
-    <End Role="RegistruCasaZi" Type="CashBook.Store.RegistruCasaZis" Multiplicity="1" />
-    <End Role="RegistruCasaIntrare" Type="CashBook.Store.RegistruCasaIntrares" Multiplicity="*" />
+    <End Role="RegistruCasaZi" Type="CashBook.Store.DailyCashBooks" Multiplicity="1" />
+    <End Role="RegistruCasaIntrare" Type="CashBook.Store.CashBookEntries" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="RegistruCasaZi">
         <PropertyRef Name="Id" />
@@ -101,8 +101,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="RegistruCasaRegistruCasaZi">
-    <End Role="RegistruCasa" Type="CashBook.Store.RegistruCasas" Multiplicity="1" />
-    <End Role="RegistruCasaZi" Type="CashBook.Store.RegistruCasaZis" Multiplicity="*" />
+    <End Role="RegistruCasa" Type="CashBook.Store.UserCashBooks" Multiplicity="1" />
+    <End Role="RegistruCasaZi" Type="CashBook.Store.DailyCashBooks" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="RegistruCasa">
         <PropertyRef Name="Id" />
@@ -118,21 +118,21 @@
       <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="CashBook" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
         <EntityContainer Name="CashBookContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Settings" EntityType="CashBook.Settings" />
-          <EntitySet Name="RegistruCasas" EntityType="CashBook.RegistruCasa" />
-          <EntitySet Name="Societates" EntityType="CashBook.Societate" />
-          <EntitySet Name="RegistruCasaIntrares" EntityType="CashBook.RegistruCasaIntrare" />
-          <EntitySet Name="RegistruCasaZis" EntityType="CashBook.RegistruCasaZi" />
+          <EntitySet Name="UserCashBooks" EntityType="CashBook.UserCashBook" />
+          <EntitySet Name="Companies" EntityType="CashBook.Company" />
+          <EntitySet Name="CashBookEntries" EntityType="CashBook.CashBookEntry" />
+          <EntitySet Name="DailyCashBooks" EntityType="CashBook.DailyCashBook" />
           <AssociationSet Name="SocietateRegistruCasa" Association="CashBook.SocietateRegistruCasa">
-            <End Role="Societate" EntitySet="Societates" />
-            <End Role="RegistruCasa" EntitySet="RegistruCasas" />
+            <End Role="Societate" EntitySet="Companies" />
+            <End Role="RegistruCasa" EntitySet="UserCashBooks" />
           </AssociationSet>
           <AssociationSet Name="RegistruCasaZiRegistruCasaIntrare" Association="CashBook.RegistruCasaZiRegistruCasaIntrare">
-            <End Role="RegistruCasaZi" EntitySet="RegistruCasaZis" />
-            <End Role="RegistruCasaIntrare" EntitySet="RegistruCasaIntrares" />
+            <End Role="RegistruCasaZi" EntitySet="DailyCashBooks" />
+            <End Role="RegistruCasaIntrare" EntitySet="CashBookEntries" />
           </AssociationSet>
           <AssociationSet Name="RegistruCasaRegistruCasaZi" Association="CashBook.RegistruCasaRegistruCasaZi">
-            <End Role="RegistruCasa" EntitySet="RegistruCasas" />
-            <End Role="RegistruCasaZi" EntitySet="RegistruCasaZis" />
+            <End Role="RegistruCasa" EntitySet="UserCashBooks" />
+            <End Role="RegistruCasaZi" EntitySet="DailyCashBooks" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Settings">
@@ -143,7 +143,7 @@
           <Property Type="String" Name="Key" Nullable="false" />
           <Property Type="String" Name="Value" Nullable="false" />
         </EntityType>
-        <EntityType Name="RegistruCasa">
+        <EntityType Name="UserCashBook">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -159,7 +159,7 @@
           <Property Type="String" Name="Account" Nullable="false" MaxLength="200" FixedLength="false" />
           <Property Type="String" Name="CashierName" Nullable="false" MaxLength="200" FixedLength="false" />
         </EntityType>
-        <EntityType Name="Societate">
+        <EntityType Name="Company">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -169,7 +169,7 @@
           <Property Type="String" Name="CUI" Nullable="false" />
           <NavigationProperty Name="RegistreCasa" Relationship="CashBook.SocietateRegistruCasa" FromRole="Societate" ToRole="RegistruCasa" />
         </EntityType>
-        <EntityType Name="RegistruCasaIntrare">
+        <EntityType Name="CashBookEntry">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -183,7 +183,7 @@
           <Property Type="Int64" Name="RegistruCasaZiId" Nullable="false" />
           <NavigationProperty Name="RegistruCasaZi" Relationship="CashBook.RegistruCasaZiRegistruCasaIntrare" FromRole="RegistruCasaIntrare" ToRole="RegistruCasaZi" />
         </EntityType>
-        <EntityType Name="RegistruCasaZi">
+        <EntityType Name="DailyCashBook">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -194,8 +194,8 @@
           <NavigationProperty Name="RegistruCasa" Relationship="CashBook.RegistruCasaRegistruCasaZi" FromRole="RegistruCasaZi" ToRole="RegistruCasa" />
         </EntityType>
         <Association Name="SocietateRegistruCasa">
-          <End Type="CashBook.Societate" Role="Societate" Multiplicity="1" />
-          <End Type="CashBook.RegistruCasa" Role="RegistruCasa" Multiplicity="*" />
+          <End Type="CashBook.Company" Role="Societate" Multiplicity="1" />
+          <End Type="CashBook.UserCashBook" Role="RegistruCasa" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Societate">
               <PropertyRef Name="Id" />
@@ -206,8 +206,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="RegistruCasaZiRegistruCasaIntrare">
-          <End Type="CashBook.RegistruCasaZi" Role="RegistruCasaZi" Multiplicity="1" />
-          <End Type="CashBook.RegistruCasaIntrare" Role="RegistruCasaIntrare" Multiplicity="*" />
+          <End Type="CashBook.DailyCashBook" Role="RegistruCasaZi" Multiplicity="1" />
+          <End Type="CashBook.CashBookEntry" Role="RegistruCasaIntrare" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RegistruCasaZi">
               <PropertyRef Name="Id" />
@@ -218,8 +218,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="RegistruCasaRegistruCasaZi">
-          <End Type="CashBook.RegistruCasa" Role="RegistruCasa" Multiplicity="1" />
-          <End Type="CashBook.RegistruCasaZi" Role="RegistruCasaZi" Multiplicity="*" />
+          <End Type="CashBook.UserCashBook" Role="RegistruCasa" Multiplicity="1" />
+          <End Type="CashBook.DailyCashBook" Role="RegistruCasaZi" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RegistruCasa">
               <PropertyRef Name="Id" />
@@ -244,9 +244,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="RegistruCasas">
-      <EntityTypeMapping TypeName="IsTypeOf(CashBook.RegistruCasa)">
-        <MappingFragment StoreEntitySet="RegistruCasas">
+    <EntitySetMapping Name="UserCashBooks">
+      <EntityTypeMapping TypeName="IsTypeOf(CashBook.UserCashBook)">
+        <MappingFragment StoreEntitySet="UserCashBooks">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="SocietateId" ColumnName="SocietateId" />
           <ScalarProperty Name="CoinType" ColumnName="CoinType" />
@@ -259,9 +259,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Societates">
-      <EntityTypeMapping TypeName="IsTypeOf(CashBook.Societate)">
-        <MappingFragment StoreEntitySet="Societates">
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="IsTypeOf(CashBook.Company)">
+        <MappingFragment StoreEntitySet="Companies">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Nume" ColumnName="Nume" />
           <ScalarProperty Name="Adresa" ColumnName="Adresa" />
@@ -269,9 +269,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="RegistruCasaIntrares">
-      <EntityTypeMapping TypeName="IsTypeOf(CashBook.RegistruCasaIntrare)">
-        <MappingFragment StoreEntitySet="RegistruCasaIntrares">
+    <EntitySetMapping Name="CashBookEntries">
+      <EntityTypeMapping TypeName="IsTypeOf(CashBook.CashBookEntry)">
+        <MappingFragment StoreEntitySet="CashBookEntries">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="NrCrt" ColumnName="NrCrt" />
           <ScalarProperty Name="NrActCasa" ColumnName="NrActCasa" />
@@ -283,9 +283,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="RegistruCasaZis">
-      <EntityTypeMapping TypeName="IsTypeOf(CashBook.RegistruCasaZi)">
-        <MappingFragment StoreEntitySet="RegistruCasaZis">
+    <EntitySetMapping Name="DailyCashBooks">
+      <EntityTypeMapping TypeName="IsTypeOf(CashBook.DailyCashBook)">
+        <MappingFragment StoreEntitySet="DailyCashBooks">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Data" ColumnName="Data" />
           <ScalarProperty Name="RegistruCasaId" ColumnName="RegistruCasaId" />
@@ -312,10 +312,10 @@
     <edmx:Diagrams>
       <Diagram Name="CashBook" ZoomLevel="105" >
         <EntityTypeShape EntityType="CashBook.Settings" Width="1.5" PointX="6.375" PointY="3.375" Height="1.5956835937499996" />
-        <EntityTypeShape EntityType="CashBook.RegistruCasa" Width="1.5" PointX="4.5" PointY="1.375" Height="3.1340950520833335" />
-        <EntityTypeShape EntityType="CashBook.Societate" Width="1.5" PointX="4.625" PointY="5.625" Height="1.9802864583333317" />
-        <EntityTypeShape EntityType="CashBook.RegistruCasaIntrare" Width="1.5" PointX="2" PointY="2.625" Height="2.7494921875000031" />
-        <EntityTypeShape EntityType="CashBook.RegistruCasaZi" Width="1.5" PointX="0.5" PointY="5.25" Height="1.9802864583333335" />
+        <EntityTypeShape EntityType="CashBook.UserCashBook" Width="1.5" PointX="4.5" PointY="1.375" Height="3.1340950520833335" />
+        <EntityTypeShape EntityType="CashBook.Company" Width="1.5" PointX="4.625" PointY="5.625" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="CashBook.CashBookEntry" Width="1.5" PointX="2" PointY="2.625" Height="2.7494921875000031" />
+        <EntityTypeShape EntityType="CashBook.DailyCashBook" Width="1.5" PointX="0.5" PointY="5.25" Height="1.9802864583333335" />
         <AssociationConnector Association="CashBook.SocietateRegistruCasa" >
           <ConnectorPoint PointX="5.3125" PointY="5.625" />
           <ConnectorPoint PointX="5.3125" PointY="4.5090950520833335" />

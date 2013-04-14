@@ -17,7 +17,7 @@ namespace CashBook.Data
 
         private static void DeleteCashBook(object entity)
         {
-            RegistruCasa ent = entity as RegistruCasa;
+            UserCashBook ent = entity as UserCashBook;
             if (ent != null)
             {
                 ICashBookRepository repository= new CashBookRepository();
