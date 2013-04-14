@@ -21,6 +21,7 @@ namespace CashBook.Common.Mediator
         NewCashBook,
         DeleteDialog,
         Information,
-        CreateOrEditCashBook
+        CreateOrEditCashBook,
+        LegalReglementations
     }
 }

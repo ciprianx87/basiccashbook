@@ -73,6 +73,9 @@
     <Compile Include="Popups\InformationPopup.xaml.cs">
       <DependentUpon>InformationPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Popups\LegalReglementationsPopup.xaml.cs">
+      <DependentUpon>LegalReglementationsPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Popups\PopupManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -148,6 +151,10 @@
     <Page Include="Popups\InformationPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popups\LegalReglementationsPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

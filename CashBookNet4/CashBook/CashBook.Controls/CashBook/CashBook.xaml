@@ -7,87 +7,138 @@
              mc:Ignorable="d" 
              Height="500" Width="800" Background="Wheat">
     <UserControl.Resources>
-        
+
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Data:"/>
-                <TextBox x:Name="txtDate" Width="100"/>
-                <Button Content="addRow" Click="Button_Click_1"/>
-            </StackPanel>
+        <Grid Grid.Row="0">
+            <Button Content="Reglementari Legale" Command="{Binding LegalReglementationsCommand}" HorizontalAlignment="Right" Width="150"/>
         </Grid>
-        <Grid Grid.Row="1">
-            <DataGrid x:Name="dataGrid" ItemsSource="{Binding CashBooks}" KeyUp="dataGrid_KeyUp_1" AutoGenerateColumns="False"> 
-                <DataGrid.Resources>
-                    <Style TargetType="TextBlock" >
-                        <Setter Property="TextAlignment" Value="Center"/>
-                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                    </Style>
-                </DataGrid.Resources>
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="50">
-                        <DataGridTemplateColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <StackPanel.Resources>
-                                        <Style TargetType="TextBlock" >
-                                            <Setter Property="TextAlignment" Value="Center"/>
-                                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                                        </Style>
-                                    </StackPanel.Resources>
-                                    <TextBlock Text="Nr." TextAlignment="Center"/>
-                                    <TextBlock Text="Crt." HorizontalAlignment="Stretch" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.HeaderTemplate>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate >
-                                <TextBlock Text="{Binding NrCrt}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="100" Header="Nr Act Casa">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate >
-                                <TextBox />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="100" Header="Nr Anexe">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate >
-                                <TextBox />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="300" Header="Explicatii">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate >
-                                <TextBox />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="100" Header="INCASARI">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate >
-                                <TextBox />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="100" Header="PLATI">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate >
-                                <TextBox />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+        <Grid Grid.Row="1" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="170"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Creare Registru de casa:" FontSize="30" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="1" Text="Nume:"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
+
+            <TextBlock Grid.Row="2" Text="Moneda:" />
+            <TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding CoinType}"/>
+            <TextBlock Grid.Row="3" Text="Zecimale Moneda:"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CoinDecimals}"/>
+
+
+            <TextBlock Grid.Row="4" Text="Locatie:"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Location}"/>
+            <TextBlock Grid.Row="5" Text="Nume Casier:"/>
+            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding CashierName}"/>
+            <TextBlock Grid.Row="6" Text="Sold Initial:"/>
+            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding InitialBalance}"/>
+            <TextBlock Grid.Row="7" Text="Contul:"/>
+            <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Account}"/>
+
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Data:"/>
+                    <TextBox x:Name="txtDate" Width="100"/>
+                    <Button Content="addRow" Command="{Binding NewRowCommand}"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <DataGrid x:Name="dataGrid" ItemsSource="{Binding CashBooks}" KeyUp="dataGrid_KeyUp" AutoGenerateColumns="False">
+                    <DataGrid.Resources>
+                        <Style TargetType="TextBlock" >
+                            <Setter Property="TextAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="50">
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <StackPanel.Resources>
+                                            <Style TargetType="TextBlock" >
+                                                <Setter Property="TextAlignment" Value="Center"/>
+                                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                            </Style>
+                                        </StackPanel.Resources>
+                                        <TextBlock Text="Nr." TextAlignment="Center"/>
+                                        <TextBlock Text="Crt." HorizontalAlignment="Stretch" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <TextBlock Text="{Binding NrCrt}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="100" Header="Nr Act Casa">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <TextBox />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="100" Header="Nr Anexe">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <TextBox />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="300" Header="Explicatii">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <TextBox />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="100" Header="INCASARI">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <TextBox />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="100" Header="PLATI">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <TextBox />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
         </Grid>
     </Grid>
+
 </UserControl>

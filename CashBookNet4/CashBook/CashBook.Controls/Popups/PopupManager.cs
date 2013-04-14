@@ -56,6 +56,9 @@ namespace CashBook.Controls.Popups
                     case PopupType.CreateOrEditCashBook:
                         popup = new CreateOrEditCashBook();
                         break;
+                    case PopupType.LegalReglementations:
+                        popup = new LegalReglementationsPopup();
+                        break;
                     default:
                         break;
                 }
@@ -64,9 +67,19 @@ namespace CashBook.Controls.Popups
                     popup.Loaded += Popup_Loaded;
                     popup.Closed += popup_Closed;
                     popup.Tag = popupType;
+
+                    CenterPopup(popup);
                     popup.Show();
                 }
             }
+        }
+        private void CenterPopup(Window popup)
+        {
+
+            double primScreenHeight = System.Windows.SystemParameters.FullPrimaryScreenHeight;
+            double primScreenWidth = System.Windows.SystemParameters.FullPrimaryScreenWidth;
+            popup.Top = (primScreenHeight - popup.Height) / 2;
+            popup.Left = (primScreenWidth - popup.Width) / 2;
         }
 
         void popup_Closed(object sender, EventArgs e)
