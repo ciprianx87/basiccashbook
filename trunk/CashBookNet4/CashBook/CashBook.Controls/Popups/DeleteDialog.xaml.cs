@@ -18,27 +18,23 @@ namespace CashBook.Controls.Popups
     /// <summary>
     /// Interaction logic for DeleteDialog.xaml
     /// </summary>
-    public partial class DeleteDialog : Window
+    public partial class DeleteDialog : Window, IDisposable
     {
         public DeleteDialog()
         {
             InitializeComponent();
-            this.Loaded += new RoutedEventHandler(DeleteDialog_Loaded);
+            this.Loaded += Window_Loaded;
+            this.DataContext = new DeleteDialogVM();
         }
 
-        void DeleteDialog_Loaded(object sender, RoutedEventArgs e)
+        void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= new RoutedEventHandler(DeleteDialog_Loaded);
-            this.DataContext = new DeleteDialogVM();
+            this.Loaded -= Window_Loaded;
+        }
 
-            //set in the center of the screen
-            double parentX = Application.Current.MainWindow.Left;
-            double parentY = Application.Current.MainWindow.Top;
-            double parentWidth = Application.Current.MainWindow.Width;
-            double parentHeight = Application.Current.MainWindow.Height;
-
-            this.Left = parentX + (parentWidth - this.Width) / 2;
-            this.Top = parentY + (parentHeight - this.Height) / 2;
+        public void Dispose()
+        {
+            (this.DataContext as BaseViewModel).Dispose();
         }
     }
 }

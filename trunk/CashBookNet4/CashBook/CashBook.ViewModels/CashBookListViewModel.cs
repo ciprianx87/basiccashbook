@@ -81,7 +81,6 @@ namespace CashBook.ViewModels
         {
             try
             {
-                //settingsRepository.AddOrUpdateSetting(Constants.LegalRelementationsKey, LegalReglementationsText);
             }
             catch (Exception ex)
             {
@@ -132,7 +131,7 @@ namespace CashBook.ViewModels
         public void Select(object param)
         {
             Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.CashBook);
-            Mediator.Instance.SendMessage(MediatorActionType.SetCashBookData, param);
+            Mediator.Instance.SendMessage(MediatorActionType.SetSelectedCashBook, param);
         }
 
         public bool CanCreate(object param)

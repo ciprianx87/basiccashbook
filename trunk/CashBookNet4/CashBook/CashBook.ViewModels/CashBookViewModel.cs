@@ -16,30 +16,52 @@ namespace CashBook.ViewModels
     public class CashBookViewModel : BaseViewModel
     {
         ICashBookRepository cashBookRepository;
+        ICashBookEntryRepository cashBookEntryRepository;
 
-        public ICommand SaveCommand { get; set; }
         public ICommand CreateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand SelectCommand { get; set; }
 
-       
+
         public CashBookViewModel()
         {
-            SaveCommand = new DelegateCommand(Save, CanSave);
             CreateCommand = new DelegateCommand(Create, CanCreate);
             DeleteCommand = new DelegateCommand(Delete, CanDelete);
             EditCommand = new DelegateCommand(Edit, CanEdit);
             SelectCommand = new DelegateCommand(Select, CanSelect);
 
-            this.LegalReglementationsCommand = new DelegateCommand(LegalReglementations, CanLegalReglementations); 
+            this.LegalReglementationsCommand = new DelegateCommand(LegalReglementations, CanLegalReglementations);
 
             Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
+            Mediator.Instance.Register(MediatorActionType.SetSelectedCashBook, SetSelectedCashBook);
 
             cashBookRepository = new CashBookRepository();
+            cashBookEntryRepository = new CashBookEntryRepository();
 
-            LoadData();
             SelectedDate = DateTime.Now;
+            // LoadData();
+        }
+
+        private void LoadDataForDay(DateTime dateTime)
+        {
+            CashBookEntries = new ObservableCollection<CashBookEntry>();
+            CashBookEntries.CollectionChanged += CashBookEntries_CollectionChanged;
+
+            var existingCashBookEntries = cashBookEntryRepository.GetEntriesForDay(dateTime);
+            if (existingCashBookEntries != null)
+            {
+                foreach (var item in existingCashBookEntries)
+                {
+                    CashBookEntries.Add(item);
+                }
+            }
+        }
+
+        void CashBookEntries_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            //if all the items are valid, save them in the DB
+            SaveData();
         }
 
         #region properties
@@ -54,45 +76,70 @@ namespace CashBook.ViewModels
                 {
                     selectedDate = value;
                     this.NotifyPropertyChanged("SelectedDate");
+                    LoadDataForDay(selectedDate);
                 }
             }
         }
 
-        private ObservableCollection<UserCashBook> cashBooks;
-        public ObservableCollection<UserCashBook> CashBooks
+        private ObservableCollection<CashBookEntry> cashBookEntries;
+        public ObservableCollection<CashBookEntry> CashBookEntries
         {
-            get { return cashBooks; }
+            get { return cashBookEntries; }
             set
             {
-                cashBooks = value;
-                NotifyPropertyChanged("CashBooks");
+                cashBookEntries = value;
+                NotifyPropertyChanged("CashBookEntries");
             }
         }
-       
+
+
+        private decimal totalBalance;
+        public decimal TotalBalance
+        {
+            get { return totalBalance; }
+            set
+            {
+                if (totalBalance != value)
+                {
+                    totalBalance = value;
+                    this.NotifyPropertyChanged("TotalBalance");
+                }
+            }
+        }
+
+
+        private string totalBalanceString;
+        public string TotalBalanceString
+        {
+            get { return totalBalanceString; }
+            set
+            {
+                if (totalBalanceString != value)
+                {
+                    totalBalanceString = value;
+                    this.NotifyPropertyChanged("TotalBalanceString");
+                }
+            }
+        }
+
+
         #endregion
 
         #region methods
+        public void AddNewItem()
+        {
+            CashBookEntries.Add(new CashBookEntry());
+        }
+
         public void RefreshList(object param)
         {
-            LoadData();
+            // LoadData();
         }
-        private void LoadData()
+        UserCashBook selectedCashBook;
+        public void SetSelectedCashBook(object param)
         {
-            try
-            {
-                CashBooks = new ObservableCollection<UserCashBook>();
-                var existingCashBooks = cashBookRepository.GetAll();
-                if (existingCashBooks != null)
-                {
-                    foreach (var item in existingCashBooks)
-                    {
-                        CashBooks.Add(item);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-            }
+            selectedCashBook = param as UserCashBook;
+            // LoadData();
         }
 
         public ICommand LegalReglementationsCommand { get; set; }
@@ -105,23 +152,18 @@ namespace CashBook.ViewModels
         private void LegalReglementations(object parameter)
         {
             Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.LegalReglementations);
-        } 
+        }
 
-        public void Save(object param)
+        public void SaveData()
         {
             try
             {
-                //settingsRepository.AddOrUpdateSetting(Constants.LegalRelementationsKey, LegalReglementationsText);
+                cashBookEntryRepository.UpdateRepositoryForDay(selectedCashBook.Id, CashBookEntries.ToList(), SelectedDate);
             }
             catch (Exception ex)
             {
 
             }
-        }
-
-        public bool CanSave(object param)
-        {
-            return true;
         }
 
         public void Create(object param)
@@ -184,7 +226,9 @@ namespace CashBook.ViewModels
 
         public override void Dispose()
         {
+            CashBookEntries.CollectionChanged -= CashBookEntries_CollectionChanged;
             Mediator.Instance.Unregister(MediatorActionType.RefreshList, RefreshList);
+            Mediator.Instance.Unregister(MediatorActionType.SetSelectedCashBook, SetSelectedCashBook);
             base.Dispose();
         }
 

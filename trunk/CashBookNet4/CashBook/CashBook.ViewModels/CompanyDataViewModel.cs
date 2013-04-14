@@ -6,13 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CashBook.Common.Mediator;
 
 namespace CashBook.ViewModels
 {
     public class CompanyDataViewModel : BaseViewModel
     {
         ICompanyRepository companyRepository;
-        
+
         public ICommand SaveCommand { get; set; }
         public CompanyDataViewModel()
         {
@@ -65,7 +66,7 @@ namespace CashBook.ViewModels
             var currentCompany = companyRepository.GetCompany();
             if (currentCompany != null)
             {
-                this.CompanyName=currentCompany.Nume;
+                this.CompanyName = currentCompany.Nume;
                 this.CompanyAddress = currentCompany.Adresa;
                 this.CompanyCui = currentCompany.CUI;
             }
@@ -76,10 +77,13 @@ namespace CashBook.ViewModels
             try
             {
                 companyRepository.EditDetails(CompanyName, CompanyCui, CompanyAddress);
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.Information);
+                Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, "Informatia a fost salvata");
             }
             catch (Exception ex)
             {
-
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.ErrorDialog);
+                Mediator.Instance.SendMessage(MediatorActionType.SetErrorDialogMessage, "Eroare la salvarea informatiei");
             }
         }
 

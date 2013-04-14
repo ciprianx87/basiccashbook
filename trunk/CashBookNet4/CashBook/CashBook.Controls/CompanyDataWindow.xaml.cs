@@ -29,13 +29,13 @@ namespace CashBook.Controls
         {
             InitializeComponent();
             this.Loaded += CompanyDataWindow_Loaded;
+            this.DataContext = new CompanyDataViewModel();          
 
         }
 
         void CompanyDataWindow_Loaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= CompanyDataWindow_Loaded;
-            this.DataContext = new CompanyDataViewModel();          
         }
 
 

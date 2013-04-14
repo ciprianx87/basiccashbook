@@ -26,13 +26,13 @@ namespace CashBook.Controls
         {
             InitializeComponent();
             this.Loaded += CashBook_Loaded;
+            this.DataContext = new CashBookViewModel();
 
         }
 
         void CashBook_Loaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= CashBook_Loaded;
-            this.DataContext = new CashBookViewModel();
         }
 
         public void Dispose()
@@ -42,7 +42,10 @@ namespace CashBook.Controls
 
         private void dataGrid_KeyUp(object sender, KeyEventArgs e)
         {
-
+            if (e.Key == Key.Enter)
+            {
+                (this.DataContext as CashBookViewModel).AddNewItem();
+            }
         }
 
         private void btnPickDate_Click(object sender, RoutedEventArgs e)
