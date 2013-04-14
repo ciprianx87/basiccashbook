@@ -48,6 +48,8 @@
     <Compile Include="CompanyDataViewModel.cs" />
     <Compile Include="CashBookListViewModel.cs" />
     <Compile Include="CashBookViewModel.cs" />
+    <Compile Include="ErrorDialogVM.cs" />
+    <Compile Include="InformationDialogVM.cs" />
     <Compile Include="LegalReglementationsPopupViewModel.cs" />
     <Compile Include="CreateOrEditCashBookViewModel.cs" />
     <Compile Include="DeleteDialogVM.cs" />

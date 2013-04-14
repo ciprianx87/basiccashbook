@@ -10,37 +10,30 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CashBook.ViewModels;
 
 namespace CashBook.Controls.Popups
 {
     /// <summary>
-    /// Interaction logic for SettingsSavedPopup.xaml
+    /// Interaction logic for InformationPopup.xaml
     /// </summary>
     public partial class InformationPopup : Window
     {
         public InformationPopup()
         {
             InitializeComponent();
-            this.Loaded += new RoutedEventHandler(InformationPopup_Loaded);
-           
+            this.Loaded += Window_Loaded;
+            this.DataContext = new InformationDialogVM();
         }
 
-        void InformationPopup_Loaded(object sender, RoutedEventArgs e)
+        void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= new RoutedEventHandler(InformationPopup_Loaded);
-            this.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-            this.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-           
+            this.Loaded -= Window_Loaded;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void Dispose()
         {
-            this.DialogResult = true;
-        }
-
-        public void SetMessage(string msg)
-        {
-            txtMessage.Text = msg;
+            (this.DataContext as BaseViewModel).Dispose();
         }
     }
 }

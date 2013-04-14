@@ -14,6 +14,9 @@ namespace CashBook.Common.Mediator
         SetEntityToEdit,
         RefreshList,
         SetCashBookData,
+        SetSelectedCashBook,
+        SetInformationPopupMessage,
+        SetErrorDialogMessage,
 
     }
     public enum PopupType
@@ -22,6 +25,7 @@ namespace CashBook.Common.Mediator
         DeleteDialog,
         Information,
         CreateOrEditCashBook,
-        LegalReglementations
+        LegalReglementations,
+        ErrorDialog
     }
 }

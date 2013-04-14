@@ -24,13 +24,13 @@ namespace CashBook.Controls.Popups
         {
             InitializeComponent();
             this.Loaded += CreateCashBook_Loaded;
+            this.DataContext = new CreateOrEditCashBookViewModel();
 
         }
 
         void CreateCashBook_Loaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= CreateCashBook_Loaded;
-            this.DataContext = new CreateOrEditCashBookViewModel();
         }
 
 

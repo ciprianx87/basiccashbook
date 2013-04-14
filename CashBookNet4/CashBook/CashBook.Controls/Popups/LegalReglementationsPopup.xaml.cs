@@ -23,11 +23,11 @@ namespace CashBook.Controls.Popups
         {
             InitializeComponent();
             this.Loaded += LegalReglementationsPopup_Loaded;
+            this.DataContext = new LegalReglementationsPopupViewModel();
         }
 
         void LegalReglementationsPopup_Loaded(object sender, RoutedEventArgs e)
         {
-            this.DataContext = new LegalReglementationsPopupViewModel();
         }
 
         public void Dispose()

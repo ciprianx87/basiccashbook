@@ -53,6 +53,9 @@ namespace CashBook.Controls.Popups
                     case PopupType.Information:
                         popup = new InformationPopup();
                         break;
+                    case PopupType.ErrorDialog:
+                        popup = new ErrorDialog();
+                        break;
                     case PopupType.CreateOrEditCashBook:
                         popup = new CreateOrEditCashBook();
                         break;
