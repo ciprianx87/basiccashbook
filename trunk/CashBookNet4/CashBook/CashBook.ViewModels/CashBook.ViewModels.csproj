@@ -47,6 +47,8 @@
     <Compile Include="Base\DelegateCommand.cs" />
     <Compile Include="CompanyDataViewModel.cs" />
     <Compile Include="CashBookListViewModel.cs" />
+    <Compile Include="CashBookViewModel.cs" />
+    <Compile Include="LegalReglementationsPopupViewModel.cs" />
     <Compile Include="CreateOrEditCashBookViewModel.cs" />
     <Compile Include="DeleteDialogVM.cs" />
     <Compile Include="LegalReglementationsViewModel.cs" />

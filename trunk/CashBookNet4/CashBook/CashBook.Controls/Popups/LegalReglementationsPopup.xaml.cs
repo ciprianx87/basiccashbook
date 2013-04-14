@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,37 +9,30 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CashBook.ViewModels;
 
-namespace CashBook.Controls
+namespace CashBook.Controls.Popups
 {
     /// <summary>
-    /// Interaction logic for CashBook.xaml
+    /// Interaction logic for LegalReglementationsPopup.xaml
     /// </summary>
-    public partial class CashBook : UserControl, IDisposable
+    public partial class LegalReglementationsPopup : Window, IDisposable
     {
-        public CashBook()
+        public LegalReglementationsPopup()
         {
             InitializeComponent();
-            this.Loaded += CashBook_Loaded;
-
+            this.Loaded += LegalReglementationsPopup_Loaded;
         }
 
-        void CashBook_Loaded(object sender, RoutedEventArgs e)
+        void LegalReglementationsPopup_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= CashBook_Loaded;
-            this.DataContext = new CashBookViewModel();
+            this.DataContext = new LegalReglementationsPopupViewModel();
         }
 
         public void Dispose()
         {
             (this.DataContext as BaseViewModel).Dispose();
-        }
-
-        private void dataGrid_KeyUp(object sender, KeyEventArgs e)
-        {
 
         }
     }
