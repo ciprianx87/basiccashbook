@@ -19,9 +19,9 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("CashBook", "SocietateRegistruCasa", "Societate", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CashBook.Data.Model.Societate), "RegistruCasa", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CashBook.Data.Model.RegistruCasa), true)]
-[assembly: EdmRelationshipAttribute("CashBook", "RegistruCasaZiRegistruCasaIntrare", "RegistruCasaZi", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CashBook.Data.Model.RegistruCasaZi), "RegistruCasaIntrare", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CashBook.Data.Model.RegistruCasaIntrare), true)]
-[assembly: EdmRelationshipAttribute("CashBook", "RegistruCasaRegistruCasaZi", "RegistruCasa", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CashBook.Data.Model.RegistruCasa), "RegistruCasaZi", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CashBook.Data.Model.RegistruCasaZi), true)]
+[assembly: EdmRelationshipAttribute("CashBook", "SocietateRegistruCasa", "Societate", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CashBook.Data.Model.Company), "RegistruCasa", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CashBook.Data.Model.UserCashBook), true)]
+[assembly: EdmRelationshipAttribute("CashBook", "RegistruCasaZiRegistruCasaIntrare", "RegistruCasaZi", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CashBook.Data.Model.DailyCashBook), "RegistruCasaIntrare", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CashBook.Data.Model.CashBookEntry), true)]
+[assembly: EdmRelationshipAttribute("CashBook", "RegistruCasaRegistruCasaZi", "RegistruCasa", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CashBook.Data.Model.UserCashBook), "RegistruCasaZi", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CashBook.Data.Model.DailyCashBook), true)]
 
 #endregion
 
@@ -92,66 +92,66 @@ namespace CashBook.Data.Model
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<RegistruCasa> RegistruCasas
+        public ObjectSet<UserCashBook> UserCashBooks
         {
             get
             {
-                if ((_RegistruCasas == null))
+                if ((_UserCashBooks == null))
                 {
-                    _RegistruCasas = base.CreateObjectSet<RegistruCasa>("RegistruCasas");
+                    _UserCashBooks = base.CreateObjectSet<UserCashBook>("UserCashBooks");
                 }
-                return _RegistruCasas;
+                return _UserCashBooks;
             }
         }
-        private ObjectSet<RegistruCasa> _RegistruCasas;
+        private ObjectSet<UserCashBook> _UserCashBooks;
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Societate> Societates
+        public ObjectSet<Company> Companies
         {
             get
             {
-                if ((_Societates == null))
+                if ((_Companies == null))
                 {
-                    _Societates = base.CreateObjectSet<Societate>("Societates");
+                    _Companies = base.CreateObjectSet<Company>("Companies");
                 }
-                return _Societates;
+                return _Companies;
             }
         }
-        private ObjectSet<Societate> _Societates;
+        private ObjectSet<Company> _Companies;
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<RegistruCasaIntrare> RegistruCasaIntrares
+        public ObjectSet<CashBookEntry> CashBookEntries
         {
             get
             {
-                if ((_RegistruCasaIntrares == null))
+                if ((_CashBookEntries == null))
                 {
-                    _RegistruCasaIntrares = base.CreateObjectSet<RegistruCasaIntrare>("RegistruCasaIntrares");
+                    _CashBookEntries = base.CreateObjectSet<CashBookEntry>("CashBookEntries");
                 }
-                return _RegistruCasaIntrares;
+                return _CashBookEntries;
             }
         }
-        private ObjectSet<RegistruCasaIntrare> _RegistruCasaIntrares;
+        private ObjectSet<CashBookEntry> _CashBookEntries;
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<RegistruCasaZi> RegistruCasaZis
+        public ObjectSet<DailyCashBook> DailyCashBooks
         {
             get
             {
-                if ((_RegistruCasaZis == null))
+                if ((_DailyCashBooks == null))
                 {
-                    _RegistruCasaZis = base.CreateObjectSet<RegistruCasaZi>("RegistruCasaZis");
+                    _DailyCashBooks = base.CreateObjectSet<DailyCashBook>("DailyCashBooks");
                 }
-                return _RegistruCasaZis;
+                return _DailyCashBooks;
             }
         }
-        private ObjectSet<RegistruCasaZi> _RegistruCasaZis;
+        private ObjectSet<DailyCashBook> _DailyCashBooks;
 
         #endregion
 
@@ -166,35 +166,35 @@ namespace CashBook.Data.Model
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the RegistruCasas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the UserCashBooks EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToRegistruCasas(RegistruCasa registruCasa)
+        public void AddToUserCashBooks(UserCashBook userCashBook)
         {
-            base.AddObject("RegistruCasas", registruCasa);
+            base.AddObject("UserCashBooks", userCashBook);
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Societates EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Companies EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToSocietates(Societate societate)
+        public void AddToCompanies(Company company)
         {
-            base.AddObject("Societates", societate);
+            base.AddObject("Companies", company);
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the RegistruCasaIntrares EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the CashBookEntries EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToRegistruCasaIntrares(RegistruCasaIntrare registruCasaIntrare)
+        public void AddToCashBookEntries(CashBookEntry cashBookEntry)
         {
-            base.AddObject("RegistruCasaIntrares", registruCasaIntrare);
+            base.AddObject("CashBookEntries", cashBookEntry);
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the RegistruCasaZis EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the DailyCashBooks EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToRegistruCasaZis(RegistruCasaZi registruCasaZi)
+        public void AddToDailyCashBooks(DailyCashBook dailyCashBook)
         {
-            base.AddObject("RegistruCasaZis", registruCasaZi);
+            base.AddObject("DailyCashBooks", dailyCashBook);
         }
 
         #endregion
@@ -208,15 +208,739 @@ namespace CashBook.Data.Model
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="CashBook", Name="RegistruCasa")]
+    [EdmEntityTypeAttribute(NamespaceName="CashBook", Name="CashBookEntry")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class RegistruCasa : EntityObject
+    public partial class CashBookEntry : EntityObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new RegistruCasa object.
+        /// Create a new CashBookEntry object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="nrCrt">Initial value of the NrCrt property.</param>
+        /// <param name="nrActCasa">Initial value of the NrActCasa property.</param>
+        /// <param name="nrAnexe">Initial value of the NrAnexe property.</param>
+        /// <param name="explicatii">Initial value of the Explicatii property.</param>
+        /// <param name="incasari">Initial value of the Incasari property.</param>
+        /// <param name="plati">Initial value of the Plati property.</param>
+        /// <param name="registruCasaZiId">Initial value of the RegistruCasaZiId property.</param>
+        public static CashBookEntry CreateCashBookEntry(global::System.Int64 id, global::System.Int32 nrCrt, global::System.String nrActCasa, global::System.Int32 nrAnexe, global::System.String explicatii, global::System.Decimal incasari, global::System.Decimal plati, global::System.Int64 registruCasaZiId)
+        {
+            CashBookEntry cashBookEntry = new CashBookEntry();
+            cashBookEntry.Id = id;
+            cashBookEntry.NrCrt = nrCrt;
+            cashBookEntry.NrActCasa = nrActCasa;
+            cashBookEntry.NrAnexe = nrAnexe;
+            cashBookEntry.Explicatii = explicatii;
+            cashBookEntry.Incasari = incasari;
+            cashBookEntry.Plati = plati;
+            cashBookEntry.RegistruCasaZiId = registruCasaZiId;
+            return cashBookEntry;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NrCrt
+        {
+            get
+            {
+                return _NrCrt;
+            }
+            set
+            {
+                OnNrCrtChanging(value);
+                ReportPropertyChanging("NrCrt");
+                _NrCrt = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NrCrt");
+                OnNrCrtChanged();
+            }
+        }
+        private global::System.Int32 _NrCrt;
+        partial void OnNrCrtChanging(global::System.Int32 value);
+        partial void OnNrCrtChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String NrActCasa
+        {
+            get
+            {
+                return _NrActCasa;
+            }
+            set
+            {
+                OnNrActCasaChanging(value);
+                ReportPropertyChanging("NrActCasa");
+                _NrActCasa = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("NrActCasa");
+                OnNrActCasaChanged();
+            }
+        }
+        private global::System.String _NrActCasa;
+        partial void OnNrActCasaChanging(global::System.String value);
+        partial void OnNrActCasaChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NrAnexe
+        {
+            get
+            {
+                return _NrAnexe;
+            }
+            set
+            {
+                OnNrAnexeChanging(value);
+                ReportPropertyChanging("NrAnexe");
+                _NrAnexe = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NrAnexe");
+                OnNrAnexeChanged();
+            }
+        }
+        private global::System.Int32 _NrAnexe;
+        partial void OnNrAnexeChanging(global::System.Int32 value);
+        partial void OnNrAnexeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Explicatii
+        {
+            get
+            {
+                return _Explicatii;
+            }
+            set
+            {
+                OnExplicatiiChanging(value);
+                ReportPropertyChanging("Explicatii");
+                _Explicatii = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Explicatii");
+                OnExplicatiiChanged();
+            }
+        }
+        private global::System.String _Explicatii;
+        partial void OnExplicatiiChanging(global::System.String value);
+        partial void OnExplicatiiChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal Incasari
+        {
+            get
+            {
+                return _Incasari;
+            }
+            set
+            {
+                OnIncasariChanging(value);
+                ReportPropertyChanging("Incasari");
+                _Incasari = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Incasari");
+                OnIncasariChanged();
+            }
+        }
+        private global::System.Decimal _Incasari;
+        partial void OnIncasariChanging(global::System.Decimal value);
+        partial void OnIncasariChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal Plati
+        {
+            get
+            {
+                return _Plati;
+            }
+            set
+            {
+                OnPlatiChanging(value);
+                ReportPropertyChanging("Plati");
+                _Plati = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Plati");
+                OnPlatiChanged();
+            }
+        }
+        private global::System.Decimal _Plati;
+        partial void OnPlatiChanging(global::System.Decimal value);
+        partial void OnPlatiChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 RegistruCasaZiId
+        {
+            get
+            {
+                return _RegistruCasaZiId;
+            }
+            set
+            {
+                OnRegistruCasaZiIdChanging(value);
+                ReportPropertyChanging("RegistruCasaZiId");
+                _RegistruCasaZiId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RegistruCasaZiId");
+                OnRegistruCasaZiIdChanged();
+            }
+        }
+        private global::System.Int64 _RegistruCasaZiId;
+        partial void OnRegistruCasaZiIdChanging(global::System.Int64 value);
+        partial void OnRegistruCasaZiIdChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("CashBook", "RegistruCasaZiRegistruCasaIntrare", "RegistruCasaZi")]
+        public DailyCashBook RegistruCasaZi
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DailyCashBook>("CashBook.RegistruCasaZiRegistruCasaIntrare", "RegistruCasaZi").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DailyCashBook>("CashBook.RegistruCasaZiRegistruCasaIntrare", "RegistruCasaZi").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<DailyCashBook> RegistruCasaZiReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DailyCashBook>("CashBook.RegistruCasaZiRegistruCasaIntrare", "RegistruCasaZi");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DailyCashBook>("CashBook.RegistruCasaZiRegistruCasaIntrare", "RegistruCasaZi", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="CashBook", Name="Company")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Company : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Company object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="nume">Initial value of the Nume property.</param>
+        /// <param name="adresa">Initial value of the Adresa property.</param>
+        /// <param name="cUI">Initial value of the CUI property.</param>
+        public static Company CreateCompany(global::System.Int64 id, global::System.String nume, global::System.String adresa, global::System.String cUI)
+        {
+            Company company = new Company();
+            company.Id = id;
+            company.Nume = nume;
+            company.Adresa = adresa;
+            company.CUI = cUI;
+            return company;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Nume
+        {
+            get
+            {
+                return _Nume;
+            }
+            set
+            {
+                OnNumeChanging(value);
+                ReportPropertyChanging("Nume");
+                _Nume = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Nume");
+                OnNumeChanged();
+            }
+        }
+        private global::System.String _Nume;
+        partial void OnNumeChanging(global::System.String value);
+        partial void OnNumeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Adresa
+        {
+            get
+            {
+                return _Adresa;
+            }
+            set
+            {
+                OnAdresaChanging(value);
+                ReportPropertyChanging("Adresa");
+                _Adresa = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Adresa");
+                OnAdresaChanged();
+            }
+        }
+        private global::System.String _Adresa;
+        partial void OnAdresaChanging(global::System.String value);
+        partial void OnAdresaChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CUI
+        {
+            get
+            {
+                return _CUI;
+            }
+            set
+            {
+                OnCUIChanging(value);
+                ReportPropertyChanging("CUI");
+                _CUI = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CUI");
+                OnCUIChanged();
+            }
+        }
+        private global::System.String _CUI;
+        partial void OnCUIChanging(global::System.String value);
+        partial void OnCUIChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("CashBook", "SocietateRegistruCasa", "RegistruCasa")]
+        public EntityCollection<UserCashBook> RegistreCasa
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UserCashBook>("CashBook.SocietateRegistruCasa", "RegistruCasa");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserCashBook>("CashBook.SocietateRegistruCasa", "RegistruCasa", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="CashBook", Name="DailyCashBook")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class DailyCashBook : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new DailyCashBook object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="data">Initial value of the Data property.</param>
+        /// <param name="registruCasaId">Initial value of the RegistruCasaId property.</param>
+        public static DailyCashBook CreateDailyCashBook(global::System.Int64 id, global::System.DateTime data, global::System.Int64 registruCasaId)
+        {
+            DailyCashBook dailyCashBook = new DailyCashBook();
+            dailyCashBook.Id = id;
+            dailyCashBook.Data = data;
+            dailyCashBook.RegistruCasaId = registruCasaId;
+            return dailyCashBook;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime Data
+        {
+            get
+            {
+                return _Data;
+            }
+            set
+            {
+                OnDataChanging(value);
+                ReportPropertyChanging("Data");
+                _Data = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Data");
+                OnDataChanged();
+            }
+        }
+        private global::System.DateTime _Data;
+        partial void OnDataChanging(global::System.DateTime value);
+        partial void OnDataChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 RegistruCasaId
+        {
+            get
+            {
+                return _RegistruCasaId;
+            }
+            set
+            {
+                OnRegistruCasaIdChanging(value);
+                ReportPropertyChanging("RegistruCasaId");
+                _RegistruCasaId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RegistruCasaId");
+                OnRegistruCasaIdChanged();
+            }
+        }
+        private global::System.Int64 _RegistruCasaId;
+        partial void OnRegistruCasaIdChanging(global::System.Int64 value);
+        partial void OnRegistruCasaIdChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("CashBook", "RegistruCasaZiRegistruCasaIntrare", "RegistruCasaIntrare")]
+        public EntityCollection<CashBookEntry> RegistruCasaIntrares
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<CashBookEntry>("CashBook.RegistruCasaZiRegistruCasaIntrare", "RegistruCasaIntrare");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<CashBookEntry>("CashBook.RegistruCasaZiRegistruCasaIntrare", "RegistruCasaIntrare", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("CashBook", "RegistruCasaRegistruCasaZi", "RegistruCasa")]
+        public UserCashBook RegistruCasa
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserCashBook>("CashBook.RegistruCasaRegistruCasaZi", "RegistruCasa").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserCashBook>("CashBook.RegistruCasaRegistruCasaZi", "RegistruCasa").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<UserCashBook> RegistruCasaReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserCashBook>("CashBook.RegistruCasaRegistruCasaZi", "RegistruCasa");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UserCashBook>("CashBook.RegistruCasaRegistruCasaZi", "RegistruCasa", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="CashBook", Name="Settings")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Settings : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Settings object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="key">Initial value of the Key property.</param>
+        /// <param name="value">Initial value of the Value property.</param>
+        public static Settings CreateSettings(global::System.Int64 id, global::System.String key, global::System.String value)
+        {
+            Settings settings = new Settings();
+            settings.Id = id;
+            settings.Key = key;
+            settings.Value = value;
+            return settings;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Key
+        {
+            get
+            {
+                return _Key;
+            }
+            set
+            {
+                OnKeyChanging(value);
+                ReportPropertyChanging("Key");
+                _Key = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Key");
+                OnKeyChanged();
+            }
+        }
+        private global::System.String _Key;
+        partial void OnKeyChanging(global::System.String value);
+        partial void OnKeyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Value
+        {
+            get
+            {
+                return _Value;
+            }
+            set
+            {
+                OnValueChanging(value);
+                ReportPropertyChanging("Value");
+                _Value = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Value");
+                OnValueChanged();
+            }
+        }
+        private global::System.String _Value;
+        partial void OnValueChanging(global::System.String value);
+        partial void OnValueChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="CashBook", Name="UserCashBook")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class UserCashBook : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new UserCashBook object.
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="societateId">Initial value of the SocietateId property.</param>
@@ -227,19 +951,19 @@ namespace CashBook.Data.Model
         /// <param name="location">Initial value of the Location property.</param>
         /// <param name="account">Initial value of the Account property.</param>
         /// <param name="cashierName">Initial value of the CashierName property.</param>
-        public static RegistruCasa CreateRegistruCasa(global::System.Int64 id, global::System.Int64 societateId, global::System.String coinType, global::System.String name, global::System.Byte coinDecimals, global::System.Decimal initialBalance, global::System.String location, global::System.String account, global::System.String cashierName)
+        public static UserCashBook CreateUserCashBook(global::System.Int64 id, global::System.Int64 societateId, global::System.String coinType, global::System.String name, global::System.Byte coinDecimals, global::System.Decimal initialBalance, global::System.String location, global::System.String account, global::System.String cashierName)
         {
-            RegistruCasa registruCasa = new RegistruCasa();
-            registruCasa.Id = id;
-            registruCasa.SocietateId = societateId;
-            registruCasa.CoinType = coinType;
-            registruCasa.Name = name;
-            registruCasa.CoinDecimals = coinDecimals;
-            registruCasa.InitialBalance = initialBalance;
-            registruCasa.Location = location;
-            registruCasa.Account = account;
-            registruCasa.CashierName = cashierName;
-            return registruCasa;
+            UserCashBook userCashBook = new UserCashBook();
+            userCashBook.Id = id;
+            userCashBook.SocietateId = societateId;
+            userCashBook.CoinType = coinType;
+            userCashBook.Name = name;
+            userCashBook.CoinDecimals = coinDecimals;
+            userCashBook.InitialBalance = initialBalance;
+            userCashBook.Location = location;
+            userCashBook.Account = account;
+            userCashBook.CashierName = cashierName;
+            return userCashBook;
         }
 
         #endregion
@@ -477,15 +1201,15 @@ namespace CashBook.Data.Model
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("CashBook", "SocietateRegistruCasa", "Societate")]
-        public Societate Societate
+        public Company Societate
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Societate>("CashBook.SocietateRegistruCasa", "Societate").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Company>("CashBook.SocietateRegistruCasa", "Societate").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Societate>("CashBook.SocietateRegistruCasa", "Societate").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Company>("CashBook.SocietateRegistruCasa", "Societate").Value = value;
             }
         }
         /// <summary>
@@ -493,17 +1217,17 @@ namespace CashBook.Data.Model
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<Societate> SocietateReference
+        public EntityReference<Company> SocietateReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Societate>("CashBook.SocietateRegistruCasa", "Societate");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Company>("CashBook.SocietateRegistruCasa", "Societate");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Societate>("CashBook.SocietateRegistruCasa", "Societate", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Company>("CashBook.SocietateRegistruCasa", "Societate", value);
                 }
             }
         }
@@ -515,741 +1239,17 @@ namespace CashBook.Data.Model
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("CashBook", "RegistruCasaRegistruCasaZi", "RegistruCasaZi")]
-        public EntityCollection<RegistruCasaZi> RegistruCasaZis
+        public EntityCollection<DailyCashBook> RegistruCasaZis
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<RegistruCasaZi>("CashBook.RegistruCasaRegistruCasaZi", "RegistruCasaZi");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DailyCashBook>("CashBook.RegistruCasaRegistruCasaZi", "RegistruCasaZi");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RegistruCasaZi>("CashBook.RegistruCasaRegistruCasaZi", "RegistruCasaZi", value);
-                }
-            }
-        }
-
-        #endregion
-
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="CashBook", Name="RegistruCasaIntrare")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class RegistruCasaIntrare : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new RegistruCasaIntrare object.
-        /// </summary>
-        /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="nrCrt">Initial value of the NrCrt property.</param>
-        /// <param name="nrActCasa">Initial value of the NrActCasa property.</param>
-        /// <param name="nrAnexe">Initial value of the NrAnexe property.</param>
-        /// <param name="explicatii">Initial value of the Explicatii property.</param>
-        /// <param name="incasari">Initial value of the Incasari property.</param>
-        /// <param name="plati">Initial value of the Plati property.</param>
-        /// <param name="registruCasaZiId">Initial value of the RegistruCasaZiId property.</param>
-        public static RegistruCasaIntrare CreateRegistruCasaIntrare(global::System.Int64 id, global::System.Int32 nrCrt, global::System.String nrActCasa, global::System.Int32 nrAnexe, global::System.String explicatii, global::System.Decimal incasari, global::System.Decimal plati, global::System.Int64 registruCasaZiId)
-        {
-            RegistruCasaIntrare registruCasaIntrare = new RegistruCasaIntrare();
-            registruCasaIntrare.Id = id;
-            registruCasaIntrare.NrCrt = nrCrt;
-            registruCasaIntrare.NrActCasa = nrActCasa;
-            registruCasaIntrare.NrAnexe = nrAnexe;
-            registruCasaIntrare.Explicatii = explicatii;
-            registruCasaIntrare.Incasari = incasari;
-            registruCasaIntrare.Plati = plati;
-            registruCasaIntrare.RegistruCasaZiId = registruCasaZiId;
-            return registruCasaIntrare;
-        }
-
-        #endregion
-
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 Id
-        {
-            get
-            {
-                return _Id;
-            }
-            set
-            {
-                if (_Id != value)
-                {
-                    OnIdChanging(value);
-                    ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("Id");
-                    OnIdChanged();
-                }
-            }
-        }
-        private global::System.Int64 _Id;
-        partial void OnIdChanging(global::System.Int64 value);
-        partial void OnIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 NrCrt
-        {
-            get
-            {
-                return _NrCrt;
-            }
-            set
-            {
-                OnNrCrtChanging(value);
-                ReportPropertyChanging("NrCrt");
-                _NrCrt = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NrCrt");
-                OnNrCrtChanged();
-            }
-        }
-        private global::System.Int32 _NrCrt;
-        partial void OnNrCrtChanging(global::System.Int32 value);
-        partial void OnNrCrtChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String NrActCasa
-        {
-            get
-            {
-                return _NrActCasa;
-            }
-            set
-            {
-                OnNrActCasaChanging(value);
-                ReportPropertyChanging("NrActCasa");
-                _NrActCasa = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("NrActCasa");
-                OnNrActCasaChanged();
-            }
-        }
-        private global::System.String _NrActCasa;
-        partial void OnNrActCasaChanging(global::System.String value);
-        partial void OnNrActCasaChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 NrAnexe
-        {
-            get
-            {
-                return _NrAnexe;
-            }
-            set
-            {
-                OnNrAnexeChanging(value);
-                ReportPropertyChanging("NrAnexe");
-                _NrAnexe = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NrAnexe");
-                OnNrAnexeChanged();
-            }
-        }
-        private global::System.Int32 _NrAnexe;
-        partial void OnNrAnexeChanging(global::System.Int32 value);
-        partial void OnNrAnexeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Explicatii
-        {
-            get
-            {
-                return _Explicatii;
-            }
-            set
-            {
-                OnExplicatiiChanging(value);
-                ReportPropertyChanging("Explicatii");
-                _Explicatii = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Explicatii");
-                OnExplicatiiChanged();
-            }
-        }
-        private global::System.String _Explicatii;
-        partial void OnExplicatiiChanging(global::System.String value);
-        partial void OnExplicatiiChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal Incasari
-        {
-            get
-            {
-                return _Incasari;
-            }
-            set
-            {
-                OnIncasariChanging(value);
-                ReportPropertyChanging("Incasari");
-                _Incasari = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Incasari");
-                OnIncasariChanged();
-            }
-        }
-        private global::System.Decimal _Incasari;
-        partial void OnIncasariChanging(global::System.Decimal value);
-        partial void OnIncasariChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal Plati
-        {
-            get
-            {
-                return _Plati;
-            }
-            set
-            {
-                OnPlatiChanging(value);
-                ReportPropertyChanging("Plati");
-                _Plati = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Plati");
-                OnPlatiChanged();
-            }
-        }
-        private global::System.Decimal _Plati;
-        partial void OnPlatiChanging(global::System.Decimal value);
-        partial void OnPlatiChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 RegistruCasaZiId
-        {
-            get
-            {
-                return _RegistruCasaZiId;
-            }
-            set
-            {
-                OnRegistruCasaZiIdChanging(value);
-                ReportPropertyChanging("RegistruCasaZiId");
-                _RegistruCasaZiId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("RegistruCasaZiId");
-                OnRegistruCasaZiIdChanged();
-            }
-        }
-        private global::System.Int64 _RegistruCasaZiId;
-        partial void OnRegistruCasaZiIdChanging(global::System.Int64 value);
-        partial void OnRegistruCasaZiIdChanged();
-
-        #endregion
-
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("CashBook", "RegistruCasaZiRegistruCasaIntrare", "RegistruCasaZi")]
-        public RegistruCasaZi RegistruCasaZi
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RegistruCasaZi>("CashBook.RegistruCasaZiRegistruCasaIntrare", "RegistruCasaZi").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RegistruCasaZi>("CashBook.RegistruCasaZiRegistruCasaIntrare", "RegistruCasaZi").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<RegistruCasaZi> RegistruCasaZiReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RegistruCasaZi>("CashBook.RegistruCasaZiRegistruCasaIntrare", "RegistruCasaZi");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<RegistruCasaZi>("CashBook.RegistruCasaZiRegistruCasaIntrare", "RegistruCasaZi", value);
-                }
-            }
-        }
-
-        #endregion
-
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="CashBook", Name="RegistruCasaZi")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class RegistruCasaZi : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new RegistruCasaZi object.
-        /// </summary>
-        /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="data">Initial value of the Data property.</param>
-        /// <param name="registruCasaId">Initial value of the RegistruCasaId property.</param>
-        public static RegistruCasaZi CreateRegistruCasaZi(global::System.Int64 id, global::System.DateTime data, global::System.Int64 registruCasaId)
-        {
-            RegistruCasaZi registruCasaZi = new RegistruCasaZi();
-            registruCasaZi.Id = id;
-            registruCasaZi.Data = data;
-            registruCasaZi.RegistruCasaId = registruCasaId;
-            return registruCasaZi;
-        }
-
-        #endregion
-
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 Id
-        {
-            get
-            {
-                return _Id;
-            }
-            set
-            {
-                if (_Id != value)
-                {
-                    OnIdChanging(value);
-                    ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("Id");
-                    OnIdChanged();
-                }
-            }
-        }
-        private global::System.Int64 _Id;
-        partial void OnIdChanging(global::System.Int64 value);
-        partial void OnIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime Data
-        {
-            get
-            {
-                return _Data;
-            }
-            set
-            {
-                OnDataChanging(value);
-                ReportPropertyChanging("Data");
-                _Data = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Data");
-                OnDataChanged();
-            }
-        }
-        private global::System.DateTime _Data;
-        partial void OnDataChanging(global::System.DateTime value);
-        partial void OnDataChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 RegistruCasaId
-        {
-            get
-            {
-                return _RegistruCasaId;
-            }
-            set
-            {
-                OnRegistruCasaIdChanging(value);
-                ReportPropertyChanging("RegistruCasaId");
-                _RegistruCasaId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("RegistruCasaId");
-                OnRegistruCasaIdChanged();
-            }
-        }
-        private global::System.Int64 _RegistruCasaId;
-        partial void OnRegistruCasaIdChanging(global::System.Int64 value);
-        partial void OnRegistruCasaIdChanged();
-
-        #endregion
-
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("CashBook", "RegistruCasaZiRegistruCasaIntrare", "RegistruCasaIntrare")]
-        public EntityCollection<RegistruCasaIntrare> RegistruCasaIntrares
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<RegistruCasaIntrare>("CashBook.RegistruCasaZiRegistruCasaIntrare", "RegistruCasaIntrare");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RegistruCasaIntrare>("CashBook.RegistruCasaZiRegistruCasaIntrare", "RegistruCasaIntrare", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("CashBook", "RegistruCasaRegistruCasaZi", "RegistruCasa")]
-        public RegistruCasa RegistruCasa
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RegistruCasa>("CashBook.RegistruCasaRegistruCasaZi", "RegistruCasa").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RegistruCasa>("CashBook.RegistruCasaRegistruCasaZi", "RegistruCasa").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<RegistruCasa> RegistruCasaReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RegistruCasa>("CashBook.RegistruCasaRegistruCasaZi", "RegistruCasa");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<RegistruCasa>("CashBook.RegistruCasaRegistruCasaZi", "RegistruCasa", value);
-                }
-            }
-        }
-
-        #endregion
-
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="CashBook", Name="Settings")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class Settings : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new Settings object.
-        /// </summary>
-        /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="key">Initial value of the Key property.</param>
-        /// <param name="value">Initial value of the Value property.</param>
-        public static Settings CreateSettings(global::System.Int64 id, global::System.String key, global::System.String value)
-        {
-            Settings settings = new Settings();
-            settings.Id = id;
-            settings.Key = key;
-            settings.Value = value;
-            return settings;
-        }
-
-        #endregion
-
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 Id
-        {
-            get
-            {
-                return _Id;
-            }
-            set
-            {
-                if (_Id != value)
-                {
-                    OnIdChanging(value);
-                    ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("Id");
-                    OnIdChanged();
-                }
-            }
-        }
-        private global::System.Int64 _Id;
-        partial void OnIdChanging(global::System.Int64 value);
-        partial void OnIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Key
-        {
-            get
-            {
-                return _Key;
-            }
-            set
-            {
-                OnKeyChanging(value);
-                ReportPropertyChanging("Key");
-                _Key = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Key");
-                OnKeyChanged();
-            }
-        }
-        private global::System.String _Key;
-        partial void OnKeyChanging(global::System.String value);
-        partial void OnKeyChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Value
-        {
-            get
-            {
-                return _Value;
-            }
-            set
-            {
-                OnValueChanging(value);
-                ReportPropertyChanging("Value");
-                _Value = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Value");
-                OnValueChanged();
-            }
-        }
-        private global::System.String _Value;
-        partial void OnValueChanging(global::System.String value);
-        partial void OnValueChanged();
-
-        #endregion
-
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="CashBook", Name="Societate")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class Societate : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new Societate object.
-        /// </summary>
-        /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="nume">Initial value of the Nume property.</param>
-        /// <param name="adresa">Initial value of the Adresa property.</param>
-        /// <param name="cUI">Initial value of the CUI property.</param>
-        public static Societate CreateSocietate(global::System.Int64 id, global::System.String nume, global::System.String adresa, global::System.String cUI)
-        {
-            Societate societate = new Societate();
-            societate.Id = id;
-            societate.Nume = nume;
-            societate.Adresa = adresa;
-            societate.CUI = cUI;
-            return societate;
-        }
-
-        #endregion
-
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 Id
-        {
-            get
-            {
-                return _Id;
-            }
-            set
-            {
-                if (_Id != value)
-                {
-                    OnIdChanging(value);
-                    ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("Id");
-                    OnIdChanged();
-                }
-            }
-        }
-        private global::System.Int64 _Id;
-        partial void OnIdChanging(global::System.Int64 value);
-        partial void OnIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Nume
-        {
-            get
-            {
-                return _Nume;
-            }
-            set
-            {
-                OnNumeChanging(value);
-                ReportPropertyChanging("Nume");
-                _Nume = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Nume");
-                OnNumeChanged();
-            }
-        }
-        private global::System.String _Nume;
-        partial void OnNumeChanging(global::System.String value);
-        partial void OnNumeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Adresa
-        {
-            get
-            {
-                return _Adresa;
-            }
-            set
-            {
-                OnAdresaChanging(value);
-                ReportPropertyChanging("Adresa");
-                _Adresa = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Adresa");
-                OnAdresaChanged();
-            }
-        }
-        private global::System.String _Adresa;
-        partial void OnAdresaChanging(global::System.String value);
-        partial void OnAdresaChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String CUI
-        {
-            get
-            {
-                return _CUI;
-            }
-            set
-            {
-                OnCUIChanging(value);
-                ReportPropertyChanging("CUI");
-                _CUI = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("CUI");
-                OnCUIChanged();
-            }
-        }
-        private global::System.String _CUI;
-        partial void OnCUIChanging(global::System.String value);
-        partial void OnCUIChanged();
-
-        #endregion
-
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("CashBook", "SocietateRegistruCasa", "RegistruCasa")]
-        public EntityCollection<RegistruCasa> RegistreCasa
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<RegistruCasa>("CashBook.SocietateRegistruCasa", "RegistruCasa");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RegistruCasa>("CashBook.SocietateRegistruCasa", "RegistruCasa", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DailyCashBook>("CashBook.RegistruCasaRegistruCasaZi", "RegistruCasaZi", value);
                 }
             }
         }

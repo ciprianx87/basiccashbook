@@ -10,6 +10,6 @@ namespace CashBook.Data.Interfaces
     public interface ICompanyRepository
     {
         void EditDetails(string name, string cui, string address);
-        Societate GetCompany();
+        Company GetCompany();
     }
 }

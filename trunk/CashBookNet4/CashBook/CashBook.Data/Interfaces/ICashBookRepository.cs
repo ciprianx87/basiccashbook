@@ -9,10 +9,10 @@ namespace CashBook.Data.Interfaces
 {
     public interface ICashBookRepository
     {
-        RegistruCasa Get(Int64 id);
-        List<RegistruCasa> GetAll();
-        void Create(RegistruCasa item);
-        void Edit(Int64 id, RegistruCasa item);
+        UserCashBook Get(Int64 id);
+        List<UserCashBook> GetAll();
+        void Create(UserCashBook item);
+        void Edit(Int64 id, UserCashBook item);
         void Delete(Int64 id);
     }
 }

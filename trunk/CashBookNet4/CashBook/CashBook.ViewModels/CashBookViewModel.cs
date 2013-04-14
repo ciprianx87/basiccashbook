@@ -39,13 +39,27 @@ namespace CashBook.ViewModels
             cashBookRepository = new CashBookRepository();
 
             LoadData();
-
+            SelectedDate = DateTime.Now;
         }
 
         #region properties
 
-        private ObservableCollection<RegistruCasa> cashBooks;
-        public ObservableCollection<RegistruCasa> CashBooks
+        private DateTime selectedDate;
+        public DateTime SelectedDate
+        {
+            get { return selectedDate; }
+            set
+            {
+                if (selectedDate != value)
+                {
+                    selectedDate = value;
+                    this.NotifyPropertyChanged("SelectedDate");
+                }
+            }
+        }
+
+        private ObservableCollection<UserCashBook> cashBooks;
+        public ObservableCollection<UserCashBook> CashBooks
         {
             get { return cashBooks; }
             set
@@ -66,7 +80,7 @@ namespace CashBook.ViewModels
         {
             try
             {
-                CashBooks = new ObservableCollection<RegistruCasa>();
+                CashBooks = new ObservableCollection<UserCashBook>();
                 var existingCashBooks = cashBookRepository.GetAll();
                 if (existingCashBooks != null)
                 {

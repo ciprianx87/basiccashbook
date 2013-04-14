@@ -40,8 +40,8 @@ namespace CashBook.ViewModels
 
         #region properties
 
-        private ObservableCollection<RegistruCasa> cashBooks;
-        public ObservableCollection<RegistruCasa> CashBooks
+        private ObservableCollection<UserCashBook> cashBooks;
+        public ObservableCollection<UserCashBook> CashBooks
         {
             get { return cashBooks; }
             set
@@ -62,7 +62,7 @@ namespace CashBook.ViewModels
         {
             try
             {
-                CashBooks = new ObservableCollection<RegistruCasa>();
+                CashBooks = new ObservableCollection<UserCashBook>();
                 var existingCashBooks = cashBookRepository.GetAll();
                 if (existingCashBooks != null)
                 {

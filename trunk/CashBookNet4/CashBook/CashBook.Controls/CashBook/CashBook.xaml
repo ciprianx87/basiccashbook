@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:constants="clr-namespace:CashBook.Controls"
              mc:Ignorable="d" 
-             Height="500" Width="800" Background="Wheat">
+             Height="500" Width="800" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
     <UserControl.Resources>
 
     </UserControl.Resources>
@@ -14,6 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Button Content="Reglementari Legale" Command="{Binding LegalReglementationsCommand}" HorizontalAlignment="Right" Width="150"/>
@@ -66,12 +67,13 @@
             <Grid>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Data:"/>
-                    <TextBox x:Name="txtDate" Width="100"/>
+                    <DatePicker Text="Alege Data"></DatePicker>
+                    <Button Content="Alege Data" x:Name="btnPickDate" Click="btnPickDate_Click" Visibility="Collapsed"></Button>
                     <Button Content="addRow" Command="{Binding NewRowCommand}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
-                <DataGrid x:Name="dataGrid" ItemsSource="{Binding CashBooks}" KeyUp="dataGrid_KeyUp" AutoGenerateColumns="False">
+                <DataGrid x:Name="dataGrid" ItemsSource="{Binding CashBooks}" KeyUp="dataGrid_KeyUp" AutoGenerateColumns="False" CanUserAddRows="False">
                     <DataGrid.Resources>
                         <Style TargetType="TextBlock" >
                             <Setter Property="TextAlignment" Value="Center"/>
@@ -135,9 +137,24 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*" Header="Actiuni">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Sterge" Margin="0,0,10,0" Command="{Binding DataContext.DeleteCommand, ElementName=root}" CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
+        </Grid>
+        <Grid Grid.Row="3">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Sold Total:" FontSize="25"/>
+                <TextBlock Text="{Binding TotalBalance, FallbackValue='554.3'}" FontSize="25" FontWeight="Bold" />
+            </StackPanel>
         </Grid>
     </Grid>
 

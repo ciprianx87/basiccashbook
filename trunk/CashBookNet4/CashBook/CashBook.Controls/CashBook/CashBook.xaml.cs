@@ -44,5 +44,10 @@ namespace CashBook.Controls
         {
 
         }
+
+        private void btnPickDate_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.DatePicker datePicker = new DatePicker();
+        }
     }
 }
