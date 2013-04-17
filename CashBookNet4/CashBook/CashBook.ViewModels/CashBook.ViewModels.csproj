@@ -54,6 +54,7 @@
     <Compile Include="CreateOrEditCashBookViewModel.cs" />
     <Compile Include="DeleteDialogVM.cs" />
     <Compile Include="LegalReglementationsViewModel.cs" />
+    <Compile Include="Models\CashBookEntryUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -122,10 +122,8 @@ namespace CashBook.Data.Repositories
                     newItems.Add(new CashBookEntry()
                     {
                         Explicatii = item.Explicatii,
-                        GridId = item.GridId,
                         Id = item.Id == 0 ? DbIdHelper.GetNextID() : item.Id,
                         Incasari = item.Incasari,
-                        IsOk = item.IsOk,
                         NrActCasa = item.NrActCasa,
                         NrAnexe = item.NrAnexe,
                         NrCrt = item.NrCrt,

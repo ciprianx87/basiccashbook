@@ -88,6 +88,7 @@
                 <DataGrid x:Name="dataGrid" ItemsSource="{Binding CashBookEntries, Mode=TwoWay}" KeyUp="dataGrid_KeyUp" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Visible"
                           Height="400"  SelectionMode="Single" SelectionUnit="CellOrRowHeader" 
                           SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" 
+                          SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                           >
                     <!--SelectedItem="{Binding SelectedItem, Mode=TwoWay}"-->
                     <DataGrid.Resources>
@@ -145,7 +146,7 @@
                         <DataGridTemplateColumn Width="100" Header="INCASARI">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
-                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Incasari,
+                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=Incasari,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource ResourceKey=TextBoxStyle}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -153,7 +154,7 @@
                         <DataGridTemplateColumn Width="100" Header="PLATI">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
-                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Plati,
+                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Path=Plati,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource ResourceKey=TextBoxStyle}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -178,7 +179,7 @@
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Sold Total:" FontSize="25"/>
-                <TextBlock Text="{Binding TotalBalance, FallbackValue='554.3'}" FontSize="25" FontWeight="Bold" />
+                <TextBlock Text="{Binding TotalBalanceString, FallbackValue='554.3'}" FontSize="25" FontWeight="Bold" />
             </StackPanel>
             <Button Content="Salvare" Grid.Row="1" Height="25" Width="100" Command="{Binding SaveCommand}"/>
         </Grid>
