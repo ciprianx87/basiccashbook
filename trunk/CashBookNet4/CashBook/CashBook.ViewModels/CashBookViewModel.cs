@@ -10,6 +10,7 @@ using CashBook.Common;
 using CashBook.Data.Model;
 using System.Collections.ObjectModel;
 using CashBook.Common.Mediator;
+using System.ComponentModel;
 
 namespace CashBook.ViewModels
 {
@@ -18,18 +19,14 @@ namespace CashBook.ViewModels
         ICashBookRepository cashBookRepository;
         ICashBookEntryRepository cashBookEntryRepository;
 
-        public ICommand CreateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
-        public ICommand EditCommand { get; set; }
-        public ICommand SelectCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
 
 
         public CashBookViewModel()
         {
-            CreateCommand = new DelegateCommand(Create, CanCreate);
             DeleteCommand = new DelegateCommand(Delete, CanDelete);
-            EditCommand = new DelegateCommand(Edit, CanEdit);
-            SelectCommand = new DelegateCommand(Select, CanSelect);
+            SaveCommand = new DelegateCommand(Save, CanSave);
 
             this.LegalReglementationsCommand = new DelegateCommand(LegalReglementations, CanLegalReglementations);
 
@@ -40,13 +37,13 @@ namespace CashBook.ViewModels
             cashBookEntryRepository = new CashBookEntryRepository();
 
             SelectedDate = DateTime.Now;
+            canSave = true;
             // LoadData();
         }
-
+        private bool canSave = false;
         private void LoadDataForDay(DateTime dateTime)
         {
             CashBookEntries = new ObservableCollection<CashBookEntry>();
-            CashBookEntries.CollectionChanged += CashBookEntries_CollectionChanged;
 
             var existingCashBookEntries = cashBookEntryRepository.GetEntriesForDay(dateTime);
             if (existingCashBookEntries != null)
@@ -56,15 +53,95 @@ namespace CashBook.ViewModels
                     CashBookEntries.Add(item);
                 }
             }
+            CashBookEntries.Add(new CashBookEntry());
+
+            //AddFakeItems();
+            CashBookEntries.CollectionChanged += CashBookEntries_CollectionChanged;
+            //CashBookEntries.CollectionChanged += items_CollectionChanged;
+
+        }
+
+        private void AddFakeItems()
+        {
+            for (int i = CashBookEntries.Count; i < 100; i++)
+            {
+                CashBookEntries.Add(new CashBookEntry()
+                {
+                    NrCrt = i
+                });
+            }
+        }
+
+        void items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            foreach (INotifyPropertyChanged item in e.OldItems)
+                item.PropertyChanged -= new PropertyChangedEventHandler(item_PropertyChanged);
+
+            foreach (INotifyPropertyChanged item in e.NewItems)
+                item.PropertyChanged += new PropertyChangedEventHandler(item_PropertyChanged);
+        }
+
+        void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            NotifyPropertyChanged("CashBookEntries");
         }
 
         void CashBookEntries_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            //if all the items are valid, save them in the DB
-            SaveData();
+            //foreach (INotifyPropertyChanged item in e.OldItems)
+            //    item.PropertyChanged -= new PropertyChangedEventHandler(item_PropertyChanged);
+
+            //foreach (INotifyPropertyChanged item in e.NewItems)
+            //    item.PropertyChanged += new PropertyChangedEventHandler(item_PropertyChanged);
+
+            //return;
+            UpdateItemState();
+            return;
+            if (canSave)
+            {
+                //if all the items are valid, save them in the DB
+                SaveData();
+            }
+        }
+        private void UpdateItemState()
+        {
+            foreach (var item in CashBookEntries)
+            {
+
+            }
         }
 
         #region properties
+
+        private CashBookEntry selectedItem;
+        public CashBookEntry SelectedItem
+        {
+            get { return selectedItem; }
+            set
+            {
+                if (selectedItem != value)
+                {
+                    selectedItem = value;
+                    this.NotifyPropertyChanged("SelectedItem");
+                }
+            }
+        }
+
+
+        private int selectedIndex;
+        public int SelectedIndex
+        {
+            get { return selectedIndex; }
+            set
+            {
+                if (selectedIndex != value)
+                {
+                    selectedIndex = value;
+                    this.NotifyPropertyChanged("SelectedIndex");
+                }
+            }
+        }
+
 
         private DateTime selectedDate;
         public DateTime SelectedDate
@@ -128,18 +205,26 @@ namespace CashBook.ViewModels
         #region methods
         public void AddNewItem()
         {
-            CashBookEntries.Add(new CashBookEntry());
+            //navigate to the next item or add a new one
+            if (SelectedIndex < CashBookEntries.Count - 1)
+            {
+                SelectedIndex++;
+            }
+            else
+            {
+                CashBookEntries.Insert(CashBookEntries.Count, new CashBookEntry());
+                SelectedIndex = CashBookEntries.Count - 1;
+            }
         }
 
         public void RefreshList(object param)
         {
-            // LoadData();
         }
+
         UserCashBook selectedCashBook;
         public void SetSelectedCashBook(object param)
         {
             selectedCashBook = param as UserCashBook;
-            // LoadData();
         }
 
         public ICommand LegalReglementationsCommand { get; set; }
@@ -158,53 +243,47 @@ namespace CashBook.ViewModels
         {
             try
             {
-                cashBookEntryRepository.UpdateRepositoryForDay(selectedCashBook.Id, CashBookEntries.ToList(), SelectedDate);
+                var validEntries = ExtractValidItems(CashBookEntries);
+                if (validEntries.Count > 0)
+                {
+                    cashBookEntryRepository.UpdateRepositoryForDay(selectedCashBook.Id, validEntries, SelectedDate);
+                    WindowHelper.OpenInformationDialog("Informatia a fost salvata");
+                }
             }
             catch (Exception ex)
             {
+                WindowHelper.OpenErrorDialog("Eroare la salvarea informatiei");
 
             }
         }
 
-        public void Create(object param)
+        private List<CashBookEntry> ExtractValidItems(ObservableCollection<CashBookEntry> entries)
         {
-            try
+            List<CashBookEntry> validEntries = new List<CashBookEntry>();
+            foreach (var item in entries)
             {
-                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CreateOrEditCashBook);
-                Mediator.Instance.SendMessage(MediatorActionType.SetEntityToEdit, null);
+                if (IsValid(item))
+                {
+                    validEntries.Add(item);
+                }
             }
-            catch (Exception ex)
-            {
-
-            }
+            return validEntries;
         }
 
-        public bool CanEdit(object param)
+        private bool IsValid(CashBookEntry item)
         {
-            return true;
-        }
-        public void Edit(object param)
-        {
-            try
-            {
-                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CreateOrEditCashBook);
-                Mediator.Instance.SendMessage(MediatorActionType.SetEntityToEdit, param);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            return !string.IsNullOrEmpty(item.Explicatii) && !string.IsNullOrEmpty(item.NrActCasa) && (item.Incasari != 0 || item.Plati != 0);
         }
 
-        public bool CanSelect(object param)
+
+        public bool CanSave(object param)
         {
             return true;
         }
 
-        public void Select(object param)
+        public void Save(object param)
         {
-            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.CashBook);
-            Mediator.Instance.SendMessage(MediatorActionType.SetCashBookData, param);
+            SaveData();
         }
 
         public bool CanCreate(object param)
@@ -215,8 +294,11 @@ namespace CashBook.ViewModels
 
         public void Delete(object param)
         {
-            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.DeleteDialog);
-            Mediator.Instance.SendMessage(MediatorActionType.SetEntityToDelete, param);
+            var itemToDelete = param as CashBookEntry;
+            if (itemToDelete != null)
+            {
+                CashBookEntries.Remove(itemToDelete);
+            }
         }
 
         public bool CanDelete(object param)
@@ -227,6 +309,7 @@ namespace CashBook.ViewModels
         public override void Dispose()
         {
             CashBookEntries.CollectionChanged -= CashBookEntries_CollectionChanged;
+            CashBookEntries.CollectionChanged -= items_CollectionChanged;
             Mediator.Instance.Unregister(MediatorActionType.RefreshList, RefreshList);
             Mediator.Instance.Unregister(MediatorActionType.SetSelectedCashBook, SetSelectedCashBook);
             base.Dispose();

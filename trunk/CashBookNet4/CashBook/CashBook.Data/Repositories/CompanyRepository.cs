@@ -8,39 +8,43 @@ using System.Threading.Tasks;
 
 namespace CashBook.Data.Repositories
 {
-    public class CompanyRepository : ICompanyRepository
+    public class CompanyRepository :BaseRepository, ICompanyRepository
     {
         public void EditDetails(string name, string cui, string address)
         {
             //only allow one company to exist
-            var context = new CashBookContainer();
-            var existingCompany = context.Companies.FirstOrDefault();
-            if (existingCompany == null)
+            using (var context = GetContext())
             {
-                Company soc = new Company()
+                var existingCompany = context.Companies.FirstOrDefault();
+                if (existingCompany == null)
                 {
-                    Id=DbIdHelper.GetNextID(),
-                    Adresa = address,
-                    Nume = name,
-                    CUI = cui
-                };
-                context.Companies.AddObject(soc);
+                    Company soc = new Company()
+                    {
+                        Id = DbIdHelper.GetNextID(),
+                        Adresa = address,
+                        Nume = name,
+                        CUI = cui
+                    };
+                    context.Companies.AddObject(soc);
+                }
+                else
+                {
+                    existingCompany.Adresa = address;
+                    existingCompany.Nume = name;
+                    existingCompany.CUI = cui;
+                }
+                context.SaveChanges();
             }
-            else
-            {
-                existingCompany.Adresa = address;
-                existingCompany.Nume = name;
-                existingCompany.CUI = cui;
-            }
-            context.SaveChanges();
         }
 
 
         public Company GetCompany()
         {
-            var context = new CashBookContainer();
-            var existingCompany = context.Companies.FirstOrDefault();
-            return existingCompany;
+            using (var context = GetContext())
+            {
+                var existingCompany = context.Companies.FirstOrDefault();
+                return existingCompany;
+            }
         }
     }
 }

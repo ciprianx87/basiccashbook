@@ -12,15 +12,19 @@ namespace CashBook.Data.Repositories
     {
         public UserCashBook Get(long id)
         {
-            var context = GetContext();
-            var existingEntity = context.UserCashBooks.FirstOrDefault(p => p.Id == id);
-            return existingEntity;
+            using (var context = GetContext())
+            {
+                var existingEntity = context.UserCashBooks.FirstOrDefault(p => p.Id == id);
+                return existingEntity;
+            }
         }
 
         public List<UserCashBook> GetAll()
         {
-            var context = GetContext();
-            return context.UserCashBooks.ToList();
+            using (var context = GetContext())
+            {
+                return context.UserCashBooks.ToList();
+            }
         }
 
         public void Create(UserCashBook item)

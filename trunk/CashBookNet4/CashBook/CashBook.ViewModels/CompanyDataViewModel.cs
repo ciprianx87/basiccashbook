@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CashBook.Common.Mediator;
+using CashBook.Common;
 
 namespace CashBook.ViewModels
 {
@@ -77,13 +78,11 @@ namespace CashBook.ViewModels
             try
             {
                 companyRepository.EditDetails(CompanyName, CompanyCui, CompanyAddress);
-                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.Information);
-                Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, "Informatia a fost salvata");
+                WindowHelper.OpenInformationDialog("Informatia a fost salvata");
             }
             catch (Exception ex)
             {
-                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.ErrorDialog);
-                Mediator.Instance.SendMessage(MediatorActionType.SetErrorDialogMessage, "Eroare la salvarea informatiei");
+                WindowHelper.OpenErrorDialog("Eroare la salvarea informatiei");
             }
         }
 
