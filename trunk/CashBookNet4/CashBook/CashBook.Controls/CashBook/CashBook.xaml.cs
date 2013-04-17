@@ -75,19 +75,7 @@ namespace CashBook.Controls
         }
 
         private void dataGrid_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                e.Handled = true;
-                //var cell = GetCell(dataGrid, dataGrid.Items.Count - 1, 2);
-                //if (cell != null)
-                //{
-                //    cell.IsSelected = true;
-                //    cell.Focus();
-                //    dataGrid.BeginEdit();
-                //}
-            }
-            return;
+        {       
             if (e.Key == Key.Enter)
             {
                 (this.DataContext as CashBookViewModel).AddNewItem();
@@ -114,6 +102,9 @@ namespace CashBook.Controls
                     {
                         if (!cell.IsSelected)
                             cell.IsSelected = true;
+                        DataGridRow row = FindVisualParent<DataGridRow>(cell);
+                        if (row != null && !row.IsSelected)
+                            row.IsSelected = true;
                     }
                     else
                     {

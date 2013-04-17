@@ -87,7 +87,7 @@
                 </Grid.Resources>
                 <DataGrid x:Name="dataGrid" ItemsSource="{Binding CashBookEntries, Mode=TwoWay}" KeyUp="dataGrid_KeyUp" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Visible"
                           Height="400"  SelectionMode="Single" SelectionUnit="CellOrRowHeader" 
-                          SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                          SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" 
                           >
                     <!--SelectedItem="{Binding SelectedItem, Mode=TwoWay}"-->
                     <DataGrid.Resources>
@@ -145,7 +145,7 @@
                         <DataGridTemplateColumn Width="100" Header="INCASARI">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
-                                    <TextBox Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Incasari,
+                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Incasari,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource ResourceKey=TextBoxStyle}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -153,16 +153,16 @@
                         <DataGridTemplateColumn Width="100" Header="PLATI">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
-                                    <TextBox Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Plati,
+                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Plati,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource ResourceKey=TextBoxStyle}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="*" Header="Actiuni">
+                        <DataGridTemplateColumn Width="*" Header="Actiuni" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Content="Sterge" Margin="0,0,10,0" Command="{Binding DataContext.DeleteCommand, ElementName=root}" CommandParameter="{Binding}"/>
+                                        <Button Content="Sterge" Margin="0,0,10,0" Command="{Binding DataContext.DeleteCommand, ElementName=root}" CommandParameter="{Binding}" ClickMode="Press" />
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

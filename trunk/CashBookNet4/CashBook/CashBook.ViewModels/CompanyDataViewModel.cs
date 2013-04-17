@@ -18,6 +18,7 @@ namespace CashBook.ViewModels
         public ICommand SaveCommand { get; set; }
         public CompanyDataViewModel()
         {
+            this.Title = "Detalii despre companie";
             SaveCommand = new DelegateCommand(Save, CanSave);
             companyRepository = new CompanyRepository();
 

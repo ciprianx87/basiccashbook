@@ -20,6 +20,8 @@ namespace CashBook.ViewModels
 
         public DeleteDialogVM()
         {
+            this.Title = "Stergere";
+           
             InitializeCommands();
             Mediator.Instance.Register(MediatorActionType.SetEntityToDelete, SetEntityToDelete);
         }

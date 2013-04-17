@@ -106,6 +106,10 @@
       <Project>{5C77ACAD-62CE-4019-B630-7F792E6EAD44}</Project>
       <Name>CashBook.Data.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CashBook.ViewModels\CashBook.ViewModels.csproj">
+      <Project>{598E5A95-BD21-4721-B3D8-EE9E7E1C74D5}</Project>
+      <Name>CashBook.ViewModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

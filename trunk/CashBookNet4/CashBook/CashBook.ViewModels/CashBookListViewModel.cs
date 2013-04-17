@@ -24,6 +24,7 @@ namespace CashBook.ViewModels
         public ICommand SelectCommand { get; set; }
         public CashBookListViewModel()
         {
+            this.Title = "Registre de casa";
             SaveCommand = new DelegateCommand(Save, CanSave);
             CreateCommand = new DelegateCommand(Create, CanCreate);
             DeleteCommand = new DelegateCommand(Delete, CanDelete);
