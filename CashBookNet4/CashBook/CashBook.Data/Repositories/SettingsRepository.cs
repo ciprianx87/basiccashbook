@@ -8,42 +8,46 @@ using System.Threading.Tasks;
 
 namespace CashBook.Data.Repositories
 {
-    public class SettingsRepository : ISettingsRepository
+    public class SettingsRepository :BaseRepository, ISettingsRepository
     {
 
         public string GetSetting(string key)
         {
-            var context = new CashBookContainer();
-            var setting = context.Settings.FirstOrDefault(p => p.Key == key);
-            if (setting == null)
+            using (var context = GetContext())
             {
-                return null;
-            }
-            else
-            {
-                return setting.Value;
+                var setting = context.Settings.FirstOrDefault(p => p.Key == key);
+                if (setting == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return setting.Value;
+                }
             }
         }
 
         public void AddOrUpdateSetting(string key, string value)
         {
-            var context = new CashBookContainer();
-            var setting = context.Settings.FirstOrDefault(p => p.Key == key);
-            if (setting == null)
+            using (var context = GetContext())
             {
-                setting = new Settings()
+                var setting = context.Settings.FirstOrDefault(p => p.Key == key);
+                if (setting == null)
                 {
-                    Id = DbIdHelper.GetNextID(),
-                    Key = key,
-                    Value = value
-                };
-                context.Settings.AddObject(setting);
+                    setting = new Settings()
+                    {
+                        Id = DbIdHelper.GetNextID(),
+                        Key = key,
+                        Value = value
+                    };
+                    context.Settings.AddObject(setting);
+                }
+                else
+                {
+                    setting.Value = value;
+                }
+                context.SaveChanges();
             }
-            else
-            {
-                setting.Value = value;
-            }
-            context.SaveChanges();
         }
     }
 }
