@@ -25,6 +25,7 @@ namespace CashBook.ViewModels
 
         public CashBookViewModel()
         {
+            this.Title = "Registru de casa";
             DeleteCommand = new DelegateCommand(Delete, CanDelete);
             SaveCommand = new DelegateCommand(Save, CanSave);
 
@@ -58,6 +59,7 @@ namespace CashBook.ViewModels
             //AddFakeItems();
             CashBookEntries.CollectionChanged += CashBookEntries_CollectionChanged;
             //CashBookEntries.CollectionChanged += items_CollectionChanged;
+            UpdateItemState();
 
         }
 
@@ -105,9 +107,10 @@ namespace CashBook.ViewModels
         }
         private void UpdateItemState()
         {
+            var index = 0;
             foreach (var item in CashBookEntries)
             {
-
+                item.NrCrt = ++index;
             }
         }
 
@@ -225,6 +228,7 @@ namespace CashBook.ViewModels
         public void SetSelectedCashBook(object param)
         {
             selectedCashBook = param as UserCashBook;
+            this.Title = "Editare Registru de casa (" + selectedCashBook.Name + ")";
         }
 
         public ICommand LegalReglementationsCommand { get; set; }

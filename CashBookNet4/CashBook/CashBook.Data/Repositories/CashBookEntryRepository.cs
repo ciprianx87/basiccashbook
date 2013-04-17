@@ -98,6 +98,7 @@ namespace CashBook.Data.Repositories
                     //create a new one
                     context.DailyCashBooks.AddObject(new DailyCashBook()
                     {
+                        Id = DbIdHelper.GetNextID(),
                         RegistruCasaId = selectedCashBookId,
                         Data = dateOnly
                     });
@@ -112,12 +113,34 @@ namespace CashBook.Data.Repositories
                 {
                     context.CashBookEntries.DeleteObject(item);
                 }
+                Commit(context);
 
+                List<CashBookEntry> newItems = new List<CashBookEntry>();
                 //add all the new entries
                 foreach (var item in list)
                 {
-                    context.CashBookEntries.AddObject(item);
+                    newItems.Add(new CashBookEntry()
+                    {
+                        Explicatii = item.Explicatii,
+                        GridId = item.GridId,
+                        Id = item.Id == 0 ? DbIdHelper.GetNextID() : item.Id,
+                        Incasari = item.Incasari,
+                        IsOk = item.IsOk,
+                        NrActCasa = item.NrActCasa,
+                        NrAnexe = item.NrAnexe,
+                        NrCrt = item.NrCrt,
+                        Plati = item.Plati,
+                        //RegistruCasaZi = item.RegistruCasaZi,
+                        RegistruCasaZiId = registryForDay.Id,
+                        //RegistruCasaZiReference = item.RegistruCasaZiReference,
+                    });
                 }
+                foreach (var item in newItems)
+                {
+                    context.CashBookEntries.AddObject(item);
+
+                }
+
                 Commit(context);
             }
         }

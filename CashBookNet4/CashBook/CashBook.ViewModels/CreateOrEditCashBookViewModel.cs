@@ -118,6 +118,7 @@ namespace CashBook.ViewModels
         {
             if (param is UserCashBook)
             {
+                this.Title = "Editare registru de casa";
                 currentEntity = param as UserCashBook;
                 Account = currentEntity.Account;
                 CashierName = currentEntity.CashierName;
@@ -126,6 +127,10 @@ namespace CashBook.ViewModels
                 CoinDecimals = currentEntity.CoinDecimals;
                 Name = currentEntity.Name;
                 InitialBalance = currentEntity.InitialBalance;
+            }
+            else
+            {
+                this.Title = "Creare registru de casa";
             }
         }
 

@@ -66,7 +66,13 @@ namespace CashBook
                 default:
                     MessageBox.Show("invalid contentType: " + type);
                     break;
+
             }
+            //var title = ((CashBook.ViewModels.BaseViewModel)((UserControl)contentControl.Content).DataContext).Title;
+            //var binding = new Binding("Title");
+            this.DataContext = ((UserControl)contentControl.Content).DataContext;
+
+            //this.SetBinding(Window.TitleProperty, binding);
         }
 
         private void DisposeCurrentContent()

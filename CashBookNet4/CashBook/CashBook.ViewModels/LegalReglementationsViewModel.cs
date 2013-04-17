@@ -17,6 +17,7 @@ namespace CashBook.ViewModels
         public ICommand SaveCommand { get; set; }
         public LegalReglementationsViewModel()
         {
+            this.Title = "Reglementari legale";
             SaveCommand = new DelegateCommand(Save, CanSave);
             settingsRepository = new SettingsRepository();
 
