@@ -67,9 +67,6 @@
     <Compile Include="LegalReglementations.xaml.cs">
       <DependentUpon>LegalReglementations.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainContent.xaml.cs">
-      <DependentUpon>MainContent.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Popups\DeleteDialog.xaml.cs">
       <DependentUpon>DeleteDialog.xaml</DependentUpon>
     </Compile>
@@ -147,10 +144,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainContent.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Popups\DeleteDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -160,6 +153,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Popups\LegalReglementationsPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CashBookStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

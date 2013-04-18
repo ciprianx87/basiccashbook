@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:constants="clr-namespace:CashBook.Controls"
-             mc:Ignorable="d" 
-             Height="500" Width="800" Background="White">
+             mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}"
+             Height="500" Width="800" >
     <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Setter  Property="FontSize" Value="20"/>
@@ -29,7 +29,7 @@
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Detalii societate:" FontSize="30" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
+        <TextBlock Text="Detalii societate:"  Style="{DynamicResource TitleStyle}" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
         <TextBlock Grid.Row="1" Text="Nume:"/>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CompanyName}"/>
         <TextBlock Grid.Row="2" Text="Adresa:" />

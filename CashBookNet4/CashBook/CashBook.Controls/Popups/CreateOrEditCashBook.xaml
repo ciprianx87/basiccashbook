@@ -36,7 +36,7 @@
             <ColumnDefinition Width="170"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Creare Registru de casa:" FontSize="30" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
+        <TextBlock Text="Creare Registru de casa:" Style="{DynamicResource TitleStyle}" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
         <TextBlock Grid.Row="1" Text="Nume:"/>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
 
