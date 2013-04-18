@@ -41,10 +41,11 @@
     <Property Name="CoinType" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="CoinDecimals" Type="tinyint" Nullable="false" />
-    <Property Name="InitialBalance" Type="decimal" Nullable="false" />
+    <Property Name="InitialBalance" Type="decimal" Nullable="false" Precision="18" Scale="4" />
     <Property Name="Location" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="Account" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="CashierName" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="InitialBalanceDate" Type="datetime" Nullable="true" />
   </EntityType>
   <EntityType Name="Companies">
     <Key>
@@ -75,6 +76,8 @@
     <Property Name="Id" Type="bigint" Nullable="false" />
     <Property Name="Data" Type="datetime" Nullable="false" />
     <Property Name="RegistruCasaId" Type="bigint" Nullable="false" />
+    <Property Name="DeltaBalance" Type="decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="TotalBalance" Type="decimal" Nullable="false" Precision="18" Scale="4" />
   </EntityType>
   <Association Name="SocietateRegistruCasa">
     <End Role="Societate" Type="CashBook.Store.Companies" Multiplicity="1" />
@@ -154,10 +157,11 @@
           <Property Type="String" Name="CoinType" Nullable="false" FixedLength="false" MaxLength="200" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" />
           <Property Type="Byte" Name="CoinDecimals" Nullable="false" />
-          <Property Type="Decimal" Name="InitialBalance" Nullable="false" />
+          <Property Type="Decimal" Name="InitialBalance" Nullable="false" Precision="18" Scale="4" />
           <Property Type="String" Name="Location" Nullable="false" MaxLength="200" FixedLength="false" />
           <Property Type="String" Name="Account" Nullable="false" MaxLength="200" FixedLength="false" />
           <Property Type="String" Name="CashierName" Nullable="false" MaxLength="200" FixedLength="false" />
+          <Property Type="DateTime" Name="InitialBalanceDate" Nullable="true" />
         </EntityType>
         <EntityType Name="Company">
           <Key>
@@ -192,6 +196,8 @@
           <Property Type="Int64" Name="RegistruCasaId" Nullable="false" />
           <NavigationProperty Name="RegistruCasaIntrares" Relationship="CashBook.RegistruCasaZiRegistruCasaIntrare" FromRole="RegistruCasaZi" ToRole="RegistruCasaIntrare" />
           <NavigationProperty Name="RegistruCasa" Relationship="CashBook.RegistruCasaRegistruCasaZi" FromRole="RegistruCasaZi" ToRole="RegistruCasa" />
+          <Property Type="Decimal" Name="DeltaBalance" Nullable="false" Precision="18" Scale="4" />
+          <Property Type="Decimal" Name="TotalBalance" Nullable="false" Precision="18" Scale="4" />
         </EntityType>
         <Association Name="SocietateRegistruCasa">
           <End Type="CashBook.Company" Role="Societate" Multiplicity="1" />
@@ -256,6 +262,7 @@
           <ScalarProperty Name="Location" ColumnName="Location" />
           <ScalarProperty Name="Account" ColumnName="Account" />
           <ScalarProperty Name="CashierName" ColumnName="CashierName" />
+          <ScalarProperty Name="InitialBalanceDate" ColumnName="InitialBalanceDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -289,6 +296,8 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Data" ColumnName="Data" />
           <ScalarProperty Name="RegistruCasaId" ColumnName="RegistruCasaId" />
+          <ScalarProperty Name="DeltaBalance" ColumnName="DeltaBalance" />
+          <ScalarProperty Name="TotalBalance" ColumnName="TotalBalance" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -312,13 +321,13 @@
     <edmx:Diagrams>
       <Diagram Name="CashBook" ZoomLevel="105" >
         <EntityTypeShape EntityType="CashBook.Settings" Width="1.5" PointX="6.375" PointY="3.375" Height="1.5956835937499996" />
-        <EntityTypeShape EntityType="CashBook.UserCashBook" Width="1.5" PointX="4.5" PointY="1.375" Height="3.1340950520833335" />
+        <EntityTypeShape EntityType="CashBook.UserCashBook" Width="1.5" PointX="4.5" PointY="1.375" Height="3.3263964843749996" />
         <EntityTypeShape EntityType="CashBook.Company" Width="1.5" PointX="4.625" PointY="5.625" Height="1.9802864583333317" />
         <EntityTypeShape EntityType="CashBook.CashBookEntry" Width="1.5" PointX="2" PointY="2.625" Height="2.7494921875000031" />
-        <EntityTypeShape EntityType="CashBook.DailyCashBook" Width="1.5" PointX="0.5" PointY="5.25" Height="1.9802864583333335" />
+        <EntityTypeShape EntityType="CashBook.DailyCashBook" Width="1.5" PointX="0.5" PointY="5.25" Height="2.3648893229166656" />
         <AssociationConnector Association="CashBook.SocietateRegistruCasa" >
           <ConnectorPoint PointX="5.3125" PointY="5.625" />
-          <ConnectorPoint PointX="5.3125" PointY="4.5090950520833335" />
+          <ConnectorPoint PointX="5.3125" PointY="4.701396484375" />
         </AssociationConnector>
         <AssociationConnector Association="CashBook.RegistruCasaZiRegistruCasaIntrare" >
           <ConnectorPoint PointX="1.2499995" PointY="5.25" />
@@ -326,9 +335,9 @@
           <ConnectorPoint PointX="2" PointY="3.9374995" />
         </AssociationConnector>
         <AssociationConnector Association="CashBook.RegistruCasaRegistruCasaZi" >
-          <ConnectorPoint PointX="4.53125" PointY="4.5090950520833335" />
-          <ConnectorPoint PointX="4.53125" PointY="5.4997460937500016" />
-          <ConnectorPoint PointX="2" PointY="5.4997460937500016" />
+          <ConnectorPoint PointX="4.5" PointY="1.96875" />
+          <ConnectorPoint PointX="0.84374725" PointY="1.96875" />
+          <ConnectorPoint PointX="0.84374725" PointY="5.25" />
         </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>

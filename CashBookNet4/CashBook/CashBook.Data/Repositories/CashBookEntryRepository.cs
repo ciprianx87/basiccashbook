@@ -92,7 +92,7 @@ namespace CashBook.Data.Repositories
             using (var context = GetContext())
             {
                 var dateOnly = Utils.DateTimeToDay(dateTime);
-                var registryForDay = context.DailyCashBooks.FirstOrDefault(p => p.Data == dateOnly);
+                var registryForDay = context.DailyCashBooks.FirstOrDefault(p => p.Data == dateOnly && p.RegistruCasaId == selectedCashBookId);
                 if (registryForDay == null)
                 {
                     //create a new one
@@ -105,7 +105,7 @@ namespace CashBook.Data.Repositories
                     Commit(context);
                 }
 
-                registryForDay = context.DailyCashBooks.FirstOrDefault(p => p.Data == dateOnly);
+                registryForDay = context.DailyCashBooks.FirstOrDefault(p => p.Data == dateOnly && p.RegistruCasaId == selectedCashBookId);
 
                 var allEntries = context.CashBookEntries.Where(p => p.RegistruCasaZiId == registryForDay.Id).ToList();
                 //delete all the entries
@@ -128,19 +128,38 @@ namespace CashBook.Data.Repositories
                         NrAnexe = item.NrAnexe,
                         NrCrt = item.NrCrt,
                         Plati = item.Plati,
-                        //RegistruCasaZi = item.RegistruCasaZi,
                         RegistruCasaZiId = registryForDay.Id,
-                        //RegistruCasaZiReference = item.RegistruCasaZiReference,
                     });
                 }
                 foreach (var item in newItems)
                 {
                     context.CashBookEntries.AddObject(item);
-
                 }
 
+                //update the current balance
+                decimal totalSum = 0;
+                newItems.ForEach(p => totalSum += p.Incasari);
+                newItems.ForEach(p => totalSum -= p.Plati);
+                registryForDay.DeltaBalance = totalSum;
+                registryForDay.TotalBalance = GetPreviousBalance(context, Utils.DateTimeToDay(dateTime), selectedCashBookId);
                 Commit(context);
             }
+        }
+
+        private decimal GetPreviousBalance(CashBookContainer context, DateTime currentDate, long selectedCashBookId)
+        {
+            //get all the previous registers
+            var previousRegisters = context.DailyCashBooks.Where(p => p.Data < currentDate && p.RegistruCasaId == selectedCashBookId).ToList();
+            decimal totalSum = 0;
+            previousRegisters.ForEach(p => totalSum += p.DeltaBalance);
+
+            //take the initial balance of the cashbook into account
+            var currentCashBook = context.UserCashBooks.FirstOrDefault(p => p.Id == selectedCashBookId);
+            if (currentCashBook.InitialBalanceDate < currentDate)
+            {
+                totalSum += currentCashBook.InitialBalance;
+            }
+            return totalSum;
         }
 
 

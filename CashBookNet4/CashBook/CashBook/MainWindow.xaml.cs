@@ -35,10 +35,44 @@ namespace CashBook
         {
             PopupManager.Instance.Init();
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
-            ChangeContent(ContentTypes.CashBookList);
-
+            ShowCashBookListScreen(CashBookListType.Any);
+        }
+        private void InitErrorHandling()
+        {
+            Dispatcher.UnhandledException += new System.Windows.Threading.DispatcherUnhandledExceptionEventHandler(Dispatcher_UnhandledException);
+            Application.Current.DispatcherUnhandledException += new System.Windows.Threading.DispatcherUnhandledExceptionEventHandler(Current_DispatcherUnhandledException);
         }
 
+        void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            ShowError(e.Exception);
+        }
+
+        void Dispatcher_UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            ShowError(e.Exception);
+        }
+        private void ShowError(Exception ex)
+        {
+            try
+            {
+                string errorMessage = ex.Message + Environment.NewLine + ex.StackTrace;
+                while (ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+                    errorMessage += Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                }
+                AppErrorWindow errorWindow = new AppErrorWindow(errorMessage);
+                errorWindow.Show();
+                Application.Current.Shutdown();
+
+            }
+            catch (Exception exc)
+            {
+            }
+        }
         private void ChangeContent(object contentType)
         {
             DisposeCurrentContent();
@@ -83,20 +117,35 @@ namespace CashBook
             }
         }
 
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        private void MenuItem_CompanyData(object sender, RoutedEventArgs e)
         {
             ChangeContent(ContentTypes.CompanyDetails);
         }
 
-        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        private void MenuItem_CashBooks(object sender, RoutedEventArgs e)
         {
-            ChangeContent(ContentTypes.CashBookList);
-
+            ShowCashBookListScreen(CashBookListType.Any);
         }
 
-        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        private void MenuItem_LegalReglementations(object sender, RoutedEventArgs e)
         {
             ChangeContent(ContentTypes.LegalReglementations);
+        }
+
+        private void MenuItem_CashBooksOther(object sender, RoutedEventArgs e)
+        {
+            ShowCashBookListScreen(CashBookListType.Other);
+        }
+
+        private void MenuItem_CashBooksLei(object sender, RoutedEventArgs e)
+        {
+            ShowCashBookListScreen(CashBookListType.Lei);
+        }
+
+        private void ShowCashBookListScreen(CashBookListType type)
+        {
+            ChangeContent(ContentTypes.CashBookList);
+            Mediator.Instance.SendMessage(MediatorActionType.SetCashBookListType, type);
         }
 
     }

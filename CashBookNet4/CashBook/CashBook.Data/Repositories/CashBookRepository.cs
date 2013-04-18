@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CashBook.Common;
 
 namespace CashBook.Data.Repositories
 {
@@ -19,11 +20,21 @@ namespace CashBook.Data.Repositories
             }
         }
 
-        public List<UserCashBook> GetAll()
+        public List<UserCashBook> GetAll(CashBookListType cashBookListType)
         {
             using (var context = GetContext())
             {
-                return context.UserCashBooks.ToList();
+
+                var list= context.UserCashBooks.ToList();
+                if (cashBookListType == CashBookListType.Lei)
+                {
+                    list = list.Where(p => p.CoinType.ToLower() == "lei").ToList();
+                }
+                else if (cashBookListType == CashBookListType.Other)
+                {
+                    list = list.Where(p => p.CoinType.ToLower() != "lei").ToList();
+                }
+                return list;
             }
         }
 
@@ -63,19 +74,68 @@ namespace CashBook.Data.Repositories
         {
             using (var context = GetContext())
             {
-                //the same context needs to load this entity
-                var existingEntity = GetCashBook(id, context);
-                if (existingEntity != null)
+                try
                 {
-                    context.UserCashBooks.DeleteObject(existingEntity);
+                    //the same context needs to load this entity
+                    var existingEntity = GetCashBook(id, context);
+                    if (existingEntity != null)
+                    {
+                        foreach (var item in existingEntity.RegistruCasaZis.ToArray())
+                        {
+                            foreach (var it in item.RegistruCasaIntrares.ToArray())
+                            {
+                                context.CashBookEntries.DeleteObject(it);
+
+                            }
+                            context.DailyCashBooks.DeleteObject(item);
+                        }
+                        context.UserCashBooks.DeleteObject(existingEntity);
+                    }
+                    Commit(context);
                 }
-                Commit(context);
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
         }
 
         private UserCashBook GetCashBook(long id, CashBookContainer context)
         {
             return context.UserCashBooks.FirstOrDefault(p => p.Id == id);
+        }
+
+
+        public decimal GetInitialBalanceForDay(long selectedCashBookId, DateTime selectedDate)
+        {
+            using (var context = GetContext())
+            {
+                try
+                {
+                    decimal initialBalance = GetPreviousBalance(context, Utils.DateTimeToDay(selectedDate), selectedCashBookId);
+                    return initialBalance;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        private decimal GetPreviousBalance(CashBookContainer context, DateTime currentDate, long selectedCashBookId)
+        {
+            //get all the previous registers
+            var previousRegisters = context.DailyCashBooks.Where(p => p.Data < currentDate && p.RegistruCasaId == selectedCashBookId).ToList();
+            decimal totalSum = 0;
+            previousRegisters.ForEach(p => totalSum += p.DeltaBalance);
+
+            //take the initial balance of the cashbook into account
+            var currentCashBook = context.UserCashBooks.FirstOrDefault(p => p.Id == selectedCashBookId);
+            if (currentCashBook.InitialBalanceDate < currentDate)
+            {
+                totalSum += currentCashBook.InitialBalance;
+            }
+            return totalSum;
         }
     }
 }

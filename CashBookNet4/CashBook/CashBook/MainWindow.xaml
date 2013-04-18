@@ -12,13 +12,13 @@
                 <MenuItem Header="Iesire"></MenuItem>
             </MenuItem>
             <MenuItem Header="Cataloage">
-                <MenuItem Header="Date Societate" Click="MenuItem_Click_1"></MenuItem>
-                <MenuItem Header="Definire registre de casa" Click="MenuItem_Click_2"></MenuItem>
-                <MenuItem Header="Reglementari legale" Click="MenuItem_Click_3"></MenuItem>
+                <MenuItem Header="Date Societate" Click="MenuItem_CompanyData"></MenuItem>
+                <MenuItem Header="Definire registre de casa" Click="MenuItem_CashBooks"></MenuItem>
+                <MenuItem Header="Reglementari legale" Click="MenuItem_LegalReglementations"></MenuItem>
             </MenuItem>
             <MenuItem Header="Registre de casa">
-                <MenuItem Header="Registru de casa in lei"></MenuItem>
-                <MenuItem Header="Registru de casa in valuta"></MenuItem>
+                <MenuItem Header="Registru de casa in lei"  Click="MenuItem_CashBooksLei"> </MenuItem>
+                <MenuItem Header="Registru de casa in valuta"  Click="MenuItem_CashBooksOther"></MenuItem>
             </MenuItem>
 
         </Menu>

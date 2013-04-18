@@ -663,12 +663,16 @@ namespace CashBook.Data.Model
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="data">Initial value of the Data property.</param>
         /// <param name="registruCasaId">Initial value of the RegistruCasaId property.</param>
-        public static DailyCashBook CreateDailyCashBook(global::System.Int64 id, global::System.DateTime data, global::System.Int64 registruCasaId)
+        /// <param name="deltaBalance">Initial value of the DeltaBalance property.</param>
+        /// <param name="totalBalance">Initial value of the TotalBalance property.</param>
+        public static DailyCashBook CreateDailyCashBook(global::System.Int64 id, global::System.DateTime data, global::System.Int64 registruCasaId, global::System.Decimal deltaBalance, global::System.Decimal totalBalance)
         {
             DailyCashBook dailyCashBook = new DailyCashBook();
             dailyCashBook.Id = id;
             dailyCashBook.Data = data;
             dailyCashBook.RegistruCasaId = registruCasaId;
+            dailyCashBook.DeltaBalance = deltaBalance;
+            dailyCashBook.TotalBalance = totalBalance;
             return dailyCashBook;
         }
 
@@ -750,6 +754,54 @@ namespace CashBook.Data.Model
         private global::System.Int64 _RegistruCasaId;
         partial void OnRegistruCasaIdChanging(global::System.Int64 value);
         partial void OnRegistruCasaIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal DeltaBalance
+        {
+            get
+            {
+                return _DeltaBalance;
+            }
+            set
+            {
+                OnDeltaBalanceChanging(value);
+                ReportPropertyChanging("DeltaBalance");
+                _DeltaBalance = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DeltaBalance");
+                OnDeltaBalanceChanged();
+            }
+        }
+        private global::System.Decimal _DeltaBalance;
+        partial void OnDeltaBalanceChanging(global::System.Decimal value);
+        partial void OnDeltaBalanceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal TotalBalance
+        {
+            get
+            {
+                return _TotalBalance;
+            }
+            set
+            {
+                OnTotalBalanceChanging(value);
+                ReportPropertyChanging("TotalBalance");
+                _TotalBalance = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TotalBalance");
+                OnTotalBalanceChanged();
+            }
+        }
+        private global::System.Decimal _TotalBalance;
+        partial void OnTotalBalanceChanging(global::System.Decimal value);
+        partial void OnTotalBalanceChanged();
 
         #endregion
 
@@ -1188,6 +1240,30 @@ namespace CashBook.Data.Model
         private global::System.String _CashierName;
         partial void OnCashierNameChanging(global::System.String value);
         partial void OnCashierNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> InitialBalanceDate
+        {
+            get
+            {
+                return _InitialBalanceDate;
+            }
+            set
+            {
+                OnInitialBalanceDateChanging(value);
+                ReportPropertyChanging("InitialBalanceDate");
+                _InitialBalanceDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("InitialBalanceDate");
+                OnInitialBalanceDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _InitialBalanceDate;
+        partial void OnInitialBalanceDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnInitialBalanceDateChanged();
 
         #endregion
 

@@ -56,6 +56,8 @@ namespace CashBook.ViewModels
                 }
             }
             CashBookEntries.Add(new CashBookEntryUI());
+
+
             UpdateBalance(null);
             //AddFakeItems();
             UpdateItemState();
@@ -194,7 +196,7 @@ namespace CashBook.ViewModels
             get { return totalBalance; }
             set
             {
-                if (totalBalance != value)
+                //if (totalBalance != value)
                 {
                     totalBalance = value;
                     //this.NotifyPropertyChanged("TotalBalance");
@@ -210,7 +212,7 @@ namespace CashBook.ViewModels
             get { return totalBalanceString; }
             set
             {
-                if (totalBalanceString != value)
+                //if (totalBalanceString != value)
                 {
                     totalBalanceString = value;
                     this.NotifyPropertyChanged("TotalBalanceString");
@@ -227,7 +229,7 @@ namespace CashBook.ViewModels
         {
             TotalBalanceString = TotalBalance.ToString("0.00");
         }
-     
+
         public void AddNewItem()
         {
             //navigate to the next item or add a new one
@@ -251,6 +253,12 @@ namespace CashBook.ViewModels
             decimal totalSum = 0;
             CashBookEntries.ToList().ForEach(p => totalSum += p.Incasari);
             CashBookEntries.ToList().ForEach(p => totalSum -= p.Plati);
+
+            if (selectedCashBook != null)
+            {
+                totalSum += cashBookRepository.GetInitialBalanceForDay(selectedCashBook.Id, SelectedDate);
+                //totalSum += selectedCashBook.InitialBalance;
+            }
             TotalBalance = totalSum;
         }
 
@@ -259,6 +267,8 @@ namespace CashBook.ViewModels
         {
             selectedCashBook = param as UserCashBook;
             this.Title = "Editare Registru de casa (" + selectedCashBook.Name + ")";
+
+            UpdateBalance(null);
         }
 
         public ICommand LegalReglementationsCommand { get; set; }
@@ -332,6 +342,10 @@ namespace CashBook.ViewModels
             if (itemToDelete != null)
             {
                 CashBookEntries.Remove(itemToDelete);
+                if (CashBookEntries.Count == 0)
+                {
+                    AddNewItem();
+                }
             }
         }
 
