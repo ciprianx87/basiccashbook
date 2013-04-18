@@ -31,12 +31,10 @@ namespace CashBook.ViewModels
             EditCommand = new DelegateCommand(Edit, CanEdit);
             SelectCommand = new DelegateCommand(Select, CanSelect);
 
+            Mediator.Instance.Register(MediatorActionType.SetCashBookListType, SetCashBookListType);
             Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
 
             cashBookRepository = new CashBookRepository();
-
-            LoadData();
-
         }
 
         #region properties
@@ -55,16 +53,28 @@ namespace CashBook.ViewModels
         #endregion
 
         #region methods
+        CashBookListType cashBookListType;
+        public void SetCashBookListType(object param)
+        {
+            if (param is CashBookListType)
+            {
+                cashBookListType = (CashBookListType)param;
+                LoadData();
+            }
+        }
+
         public void RefreshList(object param)
         {
             LoadData();
         }
+
+
         private void LoadData()
         {
             try
             {
                 CashBooks = new ObservableCollection<UserCashBook>();
-                var existingCashBooks = cashBookRepository.GetAll();
+                var existingCashBooks = cashBookRepository.GetAll(cashBookListType);
                 if (existingCashBooks != null)
                 {
                     foreach (var item in existingCashBooks)
@@ -143,8 +153,16 @@ namespace CashBook.ViewModels
 
         public void Delete(object param)
         {
-            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.DeleteDialog);
-            Mediator.Instance.SendMessage(MediatorActionType.SetEntityToDelete, param);
+            try
+            {
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.DeleteDialog);
+                Mediator.Instance.SendMessage(MediatorActionType.SetEntityToDelete, param);
+            }
+            catch (Exception ex)
+            {
+                WindowHelper.OpenErrorDialog("Registrul nu a putut fi sters");
+
+            }
         }
 
         public bool CanDelete(object param)
@@ -155,6 +173,7 @@ namespace CashBook.ViewModels
         public override void Dispose()
         {
             Mediator.Instance.Unregister(MediatorActionType.RefreshList, RefreshList);
+            Mediator.Instance.Unregister(MediatorActionType.SetCashBookListType, SetCashBookListType);
             base.Dispose();
         }
 

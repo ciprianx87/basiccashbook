@@ -55,6 +55,6 @@
         <TextBlock Grid.Row="7" Text="Contul:"/>
         <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Account}"/>
         <Button Grid.Row="8" Content="Salvare" Margin="20,20,0,0"  Command="{Binding SaveCommand}" Width="150"/>
-        <Button Grid.Row="8" Grid.Column="1" Content="Inchidere" Margin="20,20,0,0"  Command="{Binding CloseCommand}" Width="150" HorizontalAlignment="Left" />
+        <Button Grid.Row="8" Grid.Column="1" Content="Inchidere" Margin="20,20,0,0"  Command="{Binding CancelCommand}" Width="150" HorizontalAlignment="Left" />
     </Grid>
 </Window>

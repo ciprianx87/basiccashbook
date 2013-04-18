@@ -10,9 +10,10 @@ namespace CashBook.Data.Interfaces
     public interface ICashBookRepository
     {
         UserCashBook Get(Int64 id);
-        List<UserCashBook> GetAll();
+        List<UserCashBook> GetAll(CashBookListType cashBookListType);
         void Create(UserCashBook item);
         void Edit(Int64 id, UserCashBook item);
         void Delete(Int64 id);
+        decimal GetInitialBalanceForDay(long selectedCashBookId, DateTime SelectedDate);
     }
 }

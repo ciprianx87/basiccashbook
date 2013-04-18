@@ -14,4 +14,11 @@ namespace CashBook.Data.Model
         LegalReglementations,
         CashBookList
     }
+
+    public enum CashBookListType
+    {
+        Lei,
+        Other,
+        Any
+    }
 }
