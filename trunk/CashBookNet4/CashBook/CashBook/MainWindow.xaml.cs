@@ -83,7 +83,7 @@ namespace CashBook
                     contentControl.Content = new CashBook.Controls.CashBook();
                     break;
                 case ContentTypes.MainContent:
-                    contentControl.Content = new CashBook.Controls.MainContent();
+                    //contentControl.Content = new CashBook.Controls.MainContent();
                     break;
                 case ContentTypes.CompanyDetails:
                     contentControl.Content = new CashBook.Controls.CompanyDataWindow();

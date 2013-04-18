@@ -8,7 +8,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Reglementari legale:" FontSize="30" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
+        <TextBlock Text="Reglementari legale:" Style="{DynamicResource TitleStyle}" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
         <TextBlock  Grid.Row="1"  TextWrapping="Wrap" Text="{Binding LegalReglementationsText}" />
 
         <Button Grid.Row="2" Content="Ok" Command="{Binding OkCommand}" Width="70" FontSize="16" HorizontalAlignment="Center"></Button>

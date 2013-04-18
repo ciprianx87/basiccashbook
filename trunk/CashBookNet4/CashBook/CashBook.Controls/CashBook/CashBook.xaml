@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:constants="clr-namespace:CashBook.Controls"
-             mc:Ignorable="d" 
-             Height="550" Width="800" Background="White" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+             mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}"
+             Height="550" Width="800"  VerticalAlignment="Top" HorizontalAlignment="Stretch">
     <UserControl.Resources>
         <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
             <Style.Triggers>
