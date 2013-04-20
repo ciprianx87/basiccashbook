@@ -168,7 +168,12 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Content="Sterge" Margin="0,0,10,0" Command="{Binding DataContext.DeleteCommand, ElementName=root}" CommandParameter="{Binding}" ClickMode="Press" />
+                                        <Button  Margin="0,0,10,0" Command="{Binding DataContext.DeleteCommand, ElementName=root}" CommandParameter="{Binding}" ClickMode="Press" Width="30" Height="20" >
+                                            <StackPanel>
+                                                <Image Source="/CashBook.Controls;component/Images/deleteButton3.png"  Stretch="Uniform"  Width="30" Height="15"/>
+                                                <TextBlock Text=""/>
+                                            </StackPanel>
+                                        </Button>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

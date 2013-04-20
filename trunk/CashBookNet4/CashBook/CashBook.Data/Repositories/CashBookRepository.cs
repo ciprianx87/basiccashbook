@@ -65,6 +65,7 @@ namespace CashBook.Data.Repositories
                     existingEntity.CoinType = item.CoinType;
                     existingEntity.InitialBalance = item.InitialBalance;
                     existingEntity.Location = item.Location;
+                    existingEntity.InitialBalanceDate = item.InitialBalanceDate;
                 }
                 Commit(context);
             }

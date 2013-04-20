@@ -11,5 +11,15 @@ namespace CashBook.Common
         {
             return date.Date;
         }
+
+        public static string DateTimeToString(DateTime date)
+        {
+            return date.ToString("yyyy-MM-dd hh:mm:ss");
+        }
+
+        public static string DateTimeToStringDateOnly(DateTime date)
+        {
+            return date.ToString("yyyy-MM-dd");
+        }
     }
 }

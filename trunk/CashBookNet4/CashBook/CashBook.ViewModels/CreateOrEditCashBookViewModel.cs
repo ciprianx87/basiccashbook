@@ -55,6 +55,22 @@ namespace CashBook.ViewModels
             }
         }
 
+
+        private DateTime? initialBalanceDate;
+        public DateTime? InitialBalanceDate
+        {
+            get { return initialBalanceDate; }
+            set
+            {
+                if (initialBalanceDate != value)
+                {
+                    initialBalanceDate = value;
+                    this.NotifyPropertyChanged("InitialBalanceDate");
+                }
+            }
+        }
+
+
         private string cashierName;
         public string CashierName
         {
@@ -127,6 +143,7 @@ namespace CashBook.ViewModels
                 CoinDecimals = currentEntity.CoinDecimals;
                 Name = currentEntity.Name;
                 InitialBalance = currentEntity.InitialBalance;
+                InitialBalanceDate = currentEntity.InitialBalanceDate;
             }
             else
             {
@@ -149,6 +166,7 @@ namespace CashBook.ViewModels
             currentEntity.CoinDecimals = CoinDecimals;
             currentEntity.Name = Name;
             currentEntity.InitialBalance = InitialBalance;
+            currentEntity.InitialBalanceDate = InitialBalanceDate;
         }
 
         public void Save(object param)
@@ -167,6 +185,7 @@ namespace CashBook.ViewModels
                         CoinDecimals = CoinDecimals,
                         Name = Name != null ? Name : "",
                         InitialBalance = InitialBalance,
+                        InitialBalanceDate = InitialBalanceDate
                     };
                     cashBookRepository.Create(cashBook);
                 }
