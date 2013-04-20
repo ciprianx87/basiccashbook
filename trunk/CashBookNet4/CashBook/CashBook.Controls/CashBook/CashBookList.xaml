@@ -117,12 +117,18 @@
                                         <Image Source="/CashBook.Controls;component/Images/deleteButton3.png" Stretch="Uniform"  Width="30" Height="14"/>
                                         <TextBlock Text=""/>
                                     </StackPanel>
+                                    <Button.ToolTip>
+                                        <TextBlock Text="Stergere"/>
+                                    </Button.ToolTip>
                                 </Button>
                                 <Button Command="{Binding DataContext.EditCommand, ElementName=root}" CommandParameter="{Binding}" Width="30" Height="20" >
                                     <StackPanel>
                                         <Image Source="/CashBook.Controls;component/Images/editButton.png"  Stretch="Uniform"  Width="30" Height="15"/>
                                         <TextBlock Text=""/>
                                     </StackPanel>
+                                    <Button.ToolTip>
+                                        <TextBlock Text="Editare"/>
+                                    </Button.ToolTip>
                                 </Button>
                             </StackPanel>
                         </DataTemplate>

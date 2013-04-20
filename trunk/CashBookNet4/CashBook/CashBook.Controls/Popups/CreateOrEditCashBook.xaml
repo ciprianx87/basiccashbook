@@ -44,8 +44,8 @@
         <TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding CoinType}"/>
         <TextBlock Grid.Row="3" Text="Zecimale Moneda:"/>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CoinDecimals}"/>
-       
-        
+
+
         <TextBlock Grid.Row="4" Text="Locatie:"/>
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Location}"/>
         <TextBlock Grid.Row="5" Text="Nume Casier:"/>
@@ -53,7 +53,10 @@
         <TextBlock Grid.Row="6" Text="Sold Initial:"/>
         <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding InitialBalance}"/>
         <TextBlock Grid.Row="7" Text="Data Sold Initial:"/>
-        <DatePicker Grid.Row="7" Grid.Column="1"  Text="Alege Data" SelectedDate="{Binding InitialBalanceDate, Mode=TwoWay}" FontSize="14" Width="150" HorizontalAlignment="Left" Margin="15,0,0,0"></DatePicker>
+        <StackPanel  Grid.Row="7" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,0">
+            <TextBox IsReadOnly="True"   Text="{Binding InitialBalanceDateString}"  FontWeight="Bold" />
+            <DatePicker Text="Alege Data" SelectedDate="{Binding InitialBalanceDate, Mode=TwoWay}" FontSize="14" Width="30" HorizontalAlignment="Left" ></DatePicker>
+        </StackPanel>
         <TextBlock Grid.Row="8" Text="Contul:"/>
         <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Account}"/>
         <Button Grid.Row="9" Content="Salvare" Margin="20,20,0,0"  Command="{Binding SaveCommand}" Width="150"/>

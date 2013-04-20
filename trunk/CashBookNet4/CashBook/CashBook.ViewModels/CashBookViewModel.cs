@@ -73,11 +73,11 @@ namespace CashBook.ViewModels
                     NrCrt = i
                 });
             }
-        }      
+        }
 
         void CashBookEntries_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {           
-            UpdateItemState();        
+        {
+            UpdateItemState();
         }
 
         private void UpdateItemState()
@@ -90,6 +90,67 @@ namespace CashBook.ViewModels
         }
 
         #region properties
+
+        private string currentBalanceInString;
+        public string CurrentBalanceInString
+        {
+            get { return currentBalanceInString; }
+            set
+            {
+                if (currentBalanceInString != value)
+                {
+                    currentBalanceInString = value;
+                    this.NotifyPropertyChanged("CurrentBalanceInString");
+                }
+            }
+        }
+
+        private decimal currentBalanceIn;
+        public decimal CurrentBalanceIn
+        {
+            get { return currentBalanceIn; }
+            set
+            {
+                //if (currentBalanceIn != value)
+                {
+                    currentBalanceIn = value;
+                    this.NotifyPropertyChanged("CurrentBalanceIn");
+                }
+            }
+        }
+
+
+
+        private string currentBalanceOutString;
+        public string CurrentBalanceOutString
+        {
+            get { return currentBalanceOutString; }
+            set
+            {
+                if (currentBalanceOutString != value)
+                {
+                    currentBalanceOutString = value;
+                    this.NotifyPropertyChanged("CurrentBalanceOutString");
+                }
+            }
+        }
+
+
+        private decimal currentBalanceOut;
+        public decimal CurrentBalanceOut
+        {
+            get { return currentBalanceOut; }
+            set
+            {
+                //if (currentBalanceOut != value)
+                {
+                    currentBalanceOut = value;
+                    this.NotifyPropertyChanged("CurrentBalanceOut");
+                }
+            }
+        }
+
+
 
         private CashBookEntryUI selectedItem;
         public CashBookEntryUI SelectedItem
@@ -131,6 +192,7 @@ namespace CashBook.ViewModels
                 {
                     selectedDate = value;
                     this.NotifyPropertyChanged("SelectedDate");
+                    SelectedDateString = Utils.DateTimeToStringDateOnly(selectedDate);
                     LoadDataForDay(selectedDate);
                 }
             }
@@ -209,6 +271,21 @@ namespace CashBook.ViewModels
         }
 
 
+        private string selectedDateString;
+        public string SelectedDateString
+        {
+            get { return selectedDateString; }
+            set
+            {
+                if (selectedDateString != value)
+                {
+                    selectedDateString = value;
+                    this.NotifyPropertyChanged("SelectedDateString");
+                }
+            }
+        }
+
+
 
         #endregion
 
@@ -216,7 +293,9 @@ namespace CashBook.ViewModels
 
         private void UpdateStringValues()
         {
-            TotalBalanceString = TotalBalance.ToString("0.00");
+            TotalBalanceString = Utils.DecimalToString(TotalBalance, 2);
+            CurrentBalanceInString = Utils.DecimalToString(CurrentBalanceIn, 2);
+            CurrentBalanceOutString = Utils.DecimalToString(CurrentBalanceOut, 2);
         }
 
         public void AddNewItem()
@@ -240,8 +319,12 @@ namespace CashBook.ViewModels
         public void UpdateBalance(object param)
         {
             decimal totalSum = 0;
-            CashBookEntries.ToList().ForEach(p => totalSum += p.Incasari);
-            CashBookEntries.ToList().ForEach(p => totalSum -= p.Plati);
+            CurrentBalanceOut = 0;
+            CurrentBalanceIn = 0;
+            CashBookEntries.ToList().ForEach(p => CurrentBalanceIn += p.Incasari);
+            CashBookEntries.ToList().ForEach(p => CurrentBalanceOut += p.Plati);
+
+            totalSum = CurrentBalanceIn - CurrentBalanceOut;
 
             if (SelectedCashBook != null)
             {
@@ -338,7 +421,7 @@ namespace CashBook.ViewModels
             }
             UpdateBalance(null);
             UpdateItemState();
-            
+
         }
 
         public bool CanDelete(object param)

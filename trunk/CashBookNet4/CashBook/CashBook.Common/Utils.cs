@@ -19,7 +19,7 @@ namespace CashBook.Common
 
         public static string DateTimeToStringDateOnly(DateTime date)
         {
-            return date.ToString("yyyy-MM-dd");
+            return date.ToString("dd.MM.yyyy");
         }
 
         public static string DecimalToString(decimal number, int nrDecimals)
