@@ -10,5 +10,27 @@
 
     <Style TargetType="Window" >
         <Setter Property="Background" Value="#FFF0F0F0"/>
+        <Setter Property="Width" Value="1100"/>
+    </Style>
+    <Style TargetType="Button" x:Key="DeleteButtonStyle">
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel>
+                    <Image Source="/CashBook.Controls;component/Images/deleteButton3.png" Stretch="Uniform"  Width="30" Height="15"/>
+                    <TextBlock Text=""/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="EditButtonStyle">
+        <Setter Property="Content">
+            <Setter.Value>
+                <StackPanel>
+                    <Image Source="/CashBook.Controls;component/Images/editButton.png" Stretch="Uniform"  Width="30" Height="15"/>
+                    <TextBlock Text=""/>
+                </StackPanel>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

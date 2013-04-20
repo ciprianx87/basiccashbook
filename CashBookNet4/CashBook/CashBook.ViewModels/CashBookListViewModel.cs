@@ -79,6 +79,7 @@ namespace CashBook.ViewModels
                 {
                     foreach (var item in existingCashBooks)
                     {
+                        item.InitialBalanceDateString = item.InitialBalanceDate.HasValue ? Utils.DateTimeToStringDateOnly(item.InitialBalanceDate.Value) : "";
                         CashBooks.Add(item);
                     }
                 }

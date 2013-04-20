@@ -13,4 +13,15 @@ namespace CashBook.Data.Model
 
         }
     }
+    public partial class UserCashBook
+    {
+
+        public string InitialBalanceDateString { get; set; }
+        public UserCashBook()
+        {
+
+        }
+    }
+
+
 }
