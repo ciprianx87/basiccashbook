@@ -66,6 +66,24 @@ namespace CashBook.ViewModels
                 {
                     initialBalanceDate = value;
                     this.NotifyPropertyChanged("InitialBalanceDate");
+                    if (initialBalanceDate.HasValue)
+                    {
+                        InitialBalanceDateString = Utils.DateTimeToStringDateOnly(initialBalanceDate.Value);
+                    }
+                }
+            }
+        }
+
+        private string initialBalanceDateString;
+        public string InitialBalanceDateString
+        {
+            get { return initialBalanceDateString; }
+            set
+            {
+                if (initialBalanceDateString != value)
+                {
+                    initialBalanceDateString = value;
+                    this.NotifyPropertyChanged("InitialBalanceDateString");
                 }
             }
         }

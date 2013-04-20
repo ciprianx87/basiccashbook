@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:constants="clr-namespace:CashBook.Controls"
              mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}"
-             Height="500" Width="800" >
+             >
     <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Setter  Property="FontSize" Value="20"/>
@@ -27,7 +27,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="350"/>
         </Grid.ColumnDefinitions>
         <TextBlock Text="Detalii societate:"  Style="{DynamicResource TitleStyle}" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
         <TextBlock Grid.Row="1" Text="Nume:"/>
@@ -36,6 +36,6 @@
         <TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding CompanyAddress}"/>
         <TextBlock Grid.Row="3" Text="CUI:"/>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CompanyCui}"/>
-        <Button Grid.Row="4" Content="Salvare" Margin="20,20,0,0"  Command="{Binding SaveCommand}"/>
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="Salvare"  Command="{Binding SaveCommand}" Style="{DynamicResource SaveButton}" HorizontalAlignment="Center" Margin="0,20,0,0"/>
     </Grid>
 </UserControl>

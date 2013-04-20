@@ -54,10 +54,11 @@ namespace CashBook.ViewModels
             try
             {
                 settingsRepository.AddOrUpdateSetting(Constants.LegalRelementationsKey, LegalReglementationsText);
+                WindowHelper.OpenInformationDialog("Informatia a fost salvata");
             }
             catch (Exception ex)
             {
-
+                WindowHelper.OpenErrorDialog("Eroare la salvarea informatiei");
             }
         }
 
