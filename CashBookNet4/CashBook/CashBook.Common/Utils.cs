@@ -21,5 +21,16 @@ namespace CashBook.Common
         {
             return date.ToString("yyyy-MM-dd");
         }
+
+        public static string DecimalToString(decimal number, int nrDecimals)
+        {
+            if (number == 0)
+            {
+                return "0";
+            }
+            string format = "0.";
+            format = format.PadRight(nrDecimals + 2, '0');
+            return number.ToString(format);
+        }
     }
 }

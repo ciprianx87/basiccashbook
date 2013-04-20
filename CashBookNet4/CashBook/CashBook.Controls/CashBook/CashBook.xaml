@@ -5,14 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:constants="clr-namespace:CashBook.Controls"
              mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}"
-             Height="550" Width="800"  VerticalAlignment="Top" HorizontalAlignment="Stretch">
+             VerticalAlignment="Top" HorizontalAlignment="Stretch">
     <UserControl.Resources>
-        <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+        <Style TargetType="{x:Type TextBox}" x:Key="StandardTextBox" >
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="true">
                     <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
                 </Trigger>
             </Style.Triggers>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <Style TargetType="TextBlock"  x:Key="StandardTextBlock">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="18"/>
         </Style>
     </UserControl.Resources>
     <Grid x:Name="root">
@@ -25,47 +33,57 @@
         <Grid Grid.Row="0">
             <Button Content="Reglementari Legale" Command="{Binding LegalReglementationsCommand}" HorizontalAlignment="Right" Width="150"/>
         </Grid>
-        <!--<Grid Grid.Row="1" Visibility="Collapsed">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        <Grid Grid.Row="1" DataContext="{Binding SelectedCashBook}">
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="15"/>
+                    <Setter Property="FontWeight" Value="Normal"/>
+                </Style>
+            </Grid.Resources>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Creare Registru de casa:" FontSize="30" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Row="1" Text="Nume:"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
+            <Grid Grid.Column="0" Visibility="Visible">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="170"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="1" Text="Registru de casa:"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
+                <TextBlock Grid.Row="2" Text="Moneda:" />
+                <TextBlock Grid.Row="2" Grid.Column="1"  Text="{Binding CoinType}"/>
+                <TextBlock Grid.Row="4" Text="Locatie:"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Location}"/>
+            </Grid>
+            <Grid Grid.Column="1" Visibility="Visible">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="170"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="1" Text="Nume Casier:"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CashierName}"/>
+                <TextBlock Grid.Row="2" Text="Sold Initial ziua curenta:"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding DataContext.InitialBalanceForDayString, ElementName=root}"/>
+                <TextBlock Grid.Row="3" Text="Contul:"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Account}"/>
 
-            <TextBlock Grid.Row="2" Text="Moneda:" />
-            <TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding CoinType}"/>
-            <TextBlock Grid.Row="3" Text="Zecimale Moneda:"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CoinDecimals}"/>
+            </Grid>
+        </Grid>
 
-
-            <TextBlock Grid.Row="4" Text="Locatie:"/>
-            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Location}"/>
-            <TextBlock Grid.Row="5" Text="Nume Casier:"/>
-            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding CashierName}"/>
-            <TextBlock Grid.Row="6" Text="Sold Initial:"/>
-            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding InitialBalance}"/>
-            <TextBlock Grid.Row="7" Text="Contul:"/>
-            <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Account}"/>
-
-        </Grid>-->
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Margin="0,10,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -76,14 +94,14 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Data:"/>
-                    <DatePicker Text="Alege Data" SelectedDate="{Binding SelectedDate, Mode=TwoWay}" FontSize="24"></DatePicker>
+                    <TextBlock Text="Data:" VerticalAlignment="Center" FontSize="25" FontWeight="Bold"/>
+                    <DatePicker Text="Alege Data" SelectedDate="{Binding SelectedDate, Mode=TwoWay}" FontSize="24" Margin="10,0,0,0"></DatePicker>
                     <Button Content="Alege Data" x:Name="btnPickDate" Visibility="Collapsed"></Button>
                 </StackPanel>
                 <Button Grid.Row="1" Content="Adauga Intrare noua" Command="{Binding NewRowCommand}" Width="130" HorizontalAlignment="Left" Visibility="Collapsed"/>
 
             </Grid>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Margin="0,10,0,0">
                 <Grid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">
                         <EventSetter Event="Selected" Handler="DataGridCell_Selected">
@@ -97,10 +115,7 @@
                           >
                     <!--SelectedItem="{Binding SelectedItem, Mode=TwoWay}"-->
                     <DataGrid.Resources>
-                        <Style TargetType="TextBlock" >
-                            <Setter Property="TextAlignment" Value="Center"/>
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                        </Style>
+                                           
                     </DataGrid.Resources>
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Width="50">
@@ -120,31 +135,31 @@
                             </DataGridTemplateColumn.HeaderTemplate>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
-                                    <TextBlock Text="{Binding NrCrt}"/>
+                                    <TextBlock Text="{Binding NrCrt}" Style="{StaticResource StandardTextBlock}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="100" Header="Nr Act Casa">
+                        <DataGridTemplateColumn Width="150" Header="Nr Act Casa">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <TextBox x:Name="txtContent" Text="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Path=NrActCasa,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource ResourceKey=TextBoxStyle}"/>
+                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="100" Header="Nr Anexe">
+                        <DataGridTemplateColumn Width="150" Header="Nr Anexe">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate x:Name="dtNrAnexe" >
                                     <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=NrAnexe,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource ResourceKey=TextBoxStyle}"/>
+                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="250" Header="Explicatii">
+                        <DataGridTemplateColumn Width="*" Header="Explicatii">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <TextBox  x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Explicatii,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource ResourceKey=TextBoxStyle}"/>
+                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -152,7 +167,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=Incasari,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource ResourceKey=TextBoxStyle}"/>
+                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -160,11 +175,11 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Path=Plati,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource ResourceKey=TextBoxStyle}"/>
+                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="*" Header="Actiuni" >
+                        <DataGridTemplateColumn Width="120" Header="Actiuni" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal">
