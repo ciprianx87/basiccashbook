@@ -59,7 +59,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="180" Header="Nume">
+                <DataGridTemplateColumn Width="240" Header="Nume">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <TextBlock Text="{Binding Name}" Style="{StaticResource StandardTextBlock}"/>
