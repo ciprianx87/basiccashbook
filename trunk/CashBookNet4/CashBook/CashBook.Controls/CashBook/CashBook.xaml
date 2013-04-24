@@ -57,8 +57,8 @@
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="1" Text="Registru de casa:"/>
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
+                <TextBlock Grid.Row="1" Text="Registru de casa:" FontWeight="Bold"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}" FontWeight="Bold"/>
                 <TextBlock Grid.Row="2" Text="Moneda:" />
                 <TextBlock Grid.Row="2" Grid.Column="1"  Text="{Binding CoinType}"/>
                 <TextBlock Grid.Row="4" Text="Locatie:"/>
@@ -210,16 +210,16 @@
             </Grid.RowDefinitions>
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Rulaj curent Intrari:" FontSize="25"/>
-                    <TextBlock Text="{Binding CurrentBalanceInString, FallbackValue='eroare'}" FontSize="25" FontWeight="Bold" />
+                    <TextBlock Text="Rulaj curent Intrari:" FontSize="20"/>
+                    <TextBlock Text="{Binding CurrentBalanceInString, FallbackValue='eroare'}" FontSize="20" FontWeight="Bold"  Margin="10,0,0,0"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Rulaj curent Plati:" FontSize="25"/>
-                    <TextBlock Text="{Binding CurrentBalanceOutString, FallbackValue='eroare'}" FontSize="25" FontWeight="Bold" />
+                    <TextBlock Text="Rulaj curent Plati:" FontSize="20"/>
+                    <TextBlock Text="{Binding CurrentBalanceOutString, FallbackValue='eroare'}" FontSize="20" FontWeight="Bold" Margin="10,0,0,0" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Sold Final:" FontSize="35"/>
-                    <TextBlock Text="{Binding TotalBalanceString, FallbackValue='eroare'}" FontSize="35" FontWeight="Bold" />
+                    <TextBlock Text="Sold Final:" FontSize="25"/>
+                    <TextBlock Text="{Binding TotalBalanceString, FallbackValue='eroare'}" FontSize="25" FontWeight="Bold"  Margin="10,0,0,0"/>
                 </StackPanel>
             </StackPanel>
             <Button Content="Salvare" Grid.Row="1" Command="{Binding SaveCommand}" Style="{DynamicResource SaveButton}"/>

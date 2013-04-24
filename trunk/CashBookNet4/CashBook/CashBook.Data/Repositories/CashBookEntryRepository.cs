@@ -70,12 +70,12 @@ namespace CashBook.Data.Repositories
             }
         }
 
-        public List<CashBookEntry> GetEntriesForDay(DateTime dateTime)
+        public List<CashBookEntry> GetEntriesForDay(Int64 selectedCashBookId, DateTime dateTime)
         {
             using (var context = GetContext())
             {
                 var dateOnly = Utils.DateTimeToDay(dateTime);
-                var registryForDay = context.DailyCashBooks.FirstOrDefault(p => p.Data == dateOnly);
+                var registryForDay = context.DailyCashBooks.FirstOrDefault(p => p.Data == dateOnly && p.RegistruCasaId == selectedCashBookId);
                 if (registryForDay != null)
                 {
                     return context.CashBookEntries.Where(p => p.RegistruCasaZiId == registryForDay.Id).ToList();

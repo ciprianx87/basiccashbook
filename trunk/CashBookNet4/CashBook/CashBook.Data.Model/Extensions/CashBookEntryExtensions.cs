@@ -17,6 +17,7 @@ namespace CashBook.Data.Model
     {
 
         public string InitialBalanceDateString { get; set; }
+        public string InitialBalanceString { get; set; }
         public UserCashBook()
         {
 

@@ -97,7 +97,7 @@
                 <DataGridTemplateColumn Width="100" Header="Sold Initial">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding InitialBalance}"  Style="{StaticResource StandardTextBlock}"/>
+                            <TextBlock Text="{Binding InitialBalanceString}"  Style="{StaticResource StandardTextBlock}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

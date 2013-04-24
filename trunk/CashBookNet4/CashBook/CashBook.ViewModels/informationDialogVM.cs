@@ -7,14 +7,17 @@ using CashBook.ViewModels;
 using CashBook.Common.Mediator;
 using CashBook.Data.Model;
 using CashBook.Data;
+using System.Timers;
+using System.Windows.Threading;
 
 namespace CashBook.ViewModels
 {
     public class InformationDialogVM : BaseViewModel, IDisposable
     {
         #region Fields
+        DispatcherTimer dt;
         #endregion
-
+       
         #region Constructor
 
         public InformationDialogVM()
@@ -22,6 +25,18 @@ namespace CashBook.ViewModels
             InitializeCommands();
             Mediator.Instance.Register(MediatorActionType.SetInformationPopupMessage, SetInformationPopupMessage);
             this.Title = "Informatie";
+          
+            dt = new DispatcherTimer(DispatcherPriority.Normal);
+            dt.Tick += new EventHandler(dt_Tick);
+            dt.Interval = TimeSpan.FromMilliseconds(1500);
+            dt.Start();
+        }
+
+        void dt_Tick(object sender, EventArgs e)
+        {
+            dt.Tick -= new EventHandler(dt_Tick);
+            dt.Stop();
+            OK(null);
         }
 
         private void InitializeCommands()
