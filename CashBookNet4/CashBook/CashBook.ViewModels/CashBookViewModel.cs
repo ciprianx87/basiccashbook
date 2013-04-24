@@ -39,7 +39,6 @@ namespace CashBook.ViewModels
             cashBookRepository = new CashBookRepository();
             cashBookEntryRepository = new CashBookEntryRepository();
 
-            SelectedDate = DateTime.Now;
             canSave = true;
         }
         private bool canSave = false;
@@ -47,7 +46,7 @@ namespace CashBook.ViewModels
         {
             CashBookEntries = new ObservableCollection<CashBookEntryUI>();
 
-            var existingCashBookEntries = cashBookEntryRepository.GetEntriesForDay(dateTime);
+            var existingCashBookEntries = cashBookEntryRepository.GetEntriesForDay(SelectedCashBook.Id, dateTime);
             if (existingCashBookEntries != null)
             {
                 foreach (var item in existingCashBookEntries)
@@ -293,9 +292,9 @@ namespace CashBook.ViewModels
 
         private void UpdateStringValues()
         {
-            TotalBalanceString = Utils.DecimalToString(TotalBalance, 2);
-            CurrentBalanceInString = Utils.DecimalToString(CurrentBalanceIn, 2);
-            CurrentBalanceOutString = Utils.DecimalToString(CurrentBalanceOut, 2);
+            TotalBalanceString = DecimalConvertor.Instance.DecimalToString(TotalBalance);
+            CurrentBalanceInString = DecimalConvertor.Instance.DecimalToString(CurrentBalanceIn);
+            CurrentBalanceOutString = DecimalConvertor.Instance.DecimalToString(CurrentBalanceOut);
         }
 
         public void AddNewItem()
@@ -329,7 +328,7 @@ namespace CashBook.ViewModels
             if (SelectedCashBook != null)
             {
                 var initialBalanceForDayDecimal = cashBookRepository.GetInitialBalanceForDay(SelectedCashBook.Id, SelectedDate);
-                InitialBalanceForDayString = Utils.DecimalToString(initialBalanceForDayDecimal, 2);
+                InitialBalanceForDayString = DecimalConvertor.Instance.DecimalToString(initialBalanceForDayDecimal);
                 totalSum += initialBalanceForDayDecimal;
             }
             TotalBalance = totalSum;
@@ -339,7 +338,9 @@ namespace CashBook.ViewModels
         {
             SelectedCashBook = param as UserCashBook;
             this.Title = "Editare Registru de casa (" + SelectedCashBook.Name + ")";
-
+            DecimalConvertor.Instance.SetNumberOfDecimals(SelectedCashBook.CoinDecimals);
+         
+            SelectedDate = DateTime.Now;
             UpdateBalance(null);
         }
 

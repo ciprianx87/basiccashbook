@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Globalization;
 
 namespace CashBook.Common
 {
@@ -22,15 +23,6 @@ namespace CashBook.Common
             return date.ToString("dd.MM.yyyy");
         }
 
-        public static string DecimalToString(decimal number, int nrDecimals)
-        {
-            if (number == 0)
-            {
-                return "0";
-            }
-            string format = "0.";
-            format = format.PadRight(nrDecimals + 2, '0');
-            return number.ToString(format);
-        }
+      
     }
 }
