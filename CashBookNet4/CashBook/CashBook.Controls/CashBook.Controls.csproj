@@ -52,6 +52,9 @@
     <Compile Include="CashBook\CashBook.xaml.cs">
       <DependentUpon>CashBook.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CashBook\Report.xaml.cs">
+      <DependentUpon>Report.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CompanyDataWindow.xaml.cs">
       <DependentUpon>CompanyDataWindow.xaml</DependentUpon>
     </Compile>
@@ -123,6 +126,10 @@
     <Page Include="CashBook\CashBook.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CashBook\Report.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CompanyDataWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

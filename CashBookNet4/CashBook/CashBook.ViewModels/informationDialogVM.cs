@@ -9,6 +9,7 @@ using CashBook.Data.Model;
 using CashBook.Data;
 using System.Timers;
 using System.Windows.Threading;
+using CashBook.Common;
 
 namespace CashBook.ViewModels
 {
@@ -28,7 +29,7 @@ namespace CashBook.ViewModels
           
             dt = new DispatcherTimer(DispatcherPriority.Normal);
             dt.Tick += new EventHandler(dt_Tick);
-            dt.Interval = TimeSpan.FromMilliseconds(1500);
+            dt.Interval = TimeSpan.FromMilliseconds(AppSettings.InformationPopupCloseInterval);
             dt.Start();
         }
 

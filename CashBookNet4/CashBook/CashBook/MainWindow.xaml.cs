@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CashBook.Common.Mediator;
 using CashBook.Controls.Popups;
+using CashBook.Common;
 
 namespace CashBook
 {
@@ -33,10 +34,17 @@ namespace CashBook
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            InitSettings();
             PopupManager.Instance.Init();
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ShowCashBookListScreen(CashBookListType.Any);
         }
+
+        private void InitSettings()
+        {
+            AppSettings.InformationPopupCloseInterval = Properties.Settings.Default.InformationPopupCloseInterval;
+        }
+
         private void InitErrorHandling()
         {
             Dispatcher.UnhandledException += new System.Windows.Threading.DispatcherUnhandledExceptionEventHandler(Dispatcher_UnhandledException);
