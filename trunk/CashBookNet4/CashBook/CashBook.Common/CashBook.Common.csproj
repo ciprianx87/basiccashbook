@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DecimalConvertor.cs" />
     <Compile Include="Mediator\Enums.cs" />
