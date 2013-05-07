@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using CashBook.Common.Mediator;
 using CashBook.Controls.Popups;
 using CashBook.Common;
+using CashBook.Controls;
 
 namespace CashBook
 {
@@ -101,6 +102,9 @@ namespace CashBook
                     break;
                 case ContentTypes.CashBookList:
                     contentControl.Content = new CashBook.Controls.CashBookList();
+                    break;
+                case ContentTypes.Reports:
+                    contentControl.Content = new Report();
                     break;
                 //case ContentTypes.CreateCashBook:
                 //    //contentControl.Content = new CashBook.Controls.CreateCashBook();

@@ -20,8 +20,16 @@ namespace CashBook.Data.Model
         public string InitialBalanceString { get; set; }
         public UserCashBook()
         {
-
+            
         }
+
+        private bool isLei;
+        public bool IsLei
+        {
+            get { return CoinType.ToLower() == "lei" || CoinType.ToLower() == "ron"; }
+           
+        }
+
     }
 
 

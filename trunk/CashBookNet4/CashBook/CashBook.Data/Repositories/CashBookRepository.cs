@@ -25,14 +25,14 @@ namespace CashBook.Data.Repositories
             using (var context = GetContext())
             {
 
-                var list= context.UserCashBooks.ToList();
+                var list = context.UserCashBooks.ToList();
                 if (cashBookListType == CashBookListType.Lei)
                 {
-                    list = list.Where(p => p.CoinType.ToLower() == "lei").ToList();
+                    list = list.Where(p => p.IsLei).ToList();
                 }
                 else if (cashBookListType == CashBookListType.Other)
                 {
-                    list = list.Where(p => p.CoinType.ToLower() != "lei").ToList();
+                    list = list.Where(p => !p.IsLei).ToList();
                 }
                 return list;
             }

@@ -54,9 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Database\CashBook.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Include="Database\CashBook.sdf" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="CashBook.edmx">

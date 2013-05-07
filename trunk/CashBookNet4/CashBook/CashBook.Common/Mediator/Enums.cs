@@ -19,6 +19,7 @@ namespace CashBook.Common.Mediator
         SetErrorDialogMessage,
         UpdateBalance,
         SetCashBookListType,
+        SetSelectedDate,
 
     }
     public enum PopupType
