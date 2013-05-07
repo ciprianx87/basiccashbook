@@ -31,7 +31,25 @@ namespace CashBook.ViewModels
         }
 
         #region properties
-
+        public override string this[string columnName]
+        {
+            get
+            {
+                if (columnName == "Name")
+                {
+                    if (string.IsNullOrEmpty(Name))
+                    {
+                        return "Camp obligatoriu!";
+                    }
+                    if (!IsNameLengthValid())
+                    {
+                      return  "Lungimea numelui trebuie sa fie mai mica de " + AppSettings.CashRegistryNameCharacterLimit + " caractere!";
+                    }
+                }
+                return null;
+                return base[columnName];
+            }
+        }
 
         private string name;
         public string Name
@@ -238,6 +256,22 @@ namespace CashBook.ViewModels
         {
             Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
         }
+
+        private bool IsValid()
+        {
+            bool isValid=true;
+            if (!IsNameLengthValid())
+            {
+                isValid = false;
+            }
+            return isValid;
+        }
+
+        private bool IsNameLengthValid()
+        {
+            return Name.Length<= AppSettings.CashRegistryNameCharacterLimit;
+        }
+
 
         public override void Dispose()
         {

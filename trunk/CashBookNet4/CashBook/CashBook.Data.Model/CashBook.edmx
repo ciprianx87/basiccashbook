@@ -78,6 +78,7 @@
     <Property Name="RegistruCasaId" Type="bigint" Nullable="false" />
     <Property Name="DeltaBalance" Type="decimal" Nullable="false" Precision="18" Scale="4" />
     <Property Name="TotalBalance" Type="decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="MoneyExchangeRate" Type="decimal" Nullable="true" Precision="18" Scale="4" />
   </EntityType>
   <Association Name="SocietateRegistruCasa">
     <End Role="Societate" Type="CashBook.Store.Companies" Multiplicity="1" />
@@ -198,6 +199,7 @@
           <NavigationProperty Name="RegistruCasa" Relationship="CashBook.RegistruCasaRegistruCasaZi" FromRole="RegistruCasaZi" ToRole="RegistruCasa" />
           <Property Type="Decimal" Name="DeltaBalance" Nullable="false" Precision="18" Scale="4" />
           <Property Type="Decimal" Name="TotalBalance" Nullable="false" Precision="18" Scale="4" />
+          <Property Type="Decimal" Name="MoneyExchangeRate" Nullable="true" Precision="18" Scale="4" />
         </EntityType>
         <Association Name="SocietateRegistruCasa">
           <End Type="CashBook.Company" Role="Societate" Multiplicity="1" />
@@ -298,6 +300,7 @@
           <ScalarProperty Name="RegistruCasaId" ColumnName="RegistruCasaId" />
           <ScalarProperty Name="DeltaBalance" ColumnName="DeltaBalance" />
           <ScalarProperty Name="TotalBalance" ColumnName="TotalBalance" />
+          <ScalarProperty Name="MoneyExchangeRate" ColumnName="MoneyExchangeRate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -324,20 +327,20 @@
         <EntityTypeShape EntityType="CashBook.UserCashBook" Width="1.5" PointX="4.5" PointY="1.375" Height="3.3263964843749996" />
         <EntityTypeShape EntityType="CashBook.Company" Width="1.5" PointX="4.625" PointY="5.625" Height="1.9802864583333317" />
         <EntityTypeShape EntityType="CashBook.CashBookEntry" Width="1.5" PointX="2" PointY="2.625" Height="2.7494921875000031" />
-        <EntityTypeShape EntityType="CashBook.DailyCashBook" Width="1.5" PointX="0.5" PointY="5.25" Height="2.3648893229166656" />
+        <EntityTypeShape EntityType="CashBook.DailyCashBook" Width="1.5" PointX="0.5" PointY="5.25" Height="2.5571907552083326" />
         <AssociationConnector Association="CashBook.SocietateRegistruCasa" >
           <ConnectorPoint PointX="5.3125" PointY="5.625" />
           <ConnectorPoint PointX="5.3125" PointY="4.701396484375" />
         </AssociationConnector>
         <AssociationConnector Association="CashBook.RegistruCasaZiRegistruCasaIntrare" >
-          <ConnectorPoint PointX="1.2499995" PointY="5.25" />
-          <ConnectorPoint PointX="1.2499995" PointY="3.9374995" />
+          <ConnectorPoint PointX="1.4531251250000001" PointY="5.25" />
+          <ConnectorPoint PointX="1.4531251250000001" PointY="3.9374995" />
           <ConnectorPoint PointX="2" PointY="3.9374995" />
         </AssociationConnector>
         <AssociationConnector Association="CashBook.RegistruCasaRegistruCasaZi" >
           <ConnectorPoint PointX="4.5" PointY="1.96875" />
-          <ConnectorPoint PointX="0.84374725" PointY="1.96875" />
-          <ConnectorPoint PointX="0.84374725" PointY="5.25" />
+          <ConnectorPoint PointX="0.9453100625" PointY="1.96875" />
+          <ConnectorPoint PointX="0.9453100625" PointY="5.25" />
         </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>

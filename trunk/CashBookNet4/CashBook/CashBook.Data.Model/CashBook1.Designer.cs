@@ -802,6 +802,30 @@ namespace CashBook.Data.Model
         private global::System.Decimal _TotalBalance;
         partial void OnTotalBalanceChanging(global::System.Decimal value);
         partial void OnTotalBalanceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MoneyExchangeRate
+        {
+            get
+            {
+                return _MoneyExchangeRate;
+            }
+            set
+            {
+                OnMoneyExchangeRateChanging(value);
+                ReportPropertyChanging("MoneyExchangeRate");
+                _MoneyExchangeRate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MoneyExchangeRate");
+                OnMoneyExchangeRateChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MoneyExchangeRate;
+        partial void OnMoneyExchangeRateChanging(Nullable<global::System.Decimal> value);
+        partial void OnMoneyExchangeRateChanged();
 
         #endregion
 

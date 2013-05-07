@@ -44,6 +44,7 @@ namespace CashBook
         private void InitSettings()
         {
             AppSettings.InformationPopupCloseInterval = Properties.Settings.Default.InformationPopupCloseInterval;
+            AppSettings.CashRegistryNameCharacterLimit = Properties.Settings.Default.CashRegistryNameCharacterLimit;
         }
 
         private void InitErrorHandling()

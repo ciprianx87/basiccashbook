@@ -102,7 +102,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="400,0,0,0" Visibility="{Binding MoneyExchangeRateVisibility}">
                     <TextBlock Text="Curs Valuta:" VerticalAlignment="Center" FontSize="25" FontWeight="Bold"/>
-                    <TextBox Text="{Binding MoneyExchangeRateString}" VerticalAlignment="Center" FontSize="25" FontWeight="Bold"
+                    <TextBox Text="{Binding MoneyExchangeRate}" VerticalAlignment="Center" FontSize="25" FontWeight="Bold"
                                Margin="10,0,0,0" Width="150" />
                 </StackPanel>
                 <Button Grid.Row="1" Content="Adauga Intrare noua" Command="{Binding NewRowCommand}" Width="130" HorizontalAlignment="Left" Visibility="Collapsed"/>
