@@ -62,7 +62,7 @@ namespace CashBook.ViewModels
             }
             CashBookEntries.Add(new CashBookEntryUI());
             //CashBookEntries.CollectionChanged+=new System.Collections.Specialized.NotifyCollectionChangedEventHandler(CashBookEntries_CollectionChanged);
-
+            MoneyExchangeRate = cashBookEntryRepository.GetExchangeRateForDay(SelectedCashBook.Id, dateTime);
             UpdateBalance(null);
             //AddFakeItems();
             UpdateItemState();
@@ -306,16 +306,17 @@ namespace CashBook.ViewModels
         }
 
 
-        private decimal moneyExchangeRate;
-        public decimal MoneyExchangeRate
+        private decimal? moneyExchangeRate;
+        public decimal? MoneyExchangeRate
         {
             get { return moneyExchangeRate; }
             set
             {
-                if (moneyExchangeRate != value)
+                //if (moneyExchangeRate != value)
                 {
                     moneyExchangeRate = value;
                     this.NotifyPropertyChanged("MoneyExchangeRate");
+                   // UpdateStringValues();
                 }
             }
         }
@@ -347,6 +348,10 @@ namespace CashBook.ViewModels
             TotalBalanceString = DecimalConvertor.Instance.DecimalToString(TotalBalance);
             CurrentBalanceInString = DecimalConvertor.Instance.DecimalToString(CurrentBalanceIn);
             CurrentBalanceOutString = DecimalConvertor.Instance.DecimalToString(CurrentBalanceOut);
+            if (MoneyExchangeRate.HasValue)
+            {
+                MoneyExchangeRateString = DecimalConvertor.Instance.DecimalToString(MoneyExchangeRate.Value);
+            }
         }
 
         public void AddNewItem()
@@ -394,8 +399,12 @@ namespace CashBook.ViewModels
 
             SelectedDate = DateTime.Now;
             UpdateBalance(null);
-
-            MoneyExchangeRateVisibility = SelectedCashBook.IsLei ? Visibility.Collapsed : Visibility.Visible;
+           
+            MoneyExchangeRateVisibility = SelectedCashBook.IsLei ? Visibility.Collapsed : Visibility.Visible;          
+            if (SelectedCashBook.IsLei)
+            {
+                MoneyExchangeRate = 0;
+            }
         }
 
         public ICommand LegalReglementationsCommand { get; set; }
@@ -417,14 +426,13 @@ namespace CashBook.ViewModels
                 var validEntries = ExtractValidItems(CashBookEntries);
                 if (validEntries.Count > 0)
                 {
-                    cashBookEntryRepository.UpdateRepositoryForDay(SelectedCashBook.Id, validEntries, SelectedDate);
+                    cashBookEntryRepository.UpdateRepositoryForDay(SelectedCashBook.Id, validEntries, SelectedDate, MoneyExchangeRate);
                     WindowHelper.OpenInformationDialog("Informatia a fost salvata");
                 }
             }
             catch (Exception ex)
             {
                 WindowHelper.OpenErrorDialog("Eroare la salvarea informatiei");
-
             }
         }
 

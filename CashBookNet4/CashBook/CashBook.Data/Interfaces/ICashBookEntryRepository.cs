@@ -17,6 +17,7 @@ namespace CashBook.Data.Interfaces
 
         List<CashBookEntry> GetEntriesForDay(Int64 selectedCashBookId,DateTime dateTime);
 
-        void UpdateRepositoryForDay(Int64 selectedCashBookId, List<CashBookEntry> list, DateTime dateTime);
+        void UpdateRepositoryForDay(Int64 selectedCashBookId, List<CashBookEntry> list, DateTime dateTime, decimal? moneyExchangeRate);
+        decimal? GetExchangeRateForDay(Int64 selectedCashBookId, DateTime dateTime);
     }
 }

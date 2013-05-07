@@ -31,5 +31,14 @@ namespace CashBook.Properties {
                 return ((int)(this["InformationPopupCloseInterval"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int CashRegistryNameCharacterLimit {
+            get {
+                return ((int)(this["CashRegistryNameCharacterLimit"]));
+            }
+        }
     }
 }

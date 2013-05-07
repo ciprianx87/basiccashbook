@@ -8,5 +8,6 @@ namespace CashBook.Common
     public static class AppSettings
     {
         public static int InformationPopupCloseInterval { get; set; }
+        public static int CashRegistryNameCharacterLimit { get; set; }
     }
 }

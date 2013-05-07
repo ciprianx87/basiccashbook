@@ -57,7 +57,7 @@ namespace CashBook.ViewModels
             get { throw new NotImplementedException(); }
         }
 
-        public string this[string columnName]
+        public virtual string this[string columnName]
         {
             get { throw new NotImplementedException(); }
         }

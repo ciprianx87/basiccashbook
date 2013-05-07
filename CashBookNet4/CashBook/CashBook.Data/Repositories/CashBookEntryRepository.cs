@@ -87,7 +87,7 @@ namespace CashBook.Data.Repositories
             }
         }
 
-        public void UpdateRepositoryForDay(Int64 selectedCashBookId, List<CashBookEntry> list, DateTime dateTime)
+        public void UpdateRepositoryForDay(Int64 selectedCashBookId, List<CashBookEntry> list, DateTime dateTime, decimal? moneyExchangeRate)
         {
             using (var context = GetContext())
             {
@@ -100,7 +100,8 @@ namespace CashBook.Data.Repositories
                     {
                         Id = DbIdHelper.GetNextID(),
                         RegistruCasaId = selectedCashBookId,
-                        Data = dateOnly
+                        Data = dateOnly,
+                        MoneyExchangeRate = moneyExchangeRate
                     });
                     Commit(context);
                 }
@@ -142,6 +143,7 @@ namespace CashBook.Data.Repositories
                 newItems.ForEach(p => totalSum -= p.Plati);
                 registryForDay.DeltaBalance = totalSum;
                 registryForDay.TotalBalance = GetPreviousBalance(context, Utils.DateTimeToDay(dateTime), selectedCashBookId);
+                registryForDay.MoneyExchangeRate = moneyExchangeRate;
                 Commit(context);
             }
         }
@@ -166,6 +168,21 @@ namespace CashBook.Data.Repositories
         private CashBookEntry GetCashBookEntry(long id, CashBookContainer context)
         {
             return context.CashBookEntries.FirstOrDefault(p => p.Id == id);
+        }
+
+
+        public decimal? GetExchangeRateForDay(long selectedCashBookId, DateTime dateTime)
+        {
+            using (var context = GetContext())
+            {
+                var dateOnly = Utils.DateTimeToDay(dateTime);
+                var registryForDay = context.DailyCashBooks.FirstOrDefault(p => p.Data == dateOnly && p.RegistruCasaId == selectedCashBookId);
+                if (registryForDay != null)
+                {
+                    return registryForDay.MoneyExchangeRate;
+                }
+                return null;
+            }
         }
     }
 }
