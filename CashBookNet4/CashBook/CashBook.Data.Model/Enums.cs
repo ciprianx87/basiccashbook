@@ -12,7 +12,8 @@ namespace CashBook.Data.Model
         MainContent,
         CompanyDetails,
         LegalReglementations,
-        CashBookList
+        CashBookList,
+        Reports
     }
 
     public enum CashBookListType

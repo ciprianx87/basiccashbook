@@ -11,17 +11,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CashBook.ViewModels;
 
-namespace CashBook.Controls.CashBook
+namespace CashBook.Controls
 {
     /// <summary>
     /// Interaction logic for Report.xaml
     /// </summary>
-    public partial class Report : UserControl
+    public partial class Report : UserControl, IDisposable
     {
         public Report()
         {
             InitializeComponent();
+            this.DataContext = new ReportsViewModel();
+        }
+        public void Dispose()
+        {
+            (this.DataContext as BaseViewModel).Dispose();
+
         }
     }
 }

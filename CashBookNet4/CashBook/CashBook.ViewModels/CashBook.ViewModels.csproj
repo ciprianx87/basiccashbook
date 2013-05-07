@@ -49,6 +49,8 @@
     <Compile Include="CompanyDataViewModel.cs" />
     <Compile Include="CashBookListViewModel.cs" />
     <Compile Include="CashBookViewModel.cs" />
+    <Compile Include="Models\ReportInitialData.cs" />
+    <Compile Include="ReportsViewModel.cs" />
     <Compile Include="ErrorDialogVM.cs" />
     <Compile Include="InformationDialogVM.cs" />
     <Compile Include="LegalReglementationsPopupViewModel.cs" />

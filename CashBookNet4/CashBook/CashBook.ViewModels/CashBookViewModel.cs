@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using CashBook.Common.Mediator;
 using System.ComponentModel;
 using CashBook.ViewModels.Models;
+using System.Windows;
 
 namespace CashBook.ViewModels
 {
@@ -22,6 +23,7 @@ namespace CashBook.ViewModels
 
         public ICommand DeleteCommand { get; set; }
         public ICommand SaveCommand { get; set; }
+        public ICommand ViewReportsCommand { get; set; }
 
 
         public CashBookViewModel()
@@ -31,6 +33,7 @@ namespace CashBook.ViewModels
             SaveCommand = new DelegateCommand(Save, CanSave);
 
             this.LegalReglementationsCommand = new DelegateCommand(LegalReglementations, CanLegalReglementations);
+            this.ViewReportsCommand = new DelegateCommand(ViewReports, CanViewReports);
 
             Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
             Mediator.Instance.Register(MediatorActionType.SetSelectedCashBook, SetSelectedCashBook);
@@ -41,6 +44,9 @@ namespace CashBook.ViewModels
 
             canSave = true;
         }
+
+
+
         private bool canSave = false;
         private void LoadDataForDay(DateTime dateTime)
         {
@@ -285,6 +291,52 @@ namespace CashBook.ViewModels
         }
 
 
+        private string moneyExchangeRateString;
+        public string MoneyExchangeRateString
+        {
+            get { return moneyExchangeRateString; }
+            set
+            {
+                if (moneyExchangeRateString != value)
+                {
+                    moneyExchangeRateString = value;
+                    this.NotifyPropertyChanged("MoneyExchangeRateString");
+                }
+            }
+        }
+
+
+        private decimal moneyExchangeRate;
+        public decimal MoneyExchangeRate
+        {
+            get { return moneyExchangeRate; }
+            set
+            {
+                if (moneyExchangeRate != value)
+                {
+                    moneyExchangeRate = value;
+                    this.NotifyPropertyChanged("MoneyExchangeRate");
+                }
+            }
+        }
+
+
+        private Visibility moneyExchangeRateVisibility;
+        public Visibility MoneyExchangeRateVisibility
+        {
+            get { return moneyExchangeRateVisibility; }
+            set
+            {
+                if (moneyExchangeRateVisibility != value)
+                {
+                    moneyExchangeRateVisibility = value;
+                    this.NotifyPropertyChanged("MoneyExchangeRateVisibility");
+                }
+            }
+        }
+
+
+
 
         #endregion
 
@@ -339,9 +391,11 @@ namespace CashBook.ViewModels
             SelectedCashBook = param as UserCashBook;
             this.Title = "Editare Registru de casa (" + SelectedCashBook.Name + ")";
             DecimalConvertor.Instance.SetNumberOfDecimals(SelectedCashBook.CoinDecimals);
-         
+
             SelectedDate = DateTime.Now;
             UpdateBalance(null);
+
+            MoneyExchangeRateVisibility = SelectedCashBook.IsLei ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public ICommand LegalReglementationsCommand { get; set; }
@@ -428,6 +482,22 @@ namespace CashBook.ViewModels
         public bool CanDelete(object param)
         {
             return true;
+        }
+
+        private bool CanViewReports(object parameter)
+        {
+            return true;
+        }
+
+        private void ViewReports(object parameter)
+        {
+            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.Reports);
+            Mediator.Instance.SendMessage(MediatorActionType.SetSelectedDate, new ReportInitialData()
+            {
+                SelectedDate = SelectedDate,
+                SelectedCashBookId = SelectedCashBook.Id
+            });
+
         }
 
         public override void Dispose()
