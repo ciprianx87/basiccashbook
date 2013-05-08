@@ -17,6 +17,8 @@ using CashBook.Common.Mediator;
 using CashBook.Controls.Popups;
 using CashBook.Common;
 using CashBook.Controls;
+using System.Globalization;
+using System.Threading;
 
 namespace CashBook
 {
@@ -35,10 +37,17 @@ namespace CashBook
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            InitCulture();
             InitSettings();
             PopupManager.Instance.Init();
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ShowCashBookListScreen(CashBookListType.Any);
+        }
+        private void InitCulture()
+        {
+            CultureInfo ci = new CultureInfo("ro-RO");
+            Thread.CurrentThread.CurrentCulture = ci;
+            Thread.CurrentThread.CurrentUICulture = ci;
         }
 
         private void InitSettings()

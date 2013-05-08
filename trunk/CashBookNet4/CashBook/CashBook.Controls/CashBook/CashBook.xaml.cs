@@ -15,6 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CashBook.ViewModels;
 using System.Windows.Controls.Primitives;
+using System.Threading;
+using CashBook.Controls.CustomDataGrid;
+
 
 namespace CashBook.Controls
 {
@@ -28,33 +31,158 @@ namespace CashBook.Controls
             InitializeComponent();
             this.Loaded += CashBook_Loaded;
             this.DataContext = new CashBookViewModel();
+            //dataGrid.CurrentCellChanged+=new EventHandler<EventArgs>(dataGrid_CurrentCellChanged);
+            dataGrid.KeyUp += DataGridSubmissionDataOnKeyUp;
+            dataGrid.BeginningEdit += DataGridSubmissionDataOnBeginningEdit;
+            dataGrid.CellEditEnding += DataGridSubmissionDataOnCellEditEnding;
+            dataGrid.CurrentCellChanged += DataGridSubmissionDataOnCurrentCellChanged;
 
         }
 
-        void dataGrid_GotFocus(object sender, RoutedEventArgs e)
+        private void NumberTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            (e.OriginalSource as DataGridCell).IsSelected = true;
+            TextBox txtBox = sender as TextBox;
+            txtBox.SelectAll();
+        }
+        private bool isCellInEditionMode = false;
 
+        private void DataGridSubmissionDataOnCurrentCellChanged(object sender, EventArgs eventArgs)
+        {
+           bool result= dataGrid.BeginEdit();
+           if (!result)
+           {
+               this.Dispatcher.BeginInvoke(new Action(() =>
+               {
+                   result = dataGrid.BeginEdit();
+                   dataGrid.UpdateLayout();
+               }), System.Windows.Threading.DispatcherPriority.ApplicationIdle, null);
+             
+              
+           }
         }
 
-        private void dg_PreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
+        private void DataGridSubmissionDataOnCellEditEnding(object sender, DataGridCellEditEndingEventArgs dataGridCellEditEndingEventArgs)
         {
-            TextBox tb = e.EditingElement as TextBox;
-            if (tb != null)
+            isCellInEditionMode = false;
+        }
+
+        private void DataGridSubmissionDataOnBeginningEdit(object sender, DataGridBeginningEditEventArgs dataGridBeginningEditEventArgs)
+        {
+            isCellInEditionMode = true;
+        }
+
+        private void DataGridSubmissionDataOnKeyUp(object sender, KeyEventArgs keyEventArgs)
+        {
+            if (keyEventArgs.Key == Key.Tab)
             {
-                tb.Focus();
-                //you can set caret position and ...
+                this.FocusNextCell(dataGrid);
+                return;
+            }
+
+            //Thread.Sleep(100);
+            if (keyEventArgs.Key == Key.Up || keyEventArgs.Key == Key.Down || keyEventArgs.Key == Key.Left || keyEventArgs.Key == Key.Right)
+            {
+                if (!isCellInEditionMode)
+                    return;
+
+
+                bool result = dataGrid.CommitEdit();
+                if (!result)
+                {
+                    dataGrid.UpdateLayout();
+                    result = dataGrid.CommitEdit();
+                }
+
+                //DataGridCell cell = GetCell(1, 0);
+                //if (cell != null)
+                //{
+                //    cell.Focus();
+                //    dataGrid.BeginEdit();
+                //}
+
+                var key = keyEventArgs.Key; // Key to send
+                var target = dataGrid; // Target element
+                var routedEvent = Keyboard.KeyDownEvent; // Event to send
+
+                target.RaiseEvent(
+                    new KeyEventArgs(
+                        Keyboard.PrimaryDevice,
+                        PresentationSource.FromVisual(target),
+                        0,
+                        key) { RoutedEvent = routedEvent }
+                    );
             }
         }
-        void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
+        private void FocusNextCell(DataGrid theGrid)
+        {
+            DataGridRow currentRow = theGrid.GetSelectedRow();
+            int currentColumnIndex = theGrid.CurrentCell.Column.DisplayIndex;
+            int nextColumnIndex;
+            //If Shift is hold, then reverse, else move forward
+            if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+                nextColumnIndex = currentColumnIndex;
+            else
+                nextColumnIndex = currentColumnIndex + 1;
+            DataGridCell theNextCell = null;
+            if (theGrid.Columns.Count > nextColumnIndex &&
+             nextColumnIndex >= 0)
+                theNextCell = theGrid.GetCell(currentRow, nextColumnIndex);
+            if (theNextCell != null && theNextCell.Focusable)
+                theNextCell.Focus();
         }
 
-        void dataGrid_CurrentCellChanged(object sender, EventArgs e)
+        public DataGridCell GetCell(int row, int column)
         {
-            //DataGrid dg = (DataGrid)sender;
-            //dg.BeginEdit();
+            DataGridRow rowContainer = GetRow(row);
+
+            if (rowContainer != null)
+            {
+                DataGridCellsPresenter presenter = GetVisualChild<DataGridCellsPresenter>(rowContainer);
+
+                // try to get the cell but it may possibly be virtualized
+                DataGridCell cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(column);
+                if (cell == null)
+                {
+                    // now try to bring into view and retreive the cell
+                    dataGrid.ScrollIntoView(rowContainer, dataGrid.Columns[column]);
+                    cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(column);
+                }
+                return cell;
+            }
+            return null;
+        }
+
+        public DataGridRow GetRow(int index)
+        {
+            DataGridRow row = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromIndex(index);
+            if (row == null)
+            {
+                // may be virtualized, bring into view and try again
+                dataGrid.ScrollIntoView(dataGrid.Items[index]);
+                row = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromIndex(index);
+            }
+            return row;
+        }
+
+        static T GetVisualChild<T>(Visual parent) where T : Visual
+        {
+            T child = default(T);
+            int numVisuals = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < numVisuals; i++)
+            {
+                Visual v = (Visual)VisualTreeHelper.GetChild(parent, i);
+                child = v as T;
+                if (child == null)
+                {
+                    child = GetVisualChild<T>(v);
+                }
+                if (child != null)
+                {
+                    break;
+                }
+            }
+            return child;
         }
 
         void CashBook_Loaded(object sender, RoutedEventArgs e)
@@ -73,122 +201,20 @@ namespace CashBook.Controls
             {
                 (this.DataContext as CashBookViewModel).AddNewItem();
             }
+            return;
             if (e.Key == Key.Right)
             {
                 var currCell = dataGrid.CurrentCell;
-                Move2(currCell, e);
+                //Move2(currCell, e);
                 //currCell.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right));
 
                 //var cell = TryToFindGridCell(dataGrid, currCell);
             }
         }
-        private void Move2(DataGridCellInfo currentCell, KeyEventArgs e)
-        {
-            bool previous = false;
-            FocusNavigationDirection direction = previous ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next;
-            TraversalRequest request = new TraversalRequest(direction);
-            request.Wrapped = true;
-            var selectedCell = dataGrid.SelectedCells[0];
-            //dataGrid.MoveFocus(request);
-        }
 
-        private void Move(DataGridCellInfo currentCell, KeyEventArgs e)
-        {
-            // get the display index of the cell's column + 1 (for next column)
-            int columnDisplayIndex = currentCell.Column.DisplayIndex++;
-
-            // if display index is valid
-            if (columnDisplayIndex < dataGrid.Columns.Count)
-            {
-                // get the DataGridColumn instance from the display index
-                DataGridColumn nextColumn = dataGrid.ColumnFromDisplayIndex(columnDisplayIndex);
-
-                // now telling the grid, that we handled the key down event
-                e.Handled = true;
-             
-                // setting the current cell (selected, focused)
-                //dataGrid.CurrentCell = new DataGridCellInfo(dataGrid.SelectedItem, nextColumn);
-
-                // tell the grid to initialize edit mode for the current cell
-                //dataGrid.BeginEdit();
-            }
-        }
-        /*
-        private void OnTabKeyDown(KeyEventArgs e)
-        {
-            // When the end-user uses the keyboard to tab to another cell while the current cell
-            // is in edit-mode, then the next cell should enter edit mode in addition to gaining
-            // focus. There is no way to detect this from the focus change events, so the cell
-            // is going to handle the complete operation manually.
-            // The standard focus change method is being called here, so even if focus moves
-            // to something other than a cell, focus should land on the element that it would
-            // have landed on anyway.
-            DataGridCell currentCellContainer = CurrentCellContainer;
-            if (currentCellContainer != null)
-            {
-                bool wasEditing = currentCellContainer.IsEditing;
-                bool previous = ((e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift);
-
-                // Start navigation from the current focus to allow moveing focus on other focusable elements inside the cell
-                UIElement startElement = Keyboard.FocusedElement as UIElement;
-                ContentElement startContentElement = (startElement == null) ? Keyboard.FocusedElement as ContentElement : null;
-                if ((startElement != null) || (startContentElement != null))
-                {
-                    e.Handled = true;
-
-                    FocusNavigationDirection direction = previous ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next;
-                    TraversalRequest request = new TraversalRequest(direction);
-                    request.Wrapped = true; // Navigate only within datagrid
-
-                    // Move focus to the the next or previous tab stop.
-                    if (((startElement != null) && startElement.MoveFocus(request)) ||
-                        ((startContentElement != null) && startContentElement.MoveFocus(request)))
-                    {
-                        // If focus moved to the cell while in edit mode - keep navigating to the previous cell
-                        if (wasEditing && previous && Keyboard.FocusedElement == currentCellContainer)
-                        {
-                            currentCellContainer.MoveFocus(request);
-                        }
-
-                        // In case of grouping if a row level commit happened due to
-                        // the previous focus change, the container of the row gets
-                        // removed from the visual tree by the CollectionView, 
-                        // but we still hang on to a cell of that row, which will be used
-                        // by the call to SelectAndEditOnFocusMove. Hence re-establishing the
-                        // focus appropriately in such cases.
-                        if (IsGrouping && wasEditing)
-                        {
-                            DataGridCell newCell = GetCellForSelectAndEditOnFocusMove();
-
-                            if (newCell != null &&
-                                newCell.RowDataItem == currentCellContainer.RowDataItem)
-                            {
-                                DataGridCell realNewCell = TryFindCell(newCell.RowDataItem, newCell.Column);
-
-                                // Forcing an UpdateLayout since the generation of the new row
-                                // container which was removed earlier is done in measure.
-                                if (realNewCell == null)
-                                {
-                                    UpdateLayout();
-                                    realNewCell = TryFindCell(newCell.RowDataItem, newCell.Column);
-                                }
-                                if (realNewCell != null && realNewCell != newCell)
-                                {
-                                    realNewCell.Focus();
-                                }
-                            }
-                        }
-
-                        // When doing TAB and SHIFT+TAB focus movement, don't confuse the selection
-                        // code, which also relies on SHIFT to know whether to extend selection or not.
-                        //SelectAndEditOnFocusMove(e, currentCellContainer, wasEditing, allowsExtendSelect =  false, ignoreControlKey =  true);
-                    }
-                }
-            }
-        }
-*/
         private void DataGridCell_Selected(object sender, RoutedEventArgs e)
         {
+            return;
             DataGridCell cell = sender as DataGridCell;
             if (cell != null && !cell.IsEditing && !cell.IsReadOnly)
             {
@@ -253,5 +279,7 @@ namespace CashBook.Controls
             }
             return null;
         }
+
+        
     }
 }
