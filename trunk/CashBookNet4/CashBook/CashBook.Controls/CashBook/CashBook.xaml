@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:constants="clr-namespace:CashBook.Controls"
-             xmlns:custom="clr-namespace:CashBook.Controls.CashBookControls"
+             xmlns:custom="clr-namespace:CashBookExtended"
              mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}"
              VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
     <UserControl.Resources>
@@ -208,15 +208,13 @@
                 </DataGrid>-->
                 
                 
-                <custom:CustomDataGrid x:Name="dataGrid" ItemsSource="{Binding CashBookEntries, Mode=TwoWay}" KeyUp="dataGrid_KeyUp" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Visible"
+                <DataGrid x:Name="dataGrid" ItemsSource="{Binding CashBookEntries, Mode=TwoWay}" KeyUp="dataGrid_KeyUp" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Visible"
                           Height="Auto"  SelectionMode="Single" SelectionUnit="CellOrRowHeader" 
                           SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" 
                           SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                           >
-                    <custom:CustomDataGrid.Resources>
 
-                    </custom:CustomDataGrid.Resources>
-                    <custom:CustomDataGrid.Columns>
+                    <DataGrid.Columns>
                         <DataGridTemplateColumn Width="50" IsReadOnly="True" >
                             <DataGridTemplateColumn.HeaderTemplate>
                                 <DataTemplate>
@@ -300,8 +298,8 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                    </custom:CustomDataGrid.Columns>
-                </custom:CustomDataGrid>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </Grid>
         <Grid Grid.Row="3">

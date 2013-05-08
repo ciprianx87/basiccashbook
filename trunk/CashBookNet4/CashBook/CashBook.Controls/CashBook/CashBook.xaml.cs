@@ -32,10 +32,10 @@ namespace CashBook.Controls
             this.Loaded += CashBook_Loaded;
             this.DataContext = new CashBookViewModel();
             //dataGrid.CurrentCellChanged+=new EventHandler<EventArgs>(dataGrid_CurrentCellChanged);
-            dataGrid.KeyUp += DataGridSubmissionDataOnKeyUp;
-            dataGrid.BeginningEdit += DataGridSubmissionDataOnBeginningEdit;
-            dataGrid.CellEditEnding += DataGridSubmissionDataOnCellEditEnding;
-            dataGrid.CurrentCellChanged += DataGridSubmissionDataOnCurrentCellChanged;
+            //dataGrid.KeyUp += DataGridSubmissionDataOnKeyUp;
+            //dataGrid.BeginningEdit += DataGridSubmissionDataOnBeginningEdit;
+            //dataGrid.CellEditEnding += DataGridSubmissionDataOnCellEditEnding;
+            //dataGrid.CurrentCellChanged += DataGridSubmissionDataOnCurrentCellChanged;
 
         }
 
@@ -51,11 +51,11 @@ namespace CashBook.Controls
            bool result= dataGrid.BeginEdit();
            if (!result)
            {
-               this.Dispatcher.BeginInvoke(new Action(() =>
-               {
-                   result = dataGrid.BeginEdit();
-                   dataGrid.UpdateLayout();
-               }), System.Windows.Threading.DispatcherPriority.ApplicationIdle, null);
+               //this.Dispatcher.BeginInvoke(new Action(() =>
+               //{
+               //    result = dataGrid.BeginEdit();
+               //    dataGrid.UpdateLayout();
+               //}), System.Windows.Threading.DispatcherPriority.ApplicationIdle, null);
              
               
            }
