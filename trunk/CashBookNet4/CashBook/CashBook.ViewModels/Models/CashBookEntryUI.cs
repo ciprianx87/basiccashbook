@@ -59,6 +59,7 @@ namespace CashBook.ViewModels.Models
                 switch (columnName)
                 {
                     case "NrActCasa":
+                        return null;
                         if (string.IsNullOrEmpty(NrActCasa))
                         {
                             result = "Camp obligatoriu";
@@ -77,6 +78,7 @@ namespace CashBook.ViewModels.Models
                         }
                         break;
                     case "Incasari":
+                        return null;
                         if (Incasari < 0)
                         {
                             return "Valoarea trebuie sa fie mai mare sau egala cu 0";
@@ -103,6 +105,7 @@ namespace CashBook.ViewModels.Models
             if (Incasari == 0 && Plati == 0)
             {
                 result = "Unul din campurile Incasari sau Plati trebuie completat";
+                
             } if (Incasari != 0 && Plati != 0)
             {
                 result = "Doar unul din campurile Incasari sau Plati trebuie completat";

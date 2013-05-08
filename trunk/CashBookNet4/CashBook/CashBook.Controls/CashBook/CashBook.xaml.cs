@@ -32,10 +32,10 @@ namespace CashBook.Controls
             this.Loaded += CashBook_Loaded;
             this.DataContext = new CashBookViewModel();
             //dataGrid.CurrentCellChanged+=new EventHandler<EventArgs>(dataGrid_CurrentCellChanged);
-            //dataGrid.KeyUp += DataGridSubmissionDataOnKeyUp;
-            //dataGrid.BeginningEdit += DataGridSubmissionDataOnBeginningEdit;
-            //dataGrid.CellEditEnding += DataGridSubmissionDataOnCellEditEnding;
-            //dataGrid.CurrentCellChanged += DataGridSubmissionDataOnCurrentCellChanged;
+            dataGrid.KeyUp += DataGridSubmissionDataOnKeyUp;
+            dataGrid.BeginningEdit += DataGridSubmissionDataOnBeginningEdit;
+            dataGrid.CellEditEnding += DataGridSubmissionDataOnCellEditEnding;
+            dataGrid.CurrentCellChanged += DataGridSubmissionDataOnCurrentCellChanged;
 
         }
 
