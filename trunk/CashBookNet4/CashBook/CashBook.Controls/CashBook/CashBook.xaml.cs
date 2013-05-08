@@ -200,6 +200,19 @@ namespace CashBook.Controls
             if (e.Key == Key.Enter)
             {
                 (this.DataContext as CashBookViewModel).AddNewItem();
+                try
+                {
+                    var nrLines = dataGrid.Items.Count;
+                    DataGridCell cell = GetCell(nrLines - 1, 1);
+                    if (cell != null)
+                    {
+                        cell.Focus();
+                        dataGrid.BeginEdit();
+                    }
+                }
+                catch(Exception ex)
+                {
+                }
             }
             return;
             if (e.Key == Key.Right)
