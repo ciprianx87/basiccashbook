@@ -146,14 +146,19 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="150" Header="Nr Act Casa" Binding="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Path=NrActCasa,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}"  EditingElementStyle="{StaticResource StandardTextBox}">
+                        <DataGridTemplateColumn Width="150" Header="Nr Act Casa" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <TextBox x:Name="txtContent" Text="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Path=NrActCasa,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellEditingTemplate>
+                                <DataTemplate >
+                                    <TextBox x:Name="txtContent" Text="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Path=NrActCasa,
+                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Width="150" Header="Nr Anexe">
                             <DataGridTemplateColumn.CellTemplate>
@@ -162,6 +167,12 @@
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}" GotFocus="NumberTextBox_GotFocus"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellEditingTemplate>
+                                <DataTemplate  >
+                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=NrAnexe,
+                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}" GotFocus="NumberTextBox_GotFocus"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Width="*" Header="Explicatii">
                             <DataGridTemplateColumn.CellTemplate>
@@ -238,48 +249,23 @@
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Width="150" Header="Nr Act Casa" Binding="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Path=NrActCasa,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}"  EditingElementStyle="{StaticResource StandardTextBox}">
-                            <!--<DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate >
-                                    <TextBox x:Name="txtContent" Text="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Path=NrActCasa,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>-->
+                           
                         </DataGridTextColumn>
                         <DataGridTextColumn Width="150" Header="Nr Anexe" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=NrAnexe,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" EditingElementStyle="{StaticResource StandardTextBox}">
-                            <!-- <DataGridTemplateColumn.CellTemplate>
-                               <DataTemplate x:Name="dtNrAnexe" >
-                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=NrAnexe,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}" GotFocus="NumberTextBox_GotFocus"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>-->
+                          
                         </DataGridTextColumn>
                         <DataGridTextColumn Width="*" Header="Explicatii" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Explicatii,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" EditingElementStyle="{StaticResource StandardTextBox}">
-                            <!--<DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate >
-                                    <TextBox  x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Explicatii,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>-->
+                           
                         </DataGridTextColumn>
                         <DataGridTextColumn Width="100" Header="INCASARI" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=Incasari,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" EditingElementStyle="{StaticResource StandardTextBox}">
-                            <!--<DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate >
-                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=Incasari,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}" GotFocus="NumberTextBox_GotFocus"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>-->
+                           
                         </DataGridTextColumn>
                         <DataGridTextColumn Width="100" Header="PLATI" Binding="{Binding UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Path=Plati,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" EditingElementStyle="{StaticResource StandardTextBox}">
-                            <!--<DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate >
-                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Path=Plati,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}" GotFocus="NumberTextBox_GotFocus"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>-->
+                           
                         </DataGridTextColumn>
                         <DataGridTemplateColumn Width="120" Header="Actiuni">
                             <DataGridTemplateColumn.CellTemplate>
