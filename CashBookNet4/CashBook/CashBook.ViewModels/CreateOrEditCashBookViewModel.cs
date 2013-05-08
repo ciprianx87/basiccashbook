@@ -43,7 +43,7 @@ namespace CashBook.ViewModels
                     }
                     if (!IsNameLengthValid())
                     {
-                      return  "Lungimea numelui trebuie sa fie mai mica de " + AppSettings.CashRegistryNameCharacterLimit + " caractere!";
+                        return "Lungimea numelui trebuie sa fie mai mica de " + AppSettings.CashRegistryNameCharacterLimit + " caractere!";
                     }
                 }
                 return null;
@@ -259,7 +259,7 @@ namespace CashBook.ViewModels
 
         private bool IsValid()
         {
-            bool isValid=true;
+            bool isValid = true;
             if (!IsNameLengthValid())
             {
                 isValid = false;
@@ -269,7 +269,7 @@ namespace CashBook.ViewModels
 
         private bool IsNameLengthValid()
         {
-            return Name.Length<= AppSettings.CashRegistryNameCharacterLimit;
+            return Name.Length <= AppSettings.CashRegistryNameCharacterLimit;
         }
 
 

@@ -52,6 +52,9 @@
     <Compile Include="CashBook\CashBook.xaml.cs">
       <DependentUpon>CashBook.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CashBook\CustomDataGrid.cs" />
+    <Compile Include="CashBook\ExtendedDataGrid.cs" />
+    <Compile Include="CashBook\Extensions.cs" />
     <Compile Include="CashBook\Report.xaml.cs">
       <DependentUpon>Report.xaml</DependentUpon>
     </Compile>
