@@ -96,7 +96,7 @@ namespace CashBook.Controls.CustomDataGrid
         public static readonly DependencyProperty IsSingleTabFixedProperty = DependencyProperty.Register(
          "IsSingleTabFixed", //Property name
          typeof(bool), //Property type
-         typeof(CustomDataGrid), //Type of the dependency property provider (Whatever class it's in now)
+         typeof(CustomDataGrid1), //Type of the dependency property provider (Whatever class it's in now)
          new PropertyMetadata(IsSingleTabFixedChanged) //Callback invoked on property value has changes
         );
         public bool IsSingleTabFixed
@@ -114,7 +114,7 @@ namespace CashBook.Controls.CustomDataGrid
         public static readonly DependencyProperty ShowToggleButtonProperty = DependencyProperty.Register(
          "ShowToggleButton", //Property name
          typeof(bool), //Property type
-         typeof(CustomDataGrid), //Type of the dependency property provider (Whatever class it's in now)
+         typeof(CustomDataGrid1), //Type of the dependency property provider (Whatever class it's in now)
          new PropertyMetadata(ShowToggleButtonChanged) //Callback invoked on property value has changes
         );
 
@@ -135,7 +135,7 @@ namespace CashBook.Controls.CustomDataGrid
         public static readonly DependencyProperty ToggleOutSideActionProperty = DependencyProperty.Register(
          "ToggleOutSideAction", //Property name
          typeof(Action), //Property type
-         typeof(CustomDataGrid), //Type of the dependency property provider (Whatever class it's in now)
+         typeof(CustomDataGrid1), //Type of the dependency property provider (Whatever class it's in now)
          new PropertyMetadata(ToggleOutSideActionChanged) //Callback invoked on property value has changes
         );
         public Action ToggleOutSideAction
