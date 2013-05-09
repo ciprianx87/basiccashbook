@@ -215,6 +215,38 @@ namespace CashBook.ViewModels.Models
             }
         }
 
+
+        private decimal leiValue;
+        public decimal LeiValue
+        {
+            get { return leiValue; }
+            set
+            {
+                //if (leiValue != value)
+                {
+                    leiValue = value;
+
+                    LeiValueString = DecimalConvertor.Instance.DecimalToString(LeiValue);
+
+                }
+            }
+        }
+
+
+        private string leiValueString;
+        public string LeiValueString
+        {
+            get { return leiValueString; }
+            set
+            {
+                if (leiValueString != value)
+                {
+                    leiValueString = value;
+                    this.NotifyPropertyChanged("LeiValueString");
+                }
+            }
+        }
+
         public bool IsFormValid()
         {
             if (Plati > AppSettings.SinglePaymentLimit)
