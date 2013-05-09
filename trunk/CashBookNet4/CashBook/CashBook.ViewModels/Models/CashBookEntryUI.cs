@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using CashBook.Data.Model;
 using CashBook.Common.Mediator;
+using CashBook.Common;
 
 namespace CashBook.ViewModels.Models
 {
@@ -105,7 +106,7 @@ namespace CashBook.ViewModels.Models
             if (Incasari == 0 && Plati == 0)
             {
                 result = "Unul din campurile Incasari sau Plati trebuie completat";
-                
+
             } if (Incasari != 0 && Plati != 0)
             {
                 result = "Doar unul din campurile Incasari sau Plati trebuie completat";
@@ -159,6 +160,7 @@ namespace CashBook.ViewModels.Models
                     this.NotifyPropertyChanged("Plati");
                     this.NotifyPropertyChanged("Incasari");
                     NotifyChangedBalance(-plati);
+                    IsFormValid();
                 }
             }
         }
@@ -213,6 +215,15 @@ namespace CashBook.ViewModels.Models
             }
         }
 
+        public bool IsFormValid()
+        {
+            if (Plati > AppSettings.SinglePaymentLimit)
+            {
+                WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
+                return false;
+            }
 
+            return true;
+        }
     }
 }

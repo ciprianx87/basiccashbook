@@ -62,6 +62,9 @@ namespace CashBook.Controls.Popups
                     case PopupType.LegalReglementations:
                         popup = new LegalReglementationsPopup();
                         break;
+                    case PopupType.PaymentInformation:
+                        popup = new PaymentInformationPopup();
+                        break;
                     default:
                         break;
                 }
