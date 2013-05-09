@@ -36,7 +36,20 @@ namespace CashBook.Controls
             dataGrid.BeginningEdit += DataGridSubmissionDataOnBeginningEdit;
             dataGrid.CellEditEnding += DataGridSubmissionDataOnCellEditEnding;
             dataGrid.CurrentCellChanged += DataGridSubmissionDataOnCurrentCellChanged;
+            dataGrid.SelectedCellsChanged += new SelectedCellsChangedEventHandler(dataGrid_SelectedCellsChanged);
 
+        }
+
+        void dataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            if (dataGrid.SelectedCells != null && dataGrid.SelectedCells.Count > 0)
+            {
+                DataGridCellInfo cellinfo = dataGrid.SelectedCells[0];
+                (this.DataContext as CashBookViewModel).SetCurrentSelection(cellinfo.Item);
+                //(this.DataContext as CashBookViewModel).AddNewItem();
+
+                //_ItemICanAccessInMyClass = cellinfo.Item as MyBusinessObjectType;
+            }
         }
 
         private void NumberTextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -114,6 +127,8 @@ namespace CashBook.Controls
             }
         }
 
+      
+
         private void FocusNextCell(DataGrid theGrid)
         {
             DataGridRow currentRow = theGrid.GetSelectedRow();
@@ -139,7 +154,10 @@ namespace CashBook.Controls
             if (rowContainer != null)
             {
                 DataGridCellsPresenter presenter = GetVisualChild<DataGridCellsPresenter>(rowContainer);
-
+                if (presenter == null)
+                {
+                    return null;
+                }
                 // try to get the cell but it may possibly be virtualized
                 DataGridCell cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(column);
                 if (cell == null)

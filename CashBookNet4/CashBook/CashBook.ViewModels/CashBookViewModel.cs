@@ -166,7 +166,7 @@ namespace CashBook.ViewModels
                 if (selectedItem != value)
                 {
                     selectedItem = value;
-                    this.NotifyPropertyChanged("SelectedItem");
+                    //this.NotifyPropertyChanged("SelectedItem");
                 }
             }
         }
@@ -181,7 +181,7 @@ namespace CashBook.ViewModels
                 if (selectedIndex != value)
                 {
                     selectedIndex = value;
-                    this.NotifyPropertyChanged("SelectedIndex");
+                    //this.NotifyPropertyChanged("SelectedIndex");
                 }
             }
         }
@@ -389,6 +389,11 @@ namespace CashBook.ViewModels
                 totalSum += initialBalanceForDayDecimal;
             }
             TotalBalance = totalSum;
+
+            if (CurrentBalanceOut > AppSettings.TotalPaymentLimit)
+            {
+                WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
+            }
         }
 
         public void SetSelectedCashBook(object param)
@@ -423,11 +428,14 @@ namespace CashBook.ViewModels
         {
             try
             {
-                var validEntries = ExtractValidItems(CashBookEntries);
-                if (validEntries.Count > 0)
+                if (IsFormValid())
                 {
-                    cashBookEntryRepository.UpdateRepositoryForDay(SelectedCashBook.Id, validEntries, SelectedDate, MoneyExchangeRate);
-                    WindowHelper.OpenInformationDialog("Informatia a fost salvata");
+                    var validEntries = ExtractValidItems(CashBookEntries);
+                    if (validEntries.Count > 0)
+                    {
+                        cashBookEntryRepository.UpdateRepositoryForDay(SelectedCashBook.Id, validEntries, SelectedDate, MoneyExchangeRate);
+                        WindowHelper.OpenInformationDialog("Informatia a fost salvata");
+                    }
                 }
             }
             catch (Exception ex)
@@ -447,6 +455,28 @@ namespace CashBook.ViewModels
                 }
             }
             return validEntries;
+        }
+
+        private bool IsFormValid()
+        {
+            if (TotalBalance < 0)
+            {
+                WindowHelper.OpenInformationDialog("Atentie! Sold final negativ");
+                return false;
+            }
+            if (CurrentBalanceOut> AppSettings.SinglePaymentLimit)
+            {
+                WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");               
+                return false;
+            }
+            if (CashBookEntries.Any(p=>p.Plati > AppSettings.SinglePaymentLimit))
+            {
+                WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");               
+
+                return false;
+            }
+
+            return true;
         }
 
         private bool IsValid(CashBookEntryUI item)
@@ -519,5 +549,11 @@ namespace CashBook.ViewModels
 
         #endregion
 
+
+        public void SetCurrentSelection(object p)
+        {
+            SelectedItem = p as CashBookEntryUI;
+            SelectedIndex = CashBookEntries.IndexOf(SelectedItem);
+        }
     }
 }

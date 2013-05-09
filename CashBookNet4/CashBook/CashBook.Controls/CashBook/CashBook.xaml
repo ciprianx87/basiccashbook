@@ -221,10 +221,10 @@
                 
                 <DataGrid x:Name="dataGrid" ItemsSource="{Binding CashBookEntries, Mode=TwoWay}" KeyUp="dataGrid_KeyUp" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Visible"
                           Height="Auto"  SelectionMode="Single" SelectionUnit="CellOrRowHeader" 
-                          SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" 
-                          SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                       
                           >
-
+                    <!--SelectedIndex="{Binding SelectedIndex, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                          SelectedItem="{Binding SelectedItem, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"-->
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Width="50" IsReadOnly="True" >
                             <DataGridTemplateColumn.HeaderTemplate>
@@ -255,16 +255,15 @@
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" EditingElementStyle="{StaticResource StandardTextBox}">
                           
                         </DataGridTextColumn>
-                        <DataGridTextColumn Width="*" Header="Explicatii" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Explicatii,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" EditingElementStyle="{StaticResource StandardTextBox}">
+                        <DataGridTextColumn Width="*" Header="Explicatii" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Explicatii}" EditingElementStyle="{StaticResource StandardTextBox}">
                            
                         </DataGridTextColumn>
                         <DataGridTextColumn Width="100" Header="INCASARI" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=Incasari,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" EditingElementStyle="{StaticResource StandardTextBox}">
                            
                         </DataGridTextColumn>
-                        <DataGridTextColumn Width="100" Header="PLATI" Binding="{Binding UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Path=Plati,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" EditingElementStyle="{StaticResource StandardTextBox}">
+                        <DataGridTextColumn Width="100" Header="PLATI" Binding="{Binding UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Path=Plati
+                }" EditingElementStyle="{StaticResource StandardTextBox}">
                            
                         </DataGridTextColumn>
                         <DataGridTemplateColumn Width="120" Header="Actiuni">

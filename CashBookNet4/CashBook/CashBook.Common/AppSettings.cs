@@ -9,5 +9,7 @@ namespace CashBook.Common
     {
         public static int InformationPopupCloseInterval { get; set; }
         public static int CashRegistryNameCharacterLimit { get; set; }
+        public static int SinglePaymentLimit { get; set; }
+        public static int TotalPaymentLimit { get; set; }
     }
 }

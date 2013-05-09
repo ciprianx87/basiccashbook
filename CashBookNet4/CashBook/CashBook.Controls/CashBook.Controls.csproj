@@ -64,6 +64,9 @@
     <Compile Include="CashBook\CashBookList.xaml.cs">
       <DependentUpon>CashBookList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Popups\PaymentInformationPopup.xaml.cs">
+      <DependentUpon>PaymentInformationPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Popups\ErrorDialog.xaml.cs">
       <DependentUpon>ErrorDialog.xaml</DependentUpon>
     </Compile>
@@ -139,6 +142,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CashBook\CashBookList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popups\PaymentInformationPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
