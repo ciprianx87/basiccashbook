@@ -222,8 +222,24 @@ namespace CashBook.ViewModels.Models
                 WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
                 return false;
             }
+            return !(IsEmpty(NrActCasa, Explicatii) || ((Plati == 0 && Incasari == 0) || (Plati != 0 && Incasari != 0)));
+        }
 
-            return true;
+        public bool IsEmpty()
+        {
+            return string.IsNullOrEmpty(NrActCasa) && string.IsNullOrEmpty(Explicatii) && Plati == 0 && Incasari == 0;
+        }
+
+        private bool IsEmpty(params string[] str)
+        {
+            foreach (var item in str)
+            {
+                if (string.IsNullOrEmpty(item))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

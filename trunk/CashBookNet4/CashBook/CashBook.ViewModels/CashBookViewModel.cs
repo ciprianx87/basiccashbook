@@ -316,7 +316,7 @@ namespace CashBook.ViewModels
                 {
                     moneyExchangeRate = value;
                     this.NotifyPropertyChanged("MoneyExchangeRate");
-                   // UpdateStringValues();
+                    // UpdateStringValues();
                 }
             }
         }
@@ -404,8 +404,8 @@ namespace CashBook.ViewModels
 
             SelectedDate = DateTime.Now;
             UpdateBalance(null);
-           
-            MoneyExchangeRateVisibility = SelectedCashBook.IsLei ? Visibility.Collapsed : Visibility.Visible;          
+
+            MoneyExchangeRateVisibility = SelectedCashBook.IsLei ? Visibility.Collapsed : Visibility.Visible;
             if (SelectedCashBook.IsLei)
             {
                 MoneyExchangeRate = 0;
@@ -464,18 +464,32 @@ namespace CashBook.ViewModels
                 WindowHelper.OpenInformationDialog("Atentie! Sold final negativ");
                 return false;
             }
-            if (CurrentBalanceOut> AppSettings.SinglePaymentLimit)
+            if (CurrentBalanceOut > AppSettings.SinglePaymentLimit)
             {
-                WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");               
+                WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
                 return false;
             }
-            if (CashBookEntries.Any(p=>p.Plati > AppSettings.SinglePaymentLimit))
+            if (CashBookEntries.Any(p => p.Plati > AppSettings.SinglePaymentLimit))
             {
-                WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");               
+                WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
 
                 return false;
             }
 
+
+            foreach (var item in CashBookEntries)
+            {
+                if (item.IsEmpty() && CashBookEntries.IndexOf(item) == CashBookEntries.Count - 1)
+                {
+                    continue;
+                }
+                //do not take the last one (empty) into consideration
+                if (!item.IsFormValid())
+                {
+                    WindowHelper.OpenInformationDialog("Atentie! Exista erori pe pagina");
+                    return false;
+                }
+            }
             return true;
         }
 
