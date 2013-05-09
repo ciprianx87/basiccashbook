@@ -54,10 +54,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0"   Grid.Column="0" Grid.ColumnSpan="3" Content="Unitatea SC AURIUS SRL" />
-            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Content="Sediul CLUJ-NAPOCA, str.POPESTI NR.2" HorizontalContentAlignment="Left" />
+            <Label Grid.Row="0"   Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding Company.Nume,FallbackValue='Unitatea SC AURIUS SRL'}" />
+            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Content="{Binding Company.Adresa,FallbackValue='Sediul CLUJ-NAPOCA, str.POPESTI NR.2'}" HorizontalContentAlignment="Left" />
             <Label Grid.Row="2"   Grid.Column="0"  Grid.ColumnSpan="1" Content="CUI" />
-            <Label Grid.Row="2"   Grid.Column="1"  Grid.ColumnSpan="1" Content="22349678" />
+            <Label Grid.Row="2"   Grid.Column="1"  Grid.ColumnSpan="1" Content="{Binding Company.CUI,FallbackValue='22349678'}" />
             <Label Grid.Row="3"   Grid.Column="1"  Grid.ColumnSpan="3" Content="REGISTRU DE CASĂ în VALUTĂ" FontWeight="Bold"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
             <!--date-->
@@ -67,12 +67,12 @@
             <Label Grid.Row="2"   Grid.Column="6"  Content="Anul" HorizontalContentAlignment="Center"/>
 
 
-            <Label Grid.Row="3"   Grid.Column="4"  Content="12" HorizontalContentAlignment="Center"/>
-            <Label Grid.Row="3"   Grid.Column="5"  Content="3" HorizontalContentAlignment="Center"/>
-            <Label Grid.Row="3"   Grid.Column="6"  Content="2012" HorizontalContentAlignment="Center"/>
+            <Label Grid.Row="3"   Grid.Column="4"  Content="{Binding SelectedDate.Day,FallbackValue='12'}" HorizontalContentAlignment="Center"/>
+            <Label Grid.Row="3"   Grid.Column="5"  Content="{Binding SelectedDate.Month,FallbackValue='3'}" HorizontalContentAlignment="Center"/>
+            <Label Grid.Row="3"   Grid.Column="6"  Content="{Binding SelectedDate.Year,FallbackValue='2012'}" HorizontalContentAlignment="Center"/>
 
             <Label Grid.Row="1" Grid.RowSpan="2"   Grid.Column="7" Grid.ColumnSpan="2" Content="Contul Casa" VerticalContentAlignment="Center" />
-            <Label Grid.Row="3"   Grid.Column="7" Grid.ColumnSpan="2" Content="5314" />
+            <Label Grid.Row="3"   Grid.Column="7" Grid.ColumnSpan="2" Content="{Binding SelectedCashBook.Account,FallbackValue='5314'}" />
 
             <!--table header-->
             <Border Grid.Row="5" Grid.RowSpan="3"   Grid.Column="0"/>
@@ -99,19 +99,19 @@
 
             <Label  Grid.Row="5"    Grid.Column="4"  Grid.ColumnSpan="2" Content="INCASARI" VerticalContentAlignment="Bottom"/>
             <Label  Grid.Row="5"    Grid.Column="6" Grid.ColumnSpan="2" Content="PLATI" VerticalContentAlignment="Bottom"/>
-            <Label  Grid.Row="6"    Grid.Column="4" Grid.ColumnSpan="2" Content="Felul Valutei" VerticalContentAlignment="Bottom"/>
-            <Label  Grid.Row="6"    Grid.Column="6" Grid.ColumnSpan="2" Content="EUR" VerticalContentAlignment="Bottom"/>
-            <Label  Grid.Row="7"    Grid.Column="4" Grid.ColumnSpan="2" Content="Curs" VerticalContentAlignment="Bottom"/>
-            <Label  Grid.Row="7"    Grid.Column="6" Grid.ColumnSpan="2" Content="4.55" VerticalContentAlignment="Bottom"/>
+            <Label  Grid.Row="6"    Grid.Column="4" Grid.ColumnSpan="2" Content="Felul Valutei" VerticalContentAlignment="Bottom" Visibility="{Binding MoneyExchangeRateVisibility}"/>
+            <Label  Grid.Row="6"    Grid.Column="6" Grid.ColumnSpan="2" Content="{Binding SelectedCashBook.CoinType,FallbackValue='EUR'}" VerticalContentAlignment="Bottom"  Visibility="{Binding MoneyExchangeRateVisibility}"/>
+            <Label  Grid.Row="7"    Grid.Column="4" Grid.ColumnSpan="2" Content="Curs" VerticalContentAlignment="Bottom"  Visibility="{Binding MoneyExchangeRateVisibility}"/>
+            <Label  Grid.Row="7"    Grid.Column="6" Grid.ColumnSpan="2" Content="{Binding MoneyExchangeRateString,FallbackValue='4.55'}" VerticalContentAlignment="Bottom"  Visibility="{Binding MoneyExchangeRateVisibility}"/>
 
             <StackPanel Grid.Row="5"  Grid.RowSpan="3"   Grid.Column="8"  VerticalAlignment="Center">
-                <Label  Content="Contra-" VerticalContentAlignment="Center" BorderThickness="0"/>
-                <Label Content="valoarea in" VerticalContentAlignment="Center" BorderThickness="0"/>
-                <Label Content="LEI" VerticalContentAlignment="Center" BorderThickness="0"/>
+                <Label  Content="Contra-" VerticalContentAlignment="Center" BorderThickness="0"  Visibility="{Binding MoneyExchangeRateVisibility}"/>
+                <Label Content="valoarea in" VerticalContentAlignment="Center" BorderThickness="0"  Visibility="{Binding MoneyExchangeRateVisibility}"/>
+                <Label Content="LEI" VerticalContentAlignment="Center" BorderThickness="0"  Visibility="{Binding MoneyExchangeRateVisibility}"/>
             </StackPanel>
             <Label  Grid.Row="8"    Grid.Column="0" Grid.ColumnSpan="4" Content="Report/Sold ziua precedenta" HorizontalContentAlignment="Left" />
-            <Label  Grid.Row="8"    Grid.Column="4" Grid.ColumnSpan="2"  Content="870.89" HorizontalContentAlignment="Right"/>
-            <Label  Grid.Row="8"    Grid.Column="6" Grid.ColumnSpan="2"  Content="870.89" HorizontalContentAlignment="Right"/>
+            <Label  Grid.Row="8"    Grid.Column="4" Grid.ColumnSpan="2"  Content="{Binding InitialBalanceForDayString,FallbackValue='42.55'}" HorizontalContentAlignment="Right"/>
+            <Label  Grid.Row="8"    Grid.Column="6" Grid.ColumnSpan="2"  Content="" HorizontalContentAlignment="Right"/>
 
             <!--border fills-->
             <Border  Grid.Row="0"  Grid.Column="3"  Style="{StaticResource GrayBorder}"/>
@@ -140,7 +140,7 @@
         </Grid>
 
 
-        <ListBox Grid.Row="1" Margin="0,0,0,0" Background="Transparent"
+        <ListBox Grid.Row="1" Margin="-4,0,-3,0" Background="Transparent"
                   ItemsSource="{Binding CashBookEntries}"
                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0">
             <ListBox.ItemTemplate>

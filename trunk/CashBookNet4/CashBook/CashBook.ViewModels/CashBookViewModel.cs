@@ -547,7 +547,7 @@ namespace CashBook.ViewModels
             Mediator.Instance.SendMessage(MediatorActionType.SetSelectedDate, new ReportInitialData()
             {
                 SelectedDate = SelectedDate,
-                SelectedCashBookId = SelectedCashBook.Id
+                CashBook=SelectedCashBook
             });
 
         }
