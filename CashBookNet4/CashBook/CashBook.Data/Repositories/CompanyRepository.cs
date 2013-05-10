@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CashBook.Common.Exceptions;
 
 namespace CashBook.Data.Repositories
 {
@@ -43,6 +44,10 @@ namespace CashBook.Data.Repositories
             using (var context = GetContext())
             {
                 var existingCompany = context.Companies.FirstOrDefault();
+                if (existingCompany == null)
+                {
+                    throw new CompanyNotFoundException();
+                }
                 return existingCompany;
             }
         }

@@ -30,5 +30,24 @@ namespace CashBook.Controls
             (this.DataContext as BaseViewModel).Dispose();
 
         }
+
+        private void Print_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                PrintDialog dialog = new PrintDialog();
+
+                if (dialog.ShowDialog() != true) return;
+
+                grdReport.Measure(new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight));
+                //grdReport.Arrange(new Rect(new Point(50, 50), grdReport.DesiredSize));
+
+                dialog.PrintVisual(grdReport, "Report");
+                //827*1169
+            }
+            catch (Exception ex)
+            {
+            }
+        }
     }
 }

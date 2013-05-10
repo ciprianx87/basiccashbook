@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using CashBook.Common.Mediator;
 using CashBook.Common;
+using CashBook.Common.Exceptions;
 
 namespace CashBook.ViewModels
 {
@@ -65,12 +66,23 @@ namespace CashBook.ViewModels
         #region methods
         private void LoadData()
         {
-            var currentCompany = companyRepository.GetCompany();
-            if (currentCompany != null)
+            try
             {
-                this.CompanyName = currentCompany.Nume;
-                this.CompanyAddress = currentCompany.Adresa;
-                this.CompanyCui = currentCompany.CUI;
+                var currentCompany = companyRepository.GetCompany();
+                if (currentCompany != null)
+                {
+                    this.CompanyName = currentCompany.Nume;
+                    this.CompanyAddress = currentCompany.Adresa;
+                    this.CompanyCui = currentCompany.CUI;
+                }
+            }
+            catch (CompanyNotFoundException ce)
+            {
+                WindowHelper.OpenErrorDialog("Va rugam completati datele despre companie");
+            }
+            catch (Exception ex)
+            {
+                WindowHelper.OpenErrorDialog("Eroare la preluarea informatiei");
             }
         }
 

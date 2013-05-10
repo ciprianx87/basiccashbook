@@ -10,6 +10,7 @@ using CashBook.Common;
 using CashBook.Data.Model;
 using System.Collections.ObjectModel;
 using CashBook.Common.Mediator;
+using CashBook.Common.Exceptions;
 
 namespace CashBook.ViewModels
 {
@@ -234,9 +235,13 @@ namespace CashBook.ViewModels
                 Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
                 Mediator.Instance.SendMessage(MediatorActionType.RefreshList, this.Guid);
             }
+            catch (CompanyNotFoundException ce)
+            {
+                WindowHelper.OpenErrorDialog("Va rugam completati datele despre companie");
+            }
             catch (Exception ex)
             {
-
+                WindowHelper.OpenErrorDialog("Eroare la salvarea informatiei");
             }
         }
 
