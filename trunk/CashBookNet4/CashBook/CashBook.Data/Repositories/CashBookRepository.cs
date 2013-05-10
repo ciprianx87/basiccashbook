@@ -11,6 +11,11 @@ namespace CashBook.Data.Repositories
 {
     public class CashBookRepository : BaseRepository, ICashBookRepository
     {
+        public CashBookRepository()
+        {
+
+        }
+
         public UserCashBook Get(long id)
         {
             using (var context = GetContext())
@@ -42,10 +47,13 @@ namespace CashBook.Data.Repositories
         {
             using (var context = GetContext())
             {
-                var existingCompany = context.Companies.First();
+                ICompanyRepository companyRepository = new CompanyRepository();
+
+                var existingCompany = companyRepository.GetCompany();
+
                 item.Id = DbIdHelper.GetNextID();
                 item.RegistruCasaZis = new System.Data.Objects.DataClasses.EntityCollection<DailyCashBook>();
-                item.Societate = existingCompany;
+                item.SocietateId = existingCompany.Id;
                 context.UserCashBooks.AddObject(item);
                 Commit(context);
             }

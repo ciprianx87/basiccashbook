@@ -44,6 +44,7 @@
     <Compile Include="AppSettings.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DecimalConvertor.cs" />
+    <Compile Include="Exceptions\CompanyNotFoundException.cs" />
     <Compile Include="Mediator\Enums.cs" />
     <Compile Include="Mediator\Mediator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
