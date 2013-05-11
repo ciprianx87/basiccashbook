@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="CashBook.Controls.PrintControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:constants="clr-namespace:CashBook.Controls"
+             xmlns:custom="clr-namespace:CashBookExtended"
+             mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}"
+             VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBox}" x:Key="StandardTextBox" >
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <Style TargetType="TextBlock"  x:Key="StandardTextBlock">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid x:Name="root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
+            <Label Content="Registru de casa:" BorderThickness="0"/>
+            <ComboBox Width="300" HorizontalAlignment="Left" ItemsSource="{Binding}" Margin="10,0,0,0"></ComboBox>
+        </StackPanel>
+        <Grid Grid.Row="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Perioada:" BorderThickness="0" />
+            <RadioButton Grid.Row="1" Content="Ziua curenta" GroupName="day"  IsChecked="True" />
+            <RadioButton Grid.Row="2" Content="Luna curenta"  GroupName="day"/>
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <RadioButton x:Name="rbOtherPeriod" Content="Alta Perioada"  GroupName="day"/>
+                <Label Grid.Row="1" Content="Data inceput:"/>
+                <DatePicker  Grid.Row="1" Text="Alege Data" IsEnabled="{Binding Path=IsChecked, ElementName=rbOtherPeriod}" SelectedDate="{Binding SelectedStartDate, Mode=TwoWay,StringFormat='dd.MM.yyyy'}" Margin="150,0,0,0"  Width="30" VerticalAlignment="Center" HorizontalAlignment="Left"></DatePicker>
+
+                <Label Grid.Row="2" Content="Data sfarsit:"/>
+                <DatePicker  Grid.Row="2" Text="Alege Data" IsEnabled="{Binding Path=IsChecked, ElementName=rbOtherPeriod}" SelectedDate="{Binding SelectedEndDate, Mode=TwoWay,StringFormat='dd.MM.yyyy'}" Margin="150,0,0,0"  Width="30" VerticalAlignment="Center" HorizontalAlignment="Left"></DatePicker>
+
+            </Grid>
+
+        </Grid>
+        <Button Content="Listare" Click="Print_Click" Height="30" Width="70" HorizontalAlignment="Right"/>
+
+    </Grid>
+
+</UserControl>

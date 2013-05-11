@@ -24,18 +24,12 @@ namespace CashBook.Controls
         public LegalReglementations()
         {
             InitializeComponent();
-            this.Loaded += new RoutedEventHandler(LegalReglementations_Loaded);
             this.DataContext = new LegalReglementationsViewModel();
-        }
-
-        void LegalReglementations_Loaded(object sender, RoutedEventArgs e)
-        {
         }
 
         public void Dispose()
         {
             (this.DataContext as BaseViewModel).Dispose();
-            
         }
     }
 }
