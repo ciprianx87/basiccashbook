@@ -52,6 +52,9 @@
     <Compile Include="CashBook\CashBook.xaml.cs">
       <DependentUpon>CashBook.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PrintControl.xaml.cs">
+      <DependentUpon>PrintControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CashBook\CustomDataGrid.cs" />
     <Compile Include="CashBook\ExtendedDataGrid.cs" />
     <Compile Include="CashBook\Extensions.cs" />
@@ -130,6 +133,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CashBook\CashBook.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PrintControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
