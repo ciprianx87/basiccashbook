@@ -24,10 +24,11 @@
             <Setter Property="BorderThickness" Value="0.5"/>
         </Style>
     </UserControl.Resources>
-    <Grid Width="27.7cm"  MaxHeight="21cm" >
+    <Grid Width="27.7cm"  MaxHeight="21cm" x:Name="root">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Margin="30,0,0,10">
             <Grid.RowDefinitions>
@@ -183,42 +184,46 @@
                     <Border  Grid.Row="12"  Grid.Column="6"  Style="{StaticResource GrayBorder}"/>
 
 
-                    <ListBox Grid.Row="9" Grid.ColumnSpan="10" Margin="-4,0,-3,0" Background="Transparent" BorderThickness="0"
-                  ItemsSource="{Binding CashBookEntries}"
+                    <ListBox x:Name="lstItems" Grid.Row="9" Grid.ColumnSpan="10" Margin="-4,0,-3,0" Background="Transparent" BorderThickness="0"
+                  ItemsSource="{Binding CurrentPageCashBookEntries}" Loaded="lstItems_Loaded"
                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid HorizontalAlignment="Stretch" Height="32" Margin="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="32"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"/>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="350"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0" Content="{Binding NrCrt}" />
-                                <Label Grid.Column="1" Content="{Binding NrActCasa}" />
-                                <Label Grid.Column="2" Content="{Binding NrAnexe}" />
-                                <Label Grid.Column="3" Content="{Binding Explicatii}" />
-                                <Label Grid.Column="4" Grid.ColumnSpan="2" Content="{Binding Incasari}" />
-                                <Label Grid.Column="6"  Grid.ColumnSpan="2" Content="{Binding Plati}" />
-                                    <Label Grid.Column="8" Content="{Binding LeiValue}" Width="100" Visibility="{Binding MoneyExchangeRateVisibility, FallbackValue=Collapsed}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <ListBox.Items>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Stretch" Height="20" Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="350"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Content="{Binding NrCrt}" />
+                                    <Label Grid.Column="1" Content="{Binding NrActCasa}" />
+                                    <Label Grid.Column="2" Content="{Binding NrAnexe}" />
+                                    <Label Grid.Column="3" Content="{Binding Explicatii}" />
+                                    <Label Grid.Column="4" Grid.ColumnSpan="2" Content="{Binding Incasari}" />
+                                    <Label Grid.Column="6"  Grid.ColumnSpan="2" Content="{Binding Plati}" />
+                                    <Label Grid.Column="8" Content="{Binding LeiValue}" Width="100" Visibility="{Binding DataContext.MoneyExchangeRateVisibility, ElementName=root, FallbackValue=Collapsed}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.Items>
 
-                    </ListBox.Items>
-                </ListBox>
+                        </ListBox.Items>
+                    </ListBox>
                 </Grid>
             </Grid>
         </Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Pagina Anterioara" Margin="10" Command="{Binding PreviousPageCommand}" IsEnabled="{Binding PreviousPageEnabled}"/>
+            <Button Content="Pagina Urmatoare" Margin="10"  Command="{Binding NextPageCommand}" IsEnabled="{Binding NextPageEnabled}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

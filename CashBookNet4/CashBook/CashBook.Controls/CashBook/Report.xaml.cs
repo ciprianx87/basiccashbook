@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CashBook.ViewModels;
+using System.Windows.Threading;
 
 namespace CashBook.Controls
 {
@@ -44,10 +45,19 @@ namespace CashBook.Controls
 
                 dialog.PrintVisual(grdReport, "Report");
                 //827*1169
+                //Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
             }
             catch (Exception ex)
             {
             }
+        }
+        private const int rowHeight = 20;
+        private void lstItems_Loaded(object sender, RoutedEventArgs e)
+        {
+            var height = lstItems.ActualHeight;
+            int maxRowsPerPage = (int)height / rowHeight;
+            (this.DataContext as ReportsViewModel).SetMaxEntriesPerPage(maxRowsPerPage);
+
         }
     }
 }
