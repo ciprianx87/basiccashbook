@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 05/07/2013 22:47:10
+-- Date Created: 05/12/2013 23:27:39
 -- Generated from EDMX file: D:\Dropbox\Dropbox\proiecte\work\Vs2010\CashBook\CashBook.Data.Model\CashBook.edmx
 -- --------------------------------------------------
 
@@ -54,7 +54,7 @@ CREATE TABLE [UserCashBooks] (
     [CoinType] nvarchar(200)  NOT NULL,
     [Name] nvarchar(200)  NOT NULL,
     [CoinDecimals] tinyint  NOT NULL,
-    [InitialBalance] decimal(18,4)  NOT NULL,
+    [InitialBalance] decimal(19,5)  NOT NULL,
     [Location] nvarchar(200)  NOT NULL,
     [Account] nvarchar(200)  NOT NULL,
     [CashierName] nvarchar(200)  NOT NULL,
@@ -78,8 +78,8 @@ CREATE TABLE [CashBookEntries] (
     [NrActCasa] nvarchar(4000)  NOT NULL,
     [NrAnexe] int  NOT NULL,
     [Explicatii] nvarchar(4000)  NOT NULL,
-    [Incasari] decimal(18,0)  NOT NULL,
-    [Plati] decimal(18,0)  NOT NULL,
+    [Incasari] decimal(19,5)  NOT NULL,
+    [Plati] decimal(19,5)  NOT NULL,
     [RegistruCasaZiId] bigint  NOT NULL
 );
 GO
@@ -89,9 +89,9 @@ CREATE TABLE [DailyCashBooks] (
     [Id] bigint  NOT NULL,
     [Data] datetime  NOT NULL,
     [RegistruCasaId] bigint  NOT NULL,
-    [DeltaBalance] decimal(18,4)  NOT NULL,
-    [TotalBalance] decimal(18,4)  NOT NULL,
-    [MoneyExchangeRate] decimal(18,4)  NULL
+    [DeltaBalance] decimal(19,5)  NOT NULL,
+    [TotalBalance] decimal(19,5)  NOT NULL,
+    [MoneyExchangeRate] decimal(19,5)  NULL
 );
 GO
 
