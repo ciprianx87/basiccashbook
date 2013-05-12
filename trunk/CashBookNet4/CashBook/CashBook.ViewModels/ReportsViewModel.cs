@@ -22,6 +22,11 @@ namespace CashBook.ViewModels
         ICashBookEntryRepository cashBookEntryRepository;
 
         public ICommand SaveCommand { get; set; }
+
+        public ICommand NextPageCommand { get; set; }
+        public ICommand PreviousPageCommand { get; set; }
+
+
         public ReportsViewModel()
         {
             this.Title = "Rapoarte";
@@ -32,6 +37,8 @@ namespace CashBook.ViewModels
             cashBookEntryRepository = new CashBookEntryRepository();
             companyRepository = new CompanyRepository();
 
+            this.NextPageCommand = new DelegateCommand(NextPage, CanNextPage);
+            this.PreviousPageCommand = new DelegateCommand(PreviousPage, CanPreviousPage);
         }
 
         #region properties
@@ -60,6 +67,22 @@ namespace CashBook.ViewModels
                 NotifyPropertyChanged("CashBookEntries");
             }
         }
+
+
+        private ObservableCollection<CashBookEntryUI> currentPageCashBookEntries;
+        public ObservableCollection<CashBookEntryUI> CurrentPageCashBookEntries
+        {
+            get { return currentPageCashBookEntries; }
+            set
+            {
+                if (currentPageCashBookEntries != value)
+                {
+                    currentPageCashBookEntries = value;
+                    this.NotifyPropertyChanged("CurrentPageCashBookEntries");
+                }
+            }
+        }
+
 
 
         private Company company;
@@ -165,6 +188,37 @@ namespace CashBook.ViewModels
                 }
             }
         }
+
+
+        private bool nextPageEnabled;
+        public bool NextPageEnabled
+        {
+            get { return nextPageEnabled; }
+            set
+            {
+                if (nextPageEnabled != value)
+                {
+                    nextPageEnabled = value;
+                    this.NotifyPropertyChanged("NextPageEnabled");
+                }
+            }
+        }
+
+
+        private bool previousPageEnabled;
+        public bool PreviousPageEnabled
+        {
+            get { return previousPageEnabled; }
+            set
+            {
+                if (previousPageEnabled != value)
+                {
+                    previousPageEnabled = value;
+                    this.NotifyPropertyChanged("PreviousPageEnabled");
+                }
+            }
+        }
+
         #endregion
 
         #region methods
@@ -220,6 +274,56 @@ namespace CashBook.ViewModels
 
             InitialBalanceForDayDecimal = cashBookRepository.GetInitialBalanceForDay(SelectedCashBook.Id, SelectedDate);
 
+        }
+
+        private int currentPage = 1;
+        private bool CanNextPage(object parameter)
+        {
+            NextPageEnabled = CashBookEntries != null && CashBookEntries.Count > MaxEntriesPerPage * currentPage;
+            return true;
+        }
+
+        private void NextPage(object parameter)
+        {
+            currentPage++;
+            LoadDataForCurrentPage();          
+        }
+
+
+        private bool CanPreviousPage(object parameter)
+        {
+            PreviousPageEnabled = currentPage > 1;
+            return true;
+        }
+
+        private void PreviousPage(object parameter)
+        {
+            currentPage--;
+            LoadDataForCurrentPage();
+          
+        }
+
+        public int MaxEntriesPerPage { get; set; }
+        public void SetMaxEntriesPerPage(int maxEntries)
+        {
+            MaxEntriesPerPage = maxEntries;
+            LoadDataForCurrentPage();
+
+        }
+
+        private void LoadDataForCurrentPage()
+        {
+            if (currentPage > 0)
+            {
+                CurrentPageCashBookEntries = new ObservableCollection<CashBookEntryUI>();
+                var currentPageItems = CashBookEntries.Skip(MaxEntriesPerPage * (currentPage - 1)).Take(MaxEntriesPerPage).ToList();
+                foreach (var item in currentPageItems)
+                {
+                    CurrentPageCashBookEntries.Add(item);
+                }
+            }
+            PreviousPageCommand.CanExecute(null);
+            NextPageCommand.CanExecute(null);
         }
 
 

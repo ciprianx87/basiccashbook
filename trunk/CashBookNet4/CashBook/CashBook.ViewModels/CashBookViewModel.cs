@@ -365,6 +365,7 @@ namespace CashBook.ViewModels
             {
                 CashBookEntries.Insert(CashBookEntries.Count, new CashBookEntryUI());
                 SelectedIndex = CashBookEntries.Count - 1;
+                UpdateItemState();
             }
         }
 
