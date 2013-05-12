@@ -17,6 +17,7 @@ namespace CashBook.ViewModels
 {
     public class ReportsViewModel : BaseViewModel
     {
+        private const int EXTRA_REPORT_ENTRIES = 2;
         ICashBookRepository cashBookRepository;
         ICompanyRepository companyRepository;
         ICashBookEntryRepository cashBookEntryRepository;
@@ -219,6 +220,22 @@ namespace CashBook.ViewModels
             }
         }
 
+
+        private string pageNumber;
+        public string PageNumber
+        {
+            get { return pageNumber; }
+            set
+            {
+                if (pageNumber != value)
+                {
+                    pageNumber = value;
+                    this.NotifyPropertyChanged("PageNumber");
+                }
+            }
+        }
+
+
         #endregion
 
         #region methods
@@ -254,6 +271,7 @@ namespace CashBook.ViewModels
                     CashBookEntries.Add((CashBookEntryUI)item);
                 }
             }
+            AddExtraDetailsRows();
 
             MoneyExchangeRateVisibility = SelectedCashBook.IsLei ? Visibility.Collapsed : Visibility.Visible;
 
@@ -286,7 +304,7 @@ namespace CashBook.ViewModels
         private void NextPage(object parameter)
         {
             currentPage++;
-            LoadDataForCurrentPage();          
+            LoadDataForCurrentPage();
         }
 
 
@@ -300,7 +318,7 @@ namespace CashBook.ViewModels
         {
             currentPage--;
             LoadDataForCurrentPage();
-          
+
         }
 
         public int MaxEntriesPerPage { get; set; }
@@ -324,8 +342,39 @@ namespace CashBook.ViewModels
             }
             PreviousPageCommand.CanExecute(null);
             NextPageCommand.CanExecute(null);
+
+            int totalPages = 0;
+            int mod = (int)CashBookEntries.Count % MaxEntriesPerPage;
+            totalPages = (int)CashBookEntries.Count / MaxEntriesPerPage;
+            if (mod != 0)
+            {
+                totalPages++;
+            }
+            PageNumber = string.Format("{0}/{1}", currentPage, totalPages);
         }
 
+        private void AddExtraDetailsRows()
+        {
+            CashBookEntryUI currentBalance = new CashBookEntryUI()
+            {
+                Plati = 32.2M,
+                Incasari = 311.3M,
+                Explicatii = "Rulaj curent",
+                IsExtraDetail = true
+            };
+
+            CashBookEntryUI finalBalance = new CashBookEntryUI()
+            {
+                Incasari = 1232.2M,
+                Plati = 0,
+                PlatiString = "",
+                Explicatii = "Sold final",
+                IsExtraDetail = true
+            };
+
+            CashBookEntries.Add(currentBalance);
+            CashBookEntries.Add(finalBalance);
+        }
 
         public override void Dispose()
         {

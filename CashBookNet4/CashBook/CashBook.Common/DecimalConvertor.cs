@@ -60,7 +60,35 @@ namespace CashBook.Common
 
             CultureInfo ci = new CultureInfo("ro-RO");
             format = "N" + nrDecimals;
+            var converted = number.ToString(format);
+            return converted;
+
+            var index = converted.IndexOf('.');
+            var previous = converted.Substring(0, index).ToList(); ;
+            previous.Reverse();
+            string result = "";
+            while (previous.Count > 3)
+            {
+                var piece = previous.Take(3);
+                result += string.Join("", piece.ToList() + ",");
+            }
+            result += converted.Substring(index, converted.Length - index);
+            return result;
             return number.ToString(format, ci);
+        }
+
+        public static string Reverse(string s)
+        {
+            char[] charArray = s.ToCharArray();
+            Array.Reverse(charArray);
+            return new string(charArray);
+        }
+
+        public decimal StringToDecimal(string str)
+        {
+            CultureInfo ci = new CultureInfo("ro-RO");
+            decimal dec = Convert.ToDecimal(str, ci);
+            return dec;
         }
     }
 }

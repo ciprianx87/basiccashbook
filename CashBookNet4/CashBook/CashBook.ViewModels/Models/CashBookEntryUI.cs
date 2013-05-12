@@ -6,6 +6,7 @@ using System.ComponentModel;
 using CashBook.Data.Model;
 using CashBook.Common.Mediator;
 using CashBook.Common;
+using System.Windows;
 
 namespace CashBook.ViewModels.Models
 {
@@ -124,6 +125,7 @@ namespace CashBook.ViewModels.Models
                 {
                     nrAnexe = value;
                     this.NotifyPropertyChanged("NrAnexe");
+                    UpdateStringFields();
                 }
             }
         }
@@ -142,6 +144,7 @@ namespace CashBook.ViewModels.Models
                     this.NotifyPropertyChanged("Incasari");
                     this.NotifyPropertyChanged("Plati");
                     NotifyChangedBalance(incasari);
+                    UpdateStringFields();
                 }
             }
         }
@@ -161,6 +164,7 @@ namespace CashBook.ViewModels.Models
                     this.NotifyPropertyChanged("Incasari");
                     NotifyChangedBalance(-plati);
                     IsFormValid();
+                    //UpdateStringFields();
                 }
             }
         }
@@ -181,6 +185,7 @@ namespace CashBook.ViewModels.Models
                 {
                     nrCrt = value;
                     this.NotifyPropertyChanged("NrCrt");
+                    UpdateStringFields();
                 }
             }
         }
@@ -247,6 +252,124 @@ namespace CashBook.ViewModels.Models
             }
         }
 
+
+        private FontWeight fontWeight;
+        public FontWeight FontWeight
+        {
+            get { return fontWeight; }
+            set
+            {
+                if (fontWeight != value)
+                {
+                    fontWeight = value;
+                    this.NotifyPropertyChanged("FontWeight");
+                }
+            }
+        }
+
+
+        private bool isExtraDetail;
+        public bool IsExtraDetail
+        {
+            get { return isExtraDetail; }
+            set
+            {
+                if (isExtraDetail != value)
+                {
+                    isExtraDetail = value;
+                    if (isExtraDetail)
+                    {
+                        FontWeight = FontWeights.Bold;
+                        NrCrtString = "";
+                        NrAnexeString = "";
+                    }
+                }
+            }
+        }
+
+
+        private string incasariString;
+        public string IncasariString
+        {
+            get { return incasariString; }
+            set
+            {
+                if (incasariString != value)
+                {
+                    incasariString = value;
+                    Incasari = DecimalConvertor.Instance.StringToDecimal(incasariString);
+                    incasariString = DecimalConvertor.Instance.DecimalToString(Incasari);
+                    this.NotifyPropertyChanged("IncasariString");
+                }
+            }
+        }
+
+
+        private string platiString;
+        public string PlatiString
+        {
+            get { return platiString; }
+            set
+            {
+                if (platiString != value)
+                {
+                    platiString = value;
+                    platiString = platiString.Replace(",,", ",");
+                    if (!string.IsNullOrEmpty(platiString))
+                    {
+                        Plati = DecimalConvertor.Instance.StringToDecimal(platiString);
+                    }
+                    platiString = DecimalConvertor.Instance.DecimalToString(Plati);
+                    this.NotifyPropertyChanged("PlatiString");
+                }
+            }
+        }
+
+
+        private string nrCrtString;
+        public string NrCrtString
+        {
+            get { return nrCrtString; }
+            set
+            {
+                if (nrCrtString != value)
+                {
+                    nrCrtString = value;
+                    this.NotifyPropertyChanged("NrCrtString");
+                }
+            }
+        }
+
+
+        private string nrActCasaString;
+        public string NrActCasaString
+        {
+            get { return nrActCasaString; }
+            set
+            {
+                if (nrActCasaString != value)
+                {
+                    nrActCasaString = value;
+                    this.NotifyPropertyChanged("NrActCasaString");
+                }
+            }
+        }
+
+        private string nrAnexeString;
+        public string NrAnexeString
+        {
+            get { return nrAnexeString; }
+            set
+            {
+                if (nrAnexeString != value)
+                {
+                    nrAnexeString = value;
+                    this.NotifyPropertyChanged("NrAnexeString");
+                }
+            }
+        }
+
+
         public bool IsFormValid()
         {
             if (Plati > AppSettings.SinglePaymentLimit)
@@ -272,6 +395,15 @@ namespace CashBook.ViewModels.Models
                 }
             }
             return false;
+        }
+
+        private void UpdateStringFields()
+        {
+            //NrActCasaString = DecimalConvertor.Instance.DecimalToString(NrActCasa);
+            NrAnexeString = DecimalConvertor.Instance.DecimalToString(NrAnexe);
+            PlatiString = DecimalConvertor.Instance.DecimalToString(Plati);
+            IncasariString = DecimalConvertor.Instance.DecimalToString(Incasari);
+            NrCrtString = DecimalConvertor.Instance.DecimalToString(NrCrt);
         }
     }
 }

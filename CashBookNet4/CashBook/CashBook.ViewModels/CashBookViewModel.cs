@@ -62,7 +62,8 @@ namespace CashBook.ViewModels
             }
             CashBookEntries.Add(new CashBookEntryUI());
             //CashBookEntries.CollectionChanged+=new System.Collections.Specialized.NotifyCollectionChangedEventHandler(CashBookEntries_CollectionChanged);
-            MoneyExchangeRate = cashBookEntryRepository.GetExchangeRateForDay(SelectedCashBook.Id, dateTime);
+            var dbExchangeRate = cashBookEntryRepository.GetExchangeRateForDay(SelectedCashBook.Id, dateTime);
+            MoneyExchangeRate = dbExchangeRate.HasValue ? dbExchangeRate.Value : 0;
             UpdateBalance(null);
             //AddFakeItems();
             UpdateItemState();
@@ -301,13 +302,15 @@ namespace CashBook.ViewModels
                 {
                     moneyExchangeRateString = value;
                     this.NotifyPropertyChanged("MoneyExchangeRateString");
+                    MoneyExchangeRate = DecimalConvertor.Instance.StringToDecimal(moneyExchangeRateString);
+
                 }
             }
         }
 
 
-        private decimal? moneyExchangeRate;
-        public decimal? MoneyExchangeRate
+        private decimal moneyExchangeRate;
+        public decimal MoneyExchangeRate
         {
             get { return moneyExchangeRate; }
             set
@@ -316,7 +319,7 @@ namespace CashBook.ViewModels
                 {
                     moneyExchangeRate = value;
                     this.NotifyPropertyChanged("MoneyExchangeRate");
-                    // UpdateStringValues();
+                    UpdateStringValues();
                 }
             }
         }
@@ -348,10 +351,7 @@ namespace CashBook.ViewModels
             TotalBalanceString = DecimalConvertor.Instance.DecimalToString(TotalBalance);
             CurrentBalanceInString = DecimalConvertor.Instance.DecimalToString(CurrentBalanceIn);
             CurrentBalanceOutString = DecimalConvertor.Instance.DecimalToString(CurrentBalanceOut);
-            if (MoneyExchangeRate.HasValue)
-            {
-                MoneyExchangeRateString = DecimalConvertor.Instance.DecimalToString(MoneyExchangeRate.Value);
-            }
+            MoneyExchangeRateString = DecimalConvertor.Instance.DecimalToString(MoneyExchangeRate);
         }
 
         public void AddNewItem()
@@ -477,6 +477,16 @@ namespace CashBook.ViewModels
                 return false;
             }
 
+            //force completion of money exchange rate
+            if (!SelectedCashBook.IsLei)
+            {
+                if (MoneyExchangeRate == 0)
+                {
+                    WindowHelper.OpenErrorDialog("Atentie! Cursul valutar trebuie completat");
+                    return false;
+                }
+            }
+
 
             foreach (var item in CashBookEntries)
             {
@@ -548,7 +558,7 @@ namespace CashBook.ViewModels
             Mediator.Instance.SendMessage(MediatorActionType.SetSelectedDate, new ReportInitialData()
             {
                 SelectedDate = SelectedDate,
-                CashBook=SelectedCashBook
+                CashBook = SelectedCashBook
             });
 
         }
