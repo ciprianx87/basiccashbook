@@ -351,7 +351,7 @@ namespace CashBook.ViewModels
             TotalBalanceString = DecimalConvertor.Instance.DecimalToString(TotalBalance);
             CurrentBalanceInString = DecimalConvertor.Instance.DecimalToString(CurrentBalanceIn);
             CurrentBalanceOutString = DecimalConvertor.Instance.DecimalToString(CurrentBalanceOut);
-            MoneyExchangeRateString = DecimalConvertor.Instance.DecimalToString(MoneyExchangeRate);
+            MoneyExchangeRateString = DecimalConvertor.Instance.DecimalToString(MoneyExchangeRate, 4);
         }
 
         public void AddNewItem()

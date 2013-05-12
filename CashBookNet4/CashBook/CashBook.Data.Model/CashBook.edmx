@@ -41,7 +41,7 @@
     <Property Name="CoinType" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="CoinDecimals" Type="tinyint" Nullable="false" />
-    <Property Name="InitialBalance" Type="decimal" Nullable="false" Precision="18" Scale="4" />
+    <Property Name="InitialBalance" Type="decimal" Nullable="false" Precision="19" Scale="5" />
     <Property Name="Location" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="Account" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="CashierName" Type="nvarchar" Nullable="false" MaxLength="200" />
@@ -65,8 +65,8 @@
     <Property Name="NrActCasa" Type="nvarchar" Nullable="false" />
     <Property Name="NrAnexe" Type="int" Nullable="false" />
     <Property Name="Explicatii" Type="nvarchar" Nullable="false" />
-    <Property Name="Incasari" Type="decimal" Nullable="false" />
-    <Property Name="Plati" Type="decimal" Nullable="false" />
+    <Property Name="Incasari" Type="decimal" Nullable="false" Precision="19" Scale="5" />
+    <Property Name="Plati" Type="decimal" Nullable="false" Precision="19" Scale="5" />
     <Property Name="RegistruCasaZiId" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="DailyCashBooks">
@@ -76,9 +76,9 @@
     <Property Name="Id" Type="bigint" Nullable="false" />
     <Property Name="Data" Type="datetime" Nullable="false" />
     <Property Name="RegistruCasaId" Type="bigint" Nullable="false" />
-    <Property Name="DeltaBalance" Type="decimal" Nullable="false" Precision="18" Scale="4" />
-    <Property Name="TotalBalance" Type="decimal" Nullable="false" Precision="18" Scale="4" />
-    <Property Name="MoneyExchangeRate" Type="decimal" Nullable="true" Precision="18" Scale="4" />
+    <Property Name="DeltaBalance" Type="decimal" Nullable="false" Precision="19" Scale="5" />
+    <Property Name="TotalBalance" Type="decimal" Nullable="false" Precision="19" Scale="5" />
+    <Property Name="MoneyExchangeRate" Type="decimal" Nullable="true" Precision="19" Scale="5" />
   </EntityType>
   <Association Name="SocietateRegistruCasa">
     <End Role="Societate" Type="CashBook.Store.Companies" Multiplicity="1" />
@@ -158,7 +158,7 @@
           <Property Type="String" Name="CoinType" Nullable="false" FixedLength="false" MaxLength="200" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" />
           <Property Type="Byte" Name="CoinDecimals" Nullable="false" />
-          <Property Type="Decimal" Name="InitialBalance" Nullable="false" Precision="18" Scale="4" />
+          <Property Type="Decimal" Name="InitialBalance" Nullable="false" Precision="19" Scale="5" />
           <Property Type="String" Name="Location" Nullable="false" MaxLength="200" FixedLength="false" />
           <Property Type="String" Name="Account" Nullable="false" MaxLength="200" FixedLength="false" />
           <Property Type="String" Name="CashierName" Nullable="false" MaxLength="200" FixedLength="false" />
@@ -183,8 +183,8 @@
           <Property Type="String" Name="NrActCasa" Nullable="false" />
           <Property Type="Int32" Name="NrAnexe" Nullable="false" />
           <Property Type="String" Name="Explicatii" Nullable="false" />
-          <Property Type="Decimal" Name="Incasari" Nullable="false" />
-          <Property Type="Decimal" Name="Plati" Nullable="false" />
+          <Property Type="Decimal" Name="Incasari" Nullable="false" Precision="19" Scale="5" />
+          <Property Type="Decimal" Name="Plati" Nullable="false" Precision="19" Scale="5" />
           <Property Type="Int64" Name="RegistruCasaZiId" Nullable="false" />
           <NavigationProperty Name="RegistruCasaZi" Relationship="CashBook.RegistruCasaZiRegistruCasaIntrare" FromRole="RegistruCasaIntrare" ToRole="RegistruCasaZi" />
         </EntityType>
@@ -197,9 +197,9 @@
           <Property Type="Int64" Name="RegistruCasaId" Nullable="false" />
           <NavigationProperty Name="RegistruCasaIntrares" Relationship="CashBook.RegistruCasaZiRegistruCasaIntrare" FromRole="RegistruCasaZi" ToRole="RegistruCasaIntrare" />
           <NavigationProperty Name="RegistruCasa" Relationship="CashBook.RegistruCasaRegistruCasaZi" FromRole="RegistruCasaZi" ToRole="RegistruCasa" />
-          <Property Type="Decimal" Name="DeltaBalance" Nullable="false" Precision="18" Scale="4" />
-          <Property Type="Decimal" Name="TotalBalance" Nullable="false" Precision="18" Scale="4" />
-          <Property Type="Decimal" Name="MoneyExchangeRate" Nullable="true" Precision="18" Scale="4" />
+          <Property Type="Decimal" Name="DeltaBalance" Nullable="false" Precision="19" Scale="5" />
+          <Property Type="Decimal" Name="TotalBalance" Nullable="false" Precision="19" Scale="5" />
+          <Property Type="Decimal" Name="MoneyExchangeRate" Nullable="true" Precision="19" Scale="5" />
         </EntityType>
         <Association Name="SocietateRegistruCasa">
           <End Type="CashBook.Company" Role="Societate" Multiplicity="1" />
