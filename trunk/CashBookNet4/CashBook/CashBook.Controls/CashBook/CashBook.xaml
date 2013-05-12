@@ -18,10 +18,20 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="FontSize" Value="18"/>
         </Style>
+
         <Style TargetType="TextBlock"  x:Key="StandardTextBlock">
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <Style TargetType="TextBlock"  x:Key="StandardLeftTextBlock"  BasedOn="{StaticResource StandardTextBlock}" >
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="6,0,0,0"/>
+        </Style>
+        <Style TargetType="TextBlock"  x:Key="StandardRightTextBlock"  BasedOn="{StaticResource StandardTextBlock}" >
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Padding" Value="0,0,6,0"/>
         </Style>
     </UserControl.Resources>
     <Grid x:Name="root">
@@ -103,7 +113,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="400,0,0,0" Visibility="{Binding MoneyExchangeRateVisibility}">
                     <TextBlock Text="Curs Valuta:" VerticalAlignment="Center" FontSize="25" FontWeight="Bold"/>
-                    <TextBox Text="{Binding MoneyExchangeRate}" VerticalAlignment="Center" FontSize="25" FontWeight="Bold"
+                    <TextBox Text="{Binding MoneyExchangeRateString}" VerticalAlignment="Center" FontSize="25" FontWeight="Bold"
                                Margin="10,0,0,0" Width="150" />
                 </StackPanel>
                 <!--<Button Grid.Row="1" Content="Adauga Intrare noua" Command="{Binding NewRowCommand}" Width="130" HorizontalAlignment="Left" Visibility="Collapsed"/>-->
@@ -116,122 +126,28 @@
                         </EventSetter>
                     </Style>
                 </Grid.Resources>
-                <!--<DataGrid x:Name="dataGrid" ItemsSource="{Binding CashBookEntries, Mode=TwoWay}" KeyUp="dataGrid_KeyUp" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Visible"
-                          Height="Auto"  SelectionMode="Single" SelectionUnit="CellOrRowHeader" 
-                          SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" 
-                          SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                          >
-                    <DataGrid.Resources>
-                       
-                    </DataGrid.Resources>
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Width="50">
-                            <DataGridTemplateColumn.HeaderTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <StackPanel.Resources>
-                                            <Style TargetType="TextBlock" >
-                                                <Setter Property="TextAlignment" Value="Center"/>
-                                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                            </Style>
-                                        </StackPanel.Resources>
-                                        <TextBlock Text="Nr." TextAlignment="Center"/>
-                                        <TextBlock Text="Crt." HorizontalAlignment="Stretch" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.HeaderTemplate>
-                            <DataGridTemplateColumn.CellTemplate>                                
-                                <DataTemplate >
-                                    <TextBlock Text="{Binding NrCrt}" Style="{StaticResource StandardTextBlock}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="150" Header="Nr Act Casa" >
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate >
-                                    <TextBox x:Name="txtContent" Text="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Path=NrActCasa,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                            <DataGridTemplateColumn.CellEditingTemplate>
-                                <DataTemplate >
-                                    <TextBox x:Name="txtContent" Text="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Path=NrActCasa,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellEditingTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="150" Header="Nr Anexe">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate x:Name="dtNrAnexe" >
-                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=NrAnexe,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}" GotFocus="NumberTextBox_GotFocus"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                            <DataGridTemplateColumn.CellEditingTemplate>
-                                <DataTemplate  >
-                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=NrAnexe,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}" GotFocus="NumberTextBox_GotFocus"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellEditingTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="*" Header="Explicatii">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate >
-                                    <TextBox  x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Explicatii,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="100" Header="INCASARI">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate >
-                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=Incasari,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}" GotFocus="NumberTextBox_GotFocus"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="100" Header="PLATI">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate >
-                                    <TextBox x:Name="txtContent" Text="{Binding UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Path=Plati,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Style="{StaticResource StandardTextBox}" GotFocus="NumberTextBox_GotFocus"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="120" Header="Actiuni" >
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate >
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button  Margin="0,0,10,0" Command="{Binding DataContext.DeleteCommand, ElementName=root}" CommandParameter="{Binding}" ClickMode="Press" Width="30" Height="20" >
-                                            <StackPanel>
-                                                <Image Source="/CashBook.Controls;component/Images/deleteButton3.png"  Stretch="Uniform"  Width="30" Height="15"/>
-                                                <TextBlock Text=""/>
-                                            </StackPanel>
-                                            <Button.ToolTip>
-                                                <TextBlock Text="Stergere"/>
-                                            </Button.ToolTip>
-                                        </Button>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>-->
-                
-                
+
                 <DataGrid x:Name="dataGrid" ItemsSource="{Binding CashBookEntries, Mode=TwoWay}" KeyUp="dataGrid_KeyUp" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Visible"
                           Height="Auto"  SelectionMode="Single" SelectionUnit="CellOrRowHeader" 
                        
                           >
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridCell"  x:Key="NoFocusColumStyle">
+                            <Setter Property="IsTabStop" Value="False"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                        </Style>
+                    </DataGrid.Resources>
+
                     <!--SelectedIndex="{Binding SelectedIndex, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                           SelectedItem="{Binding SelectedItem, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"-->
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Width="50" IsReadOnly="True" >
+                        <DataGridTemplateColumn Width="50" CellStyle="{StaticResource NoFocusColumStyle}" FocusManager.IsFocusScope="False"  >
                             <DataGridTemplateColumn.HeaderTemplate>
                                 <DataTemplate>
                                     <StackPanel>
                                         <StackPanel.Resources>
-                                            <Style TargetType="TextBlock" >
+                                            <Style TargetType="TextBlock"  >
                                                 <Setter Property="TextAlignment" Value="Center"/>
                                                 <Setter Property="HorizontalAlignment" Value="Center"/>
                                             </Style>
@@ -243,34 +159,34 @@
                             </DataGridTemplateColumn.HeaderTemplate>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
-                                    <TextBlock Text="{Binding NrCrt}" Style="{StaticResource StandardTextBlock}"/>
+                                    <TextBlock Text="{Binding NrCrt}" Style="{StaticResource StandardTextBlock}" Focusable="False" IsHitTestVisible="False" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Width="150" Header="Nr Act Casa" Binding="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Path=NrActCasa,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}"  EditingElementStyle="{StaticResource StandardTextBox}">
-                           
+
                         </DataGridTextColumn>
                         <DataGridTextColumn Width="150" Header="Nr Anexe" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=NrAnexe,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" EditingElementStyle="{StaticResource StandardTextBox}">
-                          
+
                         </DataGridTextColumn>
-                        <DataGridTextColumn Width="*" Header="Explicatii" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Explicatii}" EditingElementStyle="{StaticResource StandardTextBox}">
-                           
+                        <DataGridTextColumn Width="*" Header="Explicatii" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Explicatii}" EditingElementStyle="{StaticResource StandardTextBox}"
+                                            >
                         </DataGridTextColumn>
-                        <DataGridTextColumn Width="100" Header="INCASARI" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=Incasari,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" EditingElementStyle="{StaticResource StandardTextBox}">
-                           
+                        <DataGridTextColumn Width="100" Header="INCASARI" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=IncasariString,
+                ValidatesOnDataErrors=true, NotifyOnValidationError=true}" EditingElementStyle="{StaticResource StandardTextBox}"  ElementStyle="{StaticResource StandardRightTextBlock}">
+
                         </DataGridTextColumn>
-                        <DataGridTextColumn Width="100" Header="PLATI" Binding="{Binding UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Path=Plati
-                }" EditingElementStyle="{StaticResource StandardTextBox}">
-                           
+                        <DataGridTextColumn Width="100" Header="PLATI" Binding="{Binding UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Path=PlatiString
+                }" EditingElementStyle="{StaticResource StandardTextBox}"  ElementStyle="{StaticResource StandardRightTextBlock}" >
+
                         </DataGridTextColumn>
-                        <DataGridTemplateColumn Width="120" Header="Actiuni">
+                        <DataGridTemplateColumn Width="120" Header="Actiuni"  CellStyle="{StaticResource NoFocusColumStyle}" FocusManager.IsFocusScope="False"   >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal">
-                                        <Button  Margin="0,0,10,0" Command="{Binding DataContext.DeleteCommand, ElementName=root}" CommandParameter="{Binding}" ClickMode="Press" Width="30" Height="20" >
+                                        <Button  Margin="0,0,10,0" Command="{Binding DataContext.DeleteCommand, ElementName=root}" CommandParameter="{Binding}" ClickMode="Press" Width="30" Height="20" IsTabStop="False" Focusable="False">
                                             <StackPanel>
                                                 <Image Source="/CashBook.Controls;component/Images/deleteButton3.png"  Stretch="Uniform"  Width="30" Height="15"/>
                                                 <TextBlock Text=""/>
