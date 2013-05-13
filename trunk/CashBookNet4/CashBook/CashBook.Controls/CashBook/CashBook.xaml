@@ -114,7 +114,7 @@
                 <StackPanel Orientation="Horizontal" Margin="400,0,0,0" Visibility="{Binding MoneyExchangeRateVisibility}">
                     <TextBlock Text="Curs Valuta:" VerticalAlignment="Center" FontSize="25" FontWeight="Bold"/>
                     <TextBox Text="{Binding MoneyExchangeRateString}" VerticalAlignment="Center" FontSize="25" FontWeight="Bold"
-                               Margin="10,0,0,0" Width="150" />
+                               Margin="10,0,0,0" Width="150" GotFocus="NumberTextBox_GotFocus" />
                 </StackPanel>
                 <!--<Button Grid.Row="1" Content="Adauga Intrare noua" Command="{Binding NewRowCommand}" Width="130" HorizontalAlignment="Left" Visibility="Collapsed"/>-->
 
@@ -174,15 +174,28 @@
                         <DataGridTextColumn Width="*" Header="Explicatii" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Explicatii}" EditingElementStyle="{StaticResource StandardTextBox}"
                                             >
                         </DataGridTextColumn>
-                        <DataGridTextColumn Width="100" Header="INCASARI" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=IncasariString,
+                        <DataGridTextColumn Width="130" Header="INCASARI" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=IncasariString,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" EditingElementStyle="{StaticResource StandardTextBox}"  ElementStyle="{StaticResource StandardRightTextBlock}">
 
                         </DataGridTextColumn>
-                        <DataGridTextColumn Width="100" Header="PLATI" Binding="{Binding UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Path=PlatiString
+                        <DataGridTextColumn Width="130" Header="PLATI" Binding="{Binding UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Path=PlatiString
                 }" EditingElementStyle="{StaticResource StandardTextBox}"  ElementStyle="{StaticResource StandardRightTextBlock}" >
 
                         </DataGridTextColumn>
-                        <DataGridTemplateColumn Width="120" Header="Actiuni"  CellStyle="{StaticResource NoFocusColumStyle}" FocusManager.IsFocusScope="False"   >
+                        <DataGridTemplateColumn Width="30" Header="Eroare"  CellStyle="{StaticResource NoFocusColumStyle}" FocusManager.IsFocusScope="False"   >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock  Margin="0,0,10,0" Width="30" Height="20"  Focusable="False" Text="!" FontWeight="Bold" Foreground="Red">                                         
+                                            <TextBlock.ToolTip>
+                                                <TextBlock Text="Eroare"/>
+                                            </TextBlock.ToolTip>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="60" Header="Actiuni"  CellStyle="{StaticResource NoFocusColumStyle}" FocusManager.IsFocusScope="False"   >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal">

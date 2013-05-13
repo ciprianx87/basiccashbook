@@ -16,11 +16,11 @@
             <Setter  Property="Width" Value="300"/>
             <Setter  Property="HorizontalAlignment" Value="Left"/>
             <Setter  Property="Margin" Value="15,0,0,0"/>
-            <Style.Triggers>
+            <!--<Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="true">
-                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0]}"/>
                 </Trigger>
-            </Style.Triggers>
+            </Style.Triggers>-->
         </Style>
     </Window.Resources>
     <Grid>
@@ -45,27 +45,27 @@
         </Grid.ColumnDefinitions>
         <TextBlock Text="Creare Registru de casa:" Style="{DynamicResource TitleStyle}" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
         <TextBlock Grid.Row="1" Text="Nume:"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name,  ValidatesOnDataErrors=true, NotifyOnValidationError=true}"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, Mode=TwoWay,  ValidatesOnDataErrors=true, NotifyOnValidationError=true}"/>
 
         <TextBlock Grid.Row="2" Text="Moneda:" />
-        <TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding CoinType}"/>
+        <TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding CoinType,Mode=TwoWay}"/>
         <TextBlock Grid.Row="3" Text="Zecimale Moneda:"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CoinDecimals}"/>
-
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CoinDecimals,Mode=TwoWay}" Visibility="Collapsed"/>
+        <ComboBox  Grid.Row="3" Grid.Column="1" Width="70" HorizontalAlignment="Left" Margin="15,0,0,0" ItemsSource="{Binding AllowedDecimals}" SelectedItem="{Binding SelectedDecimal, Mode=TwoWay}"/>
 
         <TextBlock Grid.Row="4" Text="Locatie:"/>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Location}"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Location,Mode=TwoWay}"/>
         <TextBlock Grid.Row="5" Text="Nume Casier:"/>
-        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding CashierName}"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding CashierName,Mode=TwoWay}"/>
         <TextBlock Grid.Row="6" Text="Sold Initial:"/>
-        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding InitialBalance}"/>
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding InitialBalance,Mode=TwoWay}"/>
         <TextBlock Grid.Row="7" Text="Data Sold Initial:"/>
         <StackPanel  Grid.Row="7" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,0">
-            <TextBox IsReadOnly="True"   Text="{Binding InitialBalanceDateString}"  FontWeight="Bold" />
+            <TextBox IsReadOnly="True"   Text="{Binding InitialBalanceDateString,Mode=TwoWay}"  FontWeight="Bold" />
             <DatePicker Text="Alege Data" SelectedDate="{Binding InitialBalanceDate, Mode=TwoWay}" FontSize="14" Width="30" HorizontalAlignment="Left" ></DatePicker>
         </StackPanel>
         <TextBlock Grid.Row="8" Text="Contul:"/>
-        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Account}"/>
+        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Account,Mode=TwoWay}"/>
         <Button Grid.Row="9" Content="Salvare" Margin="20,20,0,0"  Command="{Binding SaveCommand}" Width="150"/>
         <Button Grid.Row="9" Grid.Column="1" Content="Inchidere" Margin="20,20,0,0"  Command="{Binding CancelCommand}" Width="150" HorizontalAlignment="Left" />
     </Grid>

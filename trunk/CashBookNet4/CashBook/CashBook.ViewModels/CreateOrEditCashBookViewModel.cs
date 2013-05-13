@@ -11,10 +11,12 @@ using CashBook.Data.Model;
 using System.Collections.ObjectModel;
 using CashBook.Common.Mediator;
 using CashBook.Common.Exceptions;
+using System.ComponentModel;
 
 namespace CashBook.ViewModels
 {
-    public class CreateOrEditCashBookViewModel : BaseViewModel
+    public class CreateOrEditCashBookViewModel : BaseViewModel, IDataErrorInfo
+
     {
         ICashBookRepository cashBookRepository;
 
@@ -32,23 +34,34 @@ namespace CashBook.ViewModels
         }
 
         #region properties
-        public override string this[string columnName]
+
+        public string Error
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        //public virtual string this[string columnName]
+        //{
+        //    get { throw new NotImplementedException(); }
+        //}
+
+        public  string this[string columnName]
         {
             get
             {
-                if (columnName == "Name")
-                {
-                    if (string.IsNullOrEmpty(Name))
-                    {
-                        return "Camp obligatoriu!";
-                    }
-                    if (!IsNameLengthValid())
-                    {
-                        return "Lungimea numelui trebuie sa fie mai mica de " + AppSettings.CashRegistryNameCharacterLimit + " caractere!";
-                    }
-                }
+                //if (columnName == "Name")
+                //{
+                //    if (string.IsNullOrEmpty(Name))
+                //    {
+                //        return "Camp obligatoriu!";
+                //    }
+                //    if (!IsNameLengthValid())
+                //    {
+                //        return "Lungimea numelui trebuie sa fie mai mica de " + AppSettings.CashRegistryNameCharacterLimit + " caractere!";
+                //    }
+                //}
                 return null;
-                return base[columnName];
+               
             }
         }
 
@@ -163,6 +176,36 @@ namespace CashBook.ViewModels
             }
         }
 
+
+        private byte selectedDecimal;
+        public byte SelectedDecimal
+        {
+            get { return selectedDecimal; }
+            set
+            {
+                if (selectedDecimal != value)
+                {
+                    selectedDecimal = value;
+                    this.NotifyPropertyChanged("SelectedDecimal");
+                }
+            }
+        }
+
+
+        private ObservableCollection<byte> allowedDecimals;
+        public ObservableCollection<byte> AllowedDecimals
+        {
+            get { return allowedDecimals; }
+            set
+            {
+                if (allowedDecimals != value)
+                {
+                    allowedDecimals = value;
+                    this.NotifyPropertyChanged("AllowedDecimals");
+                }
+            }
+        }
+
         #endregion
 
         #region methods
@@ -177,10 +220,12 @@ namespace CashBook.ViewModels
                 CashierName = currentEntity.CashierName;
                 Location = currentEntity.Location;
                 CoinType = currentEntity.CoinType;
-                CoinDecimals = currentEntity.CoinDecimals;
+                //CoinDecimals = currentEntity.CoinDecimals;
                 Name = currentEntity.Name;
                 InitialBalance = currentEntity.InitialBalance;
                 InitialBalanceDate = currentEntity.InitialBalanceDate;
+
+                SelectedDecimal = currentEntity.CoinDecimals;
             }
             else
             {
@@ -190,7 +235,8 @@ namespace CashBook.ViewModels
 
         private void LoadData()
         {
-
+            AllowedDecimals = new ObservableCollection<byte>() { 2, 3, 4 };
+            SelectedDecimal = AllowedDecimals[0];
         }
 
         private void UpdateFields()
@@ -200,7 +246,7 @@ namespace CashBook.ViewModels
             currentEntity.CashierName = CashierName;
             currentEntity.Location = Location;
             currentEntity.CoinType = CoinType;
-            currentEntity.CoinDecimals = CoinDecimals;
+            currentEntity.CoinDecimals = SelectedDecimal;
             currentEntity.Name = Name;
             currentEntity.InitialBalance = InitialBalance;
             currentEntity.InitialBalanceDate = InitialBalanceDate;
@@ -219,7 +265,7 @@ namespace CashBook.ViewModels
                         CashierName = CashierName != null ? CashierName : "",
                         Location = Location != null ? Location : "",
                         CoinType = CoinType,
-                        CoinDecimals = CoinDecimals,
+                        CoinDecimals = SelectedDecimal,
                         Name = Name != null ? Name : "",
                         InitialBalance = InitialBalance,
                         InitialBalanceDate = InitialBalanceDate

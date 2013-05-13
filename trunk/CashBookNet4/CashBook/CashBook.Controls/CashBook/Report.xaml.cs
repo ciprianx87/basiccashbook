@@ -51,7 +51,7 @@ namespace CashBook.Controls
             {
             }
         }
-        private const int rowHeight = 20;
+        private const int rowHeight = 80;
         private void lstItems_Loaded(object sender, RoutedEventArgs e)
         {
             var height = lstItems.ActualHeight;
