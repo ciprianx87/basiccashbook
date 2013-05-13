@@ -174,21 +174,21 @@
                         <DataGridTextColumn Width="*" Header="Explicatii" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Explicatii}" EditingElementStyle="{StaticResource StandardTextBox}"
                                             >
                         </DataGridTextColumn>
-                        <DataGridTextColumn Width="130" Header="INCASARI" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=IncasariString,
+                        <DataGridTextColumn Width="130" Header="INCASARI" Binding="{Binding UpdateSourceTrigger=LostFocus, Mode=TwoWay, Path=IncasariString,
                 ValidatesOnDataErrors=true, NotifyOnValidationError=true}" EditingElementStyle="{StaticResource StandardTextBox}"  ElementStyle="{StaticResource StandardRightTextBlock}">
 
                         </DataGridTextColumn>
-                        <DataGridTextColumn Width="130" Header="PLATI" Binding="{Binding UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Path=PlatiString
+                        <DataGridTextColumn Width="130" Header="PLATI" Binding="{Binding UpdateSourceTrigger=LostFocus,Mode=TwoWay, Path=PlatiString
                 }" EditingElementStyle="{StaticResource StandardTextBox}"  ElementStyle="{StaticResource StandardRightTextBlock}" >
 
                         </DataGridTextColumn>
-                        <DataGridTemplateColumn Width="30" Header="Eroare"  CellStyle="{StaticResource NoFocusColumStyle}" FocusManager.IsFocusScope="False"   >
+                        <DataGridTemplateColumn Width="60" Header="Eroare"  CellStyle="{StaticResource NoFocusColumStyle}" FocusManager.IsFocusScope="False"   >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock  Margin="0,0,10,0" Width="30" Height="20"  Focusable="False" Text="!" FontWeight="Bold" Foreground="Red">                                         
+                                        <TextBlock  Margin="0,0,10,0" Width="60"  Focusable="False" Text="!" FontWeight="Bold" Foreground="Red" Visibility="{Binding ErrorVisible}" VerticalAlignment="Center">                                         
                                             <TextBlock.ToolTip>
-                                                <TextBlock Text="Eroare"/>
+                                                <TextBlock Text="{Binding ErrorMessage}" FontWeight="Bold" Foreground="Red"/>
                                             </TextBlock.ToolTip>
                                         </TextBlock>
                                     </StackPanel>
