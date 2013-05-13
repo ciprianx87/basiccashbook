@@ -145,6 +145,7 @@ namespace CashBook.ViewModels.Models
                     this.NotifyPropertyChanged("Plati");
                     NotifyChangedBalance(incasari);
                     UpdateStringFields();
+                    IsValid();
                 }
             }
         }
@@ -164,7 +165,8 @@ namespace CashBook.ViewModels.Models
                     this.NotifyPropertyChanged("Incasari");
                     NotifyChangedBalance(-plati);
                     IsFormValid();
-                    //UpdateStringFields();
+                    UpdateStringFields();
+                    IsValid();
                 }
             }
         }
@@ -202,6 +204,7 @@ namespace CashBook.ViewModels.Models
                 {
                     explicatii = value;
                     this.NotifyPropertyChanged("Explicatii");
+                    IsValid();
                 }
             }
         }
@@ -216,6 +219,7 @@ namespace CashBook.ViewModels.Models
                 {
                     nrActCasa = value;
                     this.NotifyPropertyChanged("NrActCasa");
+                    IsValid();
                 }
             }
         }
@@ -297,7 +301,11 @@ namespace CashBook.ViewModels.Models
                 if (incasariString != value)
                 {
                     incasariString = value;
-                    Incasari = DecimalConvertor.Instance.StringToDecimal(incasariString);
+                    incasariString = incasariString.Replace(".", ",");
+                    if (!string.IsNullOrEmpty(incasariString))
+                    {
+                        Incasari = DecimalConvertor.Instance.StringToDecimal(incasariString);
+                    }
                     incasariString = DecimalConvertor.Instance.DecimalToString(Incasari);
                     this.NotifyPropertyChanged("IncasariString");
                 }
@@ -314,7 +322,8 @@ namespace CashBook.ViewModels.Models
                 if (platiString != value)
                 {
                     platiString = value;
-                    platiString = platiString.Replace(",,", ",");
+                    //platiString = platiString.Replace(",,", ",");
+                    platiString = platiString.Replace(".", ",");
                     if (!string.IsNullOrEmpty(platiString))
                     {
                         Plati = DecimalConvertor.Instance.StringToDecimal(platiString);
@@ -365,6 +374,37 @@ namespace CashBook.ViewModels.Models
                 {
                     nrAnexeString = value;
                     this.NotifyPropertyChanged("NrAnexeString");
+                    IsValid();
+                }
+            }
+        }
+
+
+        private string errorMessage;
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                if (errorMessage != value)
+                {
+                    errorMessage = value;
+                    this.NotifyPropertyChanged("ErrorMessage");
+                    ErrorVisible = string.IsNullOrEmpty(errorMessage) ? Visibility.Hidden : Visibility.Visible;
+                }
+            }
+        }
+
+        private Visibility errorVisible;
+        public Visibility ErrorVisible
+        {
+            get { return errorVisible; }
+            set
+            {
+                if (errorVisible != value)
+                {
+                    errorVisible = value;
+                    this.NotifyPropertyChanged("ErrorVisible");
                 }
             }
         }
@@ -377,7 +417,42 @@ namespace CashBook.ViewModels.Models
                 WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
                 return false;
             }
-            return !(IsEmpty(NrActCasa, Explicatii) || ((Plati == 0 && Incasari == 0) || (Plati != 0 && Incasari != 0)));
+            return !IsValid();
+            //return !(IsEmpty(NrActCasa, Explicatii) || ((Plati == 0 && Incasari == 0) || (Plati != 0 && Incasari != 0)));
+        }
+
+        private bool IsValid()
+        {
+            bool result = true;
+            string message = "";
+            if (NrActCasa < 0)
+            {
+                message += "NrActCasa nu poate fi negativ" + Environment.NewLine;
+            }
+            if (IsEmpty(NrAnexeString))
+            {
+                message += "NrAnexe este obligatoriu" + Environment.NewLine;
+            }
+            if (IsEmpty(Explicatii))
+            {
+                message += "Explicatii este obligatoriu" + Environment.NewLine;
+            }
+            if (Plati != 0 && Incasari != 0)
+            {
+                message += "Doar unul din campurile Incasari sau Plati trebuie completat " + Environment.NewLine;
+            }
+            if (Plati == 0 && Incasari == 0)
+            {
+                message += "Unul din campurile Incasari sau Plati trebuie completat" + Environment.NewLine;
+            }
+
+            ErrorMessage = message;
+            result = string.IsNullOrEmpty(message);
+            if (!result)
+            {
+                // WindowHelper.OpenErrorDialog(message);
+            }
+            return result;
         }
 
         public bool IsEmpty()

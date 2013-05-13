@@ -46,7 +46,7 @@ namespace CashBook.Common
 
         public string DecimalToString(decimal number, int nrDecimals)
         {
-            return DecToString(number, NumberOfDecimals);
+            return DecToString(number, nrDecimals);
         }
 
         private static string DecToString(decimal number, int nrDecimals)

@@ -68,6 +68,8 @@ namespace CashBook.ViewModels
             //AddFakeItems();
             UpdateItemState();
 
+            CashBookEntries.ToList().ForEach(p => p.IsFormValid());
+
         }
 
         private void AddFakeItems()
