@@ -44,6 +44,7 @@
                 <Label Content="Perioada:" BorderThickness="0" />
             </StackPanel>
             <Button Content="Listare" Click="Print_Click" Height="30" Width="70" HorizontalAlignment="Right"/>
+            <Button Content="Inapoi" Command="{Binding BackCommand}" Height="30" Width="70" HorizontalAlignment="Left"/>
         </Grid>
         <!--<ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Visible"  >-->
         <Viewbox Grid.Row="1">

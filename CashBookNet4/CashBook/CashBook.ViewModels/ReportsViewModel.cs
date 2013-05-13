@@ -27,6 +27,9 @@ namespace CashBook.ViewModels
         public ICommand NextPageCommand { get; set; }
         public ICommand PreviousPageCommand { get; set; }
 
+        public ICommand BackCommand { get; set; }
+
+     
 
         public ReportsViewModel()
         {
@@ -40,6 +43,7 @@ namespace CashBook.ViewModels
 
             this.NextPageCommand = new DelegateCommand(NextPage, CanNextPage);
             this.PreviousPageCommand = new DelegateCommand(PreviousPage, CanPreviousPage);
+            this.BackCommand = new DelegateCommand(Back, CanBack); 
         }
 
         #region properties
@@ -250,7 +254,16 @@ namespace CashBook.ViewModels
             LoadCompanyData();
         }
 
+        private bool CanBack(object parameter)
+        {
+            return true;
+        }
 
+        private void Back(object parameter)
+        {
+            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.CashBook);
+            Mediator.Instance.SendMessage(MediatorActionType.SetSelectedCashBook, new CashBookDisplayInfo() { SelectedCashbook = SelectedCashBook, SelectedDate = SelectedDate });
+        } 
 
         private void LoadCompanyData()
         {
@@ -262,16 +275,34 @@ namespace CashBook.ViewModels
             MoneyExchangeRate = cashBookEntryRepository.GetExchangeRateForDay(SelectedCashBook.Id, dateTime);
 
             CashBookEntries = new ObservableCollection<CashBookEntryUI>();
+            var tempCashBookEntries = new ObservableCollection<CashBookEntryUI>();
 
             var existingCashBookEntries = cashBookEntryRepository.GetEntriesForDay(SelectedCashBook.Id, dateTime);
             if (existingCashBookEntries != null)
             {
                 foreach (var item in existingCashBookEntries)
                 {
+                    tempCashBookEntries.Add((CashBookEntryUI)item);
+                }
+            }
+
+            //add incasari
+            foreach (var item in tempCashBookEntries)
+            {
+                if (item.Incasari != 0)
+                {
                     CashBookEntries.Add((CashBookEntryUI)item);
                 }
             }
-            AddExtraDetailsRows();
+
+            //add payments
+            foreach (var item in tempCashBookEntries)
+            {
+                if (item.Plati != 0)
+                {
+                    CashBookEntries.Add((CashBookEntryUI)item);
+                }
+            }
 
             MoneyExchangeRateVisibility = SelectedCashBook.IsLei ? Visibility.Collapsed : Visibility.Visible;
 
@@ -292,6 +323,9 @@ namespace CashBook.ViewModels
 
             InitialBalanceForDayDecimal = cashBookRepository.GetInitialBalanceForDay(SelectedCashBook.Id, SelectedDate);
 
+
+
+            AddExtraDetailsRows();
         }
 
         private int currentPage = 1;
@@ -335,6 +369,7 @@ namespace CashBook.ViewModels
             {
                 CurrentPageCashBookEntries = new ObservableCollection<CashBookEntryUI>();
                 var currentPageItems = CashBookEntries.Skip(MaxEntriesPerPage * (currentPage - 1)).Take(MaxEntriesPerPage).ToList();
+
                 foreach (var item in currentPageItems)
                 {
                     CurrentPageCashBookEntries.Add(item);
@@ -355,17 +390,25 @@ namespace CashBook.ViewModels
 
         private void AddExtraDetailsRows()
         {
+            //calculate the current and final balance
+            decimal currentBalanceIn = 0;
+            decimal currentBalanceOut = 0;
+            CashBookEntries.ToList().ForEach(p => currentBalanceIn += p.Incasari);
+            CashBookEntries.ToList().ForEach(p => currentBalanceOut += p.Plati);
+            var currentBalanceDecimal = currentBalanceIn - currentBalanceOut;
+            var totalBalanceDecimal = currentBalanceDecimal + InitialBalanceForDayDecimal;
+
             CashBookEntryUI currentBalance = new CashBookEntryUI()
             {
-                Plati = 32.2M,
-                Incasari = 311.3M,
+                Plati = currentBalanceOut,
+                Incasari = currentBalanceIn,
                 Explicatii = "Rulaj curent",
                 IsExtraDetail = true
             };
 
             CashBookEntryUI finalBalance = new CashBookEntryUI()
             {
-                Incasari = 1232.2M,
+                Incasari = totalBalanceDecimal,
                 Plati = 0,
                 PlatiString = "",
                 Explicatii = "Sold final",

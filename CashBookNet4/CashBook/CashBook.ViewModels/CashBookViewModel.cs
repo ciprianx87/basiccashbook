@@ -399,11 +399,24 @@ namespace CashBook.ViewModels
 
         public void SetSelectedCashBook(object param)
         {
-            SelectedCashBook = param as UserCashBook;
+            if (param is UserCashBook)
+            {
+                LoadDataForCashBook(param as UserCashBook, DateTime.Now);
+            }
+            else if (param is CashBookDisplayInfo)
+            {
+                CashBookDisplayInfo info = param as CashBookDisplayInfo;
+                LoadDataForCashBook(info.SelectedCashbook, info.SelectedDate);
+            }
+        }
+
+        private void LoadDataForCashBook(UserCashBook cashBook, DateTime date)
+        {
+            SelectedCashBook = cashBook;
             this.Title = "Editare Registru de casa (" + SelectedCashBook.Name + ")";
             DecimalConvertor.Instance.SetNumberOfDecimals(SelectedCashBook.CoinDecimals);
 
-            SelectedDate = DateTime.Now;
+            SelectedDate = date;
             UpdateBalance(null);
 
             MoneyExchangeRateVisibility = SelectedCashBook.IsLei ? Visibility.Collapsed : Visibility.Visible;

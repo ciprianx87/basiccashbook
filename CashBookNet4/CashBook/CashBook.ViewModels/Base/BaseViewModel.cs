@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CashBook.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged, IDisposable, IDataErrorInfo
+    public class BaseViewModel : INotifyPropertyChanged, IDisposable//, IDataErrorInfo
     {
           public Guid Guid { get; set; }
           public BaseViewModel()
@@ -52,14 +52,5 @@ namespace CashBook.ViewModels
             
         }
 
-        public string Error
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public virtual string this[string columnName]
-        {
-            get { throw new NotImplementedException(); }
-        }
     }
 }
