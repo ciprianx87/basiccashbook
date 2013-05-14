@@ -68,6 +68,7 @@ namespace CashBook.ViewModels
         {
             try
             {
+                //throw new ArgumentNullException("a");
                 var currentCompany = companyRepository.GetCompany();
                 if (currentCompany != null)
                 {
@@ -83,6 +84,7 @@ namespace CashBook.ViewModels
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
                 WindowHelper.OpenErrorDialog("Eroare la preluarea informatiei");
             }
         }

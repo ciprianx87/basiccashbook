@@ -79,6 +79,7 @@ namespace CashBook.Controls.Popups
 
                     CenterPopup(popup);
                     popup.Show();
+                    //popup.Focus();
                 }
             }
         }

@@ -22,4 +22,10 @@ namespace CashBook.Data.Model
         Other,
         Any
     }
+
+    public enum YesNoPopupResponse
+    {
+        Yes,
+        No
+    }
 }

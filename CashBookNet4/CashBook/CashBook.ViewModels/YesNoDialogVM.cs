@@ -59,7 +59,8 @@ namespace CashBook.ViewModels
 
         private void OK(object parameter)
         {
-            DeleteEntity();
+            Mediator.Instance.SendMessage(MediatorActionType.YesNoPopupResponse, YesNoPopupResponse.Yes);
+
             Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
         }
 
@@ -72,6 +73,7 @@ namespace CashBook.ViewModels
 
         private void Cancel(object parameter)
         {
+            Mediator.Instance.SendMessage(MediatorActionType.YesNoPopupResponse, YesNoPopupResponse.No);
             Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
         }
         #endregion
@@ -92,10 +94,9 @@ namespace CashBook.ViewModels
 
         public void SetMessage(object param)
         {
-            if (param is UserCashBook)
+            if (param is string)
             {
-                entityToDelete = param as UserCashBook;
-                this.Message = "Sunteti sigur ca doriti sa stergeti " + entityToDelete.Name + " ?".Replace(Environment.NewLine, "");
+                this.Message = param.ToString();
             }
         }
         #endregion

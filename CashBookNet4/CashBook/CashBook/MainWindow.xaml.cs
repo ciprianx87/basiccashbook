@@ -19,6 +19,9 @@ using CashBook.Common;
 using CashBook.Controls;
 using System.Globalization;
 using System.Threading;
+using log4net.Config;
+using log4net;
+using System.Reflection;
 
 namespace CashBook
 {
@@ -32,11 +35,18 @@ namespace CashBook
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
         }
-
+        private  ILog log;
 
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            //configure log4net
+            XmlConfigurator.Configure();
+            //log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+            //log.Debug("test");
+            //log.Error("test");
+            Logger.Instance.Log.Debug("application start");
+
             InitCulture();
             InitSettings();
             PopupManager.Instance.Init();
