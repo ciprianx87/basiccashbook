@@ -302,10 +302,15 @@ namespace CashBook.ViewModels
             {
                 if (moneyExchangeRateString != value)
                 {
-                    moneyExchangeRateString = value;
+                    moneyExchangeRateString = Utils.PrepareForConversion(value);
+                  
+                   // MoneyExchangeRate = DecimalConvertor.Instance.StringToDecimal(moneyExchangeRateString);
+                    if (!string.IsNullOrEmpty(moneyExchangeRateString))
+                    {
+                        MoneyExchangeRate = DecimalConvertor.Instance.StringToDecimal(moneyExchangeRateString);
+                    }
+                    moneyExchangeRateString = DecimalConvertor.Instance.DecimalToString(MoneyExchangeRate);
                     this.NotifyPropertyChanged("MoneyExchangeRateString");
-                    MoneyExchangeRate = DecimalConvertor.Instance.StringToDecimal(moneyExchangeRateString);
-
                 }
             }
         }
@@ -317,7 +322,7 @@ namespace CashBook.ViewModels
             get { return moneyExchangeRate; }
             set
             {
-                //if (moneyExchangeRate != value)
+                if (moneyExchangeRate != value)
                 {
                     moneyExchangeRate = value;
                     this.NotifyPropertyChanged("MoneyExchangeRate");
@@ -489,6 +494,22 @@ namespace CashBook.ViewModels
             {
                 WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
 
+                return false;
+            }
+
+            bool moneyExchangeRateOk = true;
+            try
+            {
+                var testMoneyExchangeRate = DecimalConvertor.Instance.StringToDecimal(MoneyExchangeRateString );
+            }
+            catch (Exception)
+            {
+                moneyExchangeRateOk = false;
+            }
+
+            if (!moneyExchangeRateOk)
+            {
+                WindowHelper.OpenInformationDialog("Cursul valutar este invalid!");
                 return false;
             }
 

@@ -109,7 +109,14 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Data:" VerticalAlignment="Center" FontSize="25" FontWeight="Bold"/>
                     <TextBlock Text="{Binding SelectedDateString}" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" Margin="10,0,0,0" />
-                    <DatePicker Text="Alege Data" SelectedDate="{Binding SelectedDate, Mode=TwoWay,StringFormat='dd.MM.yyyy'}" Margin="10,0,0,0"  Width="30" VerticalAlignment="Center"></DatePicker>
+                    <DatePicker Text="Alege Data" SelectedDate="{Binding SelectedDate, Mode=TwoWay,StringFormat='dd.MM.yyyy'}" Margin="10,0,0,0"  Width="0" VerticalAlignment="Center" 
+                                  IsDropDownOpen="False" x:Name="calendar" IsEnabled="True" 
+                                >
+                    
+                    </DatePicker>
+                    <Button x:Name="btnPickDate" Content="Alege Data" Click="btnPickDate_Click" Height="23"/>
+                    <!--<Calendar></Calendar>-->
+                    <!--Style="{DynamicResource DatePickerStyle}"-->
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="400,0,0,0" Visibility="{Binding MoneyExchangeRateVisibility}">
                     <TextBlock Text="Curs Valuta:" VerticalAlignment="Center" FontSize="25" FontWeight="Bold"/>
@@ -129,7 +136,7 @@
 
                 <DataGrid x:Name="dataGrid" ItemsSource="{Binding CashBookEntries, Mode=TwoWay}" KeyUp="dataGrid_KeyUp" AutoGenerateColumns="False" CanUserAddRows="False" VerticalScrollBarVisibility="Visible"
                           Height="Auto"  SelectionMode="Single" SelectionUnit="CellOrRowHeader" 
-                       
+                       CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False"
                           >
                     <DataGrid.Resources>
                         <Style TargetType="DataGridCell"  x:Key="NoFocusColumStyle">

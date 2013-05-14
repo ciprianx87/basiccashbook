@@ -47,4 +47,21 @@
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Margin" Value="20"/>
     </Style>
+
+    <Style x:Key="DatePickerStyle" TargetType="{x:Type DatePicker}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DatePicker}">
+                    <!-- Wrapping in ViewBox will enlarge calendar of that size.-->
+                    <Viewbox Height="250"
+                         Width="250">
+                        <CalendarItem x:Name="PART_CalendarItem"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"/>
+                    </Viewbox>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

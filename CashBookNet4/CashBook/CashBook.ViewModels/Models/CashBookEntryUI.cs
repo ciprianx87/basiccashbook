@@ -299,9 +299,8 @@ namespace CashBook.ViewModels.Models
             set
             {
                 if (incasariString != value)
-                {
-                    incasariString = value;
-                    incasariString = incasariString.Replace(".", ",");
+                {                  
+                    incasariString = Utils.PrepareForConversion(value);
                     if (!string.IsNullOrEmpty(incasariString))
                     {
                         Incasari = DecimalConvertor.Instance.StringToDecimal(incasariString);
@@ -320,10 +319,8 @@ namespace CashBook.ViewModels.Models
             set
             {
                 if (platiString != value)
-                {
-                    platiString = value;
-                    //platiString = platiString.Replace(",,", ",");
-                    platiString = platiString.Replace(".", ",");
+                {          
+                    platiString = Utils.PrepareForConversion(value);
                     if (!string.IsNullOrEmpty(platiString))
                     {
                         Plati = DecimalConvertor.Instance.StringToDecimal(platiString);
@@ -417,21 +414,21 @@ namespace CashBook.ViewModels.Models
                 WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
                 return false;
             }
-            return !IsValid();
+            return IsValid();
             //return !(IsEmpty(NrActCasa, Explicatii) || ((Plati == 0 && Incasari == 0) || (Plati != 0 && Incasari != 0)));
         }
 
-        private bool IsValid()
+        public bool IsValid()
         {
             bool result = true;
             string message = "";
-            if (NrActCasa < 0)
+            if (IsEmpty(NrActCasa))
             {
-                message += "NrActCasa nu poate fi negativ" + Environment.NewLine;
+                message += "NrActCasa este obligatoriu" + Environment.NewLine;
             }
-            if (IsEmpty(NrAnexeString))
+            if (NrAnexe < 0)
             {
-                message += "NrAnexe este obligatoriu" + Environment.NewLine;
+                message += "NrAnexe nu poate fi negativ" + Environment.NewLine;
             }
             if (IsEmpty(Explicatii))
             {

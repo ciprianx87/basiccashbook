@@ -58,11 +58,11 @@
         <TextBlock Grid.Row="5" Text="Nume Casier:"/>
         <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding CashierName,Mode=TwoWay}"/>
         <TextBlock Grid.Row="6" Text="Sold Initial:"/>
-        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding InitialBalance,Mode=TwoWay}"/>
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding InitialBalanceString,Mode=TwoWay}"/>
         <TextBlock Grid.Row="7" Text="Data Sold Initial:"/>
         <StackPanel  Grid.Row="7" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,0">
             <TextBox IsReadOnly="True"   Text="{Binding InitialBalanceDateString,Mode=TwoWay}"  FontWeight="Bold" />
-            <DatePicker Text="Alege Data" SelectedDate="{Binding InitialBalanceDate, Mode=TwoWay}" FontSize="14" Width="30" HorizontalAlignment="Left" ></DatePicker>
+            <DatePicker Text="Alege Data" SelectedDate="{Binding InitialBalanceDate, Mode=TwoWay}" FontSize="14" Width="30" HorizontalAlignment="Left" DisplayDateStart="{Binding StartDate}"></DatePicker>
         </StackPanel>
         <TextBlock Grid.Row="8" Text="Contul:"/>
         <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Account,Mode=TwoWay}"/>
