@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using CashBook.Common.Mediator;
 using CashBook.ViewModels;
+using CashBook.Common;
 
 namespace CashBook.Controls.Popups
 {
@@ -107,6 +108,7 @@ namespace CashBook.Controls.Popups
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
             }
         }
 

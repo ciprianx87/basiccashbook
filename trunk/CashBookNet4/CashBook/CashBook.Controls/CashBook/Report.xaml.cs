@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CashBook.ViewModels;
 using System.Windows.Threading;
+using CashBook.Common;
 
 namespace CashBook.Controls
 {
@@ -49,6 +50,7 @@ namespace CashBook.Controls
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
             }
         }
         private const int rowHeight = 20;

@@ -104,6 +104,7 @@ namespace CashBook.Data.Repositories
                 }
                 catch (Exception ex)
                 {
+                    Logger.Instance.LogException(ex);
                     throw ex;
                 }
             }
@@ -126,6 +127,7 @@ namespace CashBook.Data.Repositories
                 }
                 catch (Exception ex)
                 {
+                    Logger.Instance.LogException(ex);
                     throw ex;
                 }
             }

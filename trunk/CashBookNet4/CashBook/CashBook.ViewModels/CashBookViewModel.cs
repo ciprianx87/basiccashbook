@@ -461,6 +461,7 @@ namespace CashBook.ViewModels
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
                 WindowHelper.OpenErrorDialog("Eroare la salvarea informatiei");
             }
         }
@@ -601,6 +602,7 @@ namespace CashBook.ViewModels
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
                 WindowHelper.OpenErrorDialog("Registrul nu a putut fi sters");
             }
         }

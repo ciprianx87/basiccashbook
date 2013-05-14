@@ -35,19 +35,23 @@ namespace CashBook.Common
 
         public void LogException(Exception ex)
         {
-            if (ex != null)
+            try
             {
-                Log.Error(ex.Message);
-                Log.Error(ex.StackTrace);
-                Log.Error(ex.Source);
-                if (ex.InnerException != null)
+                if (ex != null)
                 {
-                    Log.Error(ex.InnerException.Message);
-                    Log.Error(ex.InnerException.StackTrace);
-                    Log.Error(ex.InnerException.Source);
-                }
+                    Log.Error(ex.Message);
+                    Log.Error(ex.StackTrace);
+                    Log.Error(ex.Source);
+                    if (ex.InnerException != null)
+                    {
+                        Log.Error(ex.InnerException.Message);
+                        Log.Error(ex.InnerException.StackTrace);
+                        Log.Error(ex.InnerException.Source);
+                    }
 
+                }
             }
+            catch { }
         }
     }
 }

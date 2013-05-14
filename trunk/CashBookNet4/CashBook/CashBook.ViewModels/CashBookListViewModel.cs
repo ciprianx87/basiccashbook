@@ -87,6 +87,7 @@ namespace CashBook.ViewModels
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
             }
         }
 
@@ -97,6 +98,7 @@ namespace CashBook.ViewModels
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
 
             }
         }
@@ -115,6 +117,7 @@ namespace CashBook.ViewModels
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
 
             }
         }
@@ -133,6 +136,7 @@ namespace CashBook.ViewModels
             catch (Exception ex)
             {
 
+                Logger.Instance.LogException(ex);
             }
         }
 
@@ -143,6 +147,7 @@ namespace CashBook.ViewModels
 
         public void Select(object param)
         {
+            Logger.Instance.Log.Debug(string.Format("param != null {0}", param != null));
             Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.CashBook);
             Mediator.Instance.SendMessage(MediatorActionType.SetSelectedCashBook, param);
         }
@@ -162,6 +167,7 @@ namespace CashBook.ViewModels
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
                 WindowHelper.OpenErrorDialog("Registrul nu a putut fi sters");
             }
         }
