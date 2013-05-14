@@ -238,7 +238,7 @@ namespace CashBook.Controls
                 var currCell = dataGrid.CurrentCell;
                 //Move2(currCell, e);
                 //currCell.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right));
-
+                
                 //var cell = TryToFindGridCell(dataGrid, currCell);
             }
         }
@@ -309,6 +309,13 @@ namespace CashBook.Controls
                 parent = VisualTreeHelper.GetParent(parent) as UIElement;
             }
             return null;
+        }
+
+        private void btnPickDate_Click(object sender, RoutedEventArgs e)
+        {
+            calendar.Width = double.NaN;// new System.Windows.GridLength(1, System.Windows.GridUnitType.Auto);
+            calendar.Height = double.NaN;// new System.Windows.GridLength(1, System.Windows.GridUnitType.Auto);
+            calendar.IsDropDownOpen = true;
         }
 
         

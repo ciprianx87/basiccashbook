@@ -12,11 +12,11 @@ using System.Collections.ObjectModel;
 using CashBook.Common.Mediator;
 using CashBook.Common.Exceptions;
 using System.ComponentModel;
+using CashBook.ViewModels.Models;
 
 namespace CashBook.ViewModels
 {
     public class CreateOrEditCashBookViewModel : BaseViewModel, IDataErrorInfo
-
     {
         ICashBookRepository cashBookRepository;
 
@@ -45,7 +45,7 @@ namespace CashBook.ViewModels
         //    get { throw new NotImplementedException(); }
         //}
 
-        public  string this[string columnName]
+        public string this[string columnName]
         {
             get
             {
@@ -61,7 +61,7 @@ namespace CashBook.ViewModels
                 //    }
                 //}
                 return null;
-               
+
             }
         }
 
@@ -74,18 +74,7 @@ namespace CashBook.ViewModels
                 name = value;
                 NotifyPropertyChanged("Name");
             }
-        }
-
-        private decimal initialBalance;
-        public decimal InitialBalance
-        {
-            get { return initialBalance; }
-            set
-            {
-                initialBalance = value;
-                NotifyPropertyChanged("InitialBalance");
-            }
-        }
+        }       
 
 
         private DateTime? initialBalanceDate;
@@ -206,6 +195,56 @@ namespace CashBook.ViewModels
             }
         }
 
+
+        //private CashBookEntryUI cashBookEntry;
+        //public CashBookEntryUI CashBookEntry
+        //{
+        //    get { return cashBookEntry; }
+        //    set
+        //    {
+        //        if (cashBookEntry != value)
+        //        {
+        //            cashBookEntry = value;
+        //            this.NotifyPropertyChanged("CashBookEntry");
+        //        }
+        //    }
+        //}
+
+        private string initialBalanceString;
+        public string InitialBalanceString
+        {
+            get { return initialBalanceString; }
+            set
+            {
+                if (initialBalanceString != value)
+                {
+                    initialBalanceString = value;
+                    
+                    initialBalanceString =Utils.PrepareForConversion( value);
+                    if (!string.IsNullOrEmpty(initialBalanceString))
+                    {
+                        InitialBalance = DecimalConvertor.Instance.StringToDecimal(initialBalanceString);
+                    }
+                    initialBalanceString = DecimalConvertor.Instance.DecimalToString(InitialBalance, SelectedDecimal);
+                    this.NotifyPropertyChanged("InitialBalanceString");
+                }
+            }
+        }
+
+        private decimal initialBalance;
+        public decimal InitialBalance
+        {
+            get { return initialBalance; }
+            set
+            {
+                if (initialBalance != value)
+                {
+                    initialBalance = value;
+                    this.NotifyPropertyChanged("InitialBalance");                 
+                    InitialBalanceString = DecimalConvertor.Instance.DecimalToString(InitialBalance, SelectedDecimal);
+                }
+            }
+        }
         #endregion
 
         #region methods
@@ -222,10 +261,10 @@ namespace CashBook.ViewModels
                 CoinType = currentEntity.CoinType;
                 //CoinDecimals = currentEntity.CoinDecimals;
                 Name = currentEntity.Name;
+                SelectedDecimal = currentEntity.CoinDecimals;
                 InitialBalance = currentEntity.InitialBalance;
                 InitialBalanceDate = currentEntity.InitialBalanceDate;
 
-                SelectedDecimal = currentEntity.CoinDecimals;
             }
             else
             {
@@ -237,6 +276,7 @@ namespace CashBook.ViewModels
         {
             AllowedDecimals = new ObservableCollection<byte>() { 2, 3, 4 };
             SelectedDecimal = AllowedDecimals[0];
+            InitialBalanceDate = DateTime.Now;
         }
 
         private void UpdateFields()
@@ -256,30 +296,38 @@ namespace CashBook.ViewModels
         {
             try
             {
-                //create
-                if (currentEntity == null)
+                if (IsFormValid())
                 {
-                    UserCashBook cashBook = new UserCashBook()
+                    //create
+                    if (currentEntity == null)
                     {
-                        Account = Account != null ? Account : "",
-                        CashierName = CashierName != null ? CashierName : "",
-                        Location = Location != null ? Location : "",
-                        CoinType = CoinType,
-                        CoinDecimals = SelectedDecimal,
-                        Name = Name != null ? Name : "",
-                        InitialBalance = InitialBalance,
-                        InitialBalanceDate = InitialBalanceDate
-                    };
-                    cashBookRepository.Create(cashBook);
+                        UserCashBook cashBook = new UserCashBook()
+                        {
+                            Account = Account != null ? Account : "",
+                            CashierName = CashierName != null ? CashierName : "",
+                            Location = Location != null ? Location : "",
+                            CoinType = CoinType,
+                            CoinDecimals = SelectedDecimal,
+                            Name = Name != null ? Name : "",
+                            InitialBalance = InitialBalance,
+                            InitialBalanceDate = InitialBalanceDate
+                        };
+                        cashBookRepository.Create(cashBook);
+                    }
+                    //edit
+                    else
+                    {
+                        UpdateFields();
+                        cashBookRepository.Edit(currentEntity.Id, currentEntity);
+                    }
+                    Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
+                    Mediator.Instance.SendMessage(MediatorActionType.RefreshList, this.Guid);
                 }
-                //edit
                 else
                 {
-                    UpdateFields();
-                    cashBookRepository.Edit(currentEntity.Id, currentEntity);
+                    //WindowHelper.OpenErrorDialog("Va rugam corectati erorile");
+
                 }
-                Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
-                Mediator.Instance.SendMessage(MediatorActionType.RefreshList, this.Guid);
             }
             catch (CompanyNotFoundException ce)
             {
@@ -291,6 +339,45 @@ namespace CashBook.ViewModels
             }
         }
 
+        private bool IsFormValid()
+        {
+            if (string.IsNullOrEmpty(Name))
+            {
+                WindowHelper.OpenInformationDialog("Numele este obligatoriu!");
+                return false;
+            }
+            if (string.IsNullOrEmpty(CoinType))
+            {
+                WindowHelper.OpenInformationDialog("Moneda este camp obligatoriu!");
+                return false;
+            }
+            decimal convertedBalance = 0;
+            bool balanceOk = true;
+            try
+            {
+                InitialBalance = DecimalConvertor.Instance.StringToDecimal(InitialBalanceString);
+            }
+            catch (Exception)
+            {
+                balanceOk = false;
+            }
+
+            if (!balanceOk)
+            {
+                WindowHelper.OpenInformationDialog("Soldul initial este invalid!");
+                return false;
+            }
+            else if (InitialBalance < 0)
+            {
+                WindowHelper.OpenInformationDialog("Soldul initial nu poate fi negativ!");
+                return false;
+            }
+            else
+            {
+                InitialBalance = InitialBalance;
+            }
+            return true;
+        }
         public bool CanSave(object param)
         {
             return true;
