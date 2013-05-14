@@ -23,13 +23,15 @@ namespace CashBook.Controls.Popups
         public YesNoDialog()
         {
             InitializeComponent();
-            this.Loaded += Window_Loaded;
             this.DataContext = new YesNoDialogVM();
+            this.Loaded += YesNoDialog_Loaded;
         }
 
-        void Window_Loaded(object sender, RoutedEventArgs e)
+        void YesNoDialog_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= Window_Loaded;
+            this.Loaded -= YesNoDialog_Loaded;
+            bool res = this.Activate();
+            this.Topmost = true;
         }
 
         public void Dispose()

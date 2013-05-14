@@ -23,6 +23,7 @@ namespace CashBook.Common.Mediator
         SetPaymentInformationPopupMessage,
         SetTitle,
         SetMessage,
+        YesNoPopupResponse,
 
     }
     public enum PopupType

@@ -19,6 +19,7 @@ namespace CashBook.ViewModels
     public class CreateOrEditCashBookViewModel : BaseViewModel, IDataErrorInfo
     {
         ICashBookRepository cashBookRepository;
+        ISettingsRepository settingsRepository;
 
         public ICommand SaveCommand { get; set; }
         public CreateOrEditCashBookViewModel()
@@ -26,7 +27,9 @@ namespace CashBook.ViewModels
             Mediator.Instance.Register(MediatorActionType.SetEntityToEdit, SetEntityToEdit);
             SaveCommand = new DelegateCommand(Save, CanSave);
             this.CancelCommand = new DelegateCommand(Cancel, CanCancel);
+
             cashBookRepository = new CashBookRepository();
+            settingsRepository = new SettingsRepository();
 
             CoinDecimals = 2;
             LoadData();
@@ -74,7 +77,7 @@ namespace CashBook.ViewModels
                 name = value;
                 NotifyPropertyChanged("Name");
             }
-        }       
+        }
 
 
         private DateTime? initialBalanceDate;
@@ -154,16 +157,16 @@ namespace CashBook.ViewModels
             }
         }
 
-        private string coinType;
-        public string CoinType
-        {
-            get { return coinType; }
-            set
-            {
-                coinType = value;
-                NotifyPropertyChanged("CoinType");
-            }
-        }
+        //private string coinType;
+        //public string CoinType
+        //{
+        //    get { return coinType; }
+        //    set
+        //    {
+        //        coinType = value;
+        //        NotifyPropertyChanged("CoinType");
+        //    }
+        //}
 
 
         private byte selectedDecimal;
@@ -219,8 +222,8 @@ namespace CashBook.ViewModels
                 if (initialBalanceString != value)
                 {
                     initialBalanceString = value;
-                    
-                    initialBalanceString =Utils.PrepareForConversion( value);
+
+                    initialBalanceString = Utils.PrepareForConversion(value);
                     if (!string.IsNullOrEmpty(initialBalanceString))
                     {
                         InitialBalance = DecimalConvertor.Instance.StringToDecimal(initialBalanceString);
@@ -240,11 +243,43 @@ namespace CashBook.ViewModels
                 if (initialBalance != value)
                 {
                     initialBalance = value;
-                    this.NotifyPropertyChanged("InitialBalance");                 
+                    this.NotifyPropertyChanged("InitialBalance");
                     InitialBalanceString = DecimalConvertor.Instance.DecimalToString(InitialBalance, SelectedDecimal);
                 }
             }
         }
+
+
+        private ObservableCollection<string> existingCoinTypes;
+        public ObservableCollection<string> ExistingCoinTypes
+        {
+            get { return existingCoinTypes; }
+            set
+            {
+                if (existingCoinTypes != value)
+                {
+                    existingCoinTypes = value;
+                    this.NotifyPropertyChanged("ExistingCoinTypes");
+                }
+            }
+        }
+
+
+        private string selectedCoinType;
+        public string SelectedCoinType
+        {
+            get { return selectedCoinType; }
+            set
+            {
+                if (selectedCoinType != value)
+                {
+                    selectedCoinType = value;
+                    this.NotifyPropertyChanged("SelectedCoinType");
+                }
+            }
+        }
+
+
         #endregion
 
         #region methods
@@ -258,13 +293,13 @@ namespace CashBook.ViewModels
                 Account = currentEntity.Account;
                 CashierName = currentEntity.CashierName;
                 Location = currentEntity.Location;
-                CoinType = currentEntity.CoinType;
+                SelectedCoinType = currentEntity.CoinType;
                 //CoinDecimals = currentEntity.CoinDecimals;
                 Name = currentEntity.Name;
                 SelectedDecimal = currentEntity.CoinDecimals;
                 InitialBalance = currentEntity.InitialBalance;
                 InitialBalanceDate = currentEntity.InitialBalanceDate;
-
+                //SelectedCoinType = CoinType;
             }
             else
             {
@@ -277,6 +312,38 @@ namespace CashBook.ViewModels
             AllowedDecimals = new ObservableCollection<byte>() { 2, 3, 4 };
             SelectedDecimal = AllowedDecimals[0];
             InitialBalanceDate = DateTime.Now;
+
+            try
+            {
+                ExistingCoinTypes = new ObservableCollection<string>();
+                string allCoinTypes = settingsRepository.GetSetting(Constants.CoinTypesKey);
+                if (allCoinTypes == null)
+                {
+                    settingsRepository.AddOrUpdateSetting(Constants.CoinTypesKey, "LEI;EURO;DOLARI");
+                }
+                allCoinTypes = settingsRepository.GetSetting(Constants.CoinTypesKey);
+                if (allCoinTypes != null)
+                {
+                    var allCoinTypesArray = allCoinTypes.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (allCoinTypesArray != null)
+                    {
+                        foreach (var item in allCoinTypesArray)
+                        {
+                            ExistingCoinTypes.Add(item);
+                        }
+                    }
+                    if (ExistingCoinTypes.Count > 0)
+                    {
+                        SelectedCoinType = ExistingCoinTypes[0];
+                    }
+                }
+                else
+                {
+                }
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         private void UpdateFields()
@@ -285,7 +352,8 @@ namespace CashBook.ViewModels
             currentEntity.Account = Account;
             currentEntity.CashierName = CashierName;
             currentEntity.Location = Location;
-            currentEntity.CoinType = CoinType;
+            currentEntity.CoinType = SelectedCoinType;
+            // currentEntity.CoinType = CoinType;
             currentEntity.CoinDecimals = SelectedDecimal;
             currentEntity.Name = Name;
             currentEntity.InitialBalance = InitialBalance;
@@ -306,7 +374,7 @@ namespace CashBook.ViewModels
                             Account = Account != null ? Account : "",
                             CashierName = CashierName != null ? CashierName : "",
                             Location = Location != null ? Location : "",
-                            CoinType = CoinType,
+                            CoinType = SelectedCoinType,
                             CoinDecimals = SelectedDecimal,
                             Name = Name != null ? Name : "",
                             InitialBalance = InitialBalance,
@@ -346,7 +414,7 @@ namespace CashBook.ViewModels
                 WindowHelper.OpenInformationDialog("Numele este obligatoriu!");
                 return false;
             }
-            if (string.IsNullOrEmpty(CoinType))
+            if (string.IsNullOrEmpty(SelectedCoinType))
             {
                 WindowHelper.OpenInformationDialog("Moneda este camp obligatoriu!");
                 return false;

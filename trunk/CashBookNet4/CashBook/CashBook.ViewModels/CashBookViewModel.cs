@@ -303,8 +303,8 @@ namespace CashBook.ViewModels
                 if (moneyExchangeRateString != value)
                 {
                     moneyExchangeRateString = Utils.PrepareForConversion(value);
-                  
-                   // MoneyExchangeRate = DecimalConvertor.Instance.StringToDecimal(moneyExchangeRateString);
+
+                    // MoneyExchangeRate = DecimalConvertor.Instance.StringToDecimal(moneyExchangeRateString);
                     if (!string.IsNullOrEmpty(moneyExchangeRateString))
                     {
                         MoneyExchangeRate = DecimalConvertor.Instance.StringToDecimal(moneyExchangeRateString);
@@ -500,7 +500,7 @@ namespace CashBook.ViewModels
             bool moneyExchangeRateOk = true;
             try
             {
-                var testMoneyExchangeRate = DecimalConvertor.Instance.StringToDecimal(MoneyExchangeRateString );
+                var testMoneyExchangeRate = DecimalConvertor.Instance.StringToDecimal(MoneyExchangeRateString);
             }
             catch (Exception)
             {
@@ -561,36 +561,48 @@ namespace CashBook.ViewModels
             return true;
         }
 
-
+        CashBookEntryUI itemToDelete = null;
         public void Delete(object param)
         {
-
-            try
-            {
-                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.DeleteDialog);
-                Mediator.Instance.SendMessage(MediatorActionType.SetEntityToDelete, param);
-            }
-            catch (Exception ex)
-            {
-                WindowHelper.OpenErrorDialog("Registrul nu a putut fi sters");
-            }
-            var itemToDelete = param as CashBookEntryUI;
-            if (itemToDelete != null)
-            {
-                CashBookEntries.Remove(itemToDelete);
-                if (CashBookEntries.Count == 0)
-                {
-                    AddNewItem();
-                }
-            }
-            UpdateBalance(null);
-            UpdateItemState();
-
+            itemToDelete = param as CashBookEntryUI;
+            Mediator.Instance.Register(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallback);
+            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.YesNoDialog);
+            Mediator.Instance.SendMessage(MediatorActionType.SetMessage, "Doriti sa stergeti intrarea?");
         }
 
         public bool CanDelete(object param)
         {
             return true;
+        }
+
+        public void YesNoPopupResponseCallback(object param)
+        {
+            try
+            {
+                Mediator.Instance.Unregister(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallback);
+                switch ((YesNoPopupResponse)param)
+                {
+                    case YesNoPopupResponse.Yes:
+                        if (itemToDelete != null)
+                        {
+                            CashBookEntries.Remove(itemToDelete);
+                            if (CashBookEntries.Count == 0)
+                            {
+                                AddNewItem();
+                            }
+                        }
+                        UpdateBalance(null);
+                        UpdateItemState();
+
+                        break;
+                    case YesNoPopupResponse.No:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                WindowHelper.OpenErrorDialog("Registrul nu a putut fi sters");
+            }
         }
 
         private bool CanViewReports(object parameter)
@@ -615,6 +627,7 @@ namespace CashBook.ViewModels
             Mediator.Instance.Unregister(MediatorActionType.RefreshList, RefreshList);
             Mediator.Instance.Unregister(MediatorActionType.SetSelectedCashBook, SetSelectedCashBook);
             Mediator.Instance.Unregister(MediatorActionType.UpdateBalance, UpdateBalance);
+            Mediator.Instance.Unregister(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallback);
             base.Dispose();
         }
 

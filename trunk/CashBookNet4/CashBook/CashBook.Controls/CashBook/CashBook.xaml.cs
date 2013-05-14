@@ -203,10 +203,6 @@ namespace CashBook.Controls
             return child;
         }
 
-        void CashBook_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.Loaded -= CashBook_Loaded;
-        }
 
         public void Dispose()
         {
@@ -318,6 +314,29 @@ namespace CashBook.Controls
             calendar.IsDropDownOpen = true;
         }
 
+        private void calendar_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            DatePicker c;
+            
+            //calendar.Width = 400;
+            //calendar.Height = 400;
+        }
+        
+        void CashBook_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Loaded -= CashBook_Loaded;
+            //calendar.CalendarClosed += new RoutedEventHandler(calendar_CalendarClosed);
+            //calendar.CalendarOpened += new RoutedEventHandler(calendar_CalendarOpened);
+        }
+
+        void calendar_CalendarOpened(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        void calendar_CalendarClosed(object sender, RoutedEventArgs e)
+        {
+        }
         
     }
 }

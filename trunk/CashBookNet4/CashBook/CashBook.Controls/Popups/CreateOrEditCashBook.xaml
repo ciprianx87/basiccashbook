@@ -48,7 +48,15 @@
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, Mode=TwoWay,  ValidatesOnDataErrors=true, NotifyOnValidationError=true}"/>
 
         <TextBlock Grid.Row="2" Text="Moneda:" />
-        <TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding CoinType,Mode=TwoWay}"/>
+        <!--<TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding CoinType,Mode=TwoWay}"/>-->
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+            <ComboBox   Width="130" HorizontalAlignment="Left" Margin="15,0,0,0" ItemsSource="{Binding ExistingCoinTypes}" SelectedItem="{Binding SelectedCoinType, Mode=TwoWay}"/>
+            <Button Grid.Row="1"  Margin="10,0,0,0"  Command="{Binding CreateCommand}" Width="25" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/CashBook.Controls;component/Images/createButton.png" Stretch="Uniform"  Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
         <TextBlock Grid.Row="3" Text="Zecimale Moneda:"/>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CoinDecimals,Mode=TwoWay}" Visibility="Collapsed"/>
         <ComboBox  Grid.Row="3" Grid.Column="1" Width="70" HorizontalAlignment="Left" Margin="15,0,0,0" ItemsSource="{Binding AllowedDecimals}" SelectedItem="{Binding SelectedDecimal, Mode=TwoWay}"/>

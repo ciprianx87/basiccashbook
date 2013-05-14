@@ -9,5 +9,6 @@ namespace CashBook.Common
     public static class Constants
     {
         public static string LegalRelementationsKey = "LegalRelementations";
+        public static string CoinTypesKey = "CoinTypes";
     }
 }
