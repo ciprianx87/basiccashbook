@@ -30,6 +30,7 @@ namespace CashBook
     /// </summary>
     public partial class MainWindow : Window
     {
+        //<!--<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/>-->
         public MainWindow()
         {
             InitializeComponent();
@@ -40,6 +41,7 @@ namespace CashBook
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            //DisableWPFTabletSupport();
             //configure log4net
             XmlConfigurator.Configure();
             //log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
@@ -89,6 +91,7 @@ namespace CashBook
         {
             try
             {
+                Logger.Instance.LogException(ex);
                 string errorMessage = ex.Message + Environment.NewLine + ex.StackTrace;
                 while (ex.InnerException != null)
                 {
@@ -192,5 +195,42 @@ namespace CashBook
             Application.Current.Shutdown();
         }
 
+
+        public static void DisableWPFTabletSupport()
+        {
+            // Get a collection of the tablet devices for this window.  
+            TabletDeviceCollection devices = System.Windows.Input.Tablet.TabletDevices;
+
+            //if (devices.Count > 0)
+            {
+                // Get the Type of InputManager.
+                Type inputManagerType = typeof(System.Windows.Input.InputManager);
+
+                // Call the StylusLogic method on the InputManager.Current instance.
+                object stylusLogic = inputManagerType.InvokeMember("StylusLogic",
+                            BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                            null, InputManager.Current, null);
+
+                if (stylusLogic != null)
+                {
+                    //  Get the type of the stylusLogic returned from the call to StylusLogic.
+                    Type stylusLogicType = stylusLogic.GetType();
+
+                    // Loop until there are no more devices to remove.
+                    //while (devices.Count > 0)
+                    {
+                        // Remove the first tablet device in the devices collection.
+                        stylusLogicType.InvokeMember("OnTabletRemoved",
+                                BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic,
+                                null, stylusLogic, new object[] { (uint)0 });
+                    }
+                }
+
+            }
+        }
+
     }
+
+
+   
 }
