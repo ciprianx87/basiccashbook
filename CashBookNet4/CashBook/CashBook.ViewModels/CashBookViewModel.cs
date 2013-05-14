@@ -564,6 +564,16 @@ namespace CashBook.ViewModels
 
         public void Delete(object param)
         {
+
+            try
+            {
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.DeleteDialog);
+                Mediator.Instance.SendMessage(MediatorActionType.SetEntityToDelete, param);
+            }
+            catch (Exception ex)
+            {
+                WindowHelper.OpenErrorDialog("Registrul nu a putut fi sters");
+            }
             var itemToDelete = param as CashBookEntryUI;
             if (itemToDelete != null)
             {

@@ -163,7 +163,6 @@ namespace CashBook.ViewModels
             catch (Exception ex)
             {
                 WindowHelper.OpenErrorDialog("Registrul nu a putut fi sters");
-
             }
         }
 

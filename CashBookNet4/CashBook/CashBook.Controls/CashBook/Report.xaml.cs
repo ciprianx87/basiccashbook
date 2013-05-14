@@ -41,7 +41,7 @@ namespace CashBook.Controls
                 if (dialog.ShowDialog() != true) return;
 
                 grdReport.Measure(new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight));
-                //grdReport.Arrange(new Rect(new Point(50, 50), grdReport.DesiredSize));
+                //grdReport.Arrange(new Rect(new Point(0, 0), grdReport.DesiredSize));
 
                 dialog.PrintVisual(grdReport, "Report");
                 //827*1169
@@ -51,7 +51,7 @@ namespace CashBook.Controls
             {
             }
         }
-        private const int rowHeight = 80;
+        private const int rowHeight = 20;
         private void lstItems_Loaded(object sender, RoutedEventArgs e)
         {
             var height = lstItems.ActualHeight;

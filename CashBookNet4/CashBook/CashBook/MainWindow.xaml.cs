@@ -172,5 +172,15 @@ namespace CashBook
             Mediator.Instance.SendMessage(MediatorActionType.SetCashBookListType, type);
         }
 
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Iesire(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
     }
 }

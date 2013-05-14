@@ -21,6 +21,8 @@ namespace CashBook.Common.Mediator
         SetCashBookListType,
         SetSelectedDate,
         SetPaymentInformationPopupMessage,
+        SetTitle,
+        SetMessage,
 
     }
     public enum PopupType
@@ -31,6 +33,7 @@ namespace CashBook.Common.Mediator
         CreateOrEditCashBook,
         LegalReglementations,
         ErrorDialog,
-        PaymentInformation
+        PaymentInformation,
+        YesNoDialog
     }
 }
