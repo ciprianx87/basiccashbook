@@ -16,6 +16,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CashBook.Common;
+using System.Windows.Threading;
 
 namespace CashBook.Controls
 {
@@ -29,8 +31,8 @@ namespace CashBook.Controls
         {
             InitializeComponent();
             this.Loaded += CashBookList_Loaded;
-            this.DataContext = new CashBookListViewModel();          
-
+            this.DataContext = new CashBookListViewModel();
+            Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
         }
 
         void CashBookList_Loaded(object sender, RoutedEventArgs e)
@@ -44,5 +46,31 @@ namespace CashBook.Controls
         {
             (this.DataContext as BaseViewModel).Dispose();
         }
+
+        private void SelectButton_Click(object sender, RoutedEventArgs e)
+        {
+            Logger.Instance.Log.Debug("select button pressed");
+            Logger.Instance.Log.Debug(string.Format(" CommandParameter!=null {0}", (sender as Button).CommandParameter != null));
+            Logger.Instance.Log.Debug(string.Format(" Command!=null {0}", (sender as Button).Command != null));
+            Logger.Instance.Log.Debug(string.Format(" VMCommand!=null {0}", (this.DataContext as CashBookListViewModel).SelectCommand != null));
+            var but = (sender as Button);
+            (this.DataContext as CashBookListViewModel).Select(but.CommandParameter);
+
+            if (but.Command != null)
+            {
+                but.Command.Execute(but.CommandParameter);
+            }
+        }
+        private void DeleteCommand_Click(object sender, RoutedEventArgs e)
+        {
+            var but = (sender as Button);
+            (this.DataContext as CashBookListViewModel).Delete(but.CommandParameter);
+        }
+        private void EditCommand_Click(object sender, RoutedEventArgs e)
+        {
+            var but = (sender as Button);
+            (this.DataContext as CashBookListViewModel).Edit(but.CommandParameter);
+        }
+
     }
 }

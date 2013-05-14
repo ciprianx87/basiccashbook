@@ -17,6 +17,7 @@ using CashBook.ViewModels;
 using System.Windows.Controls.Primitives;
 using System.Threading;
 using CashBook.Controls.CustomDataGrid;
+using CashBook.Common;
 
 
 namespace CashBook.Controls
@@ -226,6 +227,7 @@ namespace CashBook.Controls
                 }
                 catch(Exception ex)
                 {
+                    Logger.Instance.LogException(ex);
                 }
             }
             return;
@@ -336,6 +338,12 @@ namespace CashBook.Controls
 
         void calendar_CalendarClosed(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var but = (sender as Button);
+            (this.DataContext as CashBookViewModel).Delete(but.CommandParameter);
         }
         
     }

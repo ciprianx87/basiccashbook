@@ -85,6 +85,7 @@ namespace CashBook.Common.Mediator
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
                 Debug.WriteLine(ex.Message);
             }
         }

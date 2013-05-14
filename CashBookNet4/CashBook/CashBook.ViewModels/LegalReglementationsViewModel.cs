@@ -58,6 +58,7 @@ namespace CashBook.ViewModels
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
                 WindowHelper.OpenErrorDialog("Eroare la salvarea informatiei");
             }
         }

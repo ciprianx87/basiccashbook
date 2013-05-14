@@ -17,6 +17,7 @@ using CashBook.ViewModels;
 using System.Windows.Controls.Primitives;
 using System.Threading;
 using CashBook.Controls.CustomDataGrid;
+using CashBook.Common;
 
 
 namespace CashBook.Controls
@@ -48,6 +49,7 @@ namespace CashBook.Controls
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
             }
         }
 
