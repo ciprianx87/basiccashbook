@@ -49,6 +49,7 @@
     <Compile Include="CompanyDataViewModel.cs" />
     <Compile Include="CashBookListViewModel.cs" />
     <Compile Include="CashBookViewModel.cs" />
+    <Compile Include="YesNoDialogVM.cs" />
     <Compile Include="Models\CashBookDisplayInfo.cs" />
     <Compile Include="PrintControlVM.cs" />
     <Compile Include="PaymentInformationDialogVM.cs" />

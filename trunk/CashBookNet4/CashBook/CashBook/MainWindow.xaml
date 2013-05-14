@@ -10,7 +10,7 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" x:Name="mainMenu">
             <MenuItem Header="Fisier">
-                <MenuItem Header="Iesire"></MenuItem>
+                <MenuItem Header="Iesire" Click="MenuItem_Iesire"></MenuItem>
             </MenuItem>
             <MenuItem Header="Cataloage">
                 <MenuItem Header="Date Societate" Click="MenuItem_CompanyData"></MenuItem>

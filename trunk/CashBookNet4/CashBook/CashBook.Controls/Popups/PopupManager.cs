@@ -65,6 +65,9 @@ namespace CashBook.Controls.Popups
                     case PopupType.PaymentInformation:
                         popup = new PaymentInformationPopup();
                         break;
+                    case PopupType.YesNoDialog:
+                        popup = new YesNoDialog();
+                        break;
                     default:
                         break;
                 }
