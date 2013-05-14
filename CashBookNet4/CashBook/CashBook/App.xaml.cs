@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using CashBook.Common;
 
 namespace CashBook
 {
@@ -13,5 +14,16 @@ namespace CashBook
     /// </summary>
     public partial class App : Application
     {
+
+        public App()
+        {
+            this.DispatcherUnhandledException += new System.Windows.Threading.DispatcherUnhandledExceptionEventHandler(App_DispatcherUnhandledException);
+
+        }
+
+        void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            Logger.Instance.LogException(e.Exception);
+        }
     }
 }
