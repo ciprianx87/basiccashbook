@@ -18,6 +18,8 @@ using System.Windows.Controls.Primitives;
 using System.Threading;
 using CashBook.Controls.CustomDataGrid;
 using CashBook.Common;
+using CashBook.Controls;
+using CashBook.Controls.Printing;
 
 
 namespace CashBook.Controls
@@ -37,6 +39,8 @@ namespace CashBook.Controls
         {
             try
             {
+                PrintAllPages();
+                //Print();
                 //PrintDialog dialog = new PrintDialog();
 
                 //if (dialog.ShowDialog() != true) return;
@@ -52,10 +56,50 @@ namespace CashBook.Controls
                 Logger.Instance.LogException(ex);
             }
         }
+        private void Print()
+        {
+            PrintedPage pp = new PrintedPage();
+            PrintDialog dialog = new PrintDialog();
+
+            if (dialog.ShowDialog() != true) return;
+
+
+            for (int i = 0; i < 3; i++)
+            {
+                var printedPage = new PrintedPage();
+                printedPage.DataContext = new TestClass()
+                {
+                    Test = "test " + i
+                };
+
+                grdReport.Children.Clear();
+                grdReport.Children.Add(printedPage);
+
+                grdReport.Measure(new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight));
+                //grdReport.Arrange(new Rect(new Point(50, 50), grdReport.DesiredSize));
+                //grdReport.Visibility = System.Windows.Visibility.Hidden;
+
+                dialog.PrintVisual(grdReport, "Raport");
+            }
+
+        }
+
+        public void PrintAllPages()
+        {
+            grdReport.Children.Clear();
+            Print();
+            //set the datacontext for each page and send it to the printer
+           
+        }
 
         public void Dispose()
         {
             (this.DataContext as BaseViewModel).Dispose();
         }
+    }
+
+    public class TestClass
+    {
+        public string Test { get; set; }
     }
 }

@@ -101,7 +101,7 @@
       <DependentUpon>LegalReglementationsPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Popups\PopupManager.cs" />
-    <Compile Include="PrintedPage.xaml.cs">
+    <Compile Include="Printing\PrintedPage.xaml.cs">
       <DependentUpon>PrintedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -207,7 +207,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PrintedPage.xaml">
+    <Page Include="Printing\PrintedPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
