@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using CashBook.ViewModels;
 using System.ComponentModel;
 
-namespace CashBook.Controls
+namespace CashBook.Controls.Printing
 {
     /// <summary>
     /// Interaction logic for PrintedPage.xaml
@@ -34,7 +34,7 @@ namespace CashBook.Controls
             {
                 var height = lstItems.ActualHeight;
                 int maxRowsPerPage = (int)height / rowHeight;
-                (this.DataContext as ReportsViewModel).SetMaxEntriesPerPage(maxRowsPerPage);
+                //(this.DataContext as ReportsViewModel).SetMaxEntriesPerPage(maxRowsPerPage);
             }
         }
     }

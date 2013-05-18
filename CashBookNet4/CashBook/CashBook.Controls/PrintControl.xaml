@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:contr="clr-namespace:CashBook.Controls.Printing"
+             
              xmlns:constants="clr-namespace:CashBook.Controls"
-             xmlns:custom="clr-namespace:CashBookExtended"
              mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}"
-             VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+             VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="1100">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBox}" x:Key="StandardTextBox" >
             <Style.Triggers>
@@ -26,6 +27,8 @@
     </UserControl.Resources>
     <Grid x:Name="root">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -66,7 +69,13 @@
 
         </Grid>
         <Button Grid.Row="2" Content="Listare" Click="Print_Click" Command="{Binding PrintCommand}" Height="30" Width="70" HorizontalAlignment="Left"/>
-
+        <Canvas Grid.Row="3" Margin="0,0,0,0">
+            <Grid Grid.Row="3" x:Name="grdReport" Margin="0,0,0,0" Visibility="Visible" >
+                <!--<contr:PrintedPage x:Name="printedPage"/>-->
+                <!--<contr:PrintedPage  x:Name="printedPage"/>-->
+               
+            </Grid>
+        </Canvas>
     </Grid>
 
 </UserControl>
