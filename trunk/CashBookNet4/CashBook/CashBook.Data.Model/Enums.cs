@@ -13,7 +13,8 @@ namespace CashBook.Data.Model
         CompanyDetails,
         LegalReglementations,
         CashBookList,
-        Reports
+        Reports,
+        PrintControl
     }
 
     public enum CashBookListType
