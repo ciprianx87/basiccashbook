@@ -101,6 +101,9 @@
       <DependentUpon>LegalReglementationsPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Popups\PopupManager.cs" />
+    <Compile Include="PrintedPage.xaml.cs">
+      <DependentUpon>PrintedPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -201,6 +204,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CashBookStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PrintedPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
