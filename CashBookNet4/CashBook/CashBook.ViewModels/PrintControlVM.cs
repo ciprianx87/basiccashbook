@@ -10,22 +10,64 @@ using CashBook.Data;
 using System.Timers;
 using System.Windows.Threading;
 using CashBook.Common;
+using CashBook.Data.Interfaces;
+using CashBook.Data.Repositories;
+using System.Collections.ObjectModel;
 
 namespace CashBook.ViewModels
 {
     public class PrintControlVM : BaseViewModel, IDisposable
     {
+
         #region Fields
-        
+        public ICommand OkCommand { get; set; }
+        public ICommand PrintCommand { get; set; }
+        ICashBookRepository cashBookRepository;
+        ICashBookEntryRepository cashBookEntryRepository;
         #endregion
-       
+
         #region Constructor
 
         public PrintControlVM()
         {
             InitializeCommands();
             Mediator.Instance.Register(MediatorActionType.SetPaymentInformationPopupMessage, SetPaymentInformationPopupMessage);
-            this.Title = "Informatie";          
+            this.Title = "Informatie";
+
+            cashBookRepository = new CashBookRepository();
+            cashBookEntryRepository = new CashBookEntryRepository();
+
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            SelectedStartDate = DateTime.Now;
+            SelectedEndDate = DateTime.Now;
+            CurrentDaySelected = true;
+
+            //load cash books
+
+            try
+            {
+                CashBooks = new ObservableCollection<UserCashBook>();
+                var existingCashBooks = cashBookRepository.GetAll(CashBookListType.Any);
+                if (existingCashBooks != null)
+                {
+                    foreach (var item in existingCashBooks)
+                    {
+                        CashBooks.Add(item);
+                    }
+                }
+                if (CashBooks.Count > 0)
+                {
+                    SelectedCashBook = CashBooks[0];
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
         }
 
 
@@ -33,11 +75,160 @@ namespace CashBook.ViewModels
         {
             this.OkCommand = new DelegateCommand(OK, CanOK);
             this.CancelCommand = new DelegateCommand(Cancel, CanCancel);
+            this.PrintCommand = new DelegateCommand(Print, CanPrint);
         }
 
         #endregion
 
         #region Properties
+
+
+        private UserCashBook selectedCashBook;
+        public UserCashBook SelectedCashBook
+        {
+            get { return selectedCashBook; }
+            set
+            {
+                if (selectedCashBook != value)
+                {
+                    selectedCashBook = value;
+                    this.NotifyPropertyChanged("SelectedCashBook");
+                }
+            }
+        }
+
+        private ObservableCollection<UserCashBook> cashBooks;
+        public ObservableCollection<UserCashBook> CashBooks
+        {
+            get { return cashBooks; }
+            set
+            {
+                cashBooks = value;
+                NotifyPropertyChanged("CashBooks");
+            }
+        }
+
+        private bool currentDaySelected;
+        public bool CurrentDaySelected
+        {
+            get { return currentDaySelected; }
+            set
+            {
+                if (currentDaySelected != value)
+                {
+                    currentDaySelected = value;
+                    this.NotifyPropertyChanged("CurrentDaySelected");
+                }
+            }
+        }
+
+
+
+        private bool currentMonthSelected;
+        public bool CurrentMonthSelected
+        {
+            get { return currentMonthSelected; }
+            set
+            {
+                if (currentMonthSelected != value)
+                {
+                    currentMonthSelected = value;
+                    this.NotifyPropertyChanged("CurrentMonthSelected");
+                }
+            }
+        }
+
+
+
+        private bool otherPeriodSelected;
+        public bool OtherPeriodSelected
+        {
+            get { return otherPeriodSelected; }
+            set
+            {
+                if (otherPeriodSelected != value)
+                {
+                    otherPeriodSelected = value;
+                    this.NotifyPropertyChanged("OtherPeriodSelected");
+                }
+            }
+        }
+
+
+        private bool currentDateSelected;
+        public bool CurrentDateSelected
+        {
+            get { return currentDateSelected; }
+            set
+            {
+                if (currentDateSelected != value)
+                {
+                    currentDateSelected = value;
+                    this.NotifyPropertyChanged("CurrentDateSelected");
+                }
+            }
+        }
+
+        private DateTime selectedStartDate;
+        public DateTime SelectedStartDate
+        {
+            get { return selectedStartDate; }
+            set
+            {
+                if (selectedStartDate != value)
+                {
+                    selectedStartDate = value;
+                    this.NotifyPropertyChanged("SelectedStartDate");
+                    SelectedStartDateString = Utils.DateTimeToStringDateOnly(selectedStartDate);
+                }
+            }
+        }
+
+
+        private DateTime selectedEndDate;
+        public DateTime SelectedEndDate
+        {
+            get { return selectedEndDate; }
+            set
+            {
+                if (selectedEndDate != value)
+                {
+                    selectedEndDate = value;
+                    this.NotifyPropertyChanged("SelectedEndDate");
+                    SelectedEndDateString = Utils.DateTimeToStringDateOnly(selectedEndDate);
+                }
+            }
+        }
+
+
+        private string selectedStartDateString;
+        public string SelectedStartDateString
+        {
+            get { return selectedStartDateString; }
+            set
+            {
+                if (selectedStartDateString != value)
+                {
+                    selectedStartDateString = value;
+                    this.NotifyPropertyChanged("SelectedStartDateString");
+                }
+            }
+        }
+
+
+        private string selectedEndDateString;
+        public string SelectedEndDateString
+        {
+            get { return selectedEndDateString; }
+            set
+            {
+                if (selectedEndDateString != value)
+                {
+                    selectedEndDateString = value;
+                    this.NotifyPropertyChanged("SelectedEndDateString");
+                }
+            }
+        }
 
         private string message;
         public string Message
@@ -53,7 +244,38 @@ namespace CashBook.ViewModels
             }
         }
 
-        public ICommand OkCommand { get; set; }
+
+
+        #endregion
+
+        #region Methods
+
+
+        private bool CanPrint(object parameter)
+        {
+            return true;
+        }
+
+        private void Print(object parameter)
+        {
+            if (IsValid())
+            {
+                //gather the data that needs to be printed
+            }
+        }
+
+        private bool IsValid()
+        {
+            if (OtherPeriodSelected)
+            {
+                if (SelectedStartDate > SelectedEndDate)
+                {
+                    WindowHelper.OpenErrorDialog("Data de sfarsit trebuie sa fie mai mare decat cea de inceput");
+                    return false;
+                }
+            }
+            return true;
+        }
 
         private bool CanOK(object parameter)
         {
@@ -65,12 +287,6 @@ namespace CashBook.ViewModels
             Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.LegalReglementations);
             Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
         }
-
-        #endregion
-
-        #region Methods
-
-
         public void SetPaymentInformationPopupMessage(object param)
         {
             this.Message = param.ToString();

@@ -26,6 +26,8 @@ namespace CashBook.Controls.Popups
         void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= Window_Loaded;
+            bool res = this.Activate();
+            this.Topmost = true;
         }
 
         public void Dispose()

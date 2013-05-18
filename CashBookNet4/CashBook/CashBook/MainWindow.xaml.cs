@@ -36,7 +36,7 @@ namespace CashBook
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
         }
-        private  ILog log;
+        private ILog log;
 
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -131,9 +131,9 @@ namespace CashBook
                 case ContentTypes.Reports:
                     contentControl.Content = new Report();
                     break;
-                //case ContentTypes.CreateCashBook:
-                //    //contentControl.Content = new CashBook.Controls.CreateCashBook();
-                //    break;
+                case ContentTypes.PrintControl:
+                    contentControl.Content = new CashBook.Controls.PrintControl();
+                    break;
                 default:
                     MessageBox.Show("invalid contentType: " + type);
                     break;
@@ -229,8 +229,14 @@ namespace CashBook
             }
         }
 
+        private void MenuItem_Reports(object sender, RoutedEventArgs e)
+        {
+            ChangeContent(ContentTypes.PrintControl);
+
+        }
+
     }
 
 
-   
+
 }
