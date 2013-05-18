@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Height="Auto" MinHeight="500" Width="1100" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch">
     <UserControl.Resources>
-       
+
     </UserControl.Resources>
     <Grid Width="27.7cm"  MaxHeight="21cm" x:Name="root">
         <Grid.RowDefinitions>
@@ -35,14 +35,7 @@
         <Viewbox Grid.Row="1">
             <Grid Height="827" Width="1169">
                 <Border BorderThickness="2">
-                    <Grid x:Name="grdReport"  Margin="35,70,65,35"  Height="680" Width="1019" VerticalAlignment="Top">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <!--<RowDefinition Height="*"/>-->
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <Grid x:Name="grdReport">
                         <contr:PrintedPage/>
                     </Grid>
                 </Border>
