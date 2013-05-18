@@ -54,12 +54,6 @@ namespace CashBook.Controls
             }
         }
         private const int rowHeight = 20;
-        private void lstItems_Loaded(object sender, RoutedEventArgs e)
-        {
-            var height = lstItems.ActualHeight;
-            int maxRowsPerPage = (int)height / rowHeight;
-            (this.DataContext as ReportsViewModel).SetMaxEntriesPerPage(maxRowsPerPage);
-
-        }
+       
     }
 }

@@ -48,6 +48,20 @@ namespace CashBook.ViewModels
 
         #region properties
 
+        private string reportTitle;
+        public string ReportTitle
+        {
+            get { return reportTitle; }
+            set
+            {
+                if (reportTitle != value)
+                {
+                    reportTitle = value;
+                    this.NotifyPropertyChanged("ReportTitle");
+                }
+            }
+        }
+
         private DateTime selectedDate;
         public DateTime SelectedDate
         {
@@ -303,7 +317,7 @@ namespace CashBook.ViewModels
                     CashBookEntries.Add((CashBookEntryUI)item);
                 }
             }
-
+            ReportTitle = SelectedCashBook.IsLei ? "REGISTRU DE CASA in LEI" : "REGISTRU DE CASA in VALUTA"; 
             MoneyExchangeRateVisibility = SelectedCashBook.IsLei ? Visibility.Collapsed : Visibility.Visible;
 
             if (!SelectedCashBook.IsLei && MoneyExchangeRate.HasValue)
