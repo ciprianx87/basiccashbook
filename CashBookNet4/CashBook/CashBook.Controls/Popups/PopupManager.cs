@@ -69,6 +69,9 @@ namespace CashBook.Controls.Popups
                     case PopupType.YesNoDialog:
                         popup = new YesNoDialog();
                         break;
+                    case PopupType.CrudCoinTypes:
+                        popup = new CrudCoinTypes();
+                        break;
                     default:
                         break;
                 }

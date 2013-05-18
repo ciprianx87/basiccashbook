@@ -261,6 +261,7 @@ namespace CashBook.ViewModels
             if (IsValid())
             {
                 //gather the data that needs to be printed
+
             }
         }
 

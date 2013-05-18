@@ -58,6 +58,9 @@
     <Compile Include="CashBook\CashBook.xaml.cs">
       <DependentUpon>CashBook.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Popups\CrudCoinTypes.xaml.cs">
+      <DependentUpon>CrudCoinTypes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Popups\YesNoDialog.xaml.cs">
       <DependentUpon>YesNoDialog.xaml</DependentUpon>
     </Compile>
@@ -142,6 +145,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CashBook\CashBook.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Popups\CrudCoinTypes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
