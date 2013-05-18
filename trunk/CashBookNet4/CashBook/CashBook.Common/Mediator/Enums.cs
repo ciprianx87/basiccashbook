@@ -24,6 +24,7 @@ namespace CashBook.Common.Mediator
         SetTitle,
         SetMessage,
         YesNoPopupResponse,
+        RefreshCoinTypes,
 
     }
     public enum PopupType
@@ -35,6 +36,7 @@ namespace CashBook.Common.Mediator
         LegalReglementations,
         ErrorDialog,
         PaymentInformation,
-        YesNoDialog
+        YesNoDialog,
+        CrudCoinTypes
     }
 }

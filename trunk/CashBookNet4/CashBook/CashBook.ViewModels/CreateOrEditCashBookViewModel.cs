@@ -20,13 +20,18 @@ namespace CashBook.ViewModels
     {
         ICashBookRepository cashBookRepository;
         ISettingsRepository settingsRepository;
-
+        UserCashBook currentEntity;
+        public ICommand CreateCoinTypeCommand { get; set; }
         public ICommand SaveCommand { get; set; }
+
+
         public CreateOrEditCashBookViewModel()
         {
             Mediator.Instance.Register(MediatorActionType.SetEntityToEdit, SetEntityToEdit);
+            Mediator.Instance.Register(MediatorActionType.RefreshCoinTypes, RefreshCoinTypes);
             SaveCommand = new DelegateCommand(Save, CanSave);
             this.CancelCommand = new DelegateCommand(Cancel, CanCancel);
+            this.CreateCoinTypeCommand = new DelegateCommand(CreateCoinType, CanCreateCoinType);
 
             cashBookRepository = new CashBookRepository();
             settingsRepository = new SettingsRepository();
@@ -283,7 +288,36 @@ namespace CashBook.ViewModels
         #endregion
 
         #region methods
-        UserCashBook currentEntity;
+
+        private bool CanCreateCoinType(object parameter)
+        {
+            return true;
+        }
+
+        private void CreateCoinType(object parameter)
+        {
+            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CrudCoinTypes);
+
+        }
+
+        public void RefreshCoinTypes(object param)
+        {
+            string previouslySelectedCointType = SelectedCoinType;
+            ExistingCoinTypes = new ObservableCollection<string>();
+            VMUtils.ExtractCoinTypes(settingsRepository, ExistingCoinTypes);
+            if (ExistingCoinTypes.Count > 0)
+            {
+                if (ExistingCoinTypes.Contains(previouslySelectedCointType))
+                {
+                    SelectedCoinType = previouslySelectedCointType;
+                }
+                else
+                {
+                    SelectedCoinType = ExistingCoinTypes[0];
+                }
+            }
+        }
+
         public void SetEntityToEdit(object param)
         {
             if (param is UserCashBook)
@@ -316,29 +350,10 @@ namespace CashBook.ViewModels
             try
             {
                 ExistingCoinTypes = new ObservableCollection<string>();
-                string allCoinTypes = settingsRepository.GetSetting(Constants.CoinTypesKey);
-                if (allCoinTypes == null)
+                VMUtils.ExtractCoinTypes(settingsRepository, ExistingCoinTypes);
+                if (ExistingCoinTypes.Count > 0)
                 {
-                    settingsRepository.AddOrUpdateSetting(Constants.CoinTypesKey, "LEI;EURO;DOLARI");
-                }
-                allCoinTypes = settingsRepository.GetSetting(Constants.CoinTypesKey);
-                if (allCoinTypes != null)
-                {
-                    var allCoinTypesArray = allCoinTypes.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (allCoinTypesArray != null)
-                    {
-                        foreach (var item in allCoinTypesArray)
-                        {
-                            ExistingCoinTypes.Add(item);
-                        }
-                    }
-                    if (ExistingCoinTypes.Count > 0)
-                    {
-                        SelectedCoinType = ExistingCoinTypes[0];
-                    }
-                }
-                else
-                {
+                    SelectedCoinType = ExistingCoinTypes[0];
                 }
             }
             catch (Exception ex)
@@ -485,6 +500,7 @@ namespace CashBook.ViewModels
         {
             base.Dispose();
             Mediator.Instance.Unregister(MediatorActionType.SetEntityToEdit, SetEntityToEdit);
+            Mediator.Instance.Unregister(MediatorActionType.RefreshCoinTypes, RefreshCoinTypes);
 
         }
 
