@@ -69,7 +69,7 @@
 
         </Grid>
         <Button Grid.Row="2" Content="Listare" Click="Print_Click" Command="{Binding PrintCommand}" Height="30" Width="70" HorizontalAlignment="Left"/>
-        <Canvas Grid.Row="3" Margin="0,0,0,0">
+        <Canvas Grid.Row="3" Margin="2500,0,0,0">
             <Grid Grid.Row="3" x:Name="grdReport" Margin="0,0,0,0" Visibility="Visible" >
                 <!--<TextBlock Text="dfasfas" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
                 <!--<contr:PrintedPage x:Name="printedPage"/>-->

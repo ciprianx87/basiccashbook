@@ -472,10 +472,13 @@ namespace CashBook.ViewModels.Models
         private void UpdateStringFields()
         {
             //NrActCasaString = DecimalConvertor.Instance.DecimalToString(NrActCasa);
-            NrAnexeString = NrAnexe.ToString();
             PlatiString = DecimalConvertor.Instance.DecimalToString(Plati);
             IncasariString = DecimalConvertor.Instance.DecimalToString(Incasari);
-            NrCrtString = NrCrt.ToString();
+            if (!IsExtraDetail)
+            {
+                NrAnexeString = NrAnexe.ToString();
+                NrCrtString = NrCrt.ToString();
+            }
         }
     }
 }

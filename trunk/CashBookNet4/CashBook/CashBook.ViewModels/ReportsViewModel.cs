@@ -29,7 +29,7 @@ namespace CashBook.ViewModels
 
         public ICommand BackCommand { get; set; }
 
-     
+
 
         public ReportsViewModel()
         {
@@ -43,7 +43,7 @@ namespace CashBook.ViewModels
 
             this.NextPageCommand = new DelegateCommand(NextPage, CanNextPage);
             this.PreviousPageCommand = new DelegateCommand(PreviousPage, CanPreviousPage);
-            this.BackCommand = new DelegateCommand(Back, CanBack); 
+            this.BackCommand = new DelegateCommand(Back, CanBack);
         }
 
         #region properties
@@ -277,7 +277,7 @@ namespace CashBook.ViewModels
         {
             Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.CashBook);
             Mediator.Instance.SendMessage(MediatorActionType.SetSelectedCashBook, new CashBookDisplayInfo() { SelectedCashbook = SelectedCashBook, SelectedDate = SelectedDate });
-        } 
+        }
 
         private void LoadCompanyData()
         {
@@ -317,7 +317,7 @@ namespace CashBook.ViewModels
                     CashBookEntries.Add((CashBookEntryUI)item);
                 }
             }
-            ReportTitle = SelectedCashBook.IsLei ? "REGISTRU DE CASA in LEI" : "REGISTRU DE CASA in VALUTA"; 
+            ReportTitle = SelectedCashBook.IsLei ? "REGISTRU DE CASA in LEI" : "REGISTRU DE CASA in VALUTA";
             MoneyExchangeRateVisibility = SelectedCashBook.IsLei ? Visibility.Collapsed : Visibility.Visible;
 
             if (!SelectedCashBook.IsLei && MoneyExchangeRate.HasValue)
@@ -376,16 +376,19 @@ namespace CashBook.ViewModels
             LoadDataForCurrentPage();
 
         }
-
+        private int nrCrt = 0;
         private void LoadDataForCurrentPage()
         {
             if (currentPage > 0)
             {
+                nrCrt = (currentPage - 1) * MaxEntriesPerPage + 1;
                 CurrentPageCashBookEntries = new ObservableCollection<CashBookEntryUI>();
                 var currentPageItems = CashBookEntries.Skip(MaxEntriesPerPage * (currentPage - 1)).Take(MaxEntriesPerPage).ToList();
 
                 foreach (var item in currentPageItems)
                 {
+                    item.NrCrt = nrCrt;
+                    nrCrt++;
                     CurrentPageCashBookEntries.Add(item);
                 }
             }

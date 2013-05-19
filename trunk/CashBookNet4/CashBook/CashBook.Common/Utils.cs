@@ -12,6 +12,17 @@ namespace CashBook.Common
         {
             return date.Date;
         }
+        public static DateTime? DateTimeToDay(DateTime? date)
+        {
+            if (date.HasValue)
+            {
+                return date.Value.Date;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public static string DateTimeToString(DateTime date)
         {
