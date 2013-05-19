@@ -21,7 +21,7 @@ namespace CashBook.ViewModels
 
         public List<ReportPageVM> GetPages(Company company, UserCashBook cashBook, DateTime dateTime, ICashBookRepository cashBookRepository, ICashBookEntryRepository cashBookEntryRepository, int maxEntriesPerPage)
         {
-            maxEntriesPerPage = 3;
+            maxEntriesPerPage = 13;
             List<ReportPageVM> resultPages = new List<ReportPageVM>();
             try
             {

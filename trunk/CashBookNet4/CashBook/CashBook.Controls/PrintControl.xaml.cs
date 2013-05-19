@@ -60,7 +60,7 @@ namespace CashBook.Controls
         {
             try
             {
-                PrintAllPages();
+                //PrintAllPages();
                 //Print();
                 //PrintDialog dialog = new PrintDialog();
 
@@ -107,7 +107,7 @@ namespace CashBook.Controls
 
         public void PrintAllPages()
         {
-            grdReport.Children.Clear();
+            //grdReport.Children.Clear();
             //Print();
             //set the datacontext for each page and send it to the printer
 
@@ -116,7 +116,7 @@ namespace CashBook.Controls
         {
             if (param != null)
             {
-                grdReport.Children.Clear();
+                //grdReport.Children.Clear();
                 List<ReportPageVM> pagesToPrint = param as List<ReportPageVM>;
                 PrintVmPages(pagesToPrint);
             }
@@ -129,7 +129,7 @@ namespace CashBook.Controls
             {
                 return;
             }
-            PrintedPage pp = new PrintedPage();
+           // PrintedPage pp = new PrintedPage();
             PrintDialog dialog = new PrintDialog();
 
             if (dialog.ShowDialog() != true) return;
@@ -142,8 +142,10 @@ namespace CashBook.Controls
 
                 grdReport.Children.Clear();
                 grdReport.Children.Add(printedPage);
+                Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
 
                 grdReport.Measure(new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight));
+                grdReport.UpdateLayout();
                 //grdReport.Arrange(new Rect(new Point(50, 50), grdReport.DesiredSize));
                 //grdReport.Visibility = System.Windows.Visibility.Hidden;
 

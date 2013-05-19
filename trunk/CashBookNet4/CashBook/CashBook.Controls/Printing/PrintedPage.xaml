@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
             >
     <UserControl.Resources>
-        <Thickness x:Key="textPadding" Top="0" Bottom="0" Left="0" Right="6"/>
+        <Thickness x:Key="textPadding" Top="0" Bottom="0" Left="6" Right="6"/>
         <Visibility x:Key="testVisibility">Visible</Visibility>
         <Style TargetType="Label" >
             <Setter Property="BorderBrush" Value="Black"/>
@@ -56,7 +56,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0"   Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding Company.Nume,FallbackValue='Unitatea SC AURIUS SRL'}" />
-            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Content="{Binding Company.Adresa,FallbackValue='Sediul CLUJ-NAPOCA, str.POPESTI NR.2'}" HorizontalContentAlignment="Left" />
+            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Content="{Binding Company.Adresa,FallbackValue='Sediul CLUJ-NAPOCA, str.POPESTI NR.2'}" HorizontalContentAlignment="Left"   Padding="{StaticResource textPadding}" />
             <Label Grid.Row="2"   Grid.Column="0"  Grid.ColumnSpan="1" Content="CUI" />
             <Label Grid.Row="2"   Grid.Column="1"  Grid.ColumnSpan="1" Content="{Binding Company.CUI,FallbackValue='22349678'}" />
             <Label Grid.Row="3"   Grid.Column="1"  Grid.ColumnSpan="3" Content="{Binding ReportTitle,FallbackValue='REGISTRU DE CASĂ în VALUTĂ'}" FontWeight="Bold"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
@@ -110,8 +110,8 @@
                 <Label Content="valoarea in" VerticalContentAlignment="Center" BorderThickness="0" />
                 <Label Content="LEI" VerticalContentAlignment="Center" BorderThickness="0" />
             </StackPanel>
-            <Label  Grid.Row="8"    Grid.Column="0" Grid.ColumnSpan="4" Content="Report/Sold ziua precedenta" HorizontalContentAlignment="Left" Margin="1,0,0,0"/>
-            <Label  Grid.Row="8"    Grid.Column="4" Grid.ColumnSpan="2"  Content="{Binding InitialBalanceForDayString,FallbackValue='42.55'}" HorizontalContentAlignment="Right"  Padding="{StaticResource textPadding}" />
+            <Label  Grid.Row="8"    Grid.Column="0" Grid.ColumnSpan="4" Content="Report/Sold ziua precedenta" HorizontalContentAlignment="Left" Margin="1,0,0,0"  Padding="{StaticResource textPadding}"  FontWeight="Bold"/>
+            <Label  Grid.Row="8"    Grid.Column="4" Grid.ColumnSpan="2"  Content="{Binding InitialBalanceForDayString,FallbackValue='42.55'}" HorizontalContentAlignment="Right"  Padding="{StaticResource textPadding}"  FontWeight="Bold"/>
             <Label  Grid.Row="8"    Grid.Column="6" Grid.ColumnSpan="2"  Content="" HorizontalContentAlignment="Right" BorderThickness="0.5,0.5,1,0.5"/>
 
             <!--border fills-->
@@ -176,13 +176,13 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="{Binding NrCrtString}" />
-                            <Label Grid.Column="1" Content="{Binding NrActCasa}" />
-                            <Label Grid.Column="2" Content="{Binding NrAnexeString}" />
-                            <Label Grid.Column="3" Content="{Binding Explicatii}"   FontWeight="{Binding FontWeight}" HorizontalContentAlignment="Left" Padding="6,0,0,0"/>
+                            <Label Grid.Column="0" Content="{Binding NrCrtString}" HorizontalContentAlignment="Left"  Padding="{StaticResource textPadding}"  />
+                            <Label Grid.Column="1" Content="{Binding NrActCasa}"  HorizontalContentAlignment="Left"  Padding="{StaticResource textPadding}" />
+                            <Label Grid.Column="2" Content="{Binding NrAnexeString}"  HorizontalContentAlignment="Left"  Padding="{StaticResource textPadding}" />
+                            <Label Grid.Column="3" Content="{Binding Explicatii}"   FontWeight="{Binding FontWeight}"  HorizontalContentAlignment="Left"  Padding="{StaticResource textPadding}" />
                             <Label Grid.Column="4" Grid.ColumnSpan="2" Content="{Binding IncasariString}" FontWeight="{Binding FontWeight}" HorizontalContentAlignment="Right" Padding="{StaticResource textPadding}" />
                             <Label Grid.Column="6"  Grid.ColumnSpan="2" Content="{Binding PlatiString}"  FontWeight="{Binding FontWeight}" HorizontalContentAlignment="Right" Padding="{StaticResource textPadding}" />
-                            <Label Grid.Column="8" Content="{Binding LeiValueString}" Width="100" Visibility="{Binding DataContext.MoneyExchangeRateVisibility, ElementName=root,  FallbackValue={StaticResource testVisibility}}" HorizontalContentAlignment="Right" Padding="{StaticResource textPadding}" />
+                            <Label Grid.Column="8" Content="{Binding LeiValueString}" Width="103" Visibility="{Binding DataContext.MoneyExchangeRateVisibility, ElementName=root,  FallbackValue={StaticResource testVisibility}}" HorizontalContentAlignment="Right" Padding="{StaticResource textPadding}" />
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
