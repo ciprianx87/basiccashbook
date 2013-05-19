@@ -55,7 +55,7 @@
                 <DataGridTemplateColumn Width="Auto" Header="">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <Button Content="Selecteaza" Margin="0" Command="{Binding DataContext.SelectCommand, ElementName=root}" CommandParameter="{Binding}" Click="SelectButton_Click"/>
+                            <Button Content="Selecteaza" Margin="0" CommandParameter="{Binding}" Click="SelectButton_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -112,7 +112,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <StackPanel Orientation="Horizontal">
-                                <Button Margin="0,0,10,0" Command="{Binding DataContext.DeleteCommand, ElementName=root}" CommandParameter="{Binding}" Width="30" Height="20"  Click="DeleteCommand_Click">
+                                <Button Margin="0,0,10,0" CommandParameter="{Binding}" Width="30" Height="20"  Click="DeleteCommand_Click">
                                     <StackPanel>
                                         <Image Source="/CashBook.Controls;component/Images/deleteButton3.png" Stretch="Uniform"  Width="30" Height="14"/>
                                         <TextBlock Text=""/>
@@ -122,7 +122,7 @@
                                     </Button.ToolTip>
                                 </Button>
                                 <!--,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}-->
-                                <Button Command="{Binding DataContext.EditCommand, Mode=OneTime, ElementName=root}" CommandParameter="{Binding}" Width="30" Height="20" Click="EditCommand_Click">
+                                <Button CommandParameter="{Binding}" Width="30" Height="20" Click="EditCommand_Click">
                                     <StackPanel>
                                         <Image Source="/CashBook.Controls;component/Images/editButton.png"  Stretch="Uniform"  Width="30" Height="15"/>
                                         <TextBlock Text=""/>

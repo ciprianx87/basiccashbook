@@ -17,13 +17,13 @@
             </Style.Triggers>
             <Setter Property="TextAlignment" Value="Left"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontSize" Value="12"/>
         </Style>
 
         <Style TargetType="TextBlock"  x:Key="StandardTextBlock">
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontSize" Value="12"/>
         </Style>
         <Style TargetType="TextBlock"  x:Key="StandardLeftTextBlock"  BasedOn="{StaticResource StandardTextBlock}" >
             <Setter Property="TextAlignment" Value="Left"/>
@@ -33,6 +33,9 @@
             <Setter Property="TextAlignment" Value="Right"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="Padding" Value="0,0,6,0"/>
+        </Style>
+        <Style TargetType="TextBlock"  x:Key="HeaderStyle">
+            <Setter Property="FontSize" Value="12"/>
         </Style>
     </UserControl.Resources>
     <Grid x:Name="root">
@@ -76,6 +79,8 @@
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Text="Societate:" FontWeight="Bold" FontSize="14"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=DataContext.Company.Nume, ElementName=root}" FontWeight="Bold" FontSize="14"/>
                 <TextBlock Grid.Row="1" Text="Registru de casa:" FontWeight="Bold" FontSize="14"/>
                 <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}" FontWeight="Bold" FontSize="14"/>
                 <TextBlock Grid.Row="2" Text="Moneda:"  FontWeight="Bold" FontSize="12" />
@@ -155,7 +160,12 @@
                             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                         </Style>
                     </DataGrid.Resources>
-
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="FontSize"
+                  Value="12" />
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
                     <!--SelectedIndex="{Binding SelectedIndex, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                           SelectedItem="{Binding SelectedItem, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"-->
                     <DataGrid.Columns>
@@ -169,8 +179,8 @@
                                                 <Setter Property="HorizontalAlignment" Value="Center"/>
                                             </Style>
                                         </StackPanel.Resources>
-                                        <TextBlock Text="Nr." TextAlignment="Center"/>
-                                        <TextBlock Text="Crt." HorizontalAlignment="Stretch" />
+                                        <TextBlock Text="Nr." TextAlignment="Center" FontSize="12"/>
+                                        <TextBlock Text="Crt." HorizontalAlignment="Stretch" FontSize="12" />
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.HeaderTemplate>
@@ -181,7 +191,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Width="150" Header="Nr Act Casa" Binding="{Binding Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Path=NrActCasa,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}"  EditingElementStyle="{StaticResource StandardTextBox}">
+                ValidatesOnDataErrors=true, NotifyOnValidationError=true}"  EditingElementStyle="{StaticResource StandardTextBox}"  >
 
                         </DataGridTextColumn>
                         <DataGridTextColumn Width="150" Header="Nr Anexe" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=NrAnexe,

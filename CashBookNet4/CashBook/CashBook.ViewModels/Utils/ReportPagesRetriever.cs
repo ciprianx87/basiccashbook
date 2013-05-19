@@ -25,7 +25,7 @@ namespace CashBook.ViewModels
             List<ReportPageVM> resultPages = new List<ReportPageVM>();
             try
             {
-                
+
                 this.MaxEntriesPerPage = maxEntriesPerPage;
 
                 var MoneyExchangeRate = cashBookEntryRepository.GetExchangeRateForDay(cashBook.Id, dateTime);
@@ -40,6 +40,11 @@ namespace CashBook.ViewModels
                     {
                         tempCashBookEntries.Add((CashBookEntryUI)item);
                     }
+                }
+                if (tempCashBookEntries.Count == 0)
+                {
+                    //no report to print for this day, return empty;
+                    return resultPages;
                 }
 
                 //add incasari
@@ -80,7 +85,7 @@ namespace CashBook.ViewModels
                 var InitialBalanceForDayDecimal = cashBookRepository.GetInitialBalanceForDay(cashBook.Id, dateTime);
 
 
-               
+
                 AddExtraDetailsRows(InitialBalanceForDayDecimal, cashBook, MoneyExchangeRate);
                 currentPage = 0;
                 nrCrt = 1;

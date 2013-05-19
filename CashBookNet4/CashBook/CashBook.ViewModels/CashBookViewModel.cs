@@ -20,6 +20,7 @@ namespace CashBook.ViewModels
     {
         ICashBookRepository cashBookRepository;
         ICashBookEntryRepository cashBookEntryRepository;
+        ICompanyRepository companyRepository;
 
         public ICommand DeleteCommand { get; set; }
         public ICommand SaveCommand { get; set; }
@@ -41,11 +42,12 @@ namespace CashBook.ViewModels
 
             cashBookRepository = new CashBookRepository();
             cashBookEntryRepository = new CashBookEntryRepository();
+            companyRepository = new CompanyRepository();
 
             canSave = true;
         }
 
-
+        List<CashBookEntryUI> InitialCashBookEntries;
 
         private bool canSave = false;
         private void LoadDataForDay(DateTime dateTime)
@@ -57,10 +59,14 @@ namespace CashBook.ViewModels
             {
                 foreach (var item in existingCashBookEntries)
                 {
-                    CashBookEntries.Add((CashBookEntryUI)item);
+                    var newItem = (CashBookEntryUI)item;
+                    newItem.IsModified = false;
+                    CashBookEntries.Add(newItem);
                 }
             }
-            CashBookEntries.Add(new CashBookEntryUI());
+            CashBookEntries.Add(new CashBookEntryUI() { IsModified = false });
+
+            InitialCashBookEntries = CloneEntries(CashBookEntries.ToList());
             //CashBookEntries.CollectionChanged+=new System.Collections.Specialized.NotifyCollectionChangedEventHandler(CashBookEntries_CollectionChanged);
             var dbExchangeRate = cashBookEntryRepository.GetExchangeRateForDay(SelectedCashBook.Id, dateTime);
             MoneyExchangeRate = dbExchangeRate.HasValue ? dbExchangeRate.Value : 0;
@@ -71,6 +77,16 @@ namespace CashBook.ViewModels
             CashBookEntries.ToList().ForEach(p => p.IsFormValid());
 
         }
+        private List<CashBookEntryUI> CloneEntries(List<CashBookEntryUI> original)
+        {
+            var newList = new List<CashBookEntryUI>();
+            foreach (var item in original)
+            {
+                newList.Add(item.Clone());
+            }
+            return newList;
+
+        }
 
         private void AddFakeItems()
         {
@@ -78,7 +94,8 @@ namespace CashBook.ViewModels
             {
                 CashBookEntries.Add(new CashBookEntryUI()
                 {
-                    NrCrt = i
+                    NrCrt = i,
+                    IsModified = false
                 });
             }
         }
@@ -348,6 +365,20 @@ namespace CashBook.ViewModels
 
 
 
+        private Company company;
+        public Company Company
+        {
+            get { return company; }
+            set
+            {
+                if (company != value)
+                {
+                    company = value;
+                    this.NotifyPropertyChanged("Company");
+                }
+            }
+        }
+
 
         #endregion
 
@@ -398,10 +429,10 @@ namespace CashBook.ViewModels
             }
             TotalBalance = totalSum;
 
-            if (CurrentBalanceOut > AppSettings.TotalPaymentLimit)
-            {
-                WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
-            }
+            //if (CurrentBalanceOut > AppSettings.TotalPaymentLimit)
+            //{
+            //    WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
+            //}
         }
 
         public void SetSelectedCashBook(object param)
@@ -431,6 +462,7 @@ namespace CashBook.ViewModels
             {
                 MoneyExchangeRate = 0;
             }
+            Company = companyRepository.GetCompany();
         }
 
         public ICommand LegalReglementationsCommand { get; set; }
@@ -451,10 +483,14 @@ namespace CashBook.ViewModels
             {
                 if (IsFormValid())
                 {
+                    Logger.Instance.Log.InfoFormat("SaveData initial count: {0}", CashBookEntries.Count);
                     var validEntries = ExtractValidItems(CashBookEntries);
+                    Logger.Instance.Log.InfoFormat("SaveData validEntries count: {0}", validEntries.Count);
                     if (validEntries.Count > 0)
                     {
                         cashBookEntryRepository.UpdateRepositoryForDay(SelectedCashBook.Id, validEntries, SelectedDate, MoneyExchangeRate);
+                        CashBookEntries.ToList().ForEach(p => p.IsModified = false);
+                        InitialCashBookEntries = CloneEntries(CashBookEntries.ToList());
                         WindowHelper.OpenInformationDialog("Informatia a fost salvata");
                     }
                 }
@@ -483,19 +519,18 @@ namespace CashBook.ViewModels
         {
             if (TotalBalance < 0)
             {
-                WindowHelper.OpenInformationDialog("Atentie! Sold final negativ");
-                return false;
+                WindowHelper.OpenErrorDialog("Atentie! Sold final negativ");
+                //return false;
             }
-            if (CurrentBalanceOut > AppSettings.SinglePaymentLimit)
+            if (CurrentBalanceOut > AppSettings.TotalPaymentLimit)
             {
                 WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
-                return false;
+                //return false;
             }
             if (CashBookEntries.Any(p => p.Plati > AppSettings.SinglePaymentLimit))
             {
                 WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
-
-                return false;
+                // return false;
             }
 
             bool moneyExchangeRateOk = true;
@@ -614,6 +649,20 @@ namespace CashBook.ViewModels
 
         private void ViewReports(object parameter)
         {
+            if (IsModified())
+            {
+                Mediator.Instance.Register(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallbackModifications);
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.YesNoDialog);
+                Mediator.Instance.SendMessage(MediatorActionType.SetMessage, "Aveti modificari pe care nu le-ati salvat.\r\n Doriti sa parasiti ecranul?");
+            }
+            else
+            {
+                ViewReportsAction();
+            }
+        }
+
+        private void ViewReportsAction()
+        {
             Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.Reports);
             Mediator.Instance.SendMessage(MediatorActionType.SetSelectedDate, new ReportInitialData()
             {
@@ -623,6 +672,65 @@ namespace CashBook.ViewModels
 
         }
 
+        public void YesNoPopupResponseCallbackModifications(object param)
+        {
+            try
+            {
+                Mediator.Instance.Unregister(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallbackModifications);
+                switch ((YesNoPopupResponse)param)
+                {
+                    case YesNoPopupResponse.Yes:
+                        ViewReportsAction();
+                        break;
+                    case YesNoPopupResponse.No:
+
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+                WindowHelper.OpenErrorDialog("Registrul nu a putut fi sters");
+            }
+        }
+
+        private bool IsModified()
+        {
+            if (CashBookEntries != null && CashBookEntries.Count > 0)
+            {
+                if (InitialCashBookEntries != null && InitialCashBookEntries.Count > 0)
+                {
+                    if (CashBookEntries.Count != InitialCashBookEntries.Count)
+                    {
+                        return true;
+                    }
+
+                    for (int i = 0; i < CashBookEntries.Count; i++)
+                    {
+                        var old = InitialCashBookEntries[i];
+                        var newItem = CashBookEntries[i];
+                        if (old.Explicatii != newItem.Explicatii || old.Incasari != newItem.Incasari || old.NrActCasa != newItem.NrActCasa || old.NrAnexe != newItem.NrAnexe ||
+                            old.Plati != newItem.Plati)
+                        // old.NrCrt != newItem.NrCrt ||
+                        {
+                            return true;
+                        }
+                    }
+                }
+                //bool isModified = false;
+                //foreach (var item in CashBookEntries)
+                //{
+                //    if (item.IsModified)
+                //    {
+                //        isModified = true;
+                //    }
+                //}
+                //return isModified;
+            }
+
+            return false;
+        }
+
         public override void Dispose()
         {
             CashBookEntries.CollectionChanged -= CashBookEntries_CollectionChanged;
@@ -630,6 +738,7 @@ namespace CashBook.ViewModels
             Mediator.Instance.Unregister(MediatorActionType.SetSelectedCashBook, SetSelectedCashBook);
             Mediator.Instance.Unregister(MediatorActionType.UpdateBalance, UpdateBalance);
             Mediator.Instance.Unregister(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallback);
+            Mediator.Instance.Unregister(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallbackModifications);
             base.Dispose();
         }
 

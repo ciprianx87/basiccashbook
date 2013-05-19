@@ -269,17 +269,41 @@ namespace CashBook.ViewModels
         {
             if (IsValid())
             {
+                List<DateTime> datesToPrint = new List<DateTime>();
+                if (CurrentDaySelected)
+                {
+                    datesToPrint.Add(DateTime.Now);
+                }
+                else if (CurrentMonthSelected)
+                {
+                    var currentDate = DateTime.Now;
+                    var currentDay = currentDate.Day;
+                    for (int i = 1; i <= currentDay; i++)
+                    {
+                        datesToPrint.Add(new DateTime(currentDate.Year, currentDate.Month, i));
+                    }
+                }
+                else if (OtherPeriodSelected)
+                {
+                    var currentCounterDate = Utils.DateTimeToDay(SelectedStartDate);
+                    while (currentCounterDate <= Utils.DateTimeToDay(SelectedEndDate))
+                    {
+                        datesToPrint.Add(currentCounterDate);
+                        currentCounterDate = currentCounterDate.AddDays(1);
+                    }
+                }
                 //gather the data that needs to be printed
                 List<ReportPageVM> pagesToPrint = new List<ReportPageVM>();
-                ReportPagesRetriever pagesRetriever = new ReportPagesRetriever();
-                var returnedPages = pagesRetriever.GetPages(Company, SelectedCashBook, DateTime.Now, cashBookRepository, cashBookEntryRepository, MaxEntriesPerPage);
-                if (returnedPages != null && returnedPages.Count > 0)
+                foreach (var date in datesToPrint)
                 {
-                    pagesToPrint.AddRange(returnedPages);
+
+                    ReportPagesRetriever pagesRetriever = new ReportPagesRetriever();
+                    var returnedPages = pagesRetriever.GetPages(Company, SelectedCashBook, date, cashBookRepository, cashBookEntryRepository, MaxEntriesPerPage);
+                    if (returnedPages != null && returnedPages.Count > 0)
+                    {
+                        pagesToPrint.AddRange(returnedPages);
+                    }
                 }
-                //ReportPageVM page = new ReportPageVM(Company);
-                //pagesToPrint.Add(page);
-                //pagesToPrint.Add(page);
                 Mediator.Instance.SendMessage(MediatorActionType.StartPrinting, pagesToPrint);
             }
         }
