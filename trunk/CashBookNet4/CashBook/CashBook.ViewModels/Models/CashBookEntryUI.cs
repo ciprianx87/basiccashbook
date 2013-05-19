@@ -12,6 +12,7 @@ namespace CashBook.ViewModels.Models
 {
     public class CashBookEntryUI : INotifyPropertyChanged, IDataErrorInfo
     {
+        public bool IsModified { get; set; }
         public static implicit operator CashBookEntryUI(CashBookEntry entry)
         {
             return new CashBookEntryUI()
@@ -114,6 +115,10 @@ namespace CashBook.ViewModels.Models
             }
             return result;
         }
+        private void ChangeIsModified()
+        {
+            IsModified = true;
+        }
 
         private int nrAnexe;
         public int NrAnexe
@@ -126,6 +131,7 @@ namespace CashBook.ViewModels.Models
                     nrAnexe = value;
                     this.NotifyPropertyChanged("NrAnexe");
                     UpdateStringFields();
+                    ChangeIsModified();
                 }
             }
         }
@@ -146,6 +152,7 @@ namespace CashBook.ViewModels.Models
                     NotifyChangedBalance(incasari);
                     UpdateStringFields();
                     IsValid();
+                    ChangeIsModified();
                 }
             }
         }
@@ -167,6 +174,7 @@ namespace CashBook.ViewModels.Models
                     IsFormValid();
                     UpdateStringFields();
                     IsValid();
+                    ChangeIsModified();
                 }
             }
         }
@@ -188,6 +196,7 @@ namespace CashBook.ViewModels.Models
                     nrCrt = value;
                     this.NotifyPropertyChanged("NrCrt");
                     UpdateStringFields();
+                    ChangeIsModified();
                 }
             }
         }
@@ -205,6 +214,7 @@ namespace CashBook.ViewModels.Models
                     explicatii = value;
                     this.NotifyPropertyChanged("Explicatii");
                     IsValid();
+                    ChangeIsModified();
                 }
             }
         }
@@ -220,6 +230,7 @@ namespace CashBook.ViewModels.Models
                     nrActCasa = value;
                     this.NotifyPropertyChanged("NrActCasa");
                     IsValid();
+                    ChangeIsModified();
                 }
             }
         }
@@ -252,6 +263,7 @@ namespace CashBook.ViewModels.Models
                 {
                     leiValueString = value;
                     this.NotifyPropertyChanged("LeiValueString");
+
                 }
             }
         }
@@ -267,6 +279,7 @@ namespace CashBook.ViewModels.Models
                 {
                     fontWeight = value;
                     this.NotifyPropertyChanged("FontWeight");
+
                 }
             }
         }
@@ -409,11 +422,11 @@ namespace CashBook.ViewModels.Models
 
         public bool IsFormValid()
         {
-            if (Plati > AppSettings.SinglePaymentLimit)
-            {
-                WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
-                return false;
-            }
+            //if (Plati > AppSettings.SinglePaymentLimit)
+            //{
+            //    WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
+            //    return false;
+            //}
             return IsValid();
             //return !(IsEmpty(NrActCasa, Explicatii) || ((Plati == 0 && Incasari == 0) || (Plati != 0 && Incasari != 0)));
         }
@@ -479,6 +492,19 @@ namespace CashBook.ViewModels.Models
                 NrAnexeString = NrAnexe.ToString();
                 NrCrtString = NrCrt.ToString();
             }
+        }
+
+        public CashBookEntryUI Clone()
+        {
+            return new CashBookEntryUI()
+            {
+                Plati = Plati,
+                Incasari = Incasari,
+                Explicatii = Explicatii,
+                NrActCasa = NrActCasa,
+                NrCrt = NrCrt,
+                NrAnexe = NrAnexe
+            };
         }
     }
 }

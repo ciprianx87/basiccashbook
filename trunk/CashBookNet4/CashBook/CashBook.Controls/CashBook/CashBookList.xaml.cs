@@ -56,10 +56,10 @@ namespace CashBook.Controls
             var but = (sender as Button);
             (this.DataContext as CashBookListViewModel).Select(but.CommandParameter);
 
-            if (but.Command != null)
-            {
-                but.Command.Execute(but.CommandParameter);
-            }
+            //if (but.Command != null)
+            //{
+            //    but.Command.Execute(but.CommandParameter);
+            //}
         }
         private void DeleteCommand_Click(object sender, RoutedEventArgs e)
         {
