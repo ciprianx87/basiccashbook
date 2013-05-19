@@ -7,7 +7,7 @@
              
              xmlns:constants="clr-namespace:CashBook.Controls"
              mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}"
-             VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="1100">
+             VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="1100">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBox}" x:Key="StandardTextBox" >
             <Style.Triggers>

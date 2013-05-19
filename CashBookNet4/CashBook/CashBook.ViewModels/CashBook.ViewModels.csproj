@@ -55,6 +55,8 @@
     <Compile Include="CashBookListViewModel.cs" />
     <Compile Include="CashBookViewModel.cs" />
     <Compile Include="CrudCoinTypesVM.cs" />
+    <Compile Include="ReportPageVM.cs" />
+    <Compile Include="Utils\ReportPagesRetriever.cs" />
     <Compile Include="Utils\VMUtils.cs" />
     <Compile Include="YesNoDialogVM.cs" />
     <Compile Include="Models\CashBookDisplayInfo.cs" />
