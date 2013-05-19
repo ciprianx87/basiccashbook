@@ -80,9 +80,10 @@ namespace CashBook.ViewModels
                 var InitialBalanceForDayDecimal = cashBookRepository.GetInitialBalanceForDay(cashBook.Id, dateTime);
 
 
-
-                AddExtraDetailsRows(InitialBalanceForDayDecimal);
+               
+                AddExtraDetailsRows(InitialBalanceForDayDecimal, cashBook, MoneyExchangeRate);
                 currentPage = 0;
+                nrCrt = 1;
                 while (HasNextPage())
                 {
                     currentPage++;
@@ -109,6 +110,7 @@ namespace CashBook.ViewModels
             }
             return resultPages;
         }
+        private int nrCrt = 0;
         private bool HasNextPage()
         {
             return CashBookEntries != null && CashBookEntries.Count > MaxEntriesPerPage * currentPage;
@@ -123,6 +125,8 @@ namespace CashBook.ViewModels
 
                 foreach (var item in currentPageItems)
                 {
+                    item.NrCrt = nrCrt;
+                    nrCrt++;
                     CurrentPageCashBookEntries.Add(item);
                 }
             }
@@ -138,7 +142,7 @@ namespace CashBook.ViewModels
             PageNumber = string.Format("{0}/{1}", currentPage, totalPages);
         }
 
-        private void AddExtraDetailsRows(decimal InitialBalanceForDayDecimal)
+        private void AddExtraDetailsRows(decimal InitialBalanceForDayDecimal, UserCashBook cashBook, decimal? MoneyExchangeRate)
         {
             //calculate the current and final balance
             decimal currentBalanceIn = 0;
@@ -164,6 +168,10 @@ namespace CashBook.ViewModels
                 Explicatii = "Sold final",
                 IsExtraDetail = true
             };
+            if (cashBook.IsLei)
+            {
+                finalBalance.LeiValue = finalBalance.Incasari * MoneyExchangeRate.Value;
+            }
 
             CashBookEntries.Add(currentBalance);
             CashBookEntries.Add(finalBalance);

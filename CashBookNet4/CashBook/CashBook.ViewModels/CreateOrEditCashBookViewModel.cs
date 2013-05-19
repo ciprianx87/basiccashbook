@@ -373,7 +373,7 @@ namespace CashBook.ViewModels
             currentEntity.CoinDecimals = SelectedDecimal;
             currentEntity.Name = Name;
             currentEntity.InitialBalance = InitialBalance;
-            currentEntity.InitialBalanceDate = InitialBalanceDate;
+            currentEntity.InitialBalanceDate = Utils.DateTimeToDay(InitialBalanceDate);
         }
 
         public void Save(object param)
@@ -394,7 +394,7 @@ namespace CashBook.ViewModels
                             CoinDecimals = SelectedDecimal,
                             Name = Name != null ? Name : "",
                             InitialBalance = InitialBalance,
-                            InitialBalanceDate = InitialBalanceDate
+                            InitialBalanceDate = Utils.DateTimeToDay(InitialBalanceDate)
                         };
                         cashBookRepository.Create(cashBook);
                     }

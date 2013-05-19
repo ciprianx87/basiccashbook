@@ -54,6 +54,7 @@ namespace CashBook.Data.Repositories
                 item.Id = DbIdHelper.GetNextID();
                 item.RegistruCasaZis = new System.Data.Objects.DataClasses.EntityCollection<DailyCashBook>();
                 item.SocietateId = existingCompany.Id;
+                item.InitialBalanceDate = Utils.DateTimeToDay(item.InitialBalanceDate);
                 context.UserCashBooks.AddObject(item);
                 Commit(context);
             }
@@ -73,7 +74,7 @@ namespace CashBook.Data.Repositories
                     existingEntity.CoinType = item.CoinType;
                     existingEntity.InitialBalance = item.InitialBalance;
                     existingEntity.Location = item.Location;
-                    existingEntity.InitialBalanceDate = item.InitialBalanceDate;
+                    existingEntity.InitialBalanceDate = Utils.DateTimeToDay(item.InitialBalanceDate);
                 }
                 Commit(context);
             }
@@ -142,7 +143,7 @@ namespace CashBook.Data.Repositories
 
             //take the initial balance of the cashbook into account
             var currentCashBook = context.UserCashBooks.FirstOrDefault(p => p.Id == selectedCashBookId);
-            if (currentCashBook.InitialBalanceDate < currentDate)
+            if (currentCashBook.InitialBalanceDate <= currentDate)
             {
                 totalSum += currentCashBook.InitialBalance;
             }
