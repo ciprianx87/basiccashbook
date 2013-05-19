@@ -7,7 +7,7 @@
             >
     <UserControl.Resources>
         <Thickness x:Key="textPadding" Top="0" Bottom="0" Left="0" Right="6"/>
-        <Visibility x:Key="testVisibility">Collapsed</Visibility>
+        <Visibility x:Key="testVisibility">Visible</Visibility>
         <Style TargetType="Label" >
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="0.5"/>
@@ -55,7 +55,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0"   Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding Test,FallbackValue='Unitatea SC AURIUS SRL'}" />
+            <Label Grid.Row="0"   Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding Company.Nume,FallbackValue='Unitatea SC AURIUS SRL'}" />
             <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Content="{Binding Company.Adresa,FallbackValue='Sediul CLUJ-NAPOCA, str.POPESTI NR.2'}" HorizontalContentAlignment="Left" />
             <Label Grid.Row="2"   Grid.Column="0"  Grid.ColumnSpan="1" Content="CUI" />
             <Label Grid.Row="2"   Grid.Column="1"  Grid.ColumnSpan="1" Content="{Binding Company.CUI,FallbackValue='22349678'}" />

@@ -13,6 +13,8 @@ using CashBook.Common;
 using CashBook.Data.Interfaces;
 using CashBook.Data.Repositories;
 using System.Collections.ObjectModel;
+using CashBook.ViewModels.Models;
+using System.Windows;
 
 namespace CashBook.ViewModels
 {
@@ -24,6 +26,7 @@ namespace CashBook.ViewModels
         public ICommand PrintCommand { get; set; }
         ICashBookRepository cashBookRepository;
         ICashBookEntryRepository cashBookEntryRepository;
+        ICompanyRepository companyRepository;
         #endregion
 
         #region Constructor
@@ -36,6 +39,7 @@ namespace CashBook.ViewModels
 
             cashBookRepository = new CashBookRepository();
             cashBookEntryRepository = new CashBookEntryRepository();
+            companyRepository = new CompanyRepository();
 
             LoadData();
         }
@@ -50,6 +54,8 @@ namespace CashBook.ViewModels
 
             try
             {
+                Company = companyRepository.GetCompany();
+
                 CashBooks = new ObservableCollection<UserCashBook>();
                 var existingCashBooks = cashBookRepository.GetAll(CashBookListType.Any);
                 if (existingCashBooks != null)
@@ -244,12 +250,15 @@ namespace CashBook.ViewModels
             }
         }
 
-
+        public Company Company { get; set; }
 
         #endregion
 
         #region Methods
 
+        #region printing methods
+
+        #endregion
 
         private bool CanPrint(object parameter)
         {
@@ -261,7 +270,17 @@ namespace CashBook.ViewModels
             if (IsValid())
             {
                 //gather the data that needs to be printed
-
+                List<ReportPageVM> pagesToPrint = new List<ReportPageVM>();
+                ReportPagesRetriever pagesRetriever = new ReportPagesRetriever();
+                var returnedPages = pagesRetriever.GetPages(Company, SelectedCashBook, DateTime.Now, cashBookRepository, cashBookEntryRepository, MaxEntriesPerPage);
+                if (returnedPages != null && returnedPages.Count > 0)
+                {
+                    pagesToPrint.AddRange(returnedPages);
+                }
+                //ReportPageVM page = new ReportPageVM(Company);
+                //pagesToPrint.Add(page);
+                //pagesToPrint.Add(page);
+                Mediator.Instance.SendMessage(MediatorActionType.StartPrinting, pagesToPrint);
             }
         }
 
@@ -276,6 +295,15 @@ namespace CashBook.ViewModels
                 }
             }
             return true;
+        }
+
+        public int MaxEntriesPerPage { get; set; }
+
+        public void SetMaxEntriesPerPage(int maxEntries)
+        {
+            MaxEntriesPerPage = maxEntries;
+            //LoadDataForCurrentPage();
+
         }
 
         private bool CanOK(object parameter)

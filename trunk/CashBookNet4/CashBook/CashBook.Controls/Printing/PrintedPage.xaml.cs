@@ -24,6 +24,12 @@ namespace CashBook.Controls.Printing
         public PrintedPage()
         {
             InitializeComponent();
+            this.DataContextChanged += new DependencyPropertyChangedEventHandler(PrintedPage_DataContextChanged);
+        }
+
+        void PrintedPage_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            //(this.DataContext as ReportsViewModel).SetMaxEntriesPerPage(maxRowsPerPage);
         }
 
         private const int rowHeight = 20;
@@ -36,6 +42,10 @@ namespace CashBook.Controls.Printing
                 int maxRowsPerPage = (int)height / rowHeight;
                 //(this.DataContext as ReportsViewModel).SetMaxEntriesPerPage(maxRowsPerPage);
             }
+        }
+        public ListBox GetLstItems()
+        {
+            return lstItems;
         }
     }
 }
