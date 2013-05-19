@@ -35,7 +35,7 @@
             <Grid Height="827" Width="1169">
                 <Border BorderThickness="2">
                     <Grid x:Name="grdReport">
-                        <contr:PrintedPage/>
+                        <contr:PrintedPage />
                     </Grid>
                 </Border>
             </Grid>

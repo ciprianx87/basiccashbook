@@ -299,7 +299,7 @@ namespace CashBook.ViewModels.Models
             set
             {
                 if (incasariString != value)
-                {                  
+                {
                     incasariString = Utils.PrepareForConversion(value);
                     if (!string.IsNullOrEmpty(incasariString))
                     {
@@ -319,7 +319,7 @@ namespace CashBook.ViewModels.Models
             set
             {
                 if (platiString != value)
-                {          
+                {
                     platiString = Utils.PrepareForConversion(value);
                     if (!string.IsNullOrEmpty(platiString))
                     {
@@ -472,10 +472,10 @@ namespace CashBook.ViewModels.Models
         private void UpdateStringFields()
         {
             //NrActCasaString = DecimalConvertor.Instance.DecimalToString(NrActCasa);
-            NrAnexeString = DecimalConvertor.Instance.DecimalToString(NrAnexe);
+            NrAnexeString = NrAnexe.ToString();
             PlatiString = DecimalConvertor.Instance.DecimalToString(Plati);
             IncasariString = DecimalConvertor.Instance.DecimalToString(Incasari);
-            NrCrtString = DecimalConvertor.Instance.DecimalToString(NrCrt);
+            NrCrtString = NrCrt.ToString();
         }
     }
 }

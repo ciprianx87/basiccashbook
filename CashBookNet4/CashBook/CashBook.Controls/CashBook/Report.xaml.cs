@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using CashBook.ViewModels;
 using System.Windows.Threading;
 using CashBook.Common;
+using CashBook.Controls.Printing;
 
 namespace CashBook.Controls
 {
@@ -26,7 +27,18 @@ namespace CashBook.Controls
         {
             InitializeComponent();
             this.DataContext = new ReportsViewModel();
+            var printedPage = (grdReport.Children[0] as PrintedPage);
+            printedPage.Loaded += new RoutedEventHandler(printedPage_Loaded);
         }
+
+        void printedPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            var lstItems = (sender as PrintedPage).GetLstItems();
+            var height = lstItems.ActualHeight;
+            int maxRowsPerPage = (int)height / rowHeight;
+            (this.DataContext as ReportsViewModel).SetMaxEntriesPerPage(maxRowsPerPage);
+        }
+
         public void Dispose()
         {
             (this.DataContext as BaseViewModel).Dispose();
