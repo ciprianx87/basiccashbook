@@ -134,6 +134,30 @@ namespace CashBook.Data.Repositories
             }
         }
 
+        public decimal GetCurrentBalanceForDay(long selectedCashBookId, DateTime selectedDate, out DateTime? lastDateWithEntries)
+        {
+            using (var context = GetContext())
+            {
+                try
+                {
+                    lastDateWithEntries = null;
+                    //add 1 day to the selected date to include the current day also
+                    decimal initialBalance = GetPreviousBalance(context, Utils.DateTimeToDay(selectedDate).AddDays(1), selectedCashBookId);
+                    var lastWithEntries=context.DailyCashBooks.OrderByDescending(p => p.Data).FirstOrDefault(p => p.RegistruCasaId == selectedCashBookId);
+                    if (lastWithEntries != null)
+                    {
+                        lastDateWithEntries = lastWithEntries.Data;
+                    }
+                    return initialBalance;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Instance.LogException(ex);
+                    throw ex;
+                }
+            }
+        }
+
         private decimal GetPreviousBalance(CashBookContainer context, DateTime currentDate, long selectedCashBookId)
         {
             //get all the previous registers

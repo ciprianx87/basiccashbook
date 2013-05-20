@@ -57,7 +57,7 @@
                 </Style>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="460"/>
                 <ColumnDefinition Width="400"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -76,7 +76,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="130"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Text="Societate:" FontWeight="Bold" FontSize="14"/>

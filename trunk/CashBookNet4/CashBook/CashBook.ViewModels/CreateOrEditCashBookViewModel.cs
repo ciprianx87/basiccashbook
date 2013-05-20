@@ -461,6 +461,11 @@ namespace CashBook.ViewModels
             {
                 InitialBalance = InitialBalance;
             }
+            if (!IsNameLengthValid())
+            {
+                WindowHelper.OpenErrorDialog(string.Format("Numarul de caractere al Numelui poate fi cel mult {0}", AppSettings.CashRegistryNameCharacterLimit));
+                return false;
+            }
             return true;
         }
         public bool CanSave(object param)
@@ -492,7 +497,7 @@ namespace CashBook.ViewModels
 
         private bool IsNameLengthValid()
         {
-            return Name.Length <= AppSettings.CashRegistryNameCharacterLimit;
+            return Name != null && Name.Length <= AppSettings.CashRegistryNameCharacterLimit;
         }
 
 

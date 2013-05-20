@@ -81,6 +81,17 @@ namespace CashBook.ViewModels
                     {
                         item.InitialBalanceDateString = item.InitialBalanceDate.HasValue ? Utils.DateTimeToStringDateOnly(item.InitialBalanceDate.Value) : "";
                         item.InitialBalanceString = DecimalConvertor.Instance.DecimalToString(item.InitialBalance);
+                        DateTime? lastDateWithEntries = null;
+                        decimal currentBalanceForDay = cashBookRepository.GetCurrentBalanceForDay(item.Id, DateTime.Now, out lastDateWithEntries);
+                        item.CurrentBalanceString = DecimalConvertor.Instance.DecimalToString(currentBalanceForDay, item.CoinDecimals);
+                        if (lastDateWithEntries.HasValue)
+                        {
+                            item.LastDateTimeWithEntriesString = Utils.DateTimeToStringDateOnly(lastDateWithEntries.Value);
+                        }
+                        else
+                        {
+                            item.LastDateTimeWithEntriesString = "";
+                        }
                         CashBooks.Add(item);
                     }
                 }
