@@ -44,6 +44,7 @@
                     <Setter Property="TextAlignment" Value="Center"/>
                     <Setter Property="HorizontalAlignment" Value="Left"/>
                     <Setter Property="FontSize" Value="18"/>
+                    <Setter Property="Padding" Value="6,0,0,0"/>
                 </Style>
                 <Style TargetType="TextBox"  x:Key="StandardTextBox" >
                     <Setter Property="TextAlignment" Value="Center"/>
@@ -59,7 +60,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="240" Header="Nume">
+                <DataGridTemplateColumn Width="370" Header="Nume">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <TextBlock Text="{Binding Name}" Style="{StaticResource StandardTextBlock}"/>
@@ -94,17 +95,17 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="100" Header="Sold Initial">
+                <DataGridTemplateColumn Width="140" Header="Sold">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding InitialBalanceString}"  Style="{StaticResource StandardTextBlock}"/>
+                            <TextBlock Text="{Binding CurrentBalanceString}"  Style="{StaticResource StandardTextBlock}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="150" Header="Data Sold Initial">
+                <DataGridTemplateColumn Width="150" Header="Data sold">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding InitialBalanceDateString}"  Style="{StaticResource StandardTextBlock}"/>
+                            <TextBlock Text="{Binding LastDateTimeWithEntriesString}"  Style="{StaticResource StandardTextBlock}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

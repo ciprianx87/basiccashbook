@@ -15,6 +15,7 @@ namespace CashBook.Data.Interfaces
         void Edit(Int64 id, UserCashBook item);
         void Delete(Int64 id);
         decimal GetInitialBalanceForDay(long selectedCashBookId, DateTime SelectedDate);
-        //decimal GetBalanceInfoForDay(long selectedCashBookId, DateTime SelectedDate, out decimal initial);
+        decimal GetCurrentBalanceForDay(long selectedCashBookId, DateTime selectedDate, out DateTime? lastDateWithEntries);
+
     }
 }
