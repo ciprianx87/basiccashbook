@@ -26,7 +26,7 @@
             <Setter Property="BorderThickness" Value="0.5"/>
         </Style>
     </UserControl.Resources>
-    <Grid  Margin="35,70,65,35"  Height="680" Width="1019" VerticalAlignment="Top">
+    <Grid  Margin="35,90,65,55"  Height="640" Width="1019" VerticalAlignment="Top">
         <Grid ShowGridLines="False" x:Name="grdHeader">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
@@ -140,10 +140,11 @@
             <Border  Grid.Row="8"  Grid.Column="8"  Style="{StaticResource GrayBorder}"/>
 
 
-            <Label  Grid.Row="10"    Grid.Column="0" Grid.ColumnSpan="6" Content="{Binding PageNumber,FallbackValue='1/1'}" HorizontalContentAlignment="Left" />
-            <Label  Grid.Row="11"    Grid.Column="0" Grid.ColumnSpan="9" Content="{Binding SelectedCashBook.CashierName,FallbackValue='Ciprian Sabou'}" HorizontalContentAlignment="Left" />
-            <Label  Grid.Row="11"    Grid.Column="0" Grid.ColumnSpan="9" Content="Compartiment financiar-contabil," HorizontalContentAlignment="Right" />
-            <Label  Grid.Row="12"    Grid.Column="7" Grid.ColumnSpan="2" Content="14 -4- 7A," HorizontalContentAlignment="Right" />
+            <Label  Grid.Row="10"    Grid.Column="0" Grid.ColumnSpan="6" Content="{Binding PageNumber,FallbackValue='1/1'}" HorizontalContentAlignment="Left"   Padding="{StaticResource textPadding}" />
+            <Label  Grid.Row="11"    Grid.Column="0" Grid.ColumnSpan="9" Content="Compartiment financiar-contabil," HorizontalContentAlignment="Right"   Padding="{StaticResource textPadding}" />
+            <Label  Grid.Row="11"    Grid.Column="0" Grid.ColumnSpan="9" Content="Casier," HorizontalContentAlignment="Left"   Padding="{StaticResource textPadding}" />
+            <Label  Grid.Row="12"    Grid.Column="0" Grid.ColumnSpan="9" Content="{Binding SelectedCashBook.CashierName,FallbackValue='Ciprian Sabou'}" HorizontalContentAlignment="Left"   Padding="{StaticResource textPadding}" />
+            <Label  Grid.Row="12"    Grid.Column="7" Grid.ColumnSpan="2" Content="14 -4- 7A," HorizontalContentAlignment="Right"   Padding="{StaticResource textPadding}" />
 
             <Border  Grid.Row="10"  Grid.Column="6"  Style="{StaticResource GrayBorder}"/>
             <Border  Grid.Row="10"  Grid.Column="7"  Style="{StaticResource GrayBorder}"/>

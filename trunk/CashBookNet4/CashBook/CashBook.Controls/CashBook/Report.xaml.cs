@@ -15,6 +15,7 @@ using CashBook.ViewModels;
 using System.Windows.Threading;
 using CashBook.Common;
 using CashBook.Controls.Printing;
+using System.Printing;
 
 namespace CashBook.Controls
 {
@@ -50,6 +51,7 @@ namespace CashBook.Controls
             try
             {
                 PrintDialog dialog = new PrintDialog();
+                dialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
 
                 if (dialog.ShowDialog() != true) return;
 
