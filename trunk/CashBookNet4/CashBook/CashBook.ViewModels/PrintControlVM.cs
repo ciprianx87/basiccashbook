@@ -304,7 +304,14 @@ namespace CashBook.ViewModels
                         pagesToPrint.AddRange(returnedPages);
                     }
                 }
-                Mediator.Instance.SendMessage(MediatorActionType.StartPrinting, pagesToPrint);
+                if (pagesToPrint.Count == 0)
+                {
+                    WindowHelper.OpenInformationDialog("Nu exista rapoarte de listat");
+                }
+                else
+                {
+                    Mediator.Instance.SendMessage(MediatorActionType.StartPrinting, pagesToPrint);
+                }
             }
         }
 

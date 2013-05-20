@@ -116,7 +116,7 @@ namespace CashBook.ViewModels
 
                     if (MoneyExchangeRate.HasValue)
                     {
-                        MoneyExchangeRateString = DecimalConvertor.Instance.DecimalToString(MoneyExchangeRate.Value);
+                        MoneyExchangeRateString = DecimalConvertor.Instance.DecimalToString(MoneyExchangeRate.Value, 4);
                     }
                 }
             }
@@ -204,7 +204,7 @@ namespace CashBook.ViewModels
 
 
         public int MaxEntriesPerPage { get; set; }
-      
+
         private int currentPage = 1;
 
         //private void LoadDataForCurrentPage()
@@ -292,7 +292,7 @@ namespace CashBook.ViewModels
 
         //    return page;
         //}
-        
+
 
         #endregion
 

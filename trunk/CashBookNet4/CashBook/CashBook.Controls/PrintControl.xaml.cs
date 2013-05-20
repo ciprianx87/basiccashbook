@@ -22,6 +22,7 @@ using CashBook.Controls;
 using CashBook.Controls.Printing;
 using CashBook.Common.Mediator;
 using System.Windows.Threading;
+using System.Printing;
 
 
 namespace CashBook.Controls
@@ -131,6 +132,7 @@ namespace CashBook.Controls
             }
            // PrintedPage pp = new PrintedPage();
             PrintDialog dialog = new PrintDialog();
+            dialog.PrintTicket.PageOrientation = PageOrientation.Landscape; 
 
             if (dialog.ShowDialog() != true) return;
 
@@ -148,7 +150,7 @@ namespace CashBook.Controls
                 grdReport.UpdateLayout();
                 //grdReport.Arrange(new Rect(new Point(50, 50), grdReport.DesiredSize));
                 //grdReport.Visibility = System.Windows.Visibility.Hidden;
-
+      
                 dialog.PrintVisual(grdReport, "Raport");
             }
 

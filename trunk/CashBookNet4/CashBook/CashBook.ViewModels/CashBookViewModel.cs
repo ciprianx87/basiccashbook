@@ -48,6 +48,7 @@ namespace CashBook.ViewModels
         }
 
         List<CashBookEntryUI> InitialCashBookEntries;
+        decimal InitialMoneyExchangeRate = 0;
 
         private bool canSave = false;
         private void LoadDataForDay(DateTime dateTime)
@@ -66,7 +67,6 @@ namespace CashBook.ViewModels
             }
             CashBookEntries.Add(new CashBookEntryUI() { IsModified = false });
 
-            InitialCashBookEntries = CloneEntries(CashBookEntries.ToList());
             //CashBookEntries.CollectionChanged+=new System.Collections.Specialized.NotifyCollectionChangedEventHandler(CashBookEntries_CollectionChanged);
             var dbExchangeRate = cashBookEntryRepository.GetExchangeRateForDay(SelectedCashBook.Id, dateTime);
             MoneyExchangeRate = dbExchangeRate.HasValue ? dbExchangeRate.Value : 0;
@@ -75,7 +75,12 @@ namespace CashBook.ViewModels
             UpdateItemState();
 
             CashBookEntries.ToList().ForEach(p => p.IsFormValid());
-
+            UpdateInitialDataForComparison();
+        }
+        private void UpdateInitialDataForComparison()
+        {
+            InitialMoneyExchangeRate = MoneyExchangeRate;
+            InitialCashBookEntries = CloneEntries(CashBookEntries.ToList());
         }
         private List<CashBookEntryUI> CloneEntries(List<CashBookEntryUI> original)
         {
@@ -326,7 +331,7 @@ namespace CashBook.ViewModels
                     {
                         MoneyExchangeRate = DecimalConvertor.Instance.StringToDecimal(moneyExchangeRateString);
                     }
-                    moneyExchangeRateString = DecimalConvertor.Instance.DecimalToString(MoneyExchangeRate);
+                    moneyExchangeRateString = DecimalConvertor.Instance.DecimalToString(MoneyExchangeRate, 4);
                     this.NotifyPropertyChanged("MoneyExchangeRateString");
                 }
             }
@@ -490,7 +495,7 @@ namespace CashBook.ViewModels
                     {
                         cashBookEntryRepository.UpdateRepositoryForDay(SelectedCashBook.Id, validEntries, SelectedDate, MoneyExchangeRate);
                         CashBookEntries.ToList().ForEach(p => p.IsModified = false);
-                        InitialCashBookEntries = CloneEntries(CashBookEntries.ToList());
+                        UpdateInitialDataForComparison();
                         WindowHelper.OpenInformationDialog("Informatia a fost salvata");
                     }
                 }
@@ -717,15 +722,11 @@ namespace CashBook.ViewModels
                         }
                     }
                 }
-                //bool isModified = false;
-                //foreach (var item in CashBookEntries)
-                //{
-                //    if (item.IsModified)
-                //    {
-                //        isModified = true;
-                //    }
-                //}
-                //return isModified;
+
+            }
+            if (InitialMoneyExchangeRate != MoneyExchangeRate)
+            {
+                return true;
             }
 
             return false;
