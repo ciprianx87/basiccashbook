@@ -578,6 +578,17 @@ namespace CashBook.ViewModels
                     return false;
                 }
             }
+
+            //check if there are duplicate NrActCasa for Receivables
+            List<String> duplicates = CashBookEntries.Where(p => p.Incasari != 0).GroupBy(x => x.NrActCasa.ToLower())
+                            .Where(g => g.Count() > 1)
+                            .Select(g => g.Key)
+                            .ToList();
+            if (duplicates.Count > 0)
+            {
+                WindowHelper.OpenErrorDialog(string.Format("Nu se poate sa aveti doua acte de casa cu acelasi numar pentru incasari ({0})", duplicates[0]));
+                return false;
+            }
             return true;
         }
 
