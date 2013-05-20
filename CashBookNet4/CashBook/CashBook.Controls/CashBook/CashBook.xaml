@@ -134,10 +134,15 @@
                     <TextBox Text="{Binding MoneyExchangeRateString}" VerticalAlignment="Center"  FontSize="12"
                                Margin="10,0,0,0" Width="150" GotFocus="NumberTextBox_GotFocus" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock  Text="Sold initial:" FontWeight="Bold"/>
-                    <TextBlock  FontWeight="Bold" Margin="10,0,10,0" Text="{Binding DataContext.InitialBalanceForDayString, ElementName=root}"/>
-                </StackPanel>
+                <Grid  HorizontalAlignment="Right" Width="250">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock  Grid.Column="0" Text="Sold initial:" FontWeight="Bold" FontSize="16" Width="150"/>
+                    <TextBlock Grid.Column="1"  FontWeight="Bold" Margin="10,0,0,0" Text="{Binding DataContext.InitialBalanceForDayString, ElementName=root, FallbackValue='eroare'}" 
+                                FontSize="16" HorizontalAlignment="Right" />
+                </Grid>
                 <!--<Button Grid.Row="1" Content="Adauga Intrare noua" Command="{Binding NewRowCommand}" Width="130" HorizontalAlignment="Left" Visibility="Collapsed"/>-->
 
             </Grid>
@@ -248,15 +253,15 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid  HorizontalAlignment="Right"  Width="350">
+            <Grid  HorizontalAlignment="Right"  Width="250">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock  Grid.Row="0" Grid.Column="0" Text="Total incasari zilnice:" FontWeight="Bold" FontSize="14"/>

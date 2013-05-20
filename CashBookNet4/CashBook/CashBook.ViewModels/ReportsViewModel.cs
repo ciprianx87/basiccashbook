@@ -145,7 +145,7 @@ namespace CashBook.ViewModels
 
                     if (MoneyExchangeRate.HasValue)
                     {
-                        MoneyExchangeRateString = DecimalConvertor.Instance.DecimalToString(MoneyExchangeRate.Value);
+                        MoneyExchangeRateString = DecimalConvertor.Instance.DecimalToString(MoneyExchangeRate.Value, 4);
                     }
                 }
             }
