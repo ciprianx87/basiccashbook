@@ -45,6 +45,7 @@ namespace CashBook.ViewModels
             companyRepository = new CompanyRepository();
 
             canSave = true;
+           
         }
 
         List<CashBookEntryUI> InitialCashBookEntries;
@@ -385,6 +386,37 @@ namespace CashBook.ViewModels
         }
 
 
+        private DateTime startDate;
+        public DateTime StartDate
+        {
+            get { return startDate; }
+            set
+            {
+                if (startDate != value)
+                {
+                    startDate = value;
+                    this.NotifyPropertyChanged("StartDate");
+                }
+            }
+        }
+
+
+        private DateTime endDate;
+        public DateTime EndDate
+        {
+            get { return endDate; }
+            set
+            {
+                if (endDate != value)
+                {
+                    endDate = value;
+                    this.NotifyPropertyChanged("EndDate");
+                }
+            }
+        }
+
+
+
         #endregion
 
         #region methods
@@ -468,6 +500,11 @@ namespace CashBook.ViewModels
                 MoneyExchangeRate = 0;
             }
             Company = companyRepository.GetCompany();
+            EndDate = DateTime.Now;
+            if (SelectedCashBook.InitialBalanceDate.HasValue)
+            {
+                StartDate = SelectedCashBook.InitialBalanceDate.Value;
+            }
         }
 
         public ICommand LegalReglementationsCommand { get; set; }
