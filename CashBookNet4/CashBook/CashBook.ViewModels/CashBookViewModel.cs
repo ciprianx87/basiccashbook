@@ -599,6 +599,12 @@ namespace CashBook.ViewModels
                     WindowHelper.OpenErrorDialog("Atentie! Cursul valutar trebuie completat");
                     return false;
                 }
+                if (MoneyExchangeRate < 0)
+                {                    
+                    WindowHelper.OpenErrorDialog("Cursul valutar nu poate fi negativ");
+                    return false;
+                }
+            
             }
 
 

@@ -13,6 +13,7 @@ using CashBook.Common.Mediator;
 using CashBook.Common.Exceptions;
 using System.ComponentModel;
 using CashBook.ViewModels.Models;
+using System.Windows;
 
 namespace CashBook.ViewModels
 {
@@ -81,6 +82,13 @@ namespace CashBook.ViewModels
             {
                 name = value;
                 NotifyPropertyChanged("Name");
+                if (string.IsNullOrEmpty(name))
+                {
+                    NameErrorVisibility = Visibility.Visible;
+                }
+                else {
+                    NameErrorVisibility = Visibility.Collapsed;
+                }
             }
         }
 
@@ -162,19 +170,7 @@ namespace CashBook.ViewModels
             }
         }
 
-        //private string coinType;
-        //public string CoinType
-        //{
-        //    get { return coinType; }
-        //    set
-        //    {
-        //        coinType = value;
-        //        NotifyPropertyChanged("CoinType");
-        //    }
-        //}
-
-
-        private byte selectedDecimal;
+             private byte selectedDecimal;
         public byte SelectedDecimal
         {
             get { return selectedDecimal; }
@@ -204,20 +200,6 @@ namespace CashBook.ViewModels
         }
 
 
-        //private CashBookEntryUI cashBookEntry;
-        //public CashBookEntryUI CashBookEntry
-        //{
-        //    get { return cashBookEntry; }
-        //    set
-        //    {
-        //        if (cashBookEntry != value)
-        //        {
-        //            cashBookEntry = value;
-        //            this.NotifyPropertyChanged("CashBookEntry");
-        //        }
-        //    }
-        //}
-
         private string initialBalanceString;
         public string InitialBalanceString
         {
@@ -245,7 +227,7 @@ namespace CashBook.ViewModels
             get { return initialBalance; }
             set
             {
-                if (initialBalance != value)
+                //if (initialBalance != value)
                 {
                     initialBalance = value;
                     this.NotifyPropertyChanged("InitialBalance");
@@ -284,6 +266,20 @@ namespace CashBook.ViewModels
             }
         }
 
+
+        private Visibility nameErrorVisibility;
+        public Visibility NameErrorVisibility
+        {
+            get { return nameErrorVisibility; }
+            set
+            {
+                if (nameErrorVisibility != value)
+                {
+                    nameErrorVisibility = value;
+                    this.NotifyPropertyChanged("NameErrorVisibility");
+                }
+            }
+        }
 
         #endregion
 
@@ -338,6 +334,8 @@ namespace CashBook.ViewModels
             else
             {
                 this.Title = "Creare registru de casa";
+                Name = "";
+                InitialBalance = 0;
             }
         }
 
@@ -428,12 +426,12 @@ namespace CashBook.ViewModels
         {
             if (string.IsNullOrEmpty(Name))
             {
-                WindowHelper.OpenInformationDialog("Numele este obligatoriu!");
+                WindowHelper.OpenErrorDialog("Numele este obligatoriu!");
                 return false;
             }
             if (string.IsNullOrEmpty(SelectedCoinType))
             {
-                WindowHelper.OpenInformationDialog("Moneda este camp obligatoriu!");
+                WindowHelper.OpenErrorDialog("Moneda este camp obligatoriu!");
                 return false;
             }
             decimal convertedBalance = 0;
@@ -449,12 +447,12 @@ namespace CashBook.ViewModels
 
             if (!balanceOk)
             {
-                WindowHelper.OpenInformationDialog("Soldul initial este invalid!");
+                WindowHelper.OpenErrorDialog("Soldul initial este invalid!");
                 return false;
             }
             else if (InitialBalance < 0)
             {
-                WindowHelper.OpenInformationDialog("Soldul initial nu poate fi negativ!");
+                WindowHelper.OpenErrorDialog("Soldul initial nu poate fi negativ!");
                 return false;
             }
             else
