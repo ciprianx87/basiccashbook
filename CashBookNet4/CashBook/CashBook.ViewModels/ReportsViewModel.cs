@@ -327,10 +327,12 @@ namespace CashBook.ViewModels
                     if (item.Incasari != 0)
                     {
                         item.LeiValue = item.Incasari * MoneyExchangeRate.Value;
+                        Logger.Instance.Log.Debug(string.Format("multiplying Incasari: {0} {1} . result: {2} ", item.Incasari, MoneyExchangeRate.Value, item.LeiValue));
                     }
                     else
                     {
                         item.LeiValue = item.Plati * MoneyExchangeRate.Value;
+                        Logger.Instance.Log.Debug(string.Format("multiplying Plati: {0} {1} . result: {2} ", item.Incasari, MoneyExchangeRate.Value, item.LeiValue));
                     }
                 }
             }

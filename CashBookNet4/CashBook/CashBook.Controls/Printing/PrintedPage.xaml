@@ -192,6 +192,9 @@
                 </ListBox.Items>
             </ListBox>
         </Grid>
+        <Label  Content="DID Registru de casa" HorizontalContentAlignment="Right" VerticalAlignment="Bottom"
+                FontWeight="Light"   Padding="{StaticResource textPadding}"  BorderThickness="0" Margin="0,0,0,-25"/>
+
     </Grid>
 
 </UserControl>

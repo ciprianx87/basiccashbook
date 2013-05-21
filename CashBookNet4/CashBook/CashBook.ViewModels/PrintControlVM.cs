@@ -269,6 +269,9 @@ namespace CashBook.ViewModels
         {
             if (IsValid())
             {
+                //set the number of decimals to be used when calculating this 
+                DecimalConvertor.Instance.SetNumberOfDecimals(SelectedCashBook.CoinDecimals);
+
                 List<DateTime> datesToPrint = new List<DateTime>();
                 if (CurrentDaySelected)
                 {
@@ -295,8 +298,7 @@ namespace CashBook.ViewModels
                 //gather the data that needs to be printed
                 List<ReportPageVM> pagesToPrint = new List<ReportPageVM>();
                 foreach (var date in datesToPrint)
-                {
-
+                {                  
                     ReportPagesRetriever pagesRetriever = new ReportPagesRetriever();
                     var returnedPages = pagesRetriever.GetPages(Company, SelectedCashBook, date, cashBookRepository, cashBookEntryRepository, MaxEntriesPerPage);
                     if (returnedPages != null && returnedPages.Count > 0)
@@ -310,6 +312,21 @@ namespace CashBook.ViewModels
                 }
                 else
                 {
+                    Logger.Instance.Log.Debug(string.Format("started printing {0} pages", pagesToPrint.Count));
+                    int counter = 1;
+                    foreach (var item in pagesToPrint)
+                    {
+                        Logger.Instance.Log.Debug(string.Format("info for page {0}:", counter));
+                        if (item.CurrentPageCashBookEntries != null && item.CurrentPageCashBookEntries.Count > 0)
+                        {
+                            foreach (var cbe in item.CurrentPageCashBookEntries)
+                            {
+                                Logger.Instance.Log.Debug(string.Format("cbe info: {0} {1}, {2} {3}, {4} {5}", cbe.Incasari, cbe.IncasariString, cbe.Plati, cbe.PlatiString, cbe.LeiValue, cbe.LeiValueString));
+                            }
+                        }
+
+                        counter++;
+                    }
                     Mediator.Instance.SendMessage(MediatorActionType.StartPrinting, pagesToPrint);
                 }
             }
