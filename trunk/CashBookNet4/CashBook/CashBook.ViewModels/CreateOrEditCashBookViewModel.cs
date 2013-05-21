@@ -227,7 +227,12 @@ namespace CashBook.ViewModels
             get { return initialBalance; }
             set
             {
-                //if (initialBalance != value)
+                if (value == 0)
+                {
+                    initialBalance = 0;
+                    InitialBalanceString = "0";
+                }
+                else if (initialBalance != value)
                 {
                     initialBalance = value;
                     this.NotifyPropertyChanged("InitialBalance");
