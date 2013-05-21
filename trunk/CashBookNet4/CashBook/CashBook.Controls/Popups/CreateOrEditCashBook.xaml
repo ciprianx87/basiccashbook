@@ -45,8 +45,18 @@
         </Grid.ColumnDefinitions>
         <TextBlock Text="Creare Registru de casa:" Style="{DynamicResource TitleStyle}" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
         <TextBlock Grid.Row="1" Text="Nume:"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name, Mode=TwoWay,  ValidatesOnDataErrors=true, NotifyOnValidationError=true}"/>
-
+        <Grid  Grid.Row="1" Grid.Column="1" Margin="0,0,20,0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+        <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,  ValidatesOnDataErrors=true, NotifyOnValidationError=true}"/>
+            <TextBlock Text="!" Foreground="Red" Grid.Column="1" HorizontalAlignment="Left" Width="30" Visibility="{Binding NameErrorVisibility}">
+                <TextBlock.ToolTip>
+                    <TextBlock Text="Camp obligatoriu!"/>
+                </TextBlock.ToolTip>
+            </TextBlock>
+</Grid>
         <TextBlock Grid.Row="2" Text="Moneda:" />
         <!--<TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding CoinType,Mode=TwoWay}"/>-->
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">

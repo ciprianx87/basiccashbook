@@ -455,7 +455,15 @@ namespace CashBook.ViewModels.Models
             {
                 message += "Unul din campurile Incasari sau Plati trebuie completat" + Environment.NewLine;
             }
-
+            if (Plati < 0)
+            {
+                message += "Plati nu poate fi negativ" + Environment.NewLine;
+            }
+            if (Incasari < 0)
+            {
+                message += "Incasari nu poate fi negativ" + Environment.NewLine;
+            }
+            
             ErrorMessage = message;
             result = string.IsNullOrEmpty(message);
             if (!result)
