@@ -22,6 +22,8 @@ using System.Threading;
 using log4net.Config;
 using log4net;
 using System.Reflection;
+using Microsoft.Win32;
+using System.IO;
 
 namespace CashBook
 {
@@ -41,6 +43,8 @@ namespace CashBook
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            ConfigureFile();
+            //Configure();
             //DisableWPFTabletSupport();
             //configure log4net
             XmlConfigurator.Configure();
@@ -55,6 +59,87 @@ namespace CashBook
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ShowCashBookListScreen(CashBookListType.Any);
         }
+        private static bool checkIfKeyExists(Microsoft.Win32.RegistryKey subKey)
+        {
+            bool status = true;
+            if (subKey == null)
+            {
+                status = false;
+            }
+            return status;
+        }
+        private void ConfigureFile()
+        {
+            StreamWriter namewriter = null;
+            try
+            {
+                string fileName = System.IO.Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "userinfo.txt");
+                FileInfo fileusername = new FileInfo(fileName);
+                 namewriter = fileusername.CreateText();
+                namewriter.Write("test");
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
+            finally
+            {
+                try
+                {
+                    namewriter.Close();
+                }
+                catch { }
+            }
+        }
+        private void Configure()
+        {
+            //http://tutplusplus.blogspot.ro/2010/10/c-tutorial-create-and-delete-registry.html
+            try
+            {
+                Microsoft.Win32.RegistryKey sk =
+Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Office");
+                if (checkIfKeyExists(sk))
+                {
+                    sk =
+                    Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Office\\11.0");
+                    if (checkIfKeyExists(sk))
+                    {
+                        sk =
+                        Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Office\\11.0\\Outlook\\Options");
+                        if (!checkIfKeyExists(sk))
+                        {
+                            Microsoft.Win32.Registry.LocalMachine.CreateSubKey("Software\\Microsoft\\Office\\11.0");
+                        }
+                    }
+                }
+
+                string subKeyName = "CashBook";
+                string keyName = "InstallDate";
+                var swKey = Registry.LocalMachine.OpenSubKey("SOFTWARE", true);
+                var existingSubKey = swKey.OpenSubKey(subKeyName, true);
+                if (existingSubKey == null)
+                {
+                    var subKey = swKey.CreateSubKey(subKeyName, RegistryKeyPermissionCheck.ReadWriteSubTree);
+                }
+                existingSubKey = swKey.OpenSubKey(subKeyName, true);
+                var result = existingSubKey.GetValue(keyName, null);
+                if (result != null)
+                {
+                    existingSubKey.DeleteValue(keyName);
+                }
+                else
+                {
+                    existingSubKey.SetValue(keyName, "test1");
+                    result = existingSubKey.GetValue(keyName, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
+        }
         private void InitCulture()
         {
             CultureInfo ci = new CultureInfo("ro-RO");
@@ -68,6 +153,10 @@ namespace CashBook
             AppSettings.CashRegistryNameCharacterLimit = Properties.Settings.Default.CashRegistryNameCharacterLimit;
             AppSettings.SinglePaymentLimit = Properties.Settings.Default.SinglePaymentLimit;
             AppSettings.TotalPaymentLimit = Properties.Settings.Default.TotalPaymentLimit;
+
+            Logger.Instance.Log.Debug(string.Format("settings {0}, {1}, {2},{3}", AppSettings.InformationPopupCloseInterval,
+                AppSettings.CashRegistryNameCharacterLimit, AppSettings.SinglePaymentLimit, AppSettings.TotalPaymentLimit));
+
         }
 
         private void InitErrorHandling()
