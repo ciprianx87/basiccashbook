@@ -9,6 +9,6 @@ namespace CashBook.Controls
     public static class UIConstants
     {
         public static int Width = 800;
-        public static int Height = 500;
+        public static int Height = 500;       
     }
 }

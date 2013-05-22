@@ -31,6 +31,7 @@ namespace CashBook.Controls.Popups
         void CreateCashBook_Loaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= CreateCashBook_Loaded;
+            txtName.Focus();
         }
 
 
@@ -40,4 +41,13 @@ namespace CashBook.Controls.Popups
             (this.DataContext as BaseViewModel).Dispose();
         }
     }
+
+    //public class MyDatePicker : DatePicker
+    //{
+    //    public MyDatePicker()
+    //    {
+    //        this.BlackoutDates
+    //    }
+        
+    //}
 }

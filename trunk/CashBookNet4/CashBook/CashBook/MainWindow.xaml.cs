@@ -24,6 +24,7 @@ using log4net;
 using System.Reflection;
 using Microsoft.Win32;
 using System.IO;
+using System.Windows.Threading;
 
 namespace CashBook
 {
@@ -43,7 +44,7 @@ namespace CashBook
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            ConfigureFile();
+
             //Configure();
             //DisableWPFTabletSupport();
             //configure log4net
@@ -58,27 +59,76 @@ namespace CashBook
             PopupManager.Instance.Init();
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ShowCashBookListScreen(CashBookListType.Any);
+
+            CheckAppValidity();
         }
-        private static bool checkIfKeyExists(Microsoft.Win32.RegistryKey subKey)
+        private void CheckAppValidity()
         {
-            bool status = true;
-            if (subKey == null)
+            if (!ConfigureFile())
             {
-                status = false;
+                WindowHelper.OpenInformationDialog("Aplicatia a expirat!");
+                Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
+                Thread.Sleep(5000);
+                Exit();
+
             }
-            return status;
         }
-        private void ConfigureFile()
+
+        private bool ConfigureFile()
         {
-            StreamWriter namewriter = null;
+            StreamWriter fileWriter = null;
             try
             {
-                string fileName = System.IO.Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "userinfo.txt");
-                FileInfo fileusername = new FileInfo(fileName);
-                 namewriter = fileusername.CreateText();
-                namewriter.Write("test");
+                string fileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Constants.KeyFilename);
+                FileInfo file = new FileInfo(fileName);
+                if (file.Exists)
+                {
+                    //read current value
+                    StreamReader fs = new StreamReader(file.Open(FileMode.Open, FileAccess.Read));
+                    string[] lines = fs.ReadToEnd().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                    string installDateString = lines[0];
+                    string lastOpenedDateString = lines[1];
+                    var installDate = DateTime.ParseExact(installDateString, Constants.DateTimeFormatValability, CultureInfo.InvariantCulture);
+                    var lastOpenedDate = DateTime.ParseExact(lastOpenedDateString, Constants.DateTimeFormatValability, CultureInfo.InvariantCulture);
+                    if (lastOpenedDate > DateTime.Now)
+                    {
+                        return false;
+                    }
+                    var elapsedDays = (DateTime.Now - installDate).TotalDays;
+
+                    int remainingDays = Constants.ValabilityDays - (int)elapsedDays;
+                    if (remainingDays <= 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        Constants.RemainingDays = remainingDays;
+                        Mediator.Instance.SendMessage(MediatorActionType.SetRemainingDays, remainingDays);
+                    }
+                    //write the updated values again
+                    string currentDate = DateTime.Now.ToString(Constants.DateTimeFormatValability, CultureInfo.InvariantCulture);
+                    fs.Close();
+                    // fileWriter = file.Open(FileMode.Create, FileAccess.Write);
+                    fileWriter = new StreamWriter(file.Open(FileMode.Create, FileAccess.Write));
+                    fileWriter.WriteLine(installDateString);
+
+                    //write the last opened date
+                    fileWriter.WriteLine(currentDate);
+                }
+                else
+                {
+                    fileWriter = file.CreateText();
+                    //write the install date
+                    string currentDate = DateTime.Now.ToString(Constants.DateTimeFormatValability, CultureInfo.InvariantCulture);
+                    fileWriter.WriteLine(currentDate);
+
+                    //write the last opened date
+                    fileWriter.WriteLine(currentDate);
+                    Constants.RemainingDays = remainingDays;
+                    Mediator.Instance.SendMessage(MediatorActionType.SetRemainingDays, Constants.ValabilityDays);
+                }
+
             }
             catch (Exception ex)
             {
@@ -88,58 +138,16 @@ namespace CashBook
             {
                 try
                 {
-                    namewriter.Close();
+                    if (fileWriter != null)
+                    {
+                        fileWriter.Close();
+                    }
                 }
                 catch { }
             }
+            return true;
         }
-        private void Configure()
-        {
-            //http://tutplusplus.blogspot.ro/2010/10/c-tutorial-create-and-delete-registry.html
-            try
-            {
-                Microsoft.Win32.RegistryKey sk =
-Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Office");
-                if (checkIfKeyExists(sk))
-                {
-                    sk =
-                    Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Office\\11.0");
-                    if (checkIfKeyExists(sk))
-                    {
-                        sk =
-                        Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Office\\11.0\\Outlook\\Options");
-                        if (!checkIfKeyExists(sk))
-                        {
-                            Microsoft.Win32.Registry.LocalMachine.CreateSubKey("Software\\Microsoft\\Office\\11.0");
-                        }
-                    }
-                }
 
-                string subKeyName = "CashBook";
-                string keyName = "InstallDate";
-                var swKey = Registry.LocalMachine.OpenSubKey("SOFTWARE", true);
-                var existingSubKey = swKey.OpenSubKey(subKeyName, true);
-                if (existingSubKey == null)
-                {
-                    var subKey = swKey.CreateSubKey(subKeyName, RegistryKeyPermissionCheck.ReadWriteSubTree);
-                }
-                existingSubKey = swKey.OpenSubKey(subKeyName, true);
-                var result = existingSubKey.GetValue(keyName, null);
-                if (result != null)
-                {
-                    existingSubKey.DeleteValue(keyName);
-                }
-                else
-                {
-                    existingSubKey.SetValue(keyName, "test1");
-                    result = existingSubKey.GetValue(keyName, null);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Instance.LogException(ex);
-            }
-        }
         private void InitCulture()
         {
             CultureInfo ci = new CultureInfo("ro-RO");
@@ -281,9 +289,18 @@ Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Office");
 
         private void MenuItem_Iesire(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            Exit();
         }
-
+        private void Exit()
+        {
+            try
+            {
+                Application.Current.Shutdown();
+            }
+            catch
+            {
+            }
+        }
 
         public static void DisableWPFTabletSupport()
         {

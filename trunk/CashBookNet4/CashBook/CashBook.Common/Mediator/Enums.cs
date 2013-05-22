@@ -26,6 +26,7 @@ namespace CashBook.Common.Mediator
         YesNoPopupResponse,
         RefreshCoinTypes,
         StartPrinting,
+        SetRemainingDays,
 
     }
     public enum PopupType
