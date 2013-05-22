@@ -45,7 +45,7 @@ namespace CashBook.ViewModels
             companyRepository = new CompanyRepository();
 
             canSave = true;
-           
+
         }
 
         List<CashBookEntryUI> InitialCashBookEntries;
@@ -566,11 +566,14 @@ namespace CashBook.ViewModels
             }
             if (CurrentBalanceOut > AppSettings.TotalPaymentLimit)
             {
+                Logger.Instance.Log.Debug(string.Format("CurrentBalanceOut  {0} > {1}", CurrentBalanceOut, AppSettings.TotalPaymentLimit));
                 WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
                 //return false;
             }
             if (CashBookEntries.Any(p => p.Plati > AppSettings.SinglePaymentLimit))
             {
+                var count = CashBookEntries.Count(p => p.Plati > AppSettings.SinglePaymentLimit);
+                Logger.Instance.Log.Debug(string.Format("CashBookEntries contains {0} entries with Plati > {1}", count, AppSettings.SinglePaymentLimit));
                 WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
                 // return false;
             }
@@ -600,11 +603,11 @@ namespace CashBook.ViewModels
                     return false;
                 }
                 if (MoneyExchangeRate < 0)
-                {                    
+                {
                     WindowHelper.OpenErrorDialog("Cursul valutar nu poate fi negativ");
                     return false;
                 }
-            
+
             }
 
 

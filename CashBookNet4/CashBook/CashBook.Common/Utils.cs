@@ -26,7 +26,7 @@ namespace CashBook.Common
 
         public static string DateTimeToString(DateTime date)
         {
-            return date.ToString("yyyy-MM-dd hh:mm:ss");
+            return date.ToString(Constants.DateTimeFormat);
         }
 
         public static string DateTimeToStringDateOnly(DateTime date)

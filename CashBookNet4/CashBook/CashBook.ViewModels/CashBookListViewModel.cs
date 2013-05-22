@@ -33,8 +33,10 @@ namespace CashBook.ViewModels
 
             Mediator.Instance.Register(MediatorActionType.SetCashBookListType, SetCashBookListType);
             Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
+            Mediator.Instance.Register(MediatorActionType.SetRemainingDays, SetRemainingDays);
 
             cashBookRepository = new CashBookRepository();
+            RemainingDays = Constants.RemainingDays;
         }
 
         #region properties
@@ -47,6 +49,21 @@ namespace CashBook.ViewModels
             {
                 cashBooks = value;
                 NotifyPropertyChanged("CashBooks");
+            }
+        }
+
+
+        private int remainingDays;
+        public int RemainingDays
+        {
+            get { return remainingDays; }
+            set
+            {
+                if (remainingDays != value)
+                {
+                    remainingDays = value;
+                    this.NotifyPropertyChanged("RemainingDays");
+                }
             }
         }
 
@@ -63,6 +80,10 @@ namespace CashBook.ViewModels
             }
         }
 
+        public void SetRemainingDays(object param)
+        {
+            RemainingDays = (int)param;
+        }
         public void RefreshList(object param)
         {
             LoadData();
@@ -192,6 +213,7 @@ namespace CashBook.ViewModels
         {
             Mediator.Instance.Unregister(MediatorActionType.RefreshList, RefreshList);
             Mediator.Instance.Unregister(MediatorActionType.SetCashBookListType, SetCashBookListType);
+            Mediator.Instance.Unregister(MediatorActionType.SetRemainingDays, SetRemainingDays);
             base.Dispose();
         }
 
