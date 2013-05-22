@@ -17,6 +17,7 @@ namespace CashBook
 
         public App()
         {
+            this.ShutdownMode = System.Windows.ShutdownMode.OnMainWindowClose;
             this.DispatcherUnhandledException += new System.Windows.Threading.DispatcherUnhandledExceptionEventHandler(App_DispatcherUnhandledException);
 
         }

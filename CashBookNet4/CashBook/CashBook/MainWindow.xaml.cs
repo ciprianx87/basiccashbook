@@ -49,9 +49,6 @@ namespace CashBook
             //DisableWPFTabletSupport();
             //configure log4net
             XmlConfigurator.Configure();
-            //log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-            //log.Debug("test");
-            //log.Error("test");
             Logger.Instance.Log.Debug("application start");
 
             InitCulture();
@@ -66,7 +63,7 @@ namespace CashBook
         {
             if (!ConfigureFile())
             {
-                WindowHelper.OpenInformationDialog("Aplicatia a expirat!");
+                WindowHelper.OpenInformationDialog("Perioada de valabilitate a aplicatiei a expirat!");
                 Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
                 Thread.Sleep(5000);
                 Exit();
@@ -125,7 +122,7 @@ namespace CashBook
 
                     //write the last opened date
                     fileWriter.WriteLine(currentDate);
-                    Constants.RemainingDays = remainingDays;
+                    Constants.RemainingDays = Constants.ValabilityDays;
                     Mediator.Instance.SendMessage(MediatorActionType.SetRemainingDays, Constants.ValabilityDays);
                 }
 
