@@ -136,7 +136,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="CashBook_TemporaryKey.pfx" />
-    <Content Include="Database\CashBookEmpty.sdf" />
+    <Resource Include="Database\CashBookEmpty.sdf" />
     <Content Include="sqlceca35.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -223,7 +223,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Database\CashBook.sdf" />
+    <Resource Include="Database\CashBook.sdf" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
