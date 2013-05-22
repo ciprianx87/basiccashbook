@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashBook", "CashBook\CashBook.csproj", "{EC452B8C-75C5-48FD-900B-C6F04949CBF9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashBook.Common", "CashBook.Common\CashBook.Common.csproj", "{1C683AE9-2318-4693-B048-55EF3B64A37B}"
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashBook.Data.Model", "CashBook.Data.Model\CashBook.Data.Model.csproj", "{5C77ACAD-62CE-4019-B630-7F792E6EAD44}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashBook.ViewModels", "CashBook.ViewModels\CashBook.ViewModels.csproj", "{598E5A95-BD21-4721-B3D8-EE9E7E1C74D5}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CashBook.Setup", "CashBook.Setup\CashBook.Setup.vdproj", "{2ACEA8D0-E6E7-496A-9D95-7404E308D8E9}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -87,6 +89,12 @@ Global
 		{598E5A95-BD21-4721-B3D8-EE9E7E1C74D5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{598E5A95-BD21-4721-B3D8-EE9E7E1C74D5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{598E5A95-BD21-4721-B3D8-EE9E7E1C74D5}.Release|x86.ActiveCfg = Release|Any CPU
+		{2ACEA8D0-E6E7-496A-9D95-7404E308D8E9}.Debug|Any CPU.ActiveCfg = Debug
+		{2ACEA8D0-E6E7-496A-9D95-7404E308D8E9}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{2ACEA8D0-E6E7-496A-9D95-7404E308D8E9}.Debug|x86.ActiveCfg = Debug
+		{2ACEA8D0-E6E7-496A-9D95-7404E308D8E9}.Release|Any CPU.ActiveCfg = Release
+		{2ACEA8D0-E6E7-496A-9D95-7404E308D8E9}.Release|Mixed Platforms.ActiveCfg = Release
+		{2ACEA8D0-E6E7-496A-9D95-7404E308D8E9}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
