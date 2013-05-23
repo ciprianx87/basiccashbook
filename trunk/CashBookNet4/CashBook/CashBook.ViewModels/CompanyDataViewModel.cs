@@ -9,10 +9,11 @@ using System.Windows.Input;
 using CashBook.Common.Mediator;
 using CashBook.Common;
 using CashBook.Common.Exceptions;
+using System.ComponentModel;
 
 namespace CashBook.ViewModels
 {
-    public class CompanyDataViewModel : BaseViewModel
+    public class CompanyDataViewModel : BaseViewModel, IDataErrorInfo
     {
         ICompanyRepository companyRepository;
 
@@ -64,6 +65,42 @@ namespace CashBook.ViewModels
         #endregion
 
         #region methods
+        public string Error
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string result = null;
+                switch (columnName)
+                {
+                    case "CompanyName":
+                        if (string.IsNullOrEmpty(CompanyName))
+                        {
+                            result = "Camp obligatoriu";
+                        }
+                        break;
+                    case "CompanyAddress":
+                        if (string.IsNullOrEmpty(CompanyAddress))
+                        {
+                            result = "Camp obligatoriu";
+                        }
+                        break;
+                    case "CompanyCui":
+                        if (string.IsNullOrEmpty(CompanyCui))
+                        {
+                            result = "Camp obligatoriu";
+                        }
+                        break;
+                }
+
+                return result;
+            }
+        }
+
         private void LoadData()
         {
             try
@@ -93,14 +130,25 @@ namespace CashBook.ViewModels
         {
             try
             {
-                companyRepository.EditDetails(CompanyName, CompanyCui, CompanyAddress);
-                WindowHelper.OpenInformationDialog("Informatia a fost salvata");
+                if (IsValid())
+                {
+                    companyRepository.EditDetails(CompanyName, CompanyCui, CompanyAddress);
+                    WindowHelper.OpenInformationDialog("Informatia a fost salvata");
+                }
+                else
+                {
+                    WindowHelper.OpenErrorDialog("Va rugam completati toate campurile");
+                }
             }
             catch (Exception ex)
             {
                 Logger.Instance.LogException(ex);
                 WindowHelper.OpenErrorDialog("Eroare la salvarea informatiei");
             }
+        }
+        private bool IsValid()
+        {
+            return !string.IsNullOrEmpty(CompanyAddress) && !string.IsNullOrEmpty(CompanyCui) && !string.IsNullOrEmpty(CompanyName);
         }
 
         public bool CanSave(object param)
