@@ -440,6 +440,7 @@ namespace CashBook.ViewModels
 
         public override void Dispose()
         {
+            Mediator.Instance.Unregister(MediatorActionType.SetSelectedDate, SetSelectedDate);
             base.Dispose();
         }
 

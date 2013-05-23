@@ -264,9 +264,10 @@ namespace CashBook.ViewModels
         {
             return true;
         }
-
+        bool isPreview = false;
         private void Print(object parameter)
         {
+            isPreview = parameter.ToString() == "preview";
             if (IsValid())
             {
                 //set the number of decimals to be used when calculating this 
@@ -298,7 +299,7 @@ namespace CashBook.ViewModels
                 //gather the data that needs to be printed
                 List<ReportPageVM> pagesToPrint = new List<ReportPageVM>();
                 foreach (var date in datesToPrint)
-                {                  
+                {
                     ReportPagesRetriever pagesRetriever = new ReportPagesRetriever();
                     var returnedPages = pagesRetriever.GetPages(Company, SelectedCashBook, date, cashBookRepository, cashBookEntryRepository, MaxEntriesPerPage);
                     if (returnedPages != null && returnedPages.Count > 0)
@@ -308,7 +309,14 @@ namespace CashBook.ViewModels
                 }
                 if (pagesToPrint.Count == 0)
                 {
-                    WindowHelper.OpenInformationDialog("Nu exista rapoarte de listat");
+                    if (isPreview)
+                    {
+                        WindowHelper.OpenInformationDialog("Nu exista rapoarte de previzualizat");
+                    }
+                    else
+                    {
+                        WindowHelper.OpenInformationDialog("Nu exista rapoarte de listat");
+                    }
                 }
                 else
                 {
@@ -327,13 +335,27 @@ namespace CashBook.ViewModels
 
                         counter++;
                     }
-                    Mediator.Instance.SendMessage(MediatorActionType.StartPrinting, pagesToPrint);
+                    if (isPreview)
+                    {
+                        Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.PrintPreview);
+                        Mediator.Instance.SendMessage(MediatorActionType.SetReportsToPreview, pagesToPrint);
+
+                    }
+                    else
+                    {
+                        Mediator.Instance.SendMessage(MediatorActionType.StartPrinting, pagesToPrint);
+                    }
                 }
             }
         }
 
         private bool IsValid()
         {
+            if (SelectedCashBook == null)
+            {
+                WindowHelper.OpenErrorDialog("Nu ati definit nici un registru de casa");
+                return false;
+            }
             if (OtherPeriodSelected)
             {
                 if (SelectedStartDate > SelectedEndDate)

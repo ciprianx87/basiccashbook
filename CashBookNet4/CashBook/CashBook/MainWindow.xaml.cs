@@ -228,6 +228,9 @@ namespace CashBook
                 case ContentTypes.PrintControl:
                     contentControl.Content = new CashBook.Controls.PrintControl();
                     break;
+                case ContentTypes.PrintPreview:
+                    contentControl.Content = new CashBook.Controls.Printing.PrintPreview();
+                    break;
                 default:
                     MessageBox.Show("invalid contentType: " + type);
                     break;
