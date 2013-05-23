@@ -55,6 +55,7 @@
     <Compile Include="CompanyDataViewModel.cs" />
     <Compile Include="CashBookListViewModel.cs" />
     <Compile Include="CashBookViewModel.cs" />
+    <Compile Include="PrintPreviewVM.cs" />
     <Compile Include="CrudCoinTypesVM.cs" />
     <Compile Include="ReportPageVM.cs" />
     <Compile Include="Utils\ReportPagesRetriever.cs" />

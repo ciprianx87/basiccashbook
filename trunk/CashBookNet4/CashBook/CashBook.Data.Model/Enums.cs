@@ -14,7 +14,8 @@ namespace CashBook.Data.Model
         LegalReglementations,
         CashBookList,
         Reports,
-        PrintControl
+        PrintControl,
+        PrintPreview
     }
 
     public enum CashBookListType
