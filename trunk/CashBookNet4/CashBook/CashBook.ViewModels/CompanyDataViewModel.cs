@@ -117,7 +117,6 @@ namespace CashBook.ViewModels
             catch (CompanyNotFoundException ce)
             {
                 //do not show the error when loading data
-                //WindowHelper.OpenErrorDialog("Va rugam completati datele despre companie");
             }
             catch (Exception ex)
             {

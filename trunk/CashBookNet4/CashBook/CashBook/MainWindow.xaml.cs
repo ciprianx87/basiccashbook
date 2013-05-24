@@ -63,7 +63,7 @@ namespace CashBook
         {
             if (!ConfigureFile())
             {
-                WindowHelper.OpenInformationDialog("Perioada de valabilitate a aplicatiei a expirat!");
+                WindowHelper.OpenInformationDialog("Perioada de valabilitate a aplicatiei a expirat. Va rugam contactati furnizorul!");
                 Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
                 Thread.Sleep(5000);
                 Exit();

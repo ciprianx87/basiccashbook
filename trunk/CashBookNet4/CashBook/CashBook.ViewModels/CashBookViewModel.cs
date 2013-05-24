@@ -465,11 +465,6 @@ namespace CashBook.ViewModels
                 totalSum += initialBalanceForDayDecimal;
             }
             TotalBalance = totalSum;
-
-            //if (CurrentBalanceOut > AppSettings.TotalPaymentLimit)
-            //{
-            //    WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
-            //}
         }
 
         public void SetSelectedCashBook(object param)
@@ -567,14 +562,14 @@ namespace CashBook.ViewModels
             if (CurrentBalanceOut > AppSettings.TotalPaymentLimit)
             {
                 Logger.Instance.Log.Debug(string.Format("CurrentBalanceOut  {0} > {1}", CurrentBalanceOut, AppSettings.TotalPaymentLimit));
-                WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
+                WindowHelper.OpenPaymentInformationDialog(Messages.LegalReglementationsNotifications);
                 //return false;
             }
             if (CashBookEntries.Any(p => p.Plati > AppSettings.SinglePaymentLimit))
             {
                 var count = CashBookEntries.Count(p => p.Plati > AppSettings.SinglePaymentLimit);
                 Logger.Instance.Log.Debug(string.Format("CashBookEntries contains {0} entries with Plati > {1}", count, AppSettings.SinglePaymentLimit));
-                WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
+                WindowHelper.OpenPaymentInformationDialog(Messages.LegalReglementationsNotifications);
                 // return false;
             }
 
@@ -700,7 +695,7 @@ namespace CashBook.ViewModels
             catch (Exception ex)
             {
                 Logger.Instance.LogException(ex);
-                WindowHelper.OpenErrorDialog("Registrul nu a putut fi sters");
+                WindowHelper.OpenErrorDialog(Messages.CannotDeleteCashBook);
             }
         }
 
@@ -752,7 +747,7 @@ namespace CashBook.ViewModels
             catch (Exception ex)
             {
                 Logger.Instance.LogException(ex);
-                WindowHelper.OpenErrorDialog("Registrul nu a putut fi sters");
+                WindowHelper.OpenErrorDialog(Messages.GenericError);
             }
         }
 
