@@ -374,7 +374,15 @@ namespace CashBook.ViewModels
         public int MaxEntriesPerPage { get; set; }
         public void SetMaxEntriesPerPage(int maxEntries)
         {
-            MaxEntriesPerPage = maxEntries;
+            if (SelectedCashBook.IsLei)
+            {
+                MaxEntriesPerPage = 21;
+            }
+            else
+            {
+                MaxEntriesPerPage = 18;
+            }
+            //MaxEntriesPerPage = maxEntries;
             LoadDataForCurrentPage();
 
         }
