@@ -35,6 +35,7 @@ namespace CashBook.ViewModels
         {
             InitializeCommands();
             Mediator.Instance.Register(MediatorActionType.SetPaymentInformationPopupMessage, SetPaymentInformationPopupMessage);
+            Mediator.Instance.Register(MediatorActionType.SetPrintControlPrintModel, SetPrintControlPrintModel);
             this.Title = "Informatie";
 
             cashBookRepository = new CashBookRepository();
@@ -340,7 +341,15 @@ namespace CashBook.ViewModels
                     {
                         Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.PrintPreview);
                         Mediator.Instance.SendMessage(MediatorActionType.SetReportsToPreview, pagesToPrint);
-
+                        Mediator.Instance.SendMessage(MediatorActionType.SetPrintPreviewPrintModel, new PrintModel()
+                        {
+                            CurrentDaySelected = CurrentDateSelected,
+                            CurrentMonthSelected = CurrentMonthSelected,
+                            EndDate = SelectedEndDate,
+                            OtherPeriodSelected = OtherPeriodSelected,
+                            StartDate = SelectedStartDate,
+                            SelectedCashBook = SelectedCashBook
+                        });
                     }
                     else
                     {
@@ -373,7 +382,7 @@ namespace CashBook.ViewModels
         public void SetMaxEntriesPerPage(int maxEntries)
         {
             UpdateMaxEntriesPerPage();
-           // MaxEntriesPerPage = maxEntries;
+            // MaxEntriesPerPage = maxEntries;
             //LoadDataForCurrentPage();
 
         }
@@ -400,6 +409,20 @@ namespace CashBook.ViewModels
             Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.LegalReglementations);
             Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
         }
+
+        public void SetPrintControlPrintModel(object param)
+        {
+            PrintModel pm = param as PrintModel;
+            if (pm != null)
+            {
+                CurrentDateSelected = pm.CurrentDaySelected;
+                CurrentMonthSelected = pm.CurrentMonthSelected;
+                SelectedEndDate = pm.EndDate;
+                OtherPeriodSelected = pm.OtherPeriodSelected;
+                SelectedStartDate = pm.StartDate;
+                SelectedCashBook = CashBooks.First(p=>p.Id== pm.SelectedCashBook.Id);
+            }
+        }
         public void SetPaymentInformationPopupMessage(object param)
         {
             this.Message = param.ToString();
@@ -421,9 +444,10 @@ namespace CashBook.ViewModels
 
         #region IDisposable Members
 
-        public void Dispose()
+        public override void Dispose()
         {
             Mediator.Instance.Unregister(MediatorActionType.SetPaymentInformationPopupMessage, SetPaymentInformationPopupMessage);
+            Mediator.Instance.Unregister(MediatorActionType.SetPrintControlPrintModel, SetPrintControlPrintModel);
         }
 
         #endregion

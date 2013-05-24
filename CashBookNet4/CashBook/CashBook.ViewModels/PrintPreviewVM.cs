@@ -35,6 +35,7 @@ namespace CashBook.ViewModels
         {
             this.Title = "Previzualizare Rapoarte";
             Mediator.Instance.Register(MediatorActionType.SetReportsToPreview, SetReportsToPreview);
+            Mediator.Instance.Register(MediatorActionType.SetPrintPreviewPrintModel, SetPrintPreviewPrintModel);
 
 
             cashBookRepository = new CashBookRepository();
@@ -113,6 +114,12 @@ namespace CashBook.ViewModels
         #endregion
 
         #region methods
+        public PrintModel PrintModel { get; set; }
+        public void SetPrintPreviewPrintModel(object param)
+        {
+            PrintModel = param as PrintModel;
+        }
+
         public void SetReportsToPreview(object param)
         {
             Reports = param as List<ReportPageVM>;
@@ -126,6 +133,8 @@ namespace CashBook.ViewModels
 
         private void Back(object parameter)
         {
+            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.PrintControl);
+            Mediator.Instance.SendMessage(MediatorActionType.SetPrintControlPrintModel, PrintModel);
             //Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.CashBook);
             //Mediator.Instance.SendMessage(MediatorActionType.SetSelectedCashBook, new CashBookDisplayInfo() { SelectedCashbook = SelectedCashBook, SelectedDate = SelectedDate });
         }
@@ -180,6 +189,7 @@ namespace CashBook.ViewModels
         public override void Dispose()
         {
             Mediator.Instance.Unregister(MediatorActionType.SetReportsToPreview, SetReportsToPreview);
+            Mediator.Instance.Unregister(MediatorActionType.SetPrintPreviewPrintModel, SetPrintPreviewPrintModel);
             base.Dispose();
         }
 

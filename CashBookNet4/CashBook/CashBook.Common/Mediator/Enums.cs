@@ -28,6 +28,8 @@ namespace CashBook.Common.Mediator
         StartPrinting,
         SetRemainingDays,
         SetReportsToPreview,
+        SetPrintPreviewPrintModel,
+        SetPrintControlPrintModel,
 
     }
     public enum PopupType
