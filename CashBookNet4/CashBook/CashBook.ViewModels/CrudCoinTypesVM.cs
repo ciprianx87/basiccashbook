@@ -188,7 +188,7 @@ namespace CashBook.ViewModels
             {
                 if (string.IsNullOrEmpty(item.CoinTypeName))
                 {
-                    WindowHelper.OpenErrorDialog("Nu se poate sa aveti o moneda fara nume");
+                    WindowHelper.OpenErrorDialog("Introduceti nume moneda!");
                     return false;
                 }
             }
@@ -198,7 +198,7 @@ namespace CashBook.ViewModels
                              .ToList();
             if (duplicates.Count > 0)
             {
-                WindowHelper.OpenErrorDialog("Nu se poate sa aveti doua monezi cu acelasi nume");
+                WindowHelper.OpenErrorDialog("Exista moneda cu acelasi nume!");
                 return false;
             }
 

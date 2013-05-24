@@ -422,13 +422,7 @@ namespace CashBook.ViewModels.Models
 
         public bool IsFormValid()
         {
-            //if (Plati > AppSettings.SinglePaymentLimit)
-            //{
-            //    WindowHelper.OpenPaymentInformationDialog("Va rugam sa cititi Reglementarile legale legate de valoarea platilor. \r\nDoriti sa le cititi acum?");
-            //    return false;
-            //}
             return IsValid();
-            //return !(IsEmpty(NrActCasa, Explicatii) || ((Plati == 0 && Incasari == 0) || (Plati != 0 && Incasari != 0)));
         }
 
         public bool IsValid()

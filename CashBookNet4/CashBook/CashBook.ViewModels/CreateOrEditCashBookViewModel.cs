@@ -418,7 +418,7 @@ namespace CashBook.ViewModels
             }
             catch (CompanyNotFoundException ce)
             {
-                WindowHelper.OpenErrorDialog("Va rugam completati datele despre companie");
+                WindowHelper.OpenErrorDialog("Datele despre companie trebuie completate!");
             }
             catch (Exception ex)
             {
