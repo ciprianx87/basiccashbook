@@ -267,6 +267,7 @@ namespace CashBook.ViewModels
         bool isPreview = false;
         private void Print(object parameter)
         {
+            UpdateMaxEntriesPerPage();
             isPreview = parameter.ToString() == "preview";
             if (IsValid())
             {
@@ -371,9 +372,22 @@ namespace CashBook.ViewModels
 
         public void SetMaxEntriesPerPage(int maxEntries)
         {
-            MaxEntriesPerPage = maxEntries;
+            UpdateMaxEntriesPerPage();
+           // MaxEntriesPerPage = maxEntries;
             //LoadDataForCurrentPage();
 
+        }
+        //hardcode this for fixed sizes
+        private void UpdateMaxEntriesPerPage()
+        {
+            if (SelectedCashBook.IsLei)
+            {
+                MaxEntriesPerPage = 21;
+            }
+            else
+            {
+                MaxEntriesPerPage = 18;
+            }
         }
 
         private bool CanOK(object parameter)

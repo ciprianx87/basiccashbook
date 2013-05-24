@@ -30,6 +30,7 @@ namespace CashBook.Controls
             this.DataContext = new ReportsViewModel();
             var printedPage = (grdReport.Children[0] as PrintedPage);
             printedPage.Loaded += new RoutedEventHandler(printedPage_Loaded);
+            //pp.load
         }
 
         void printedPage_Loaded(object sender, RoutedEventArgs e)
@@ -68,6 +69,11 @@ namespace CashBook.Controls
             }
         }
         private const int rowHeight = 20;
+
+        private void PrintedPage_Loaded_1(object sender, RoutedEventArgs e)
+        {
+
+        }
        
     }
 }

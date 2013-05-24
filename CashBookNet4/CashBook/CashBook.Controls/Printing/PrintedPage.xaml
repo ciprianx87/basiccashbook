@@ -7,7 +7,7 @@
             >
     <UserControl.Resources>
         <Thickness x:Key="textPadding" Top="0" Bottom="0" Left="6" Right="6"/>
-        <Visibility x:Key="testVisibility">Visible</Visibility>
+        <Visibility x:Key="testVisibility">Collapsed</Visibility>
         <Style TargetType="Label" >
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="0.5"/>
@@ -159,7 +159,7 @@
             <Border  Grid.Row="12"  Grid.Column="6"  Style="{StaticResource GrayBorder}"/>
             <ListBox x:Name="lstItems" Grid.Row="9" Grid.ColumnSpan="11" Margin="0,0,0,0" Background="Transparent" BorderThickness="0"
                   ItemsSource="{Binding CurrentPageCashBookEntries}" Loaded="lstItems_Loaded"
-                 HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Padding="0" Width="1019">
+                 HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" Padding="0" Width="1019" VerticalAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid HorizontalAlignment="Stretch" Height="20" Margin="0">
@@ -188,7 +188,27 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
                 <ListBox.Items>
-
+                    <!--<ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">10</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">a</ListBoxItem>
+                    <ListBoxItem Height="20">18</ListBoxItem>
+                    <ListBoxItem Height="20">19</ListBoxItem>
+                    <ListBoxItem Height="20">20</ListBoxItem>
+                    <ListBoxItem Height="20">21</ListBoxItem>-->
                 </ListBox.Items>
             </ListBox>
         </Grid>

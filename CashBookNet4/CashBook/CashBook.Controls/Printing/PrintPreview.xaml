@@ -33,10 +33,10 @@
         <!--<ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Visible"  >-->
         <Viewbox Grid.Row="1">
             <Border BorderThickness="2" Margin="2" BorderBrush="Black">
-                <Grid Height="827" Width="1169">
+                <Grid Height="785" Width="1169">
                     <Border BorderThickness="2" Background="Transparent">
-                        <Grid x:Name="grdReport">
-                            <contr:PrintedPage DataContext="{Binding ReportToPreview}" Height="785" />
+                        <Grid x:Name="grdReport" Height="785">
+                            <contr:PrintedPage DataContext="{Binding ReportToPreview}" />
                         </Grid>
                     </Border>
                 </Grid>
