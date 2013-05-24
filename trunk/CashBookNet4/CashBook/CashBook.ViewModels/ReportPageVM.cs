@@ -298,7 +298,7 @@ namespace CashBook.ViewModels
 
         #region IDisposable Members
 
-        public void Dispose()
+        public override void Dispose()
         {
             //Mediator.Instance.Unregister(MediatorActionType.SetInformationPopupMessage, SetInformationPopupMessage);
         }
