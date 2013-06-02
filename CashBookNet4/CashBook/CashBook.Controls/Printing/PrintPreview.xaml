@@ -27,7 +27,7 @@
             <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center"  Visibility="Collapsed" >
                 <Label Content="Perioada:" BorderThickness="0" />
             </StackPanel>
-            <Button Content="Listare" Click="Button_Click" Height="30" Width="70" HorizontalAlignment="Right"/>
+            <Button Content="Listare" Click="Button_Click" Height="30" Width="70" HorizontalAlignment="Right" Visibility="Collapsed"/>
             <Button Content="Inapoi" Command="{Binding BackCommand}" Height="30" Width="70" HorizontalAlignment="Left"/>
         </Grid>
         <!--<ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Visible"  >-->

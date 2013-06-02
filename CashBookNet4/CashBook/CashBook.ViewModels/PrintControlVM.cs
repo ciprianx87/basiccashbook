@@ -389,13 +389,16 @@ namespace CashBook.ViewModels
         //hardcode this for fixed sizes
         private void UpdateMaxEntriesPerPage()
         {
-            if (SelectedCashBook.IsLei)
+            if (SelectedCashBook != null)
             {
-                MaxEntriesPerPage = 21;
-            }
-            else
-            {
-                MaxEntriesPerPage = 18;
+                if (SelectedCashBook.IsLei)
+                {
+                    MaxEntriesPerPage = 21;
+                }
+                else
+                {
+                    MaxEntriesPerPage = 18;
+                }
             }
         }
 

@@ -111,7 +111,11 @@ namespace CashBook.ViewModels
                         }
                         else
                         {
-                            item.LastDateTimeWithEntriesString = "";
+                            if (item.InitialBalanceDate.HasValue)
+                            {
+                                item.LastDateTimeWithEntriesString = Utils.DateTimeToStringDateOnly(item.InitialBalanceDate.Value);
+                                //item.LastDateTimeWithEntriesString = "";
+                            }
                         }
                         CashBooks.Add(item);
                     }
