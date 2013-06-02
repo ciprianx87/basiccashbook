@@ -13,6 +13,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CashBook.ViewModels;
 using System.ComponentModel;
+using CashBook.Common;
+using System.Printing;
 
 namespace CashBook.Controls.Printing
 {
@@ -31,6 +33,28 @@ namespace CashBook.Controls.Printing
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Print_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                PrintDialog dialog = new PrintDialog();
+                dialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
+
+                if (dialog.ShowDialog() != true) return;
+
+                grdReport.Measure(new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight));
+                //grdReport.Arrange(new Rect(new Point(0, 0), grdReport.DesiredSize));
+
+                dialog.PrintVisual(grdReport, "Raport");
+                //827*1169
+                //Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
         }
 
         public void Dispose()
