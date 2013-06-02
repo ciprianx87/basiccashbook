@@ -45,6 +45,7 @@ namespace CashBook.ViewModels
             this.NextPageCommand = new DelegateCommand(NextPage, CanNextPage);
             this.PreviousPageCommand = new DelegateCommand(PreviousPage, CanPreviousPage);
             this.BackCommand = new DelegateCommand(Back, CanBack);
+            this.PrintCommand = new DelegateCommand(Print, CanPrint); 
         }
 
         #region properties
@@ -165,6 +166,20 @@ namespace CashBook.ViewModels
             LoadDataForCurrentPage();
 
         }
+
+
+        public ICommand PrintCommand { get; set; }
+
+        private bool CanPrint(object parameter)
+        {
+            return true;
+        }
+
+        private void Print(object parameter)
+        {
+
+        } 
+
 
         public int MaxEntriesPerPage { get; set; }
         public void SetMaxEntriesPerPage(int maxEntries)

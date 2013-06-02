@@ -36,7 +36,7 @@ namespace CashBook.ViewModels
             InitializeCommands();
             Mediator.Instance.Register(MediatorActionType.SetPaymentInformationPopupMessage, SetPaymentInformationPopupMessage);
             Mediator.Instance.Register(MediatorActionType.SetPrintControlPrintModel, SetPrintControlPrintModel);
-            this.Title = "Informatie";
+            this.Title = "Rapoarte";
 
             cashBookRepository = new CashBookRepository();
             cashBookEntryRepository = new CashBookEntryRepository();
