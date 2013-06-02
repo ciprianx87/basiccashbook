@@ -44,7 +44,7 @@ namespace CashBook
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-
+            //var x = SystemParameters.VirtualScreenWidth;
             //Configure();
             //DisableWPFTabletSupport();
             //configure log4net
