@@ -30,6 +30,7 @@ namespace CashBook.Common.Mediator
         SetReportsToPreview,
         SetPrintPreviewPrintModel,
         SetPrintControlPrintModel,
+        CloseInformationPopup,
 
     }
     public enum PopupType
@@ -42,6 +43,7 @@ namespace CashBook.Common.Mediator
         ErrorDialog,
         PaymentInformation,
         YesNoDialog,
-        CrudCoinTypes
+        CrudCoinTypes,
+        InformationModal
     }
 }

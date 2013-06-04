@@ -51,8 +51,11 @@ namespace CashBook.Controls.Popups
                     case PopupType.DeleteDialog:
                         popup = new DeleteDialog();
                         break;
+                    case PopupType.InformationModal:
+                        popup = new InformationPopup(true);
+                        break;
                     case PopupType.Information:
-                        popup = new InformationPopup();
+                        popup = new InformationPopup(false);
                         break;
                     case PopupType.ErrorDialog:
                         popup = new ErrorDialog();

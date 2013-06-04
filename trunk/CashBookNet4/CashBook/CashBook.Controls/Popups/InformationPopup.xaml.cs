@@ -19,11 +19,11 @@ namespace CashBook.Controls.Popups
     /// </summary>
     public partial class InformationPopup : Window
     {
-        public InformationPopup()
+        public InformationPopup(bool modal)
         {
             InitializeComponent();
             this.Loaded += Window_Loaded;
-            this.DataContext = new InformationDialogVM();
+            this.DataContext = new InformationDialogVM(modal);
         }
 
         void Window_Loaded(object sender, RoutedEventArgs e)

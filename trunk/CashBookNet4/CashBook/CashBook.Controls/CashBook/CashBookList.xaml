@@ -4,147 +4,150 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:constants="clr-namespace:CashBook.Controls"
+            xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}"
              >
     <UserControl.Resources>
         <!--<ResourceDictionary Source="/CashBook.Controls;component/CashBookStyles.xaml"/>-->
     </UserControl.Resources>
-    <Grid x:Name="root">
-        <Grid.Resources>
-            <Style TargetType="TextBlock">
-                <Setter  Property="FontSize" Value="20"/>
-                <Setter  Property="HorizontalAlignment" Value="Right"/>
-            </Style>
-            <Style TargetType="TextBox">
-                <Setter  Property="Width" Value="300"/>
-                <Setter  Property="HorizontalAlignment" Value="Left"/>
-                <Setter  Property="Margin" Value="15,0,0,0"/>
-            </Style>
-        </Grid.Resources>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <xctk:BusyIndicator IsBusy="{Binding IsBusy}" BusyContent="Se incarca datele..." >
+        <Grid x:Name="root">
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter  Property="FontSize" Value="20"/>
+                    <Setter  Property="HorizontalAlignment" Value="Right"/>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter  Property="Width" Value="300"/>
+                    <Setter  Property="HorizontalAlignment" Value="Left"/>
+                    <Setter  Property="Margin" Value="15,0,0,0"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <TextBlock Text="Registre casa:" Style="{DynamicResource TitleStyle}" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
-        <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
-            <TextBlock Text="Zile ramase:" FontSize="10" />
-            <TextBlock Text="{Binding RemainingDays}" FontSize="10" Margin="5,0,0,0"/>
-        </StackPanel>
-       
-
-        <Button Grid.Row="1"  Margin="0,20,0,0"  Command="{Binding CreateCommand}" Width="70" Height="60" HorizontalAlignment="Left">
-            <StackPanel Orientation="Vertical">
-                <Image Source="/CashBook.Controls;component/Images/createButton.png" Stretch="Uniform"  Width="30" Height="34"/>
-                <TextBlock Text="Creare" FontSize="15"/>
+            <TextBlock Text="Registre casa:" Style="{DynamicResource TitleStyle}" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
+            <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
+                <TextBlock Text="Zile ramase:" FontSize="10" />
+                <TextBlock Text="{Binding RemainingDays}" FontSize="10" Margin="5,0,0,0"/>
             </StackPanel>
-        </Button>
-        <DataGrid Grid.Row="2" ItemsSource="{Binding CashBooks}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False">
-            <DataGrid.Resources>
-                <Style TargetType="TextBlock" x:Key="StandardTextBlock" >
-                    <Setter Property="TextAlignment" Value="Center"/>
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                    <Setter Property="FontSize" Value="18"/>
-                    <Setter Property="Padding" Value="6,0,0,0"/>
-                </Style>
-                <Style TargetType="TextBox"  x:Key="StandardTextBox" >
-                    <Setter Property="TextAlignment" Value="Center"/>
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                    <Setter Property="FontSize" Value="30"/>
-                </Style>
-            </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Width="Auto" Header="">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <Button Content="Selecteaza" Margin="0" CommandParameter="{Binding}" Click="SelectButton_Click"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="370" Header="Nume">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <TextBlock Text="{Binding Name}" Style="{StaticResource StandardTextBlock}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="*" Header="Locatie">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <TextBlock Text="{Binding Location}"  Style="{StaticResource StandardTextBlock}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="170" Header="Nume Casier">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <TextBlock Text="{Binding CashierName}"  Style="{StaticResource StandardTextBlock}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="80" Header="Tip Moneda">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <TextBlock Text="{Binding CoinType}"  Style="{StaticResource StandardTextBlock}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="70" Header="Cont">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <TextBlock Text="{Binding Account}"  Style="{StaticResource StandardTextBlock}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="140" Header="Sold">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <TextBlock Text="{Binding CurrentBalanceString}"  Style="{StaticResource StandardTextBlock}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="150" Header="Data sold">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <TextBlock Text="{Binding LastDateTimeWithEntriesString}"  Style="{StaticResource StandardTextBlock}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="150" Header="Actiuni">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <StackPanel Orientation="Horizontal">
-                                <Button Margin="0,0,10,0" CommandParameter="{Binding}" Width="30" Height="20"  Click="DeleteCommand_Click">
-                                    <StackPanel>
-                                        <Image Source="/CashBook.Controls;component/Images/deleteButton3.png" Stretch="Uniform"  Width="30" Height="14"/>
-                                        <TextBlock Text=""/>
-                                    </StackPanel>
-                                    <Button.ToolTip>
-                                        <TextBlock Text="Stergere"/>
-                                    </Button.ToolTip>
-                                </Button>
-                                <!--,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}-->
-                                <Button CommandParameter="{Binding}" Width="30" Height="20" Click="EditCommand_Click">
-                                    <StackPanel>
-                                        <Image Source="/CashBook.Controls;component/Images/editButton.png"  Stretch="Uniform"  Width="30" Height="15"/>
-                                        <TextBlock Text=""/>
-                                    </StackPanel>
-                                    <Button.ToolTip>
-                                        <TextBlock Text="Editare"/>
-                                    </Button.ToolTip>
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-            <DataGrid.Items>
 
-            </DataGrid.Items>
-        </DataGrid>
-    </Grid>
+
+            <Button Grid.Row="1"  Margin="0,20,0,0"  Command="{Binding CreateCommand}" Width="70" Height="60" HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/CashBook.Controls;component/Images/createButton.png" Stretch="Uniform"  Width="30" Height="34"/>
+                    <TextBlock Text="Creare" FontSize="15"/>
+                </StackPanel>
+            </Button>
+            <DataGrid Grid.Row="2" ItemsSource="{Binding CashBooks}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False">
+                <DataGrid.Resources>
+                    <Style TargetType="TextBlock" x:Key="StandardTextBlock" >
+                        <Setter Property="TextAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="FontSize" Value="18"/>
+                        <Setter Property="Padding" Value="6,0,0,0"/>
+                    </Style>
+                    <Style TargetType="TextBox"  x:Key="StandardTextBox" >
+                        <Setter Property="TextAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="FontSize" Value="30"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="Auto" Header="">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <Button Content="Selecteaza" Margin="0" CommandParameter="{Binding}" Click="SelectButton_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="370" Header="Nume">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource StandardTextBlock}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*" Header="Locatie">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock Text="{Binding Location}"  Style="{StaticResource StandardTextBlock}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="170" Header="Nume Casier">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock Text="{Binding CashierName}"  Style="{StaticResource StandardTextBlock}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="80" Header="Tip Moneda">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock Text="{Binding CoinType}"  Style="{StaticResource StandardTextBlock}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="70" Header="Cont">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock Text="{Binding Account}"  Style="{StaticResource StandardTextBlock}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="140" Header="Sold">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock Text="{Binding CurrentBalanceString}"  Style="{StaticResource StandardTextBlock}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="150" Header="Data sold">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock Text="{Binding LastDateTimeWithEntriesString}"  Style="{StaticResource StandardTextBlock}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="150" Header="Actiuni">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Margin="0,0,10,0" CommandParameter="{Binding}" Width="30" Height="20"  Click="DeleteCommand_Click">
+                                        <StackPanel>
+                                            <Image Source="/CashBook.Controls;component/Images/deleteButton3.png" Stretch="Uniform"  Width="30" Height="14"/>
+                                            <TextBlock Text=""/>
+                                        </StackPanel>
+                                        <Button.ToolTip>
+                                            <TextBlock Text="Stergere"/>
+                                        </Button.ToolTip>
+                                    </Button>
+                                    <!--,RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}-->
+                                    <Button CommandParameter="{Binding}" Width="30" Height="20" Click="EditCommand_Click">
+                                        <StackPanel>
+                                            <Image Source="/CashBook.Controls;component/Images/editButton.png"  Stretch="Uniform"  Width="30" Height="15"/>
+                                            <TextBlock Text=""/>
+                                        </StackPanel>
+                                        <Button.ToolTip>
+                                            <TextBlock Text="Editare"/>
+                                        </Button.ToolTip>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+                <DataGrid.Items>
+
+                </DataGrid.Items>
+            </DataGrid>
+        </Grid>
+    </xctk:BusyIndicator>
 </UserControl>

@@ -10,6 +10,8 @@ using CashBook.Common;
 using CashBook.Data.Model;
 using System.Collections.ObjectModel;
 using CashBook.Common.Mediator;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace CashBook.ViewModels
 {
@@ -76,7 +78,8 @@ namespace CashBook.ViewModels
             if (param is CashBookListType)
             {
                 cashBookListType = (CashBookListType)param;
-                LoadData();
+                RefreshList(null);
+                //LoadData();
             }
         }
 
@@ -84,16 +87,34 @@ namespace CashBook.ViewModels
         {
             RemainingDays = (int)param;
         }
+
         public void RefreshList(object param)
         {
-            LoadData();
+            IsBusy = true;
+            Dispatcher.CurrentDispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
+            dt = new DispatcherTimer();
+            dt.Tick += new EventHandler(dt_Tick);
+            dt.Interval = TimeSpan.FromMilliseconds(500);
+            dt.Start();          
         }
 
+        void dt_Tick(object sender, EventArgs e)
+        {
+            dt.Tick -= new EventHandler(dt_Tick);
+            dt.Stop();
+            LoadData();
+            
+        }
 
+        DispatcherTimer dt;
         private void LoadData()
         {
+
+            //IsBusy = true;
+            //Thread.Sleep(3000);
             try
             {
+                var tempCashBooks = new List<UserCashBook>();
                 CashBooks = new ObservableCollection<UserCashBook>();
                 var existingCashBooks = cashBookRepository.GetAll(cashBookListType);
                 if (existingCashBooks != null)
@@ -119,12 +140,21 @@ namespace CashBook.ViewModels
                         }
                         CashBooks.Add(item);
                     }
+
+                    //Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() =>
+                    //{
+                    //    foreach (var item in tempCashBooks)
+                    //    {
+                    //        CashBooks.Add(item);
+                    //    }
+                    //}));
                 }
             }
             catch (Exception ex)
             {
                 Logger.Instance.LogException(ex);
             }
+            IsBusy = false;
         }
 
         public void Save(object param)
