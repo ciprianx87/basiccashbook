@@ -21,16 +21,19 @@ namespace CashBook.ViewModels
        
         #region Constructor
 
-        public InformationDialogVM()
+        public InformationDialogVM(bool modal)
         {
             InitializeCommands();
             Mediator.Instance.Register(MediatorActionType.SetInformationPopupMessage, SetInformationPopupMessage);
+            Mediator.Instance.Register(MediatorActionType.CloseInformationPopup, CloseInformationPopup);
             this.Title = "Informatie";
-          
-            dt = new DispatcherTimer(DispatcherPriority.Normal);
-            dt.Tick += new EventHandler(dt_Tick);
-            dt.Interval = TimeSpan.FromMilliseconds(AppSettings.InformationPopupCloseInterval);
-            dt.Start();
+            if (!modal)
+            {
+                dt = new DispatcherTimer(DispatcherPriority.Normal);
+                dt.Tick += new EventHandler(dt_Tick);
+                dt.Interval = TimeSpan.FromMilliseconds(AppSettings.InformationPopupCloseInterval);
+                dt.Start();
+            }
         }
 
         void dt_Tick(object sender, EventArgs e)
@@ -80,10 +83,15 @@ namespace CashBook.ViewModels
         #region Methods
 
 
+        public void CloseInformationPopup(object param)
+        {
+            OK(null);  
+        }
         public void SetInformationPopupMessage(object param)
         {
             this.Message = param.ToString();
         }
+
         #endregion
 
         #region IDisposable Members
@@ -91,6 +99,7 @@ namespace CashBook.ViewModels
         public override void Dispose()
         {
             Mediator.Instance.Unregister(MediatorActionType.SetInformationPopupMessage, SetInformationPopupMessage);
+            Mediator.Instance.Unregister(MediatorActionType.CloseInformationPopup, CloseInformationPopup);
         }
 
         #endregion
