@@ -114,6 +114,9 @@ namespace CashBook.ViewModels
             //Thread.Sleep(3000);
             try
             {
+                var settingsRepository = new SettingsRepository();
+                VMUtils.LegalLimits = VMUtils.GetLegalLimits(settingsRepository);
+
                 var tempCashBooks = new List<UserCashBook>();
                 CashBooks = new ObservableCollection<UserCashBook>();
                 var existingCashBooks = cashBookRepository.GetAll(cashBookListType);
