@@ -374,9 +374,14 @@
 
                                     <!-- This DataTrigger is new -->
                                     <DataTrigger Binding="{Binding Converter={StaticResource conv}}"
-                                             Value="{x:Null}">
+                                             Value="True">
                                         <Setter TargetName="RedLetterDayBackground" 
                                             Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Converter={StaticResource conv}}"
+                                             Value="False">
+                                        <Setter TargetName="RedLetterDayBackground" 
+                                            Property="Visibility" Value="Visible" />
                                     </DataTrigger>
 
                                 </ControlTemplate.Triggers>

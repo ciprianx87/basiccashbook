@@ -273,6 +273,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_7CC3391CC5914A72B9ACB31E7071CF10"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_84EBF0B759E6422E88C0184CD099B7AC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -1174,6 +1180,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7CC3391CC5914A72B9ACB31E7071CF10"
+            {
+            "SourcePath" = "8:..\\Dependencies\\3.5\\SSCERuntime_x86-ENU.msi"
+            "TargetName" = "8:SSCERuntime_x86-ENU.msi"
+            "Tag" = "8:"
+            "Folder" = "8:_5F6C0C65B5BA4A48AC87FDB02F951C59"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8F97F37F8BD64B4820B0DFC08AE7936B"
             {
             "AssemblyRegister" = "3:1"
@@ -1630,7 +1656,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Registru de Casa"
         "ProductCode" = "8:{94701DE8-2946-4E05-990C-D7D293593ED5}"
-        "PackageCode" = "8:{775258BC-9C53-4DBE-BDFC-C0FB898D579C}"
+        "PackageCode" = "8:{DCCB6BDA-FBB7-4D1B-978C-C3151145E6C7}"
         "UpgradeCode" = "8:{396C91A7-B658-498F-8ABB-B350AD2075A9}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

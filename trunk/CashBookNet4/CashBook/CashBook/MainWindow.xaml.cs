@@ -57,7 +57,7 @@ namespace CashBook
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ShowCashBookListScreen(CashBookListType.Any);
 
-            CheckAppValidity();
+            //CheckAppValidity();
 
             CopyDBIfNeeded();
         }

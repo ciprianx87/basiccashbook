@@ -74,6 +74,7 @@ namespace CashBook.Controls
             else
             {
             }
+            return string.IsNullOrEmpty(text);
             return text;
         }
 
