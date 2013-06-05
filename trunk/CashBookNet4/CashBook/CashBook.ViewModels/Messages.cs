@@ -13,5 +13,6 @@ namespace CashBook.ViewModels
         public static string LegalReglementationsNotifications = "Ati depasit plafonul de plati! Doriti sa cititi reglementarile legale?";
         public static string LegalReglementationsNotificationsCashingDaily = "Ati depasit plafonul pentru incasare zilnica!";
         public static string LegalReglementationsNotificationsCashingTotal = "Ati depasit plafonul pentru incasari totale zilnice!";
+        public static string LegalReglementationsNotificationsTotalBalance = "Ati depasit plafonul pentru soldul totala!";
     }
 }
