@@ -8,7 +8,7 @@ using CashBook.Common;
 
 namespace CashBook.ViewModels
 {
-    static class VMUtils
+   public static class VMUtils
     {
         public static void ExtractCoinTypes(ISettingsRepository settingsRepository, ObservableCollection<string> coinTypes)
         {
@@ -44,5 +44,7 @@ namespace CashBook.ViewModels
             }
             settingsRepository.AddOrUpdateSetting(Constants.CoinTypesKey, coinTypesString);
         }
+
+        public static List<DateTime> CompletedDates;
     }
 }

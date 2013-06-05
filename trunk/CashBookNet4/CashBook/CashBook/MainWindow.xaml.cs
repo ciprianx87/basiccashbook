@@ -58,7 +58,40 @@ namespace CashBook
             ShowCashBookListScreen(CashBookListType.Any);
 
             CheckAppValidity();
+
+            CopyDBIfNeeded();
         }
+
+        private void CopyDBIfNeeded()
+        {
+            try
+            {
+                string currentLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                FileInfo currentApp = new FileInfo(currentLocation);
+                DirectoryInfo dbDir = currentApp.Directory;// new DirectoryInfo(+"\\Database");
+                if (dbDir.Exists)
+                {
+                    DirectoryInfo emptyDbDir = new DirectoryInfo(dbDir.FullName + "\\Resources");
+                    DirectoryInfo databaseDbDir = new DirectoryInfo(dbDir.FullName + "\\Database");
+                    FileInfo fi = new FileInfo(databaseDbDir.FullName + "\\CashBook.sdf");
+                    if (fi.Exists)
+                    {
+                    }
+                    else
+                    {
+                        //copy the empty DB
+                       
+                        FileInfo emptyFi = new FileInfo(emptyDbDir.FullName + "\\CashBookEmpty.sdf");
+                        File.Copy(emptyFi.FullName, databaseDbDir.FullName + "\\CashBook.sdf");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
+        }
+
         private void CheckAppValidity()
         {
             if (!ConfigureFile())
@@ -341,8 +374,10 @@ namespace CashBook
 
         }
 
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Versiune: 1.0.1");
+        }
+
     }
-
-
-
 }

@@ -243,7 +243,7 @@
 
                                 <!-- This is new -->
                                 <ControlTemplate.Resources>
-                                    <src:RedLetterDayConverter x:Key="conv" />
+                                    <src:RedLetterDayConverter x:Key="conv"/>
                                 </ControlTemplate.Resources>
 
                                 <Grid ToolTip="{Binding Converter={StaticResource conv}, 
@@ -350,7 +350,7 @@
                                     <Rectangle x:Name="TodayBackground" RadiusX="1" RadiusY="1" Opacity="0" Fill="#FFAAAAAA"/>
 
                                     <!-- This element is new -->
-                                    <Rectangle x:Name="RedLetterDayBackground" IsHitTestVisible="False" Fill="#80FF0000" />
+                                    <Rectangle x:Name="RedLetterDayBackground" IsHitTestVisible="False" Fill="LightGreen" />
 
                                     <Rectangle x:Name="SelectedBackground" RadiusX="1" RadiusY="1" Opacity="0" Fill="{TemplateBinding Background}"/>
                                     <Rectangle x:Name="Background" RadiusX="1" RadiusY="1" Opacity="0" Fill="{TemplateBinding Background}"/>

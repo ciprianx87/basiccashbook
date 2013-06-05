@@ -18,6 +18,7 @@ using System.Windows.Controls.Primitives;
 using System.Threading;
 using CashBook.Controls.CustomDataGrid;
 using CashBook.Common;
+using CashBook.Common.Mediator;
 
 
 namespace CashBook.Controls
@@ -38,9 +39,22 @@ namespace CashBook.Controls
             dataGrid.CellEditEnding += DataGridSubmissionDataOnCellEditEnding;
             dataGrid.CurrentCellChanged += DataGridSubmissionDataOnCurrentCellChanged;
             dataGrid.SelectedCellsChanged += new SelectedCellsChangedEventHandler(dataGrid_SelectedCellsChanged);
+            Mediator.Instance.Register(MediatorActionType.SetCompletedDays, SetCompletedDays);
 
         }
 
+        public void SetCompletedDays(object param)
+        {
+            try
+            {
+                calendar.InvalidateVisual();
+                calendar.UpdateLayout();
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
+        }
         void dataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             if (dataGrid.SelectedCells != null && dataGrid.SelectedCells.Count > 0)

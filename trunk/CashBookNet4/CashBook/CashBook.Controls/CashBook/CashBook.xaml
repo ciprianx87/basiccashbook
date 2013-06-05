@@ -121,9 +121,9 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Data:" VerticalAlignment="Center"  FontWeight="Bold" FontSize="14"/>
                     <TextBlock Text="{Binding SelectedDateString}" VerticalAlignment="Center"  FontWeight="Bold" FontSize="14" Margin="10,0,0,0" />
-                    <DatePicker Text="Alege Data" SelectedDate="{Binding SelectedDate, Mode=TwoWay,StringFormat='dd.MM.yyyy'}" Margin="10,-15,0,0" VerticalAlignment="Center" 
+                    <DatePicker  Text="Alege Data" SelectedDate="{Binding SelectedDate, Mode=TwoWay,StringFormat='dd.MM.yyyy'}" Margin="10,-15,0,0" VerticalAlignment="Center" 
                                   IsDropDownOpen="False" x:Name="calendar" IsEnabled="True"  SizeChanged="calendar_SizeChanged" DisplayDateStart="{Binding StartDate}"
-                           Style="{DynamicResource DatePickerStyle1}"  CalendarStyle="{StaticResource CalendarStyleColoredDays}" BorderThickness="0"  >
+                           Style="{DynamicResource DatePickerStyle1}"  CalendarStyle="{DynamicResource CalendarStyleColoredDays}" BorderThickness="0"  >
                         <DatePicker.RenderTransform>
                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                         </DatePicker.RenderTransform>                   
