@@ -570,9 +570,11 @@ namespace CashBook.ViewModels
 
         private bool IsFormValid()
         {
+            string errorMessage = "";
             if (TotalBalance < 0)
             {
-                WindowHelper.OpenErrorDialog("Atentie! Sold final negativ");
+                errorMessage = "Atentie! Sold final negativ" + Environment.NewLine;
+                //WindowHelper.OpenErrorDialog("Atentie! Sold final negativ");
                 //return false;
             }
 
@@ -580,12 +582,17 @@ namespace CashBook.ViewModels
             if (CurrentBalanceOut > VMUtils.LegalLimits.TotalPayment)
             {
                 Logger.Instance.Log.Debug(string.Format("CurrentBalanceOut  {0} > {1}", CurrentBalanceOut, VMUtils.LegalLimits.TotalPayment));
+                //errorMessage += Messages.LegalReglementationsNotifications + Environment.NewLine;
                 WindowHelper.OpenPaymentInformationDialog(Messages.LegalReglementationsNotifications);
             }
             if (CashBookEntries.Any(p => p.Plati > VMUtils.LegalLimits.DailyPayment))
             {
                 var count = CashBookEntries.Count(p => p.Plati > VMUtils.LegalLimits.DailyPayment);
                 Logger.Instance.Log.Debug(string.Format("CashBookEntries contains {0} entries with Plati > {1}", count, VMUtils.LegalLimits.DailyPayment));
+                //if (string.IsNullOrEmpty(errorMessage))
+                //{
+                //    errorMessage += Messages.LegalReglementationsNotifications + Environment.NewLine;
+                //}
                 WindowHelper.OpenPaymentInformationDialog(Messages.LegalReglementationsNotifications);
             }
 
@@ -593,7 +600,8 @@ namespace CashBook.ViewModels
             if (VMUtils.LegalLimits.TotalCashingActive && CurrentBalanceIn > VMUtils.LegalLimits.TotalCashing)
             {
                 Logger.Instance.Log.Debug(string.Format("CurrentBalanceIn  {0} > {1}", CurrentBalanceIn, VMUtils.LegalLimits.TotalCashing));
-                WindowHelper.OpenErrorDialog(Messages.LegalReglementationsNotificationsCashingTotal);
+                errorMessage += Messages.LegalReglementationsNotificationsCashingDaily + Environment.NewLine;
+                //WindowHelper.OpenErrorDialog(Messages.LegalReglementationsNotificationsCashingTotal);
                 //Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.InformationModal);
                 //Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, Messages.LegalReglementationsNotificationsCashingDaily);
             }
@@ -602,9 +610,26 @@ namespace CashBook.ViewModels
             {
                 var count = CashBookEntries.Count(p => p.Plati > VMUtils.LegalLimits.DailyCashing);
                 Logger.Instance.Log.Debug(string.Format("CashBookEntries contains {0} entries with Incasari > {1}", count, VMUtils.LegalLimits.DailyCashing));
-                WindowHelper.OpenErrorDialog(Messages.LegalReglementationsNotificationsCashingDaily);
+                errorMessage += Messages.LegalReglementationsNotificationsCashingTotal + Environment.NewLine;
+                // WindowHelper.OpenErrorDialog(Messages.LegalReglementationsNotificationsCashingDaily);
                 //Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.InformationModal);
                 //Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, Messages.LegalReglementationsNotificationsCashingTotal);
+            }
+
+            if (VMUtils.LegalLimits.TotalBalanceActive && TotalBalance > VMUtils.LegalLimits.TotalBalance)
+            {
+                Logger.Instance.Log.Debug(string.Format("TotalBalance  {0} > {1}", TotalBalance, VMUtils.LegalLimits.TotalBalance));
+                errorMessage += Messages.LegalReglementationsNotificationsTotalBalance + Environment.NewLine;
+                //WindowHelper.OpenErrorDialog(Messages.LegalReglementationsNotificationsCashingTotal);
+                //Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.InformationModal);
+                //Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, Messages.LegalReglementationsNotificationsCashingDaily);
+            }
+
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                WindowHelper.OpenErrorDialog(errorMessage);
+                //Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.InformationModal);
+                //Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, errorMessage);
             }
 
             bool moneyExchangeRateOk = true;
