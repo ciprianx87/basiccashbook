@@ -264,6 +264,9 @@ namespace CashBook
                 case ContentTypes.PrintPreview:
                     contentControl.Content = new CashBook.Controls.Printing.PrintPreview();
                     break;
+                case ContentTypes.LegalLimitations:
+                    contentControl.Content = new CashBook.Controls.LegalLimitations();
+                    break;
                 default:
                     MessageBox.Show("invalid contentType: " + type);
                     break;
@@ -377,6 +380,12 @@ namespace CashBook
         private void About_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Versiune: 1.0.1");
+        }
+
+        private void MenuItem_LegalLimitations(object sender, RoutedEventArgs e)
+        {
+            ChangeContent(ContentTypes.LegalLimitations);
+            
         }
 
     }

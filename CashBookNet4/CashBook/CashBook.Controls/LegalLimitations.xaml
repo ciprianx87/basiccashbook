@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="CashBook.Controls.LegalLimitations"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:constants="clr-namespace:CashBook.Controls"
+             mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}"
+             >
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter  Property="FontSize" Value="20"/>
+            <Setter  Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter  Property="Width" Value="50"/>
+            <Setter  Property="HorizontalAlignment" Value="Left"/>
+            <Setter  Property="Margin" Value="15,0,0,0"/>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Detalii societate:"  Style="{DynamicResource TitleStyle}" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
+        <TextBlock Grid.Row="1" Text="Valoare incasare zilnica:"/>
+        <StackPanel  Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,0,0,0">
+            <CheckBox Content="Activ" x:Name="chkDailyCashing" VerticalAlignment="Center" Width="60" IsChecked="{Binding DailyCashingActive}"/>
+            <TextBox Text="{Binding DailyCashing, ValidatesOnDataErrors=True,NotifyOnValidationError=True,ValidatesOnExceptions=True}" IsEnabled="{Binding IsChecked, ElementName=chkDailyCashing}"/>
+        </StackPanel>
+        <TextBlock Grid.Row="2" Text="Valoare totala incasari zilnice:" />
+        <StackPanel  Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,0,0,0">
+            <CheckBox Content="Activ" x:Name="chkTotalCashing" VerticalAlignment="Center" Width="60" IsChecked="{Binding TotalCashingActive}"/>
+            <TextBox Text="{Binding TotalCashing, ValidatesOnDataErrors=True,NotifyOnValidationError=True,ValidatesOnExceptions=True}" IsEnabled="{Binding IsChecked, ElementName=chkTotalCashing}"/>
+        </StackPanel>
+     
+        <TextBlock Grid.Row="3" Text="Valoare plata zilnica:"/>
+        <StackPanel  Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal" Margin="70,0,0,0">
+            <TextBox Text="{Binding DailyPayment, ValidatesOnDataErrors=True,NotifyOnValidationError=True,ValidatesOnExceptions=True}"/>
+        </StackPanel>
+        
+        <TextBlock Grid.Row="4" Text="Valoare totala plati zilnice:"/>
+        <StackPanel  Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal" Margin="70,0,0,0">
+            <TextBox Text="{Binding TotalPayment, ValidatesOnDataErrors=True,NotifyOnValidationError=True,ValidatesOnExceptions=True}"/>
+        </StackPanel>
+
+        <TextBlock Grid.Row="5" Text="Valoare sold:"/>
+        <StackPanel  Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal" Margin="10,0,0,0">
+            <CheckBox Content="Activ" x:Name="chkBalance" VerticalAlignment="Center" Width="60" IsChecked="{Binding TotalBalanceActive}"/>
+            <TextBox Text="{Binding TotalBalance, ValidatesOnDataErrors=True,NotifyOnValidationError=True,ValidatesOnExceptions=True}" IsEnabled="{Binding IsChecked, ElementName=chkBalance}"/>
+        </StackPanel>
+        
+        <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Content="Salvare"  Command="{Binding SaveCommand}" Style="{DynamicResource SaveButton}" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+    </Grid>
+</UserControl>
