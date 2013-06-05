@@ -38,7 +38,7 @@ namespace CashBook.ViewModels
             Mediator.Instance.Register(MediatorActionType.SetRemainingDays, SetRemainingDays);
 
             cashBookRepository = new CashBookRepository();
-            RemainingDays = Constants.RemainingDays;
+            //SetRemainingDays(Constants.RemainingDays);
         }
 
         #region properties
@@ -55,8 +55,8 @@ namespace CashBook.ViewModels
         }
 
 
-        private int remainingDays;
-        public int RemainingDays
+        private string remainingDays;
+        public string RemainingDays
         {
             get { return remainingDays; }
             set
@@ -85,7 +85,7 @@ namespace CashBook.ViewModels
 
         public void SetRemainingDays(object param)
         {
-            RemainingDays = (int)param;
+            RemainingDays = "Zile ramase: " + param;
         }
 
         public void RefreshList(object param)
@@ -95,7 +95,7 @@ namespace CashBook.ViewModels
             dt = new DispatcherTimer();
             dt.Tick += new EventHandler(dt_Tick);
             dt.Interval = TimeSpan.FromMilliseconds(500);
-            dt.Start();          
+            dt.Start();
         }
 
         void dt_Tick(object sender, EventArgs e)
@@ -103,7 +103,7 @@ namespace CashBook.ViewModels
             dt.Tick -= new EventHandler(dt_Tick);
             dt.Stop();
             LoadData();
-            
+
         }
 
         DispatcherTimer dt;
@@ -153,6 +153,7 @@ namespace CashBook.ViewModels
             catch (Exception ex)
             {
                 Logger.Instance.LogException(ex);
+                WindowHelper.OpenErrorDialog("Nu s-au putut citi datele");
             }
             IsBusy = false;
         }

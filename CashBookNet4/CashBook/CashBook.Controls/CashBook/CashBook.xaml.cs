@@ -19,6 +19,7 @@ using System.Threading;
 using CashBook.Controls.CustomDataGrid;
 using CashBook.Common;
 using CashBook.Common.Mediator;
+using System.Windows.Threading;
 
 
 namespace CashBook.Controls
@@ -49,6 +50,12 @@ namespace CashBook.Controls
             {
                 calendar.InvalidateVisual();
                 calendar.UpdateLayout();
+                Application.Current.Dispatcher.BeginInvoke(
+               DispatcherPriority.Background,
+               new Action(() =>
+               {
+                   Thread.Sleep(10);
+               }));
             }
             catch (Exception ex)
             {

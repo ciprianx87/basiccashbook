@@ -34,7 +34,6 @@
 
             <TextBlock Text="Registre casa:" Style="{DynamicResource TitleStyle}" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
             <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
-                <TextBlock Text="Zile ramase:" FontSize="10" />
                 <TextBlock Text="{Binding RemainingDays}" FontSize="10" Margin="5,0,0,0"/>
             </StackPanel>
 
