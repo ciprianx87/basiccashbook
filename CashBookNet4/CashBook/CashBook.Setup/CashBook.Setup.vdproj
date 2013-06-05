@@ -719,7 +719,7 @@
             {
             "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:1"
+            "PrerequisitesLocation" = "2:2"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
@@ -1609,6 +1609,13 @@
         }
         "LaunchCondition"
         {
+            "{836E08B8-0285-4809-BA42-01DB6754A45D}:_314493C97A03490BA56DE8D210734B06"
+            {
+            "Name" = "8:Condition1"
+            "Condition" = "8:COMPONENTEXISTS1"
+            "Message" = "8:<Error Message>"
+            "InstallUrl" = "8:"
+            }
         }
         "Locator"
         {
@@ -1623,7 +1630,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Registru de Casa"
         "ProductCode" = "8:{94701DE8-2946-4E05-990C-D7D293593ED5}"
-        "PackageCode" = "8:{70B9C633-8011-46FA-8190-8CB50C2E085C}"
+        "PackageCode" = "8:{775258BC-9C53-4DBE-BDFC-C0FB898D579C}"
         "UpgradeCode" = "8:{396C91A7-B658-498F-8ABB-B350AD2075A9}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1640,7 +1647,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_A203A88A4A1545C5A3F7A48446332C72"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -1743,6 +1750,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_B559851373604814B193136CDA220868"
+            {
+            "Name" = "8:Registru de casa"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_6DDDA7B27403473D923702AE1E4D6B65"
+            "Folder" = "8:_8CE2EA4C22F74D0ABEABEE1628639C56"
+            "WorkingFolder" = "8:_5F6C0C65B5BA4A48AC87FDB02F951C59"
+            "Icon" = "8:_A203A88A4A1545C5A3F7A48446332C72"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_B75F9F6DC83A4335953A630A70506684"
             {
             "Name" = "8:Registru de Casa"
