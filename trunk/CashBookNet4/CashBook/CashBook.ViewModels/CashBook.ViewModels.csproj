@@ -55,7 +55,9 @@
     <Compile Include="CompanyDataViewModel.cs" />
     <Compile Include="CashBookListViewModel.cs" />
     <Compile Include="CashBookViewModel.cs" />
+    <Compile Include="LegalLimitationsVM.cs" />
     <Compile Include="Messages.cs" />
+    <Compile Include="Models\LegalLimitsModel.cs" />
     <Compile Include="Models\PrintModel.cs" />
     <Compile Include="PrintPreviewVM.cs" />
     <Compile Include="CrudCoinTypesVM.cs" />

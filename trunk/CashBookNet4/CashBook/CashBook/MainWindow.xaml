@@ -16,6 +16,7 @@
                 <MenuItem Header="Date Societate" Click="MenuItem_CompanyData"></MenuItem>
                 <MenuItem Header="Definire registre de casa" Click="MenuItem_CashBooks"></MenuItem>
                 <MenuItem Header="Reglementari legale" Click="MenuItem_LegalReglementations"></MenuItem>
+                <MenuItem Header="Limitari legislative" Click="MenuItem_LegalLimitations"></MenuItem>
             </MenuItem>
             <MenuItem Header="Registre de casa">
                 <MenuItem Header="Registru de casa in lei"  Click="MenuItem_CashBooksLei"> </MenuItem>
