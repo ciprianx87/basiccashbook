@@ -575,16 +575,16 @@ namespace CashBook.ViewModels
                 WindowHelper.OpenErrorDialog("Atentie! Sold final negativ");
                 //return false;
             }
-            if (CurrentBalanceOut > AppSettings.TotalPaymentLimit)
+            if (CurrentBalanceOut > VMUtils.LegalLimits.TotalPayment)
             {
-                Logger.Instance.Log.Debug(string.Format("CurrentBalanceOut  {0} > {1}", CurrentBalanceOut, AppSettings.TotalPaymentLimit));
+                Logger.Instance.Log.Debug(string.Format("CurrentBalanceOut  {0} > {1}", CurrentBalanceOut, VMUtils.LegalLimits.TotalPayment));
                 WindowHelper.OpenPaymentInformationDialog(Messages.LegalReglementationsNotifications);
                 //return false;
             }
-            if (CashBookEntries.Any(p => p.Plati > AppSettings.SinglePaymentLimit))
+            if (CashBookEntries.Any(p => p.Plati > VMUtils.LegalLimits.DailyPayment))
             {
-                var count = CashBookEntries.Count(p => p.Plati > AppSettings.SinglePaymentLimit);
-                Logger.Instance.Log.Debug(string.Format("CashBookEntries contains {0} entries with Plati > {1}", count, AppSettings.SinglePaymentLimit));
+                var count = CashBookEntries.Count(p => p.Plati > VMUtils.LegalLimits.DailyPayment);
+                Logger.Instance.Log.Debug(string.Format("CashBookEntries contains {0} entries with Plati > {1}", count, VMUtils.LegalLimits.DailyPayment));
                 WindowHelper.OpenPaymentInformationDialog(Messages.LegalReglementationsNotifications);
                 // return false;
             }

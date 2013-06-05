@@ -18,14 +18,14 @@ namespace CashBook.ViewModels
 {
     public class LegalLimitationsVM : BaseViewModel, IDataErrorInfo
     {
-        ICompanyRepository companyRepository;
+        ISettingsRepository settingsRepository;
 
         public ICommand SaveCommand { get; set; }
         public LegalLimitationsVM()
         {
             this.Title = "Detalii despre companie";
             SaveCommand = new DelegateCommand(Save, CanSave);
-            companyRepository = new CompanyRepository();
+            settingsRepository = new SettingsRepository();
 
             LoadData();
 

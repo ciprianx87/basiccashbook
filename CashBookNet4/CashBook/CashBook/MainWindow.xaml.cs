@@ -25,6 +25,7 @@ using System.Reflection;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows.Threading;
+using CashBook.ViewModels;
 
 namespace CashBook
 {
@@ -189,11 +190,11 @@ namespace CashBook
         {
             AppSettings.InformationPopupCloseInterval = Properties.Settings.Default.InformationPopupCloseInterval;
             AppSettings.CashRegistryNameCharacterLimit = Properties.Settings.Default.CashRegistryNameCharacterLimit;
-            AppSettings.SinglePaymentLimit = Properties.Settings.Default.SinglePaymentLimit;
-            AppSettings.TotalPaymentLimit = Properties.Settings.Default.TotalPaymentLimit;
+            //AppSettings.SinglePaymentLimit = Properties.Settings.Default.SinglePaymentLimit;
+            //AppSettings.TotalPaymentLimit = Properties.Settings.Default.TotalPaymentLimit;
 
             Logger.Instance.Log.Debug(string.Format("settings {0}, {1}, {2},{3}", AppSettings.InformationPopupCloseInterval,
-                AppSettings.CashRegistryNameCharacterLimit, AppSettings.SinglePaymentLimit, AppSettings.TotalPaymentLimit));
+                AppSettings.CashRegistryNameCharacterLimit, 0, 0));
 
         }
 
