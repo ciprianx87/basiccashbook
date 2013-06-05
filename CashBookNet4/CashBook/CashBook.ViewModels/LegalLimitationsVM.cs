@@ -212,17 +212,8 @@ namespace CashBook.ViewModels
         {
             try
             {
-                LegalLimitsModel limitsModel = new LegalLimitsModel()
-                {
-                    DailyCashing = DailyCashing,
-                    DailyPayment = DailyPayment,
-                    TotalBalance = TotalBalance,
-                    TotalCashing = TotalCashing,
-                    TotalPayment = TotalPayment,
-                    DailyCashingActive = DailyCashingActive,
-                    TotalBalanceActive = TotalBalanceActive,
-                    TotalCashingActive = TotalCashingActive
-                };
+                LegalLimitsModel limitsModel = VMUtils.GetLegalLimits(settingsRepository);
+
                 DailyCashing = limitsModel.DailyCashing;
                 DailyPayment = limitsModel.DailyPayment;
                 TotalBalance = limitsModel.TotalBalance;
@@ -231,14 +222,6 @@ namespace CashBook.ViewModels
                 DailyCashingActive = limitsModel.DailyCashingActive;
                 TotalBalanceActive = limitsModel.TotalBalanceActive;
                 TotalCashingActive = limitsModel.TotalCashingActive;
-                //throw new ArgumentNullException("a");
-                //var currentCompany = companyRepository.GetCompany();
-                //if (currentCompany != null)
-                //{
-                //    this.CompanyName = currentCompany.Nume;
-                //    this.CompanyAddress = currentCompany.Adresa;
-                //    this.CompanyCui = currentCompany.CUI;
-                //}
             }
             catch (CompanyNotFoundException ce)
             {
@@ -268,12 +251,8 @@ namespace CashBook.ViewModels
                         TotalBalanceActive = TotalBalanceActive,
                         TotalCashingActive = TotalCashingActive
                     };
-                    XmlSerializer serializer = new XmlSerializer(typeof(LegalLimitsModel));
-                    MemoryStream ms = new MemoryStream();
-                    serializer.Serialize(ms, limitsModel);
-                    var serializedString = Encoding.ASCII.GetString(ms.GetBuffer());
-
-                    //companyRepository.EditDetails(CompanyName, CompanyCui, CompanyAddress);
+                    VMUtils.SaveLegalLimits(settingsRepository, limitsModel);
+                    VMUtils.LegalLimits = VMUtils.GetLegalLimits(settingsRepository);
                     WindowHelper.OpenInformationDialog("Informatia a fost salvata");
                 }
                 else

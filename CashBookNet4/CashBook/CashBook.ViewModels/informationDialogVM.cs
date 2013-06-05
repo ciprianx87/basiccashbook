@@ -10,6 +10,7 @@ using CashBook.Data;
 using System.Timers;
 using System.Windows.Threading;
 using CashBook.Common;
+using System.Windows;
 
 namespace CashBook.ViewModels
 {
@@ -18,7 +19,7 @@ namespace CashBook.ViewModels
         #region Fields
         DispatcherTimer dt;
         #endregion
-       
+
         #region Constructor
 
         public InformationDialogVM(bool modal)
@@ -27,6 +28,7 @@ namespace CashBook.ViewModels
             Mediator.Instance.Register(MediatorActionType.SetInformationPopupMessage, SetInformationPopupMessage);
             Mediator.Instance.Register(MediatorActionType.CloseInformationPopup, CloseInformationPopup);
             this.Title = "Informatie";
+            OkButtonVisibility = modal ? Visibility.Visible : Visibility.Collapsed;
             if (!modal)
             {
                 dt = new DispatcherTimer(DispatcherPriority.Normal);
@@ -51,6 +53,20 @@ namespace CashBook.ViewModels
         #endregion
 
         #region Properties
+
+        private Visibility okButtonVisibility;
+        public Visibility OkButtonVisibility
+        {
+            get { return okButtonVisibility; }
+            set
+            {
+                if (okButtonVisibility != value)
+                {
+                    okButtonVisibility = value;
+                    this.NotifyPropertyChanged("OkButtonVisibility");
+                }
+            }
+        }
 
         private string message;
         public string Message
@@ -85,7 +101,7 @@ namespace CashBook.ViewModels
 
         public void CloseInformationPopup(object param)
         {
-            OK(null);  
+            OK(null);
         }
         public void SetInformationPopupMessage(object param)
         {

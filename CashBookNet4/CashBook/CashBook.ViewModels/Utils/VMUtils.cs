@@ -62,7 +62,18 @@ namespace CashBook.ViewModels
                 if (string.IsNullOrEmpty(legaLimits))
                 {
                     //add the default values
-                    SaveLegalLimits(settingsRepository);
+                    LegalLimitsModel limitsModel = new LegalLimitsModel()
+                    {
+                        DailyCashing = 0,
+                        TotalBalance = 0,
+                        TotalCashing = 0,
+                        TotalPayment = 10000,
+                        DailyPayment = 5000,
+                        DailyCashingActive = false,
+                        TotalBalanceActive = false,
+                        TotalCashingActive = false
+                    };
+                    SaveLegalLimits(settingsRepository, limitsModel);
                     legaLimits = settingsRepository.GetSetting(Constants.LegalLimitsKey);
                 }
                 XmlSerializer serializer = new XmlSerializer(typeof(LegalLimitsModel));
@@ -95,19 +106,9 @@ namespace CashBook.ViewModels
             }
         }
 
-        public static void SaveLegalLimits(ISettingsRepository settingsRepository)
+        public static void SaveLegalLimits(ISettingsRepository settingsRepository, LegalLimitsModel limitsModel)
         {
-            LegalLimitsModel limitsModel = new LegalLimitsModel()
-            {
-                DailyCashing = 0,
-                TotalBalance = 0,
-                TotalCashing = 0,
-                TotalPayment = 10000,
-                DailyPayment = 5000,
-                DailyCashingActive = false,
-                TotalBalanceActive = false,
-                TotalCashingActive = false
-            };
+
             MemoryStream ms = null;
             try
             {
