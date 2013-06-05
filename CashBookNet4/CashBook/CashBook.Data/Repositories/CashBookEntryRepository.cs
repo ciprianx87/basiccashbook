@@ -184,5 +184,25 @@ namespace CashBook.Data.Repositories
                 return null;
             }
         }
+
+        public List<DateTime> GetCompletedDays(long selectedCashBookId)
+        {
+            List<DateTime> result = new List<DateTime>();
+            using (var context = GetContext())
+            {
+                var registries = context.DailyCashBooks.Where(p => p.RegistruCasaId == selectedCashBookId);
+                foreach (var item in registries)
+                {
+                    if (item.RegistruCasaIntrares.Count > 0)
+                    {
+                        if (!result.Contains(item.Data))
+                        {
+                            result.Add(item.Data);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
     }
 }

@@ -31,6 +31,7 @@ namespace CashBook.Common.Mediator
         SetPrintPreviewPrintModel,
         SetPrintControlPrintModel,
         CloseInformationPopup,
+        SetCompletedDays,
 
     }
     public enum PopupType

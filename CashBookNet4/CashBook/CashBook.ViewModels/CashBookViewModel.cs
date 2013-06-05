@@ -77,7 +77,16 @@ namespace CashBook.ViewModels
 
             CashBookEntries.ToList().ForEach(p => p.IsFormValid());
             UpdateInitialDataForComparison();
+
+            UpdateCompletedDays();
         }
+
+        private void UpdateCompletedDays()
+        {
+            var completedDays = cashBookEntryRepository.GetCompletedDays(SelectedCashBook.Id);
+            Mediator.Instance.SendMessage(MediatorActionType.SetCompletedDays, completedDays);
+        }
+
         private void UpdateInitialDataForComparison()
         {
             InitialMoneyExchangeRate = MoneyExchangeRate;
@@ -500,6 +509,11 @@ namespace CashBook.ViewModels
             {
                 StartDate = SelectedCashBook.InitialBalanceDate.Value;
             }
+            //do not let the user enter values in a day before the registry start date
+            if (SelectedDate < StartDate)
+            {
+                SelectedDate = StartDate;
+            }
         }
 
         public ICommand LegalReglementationsCommand { get; set; }
@@ -523,11 +537,13 @@ namespace CashBook.ViewModels
                     Logger.Instance.Log.InfoFormat("SaveData initial count: {0}", CashBookEntries.Count);
                     var validEntries = ExtractValidItems(CashBookEntries);
                     Logger.Instance.Log.InfoFormat("SaveData validEntries count: {0}", validEntries.Count);
-                    if (validEntries.Count > 0)
+                    //save even if there are 0 valid entries (it means all the entries were deleted)
+                    //if (validEntries.Count > 0)
                     {
                         cashBookEntryRepository.UpdateRepositoryForDay(SelectedCashBook.Id, validEntries, SelectedDate, MoneyExchangeRate);
                         CashBookEntries.ToList().ForEach(p => p.IsModified = false);
                         UpdateInitialDataForComparison();
+                        UpdateCompletedDays();
                         WindowHelper.OpenInformationDialog("Informatia a fost salvata");
                     }
                 }

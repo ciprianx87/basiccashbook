@@ -22,6 +22,9 @@
                 <MenuItem Header="Registru de casa in valuta"  Click="MenuItem_CashBooksOther"></MenuItem>
             </MenuItem>
             <MenuItem Header="Rapoarte" Click="MenuItem_Reports" ></MenuItem>
+            <MenuItem Header="Ajutor">
+                <MenuItem Header="Despre" Click="About_Click"></MenuItem>
+            </MenuItem>
 
         </Menu>
         <ContentControl Grid.Row="1" x:Name="contentControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
