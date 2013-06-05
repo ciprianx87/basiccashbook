@@ -725,7 +725,7 @@
             {
             "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:2"
+            "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
@@ -1635,13 +1635,6 @@
         }
         "LaunchCondition"
         {
-            "{836E08B8-0285-4809-BA42-01DB6754A45D}:_314493C97A03490BA56DE8D210734B06"
-            {
-            "Name" = "8:Condition1"
-            "Condition" = "8:COMPONENTEXISTS1"
-            "Message" = "8:<Error Message>"
-            "InstallUrl" = "8:"
-            }
         }
         "Locator"
         {
@@ -1656,7 +1649,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Registru de Casa"
         "ProductCode" = "8:{94701DE8-2946-4E05-990C-D7D293593ED5}"
-        "PackageCode" = "8:{DCCB6BDA-FBB7-4D1B-978C-C3151145E6C7}"
+        "PackageCode" = "8:{A17E2A13-7F51-49B8-B1A1-3CF7739703CB}"
         "UpgradeCode" = "8:{396C91A7-B658-498F-8ABB-B350AD2075A9}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
