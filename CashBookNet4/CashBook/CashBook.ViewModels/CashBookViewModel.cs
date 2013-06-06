@@ -577,59 +577,51 @@ namespace CashBook.ViewModels
                 //WindowHelper.OpenErrorDialog("Atentie! Sold final negativ");
                 //return false;
             }
+            //only apply the legal limits to LEI coin type
+            if (SelectedCashBook.IsLei)
+            {
+                //payment
+                if (CurrentBalanceOut > VMUtils.LegalLimits.TotalPayment)
+                {
+                    Logger.Instance.Log.Debug(string.Format("CurrentBalanceOut  {0} > {1}", CurrentBalanceOut, VMUtils.LegalLimits.TotalPayment));
+                    //errorMessage += Messages.LegalReglementationsNotifications + Environment.NewLine;
+                    WindowHelper.OpenPaymentInformationDialog(Messages.LegalReglementationsNotifications);
+                }
+                if (CashBookEntries.Any(p => p.Plati > VMUtils.LegalLimits.DailyPayment))
+                {
+                    var count = CashBookEntries.Count(p => p.Plati > VMUtils.LegalLimits.DailyPayment);
+                    Logger.Instance.Log.Debug(string.Format("CashBookEntries contains {0} entries with Plati > {1}", count, VMUtils.LegalLimits.DailyPayment));
+                    //if (string.IsNullOrEmpty(errorMessage))
+                    //{
+                    //    errorMessage += Messages.LegalReglementationsNotifications + Environment.NewLine;
+                    //}
+                    WindowHelper.OpenPaymentInformationDialog(Messages.LegalReglementationsNotifications);
+                }
 
-            //payment
-            if (CurrentBalanceOut > VMUtils.LegalLimits.TotalPayment)
-            {
-                Logger.Instance.Log.Debug(string.Format("CurrentBalanceOut  {0} > {1}", CurrentBalanceOut, VMUtils.LegalLimits.TotalPayment));
-                //errorMessage += Messages.LegalReglementationsNotifications + Environment.NewLine;
-                WindowHelper.OpenPaymentInformationDialog(Messages.LegalReglementationsNotifications);
-            }
-            if (CashBookEntries.Any(p => p.Plati > VMUtils.LegalLimits.DailyPayment))
-            {
-                var count = CashBookEntries.Count(p => p.Plati > VMUtils.LegalLimits.DailyPayment);
-                Logger.Instance.Log.Debug(string.Format("CashBookEntries contains {0} entries with Plati > {1}", count, VMUtils.LegalLimits.DailyPayment));
-                //if (string.IsNullOrEmpty(errorMessage))
-                //{
-                //    errorMessage += Messages.LegalReglementationsNotifications + Environment.NewLine;
-                //}
-                WindowHelper.OpenPaymentInformationDialog(Messages.LegalReglementationsNotifications);
-            }
+                //cashing
+                if (VMUtils.LegalLimits.TotalCashingActive && CurrentBalanceIn > VMUtils.LegalLimits.TotalCashing)
+                {
+                    Logger.Instance.Log.Debug(string.Format("CurrentBalanceIn  {0} > {1}", CurrentBalanceIn, VMUtils.LegalLimits.TotalCashing));
+                    errorMessage += Messages.LegalReglementationsNotificationsCashingTotal + Environment.NewLine;
+                }
 
-            //cashing
-            if (VMUtils.LegalLimits.TotalCashingActive && CurrentBalanceIn > VMUtils.LegalLimits.TotalCashing)
-            {
-                Logger.Instance.Log.Debug(string.Format("CurrentBalanceIn  {0} > {1}", CurrentBalanceIn, VMUtils.LegalLimits.TotalCashing));
-                errorMessage += Messages.LegalReglementationsNotificationsCashingDaily + Environment.NewLine;
-                //WindowHelper.OpenErrorDialog(Messages.LegalReglementationsNotificationsCashingTotal);
-                //Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.InformationModal);
-                //Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, Messages.LegalReglementationsNotificationsCashingDaily);
-            }
+                if (VMUtils.LegalLimits.DailyCashingActive && CashBookEntries.Any(p => p.Incasari > VMUtils.LegalLimits.DailyCashing))
+                {
+                    var count = CashBookEntries.Count(p => p.Plati > VMUtils.LegalLimits.DailyCashing);
+                    Logger.Instance.Log.Debug(string.Format("CashBookEntries contains {0} entries with Incasari > {1}", count, VMUtils.LegalLimits.DailyCashing));
+                    errorMessage += Messages.LegalReglementationsNotificationsCashingDaily + Environment.NewLine;
+                }
 
-            if (VMUtils.LegalLimits.DailyCashingActive && CashBookEntries.Any(p => p.Incasari > VMUtils.LegalLimits.DailyCashing))
-            {
-                var count = CashBookEntries.Count(p => p.Plati > VMUtils.LegalLimits.DailyCashing);
-                Logger.Instance.Log.Debug(string.Format("CashBookEntries contains {0} entries with Incasari > {1}", count, VMUtils.LegalLimits.DailyCashing));
-                errorMessage += Messages.LegalReglementationsNotificationsCashingTotal + Environment.NewLine;
-                // WindowHelper.OpenErrorDialog(Messages.LegalReglementationsNotificationsCashingDaily);
-                //Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.InformationModal);
-                //Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, Messages.LegalReglementationsNotificationsCashingTotal);
-            }
+                if (VMUtils.LegalLimits.TotalBalanceActive && TotalBalance > VMUtils.LegalLimits.TotalBalance)
+                {
+                    Logger.Instance.Log.Debug(string.Format("TotalBalance  {0} > {1}", TotalBalance, VMUtils.LegalLimits.TotalBalance));
+                    errorMessage += Messages.LegalReglementationsNotificationsTotalBalance + Environment.NewLine;
+                }
 
-            if (VMUtils.LegalLimits.TotalBalanceActive && TotalBalance > VMUtils.LegalLimits.TotalBalance)
-            {
-                Logger.Instance.Log.Debug(string.Format("TotalBalance  {0} > {1}", TotalBalance, VMUtils.LegalLimits.TotalBalance));
-                errorMessage += Messages.LegalReglementationsNotificationsTotalBalance + Environment.NewLine;
-                //WindowHelper.OpenErrorDialog(Messages.LegalReglementationsNotificationsCashingTotal);
-                //Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.InformationModal);
-                //Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, Messages.LegalReglementationsNotificationsCashingDaily);
-            }
-
-            if (!string.IsNullOrEmpty(errorMessage))
-            {
-                WindowHelper.OpenErrorDialog(errorMessage);
-                //Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.InformationModal);
-                //Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, errorMessage);
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    WindowHelper.OpenErrorDialog(errorMessage);
+                }
             }
 
             bool moneyExchangeRateOk = true;
