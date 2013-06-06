@@ -815,11 +815,6 @@
             "AssemblyAsmDisplayName" = "8:CashBook.ViewModels, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_0957225EE59E7105FA6F7FE68059CF4D"
-                    {
-                    "Name" = "8:CashBook.ViewModels.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:CashBook.ViewModels.dll"
             "TargetName" = "8:"
@@ -846,11 +841,6 @@
             "AssemblyAsmDisplayName" = "8:Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_0C044143CF9BF1F22EF1A55C202B0B38"
-                    {
-                    "Name" = "8:Xceed.Wpf.AvalonDock.Themes.Aero.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Xceed.Wpf.AvalonDock.Themes.Aero.dll"
             "TargetName" = "8:"
@@ -877,11 +867,6 @@
             "AssemblyAsmDisplayName" = "8:Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_113334B188E4A59BFFCFD120922708F0"
-                    {
-                    "Name" = "8:Xceed.Wpf.AvalonDock.Themes.VS2010.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Xceed.Wpf.AvalonDock.Themes.VS2010.dll"
             "TargetName" = "8:"
@@ -908,11 +893,6 @@
             "AssemblyAsmDisplayName" = "8:Xceed.Wpf.DataGrid, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_15B7F9020D70826CD3D514F15BC58F79"
-                    {
-                    "Name" = "8:Xceed.Wpf.DataGrid.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Xceed.Wpf.DataGrid.dll"
             "TargetName" = "8:"
@@ -939,11 +919,6 @@
             "AssemblyAsmDisplayName" = "8:CashBook.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_176CA4772F6280B65DB0378C9671F56C"
-                    {
-                    "Name" = "8:CashBook.Controls.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:CashBook.Controls.dll"
             "TargetName" = "8:"
@@ -970,11 +945,6 @@
             "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_200BB597074D08BF400F5EA397043A09"
-                    {
-                    "Name" = "8:log4net.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:log4net.dll"
             "TargetName" = "8:"
@@ -1001,11 +971,6 @@
             "AssemblyAsmDisplayName" = "8:System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_27861ECCCEF30DB54AD23946ECADD078"
-                    {
-                    "Name" = "8:System.Data.SqlServerCe.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Data.SqlServerCe.dll"
             "TargetName" = "8:"
@@ -1032,11 +997,6 @@
             "AssemblyAsmDisplayName" = "8:Xceed.Wpf.AvalonDock, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_448809E140F4371049CEE237890BDEC7"
-                    {
-                    "Name" = "8:Xceed.Wpf.AvalonDock.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Xceed.Wpf.AvalonDock.dll"
             "TargetName" = "8:"
@@ -1094,11 +1054,6 @@
             "AssemblyAsmDisplayName" = "8:Xceed.Wpf.AvalonDock.Themes.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_54E33954F36935960F36F5A8062FBDA9"
-                    {
-                    "Name" = "8:Xceed.Wpf.AvalonDock.Themes.Metro.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Xceed.Wpf.AvalonDock.Themes.Metro.dll"
             "TargetName" = "8:"
@@ -1156,11 +1111,6 @@
             "AssemblyAsmDisplayName" = "8:Xceed.Wpf.Toolkit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_5CD8F33389D0DC21CE3E6943CA545C11"
-                    {
-                    "Name" = "8:Xceed.Wpf.Toolkit.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Xceed.Wpf.Toolkit.dll"
             "TargetName" = "8:"
@@ -1207,11 +1157,6 @@
             "AssemblyAsmDisplayName" = "8:CashBook.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_8F97F37F8BD64B4820B0DFC08AE7936B"
-                    {
-                    "Name" = "8:CashBook.Common.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:CashBook.Common.dll"
             "TargetName" = "8:"
@@ -1258,11 +1203,6 @@
             "AssemblyAsmDisplayName" = "8:CashBook.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_A899378DEDDC7290AC91A31932C47840"
-                    {
-                    "Name" = "8:CashBook.Data.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:CashBook.Data.dll"
             "TargetName" = "8:"
@@ -1289,11 +1229,6 @@
             "AssemblyAsmDisplayName" = "8:System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_B353488CF2724A8075A9D59D6EC89ABA"
-                    {
-                    "Name" = "8:System.Windows.Interactivity.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Windows.Interactivity.dll"
             "TargetName" = "8:"
@@ -1351,11 +1286,6 @@
             "AssemblyAsmDisplayName" = "8:CashBook.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_C6E7103F3413460B18808242210F60E1"
-                    {
-                    "Name" = "8:CashBook.Data.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:CashBook.Data.dll"
             "TargetName" = "8:"
@@ -1382,11 +1312,6 @@
             "AssemblyAsmDisplayName" = "8:System.Windows.Controls.Layout.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_CD3E0A782A58261B8DAE734464F16382"
-                    {
-                    "Name" = "8:System.Windows.Controls.Layout.Toolkit.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Windows.Controls.Layout.Toolkit.dll"
             "TargetName" = "8:"
@@ -1413,11 +1338,6 @@
             "AssemblyAsmDisplayName" = "8:WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_D6834174D291D1F9FF553D75679353D2"
-                    {
-                    "Name" = "8:WPFToolkit.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:WPFToolkit.dll"
             "TargetName" = "8:"
@@ -1484,11 +1404,6 @@
             "AssemblyAsmDisplayName" = "8:CashBook.Data.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_F9B27915C998452847CC4FDEDD255116"
-                    {
-                    "Name" = "8:CashBook.Data.Model.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:CashBook.Data.Model.dll"
             "TargetName" = "8:"
@@ -1515,11 +1430,6 @@
             "AssemblyAsmDisplayName" = "8:System.Windows.Controls.Input.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_F9E52332906AA6DAD57229EAE1039B2C"
-                    {
-                    "Name" = "8:System.Windows.Controls.Input.Toolkit.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Windows.Controls.Input.Toolkit.dll"
             "TargetName" = "8:"
@@ -1648,15 +1558,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Registru de Casa"
-        "ProductCode" = "8:{94701DE8-2946-4E05-990C-D7D293593ED5}"
-        "PackageCode" = "8:{A17E2A13-7F51-49B8-B1A1-3CF7739703CB}"
+        "ProductCode" = "8:{1E7DE8BF-25D1-4ABA-ABB4-FA26F3773CB2}"
+        "PackageCode" = "8:{6F2227A1-DB01-4081-8997-EA8366B0A6B3}"
         "UpgradeCode" = "8:{396C91A7-B658-498F-8ABB-B350AD2075A9}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.2"
+        "ProductVersion" = "8:1.0.5"
         "Manufacturer" = "8:Microsoft"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

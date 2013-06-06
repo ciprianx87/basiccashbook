@@ -59,7 +59,7 @@
 </Grid>
         <TextBlock Grid.Row="2" Text="Moneda:" />
         <!--<TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding CoinType,Mode=TwoWay}"/>-->
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" IsEnabled="{Binding EditCoinTypeEnabled}">
             <ComboBox   Width="130" HorizontalAlignment="Left" Margin="15,0,0,0" ItemsSource="{Binding ExistingCoinTypes}" SelectedItem="{Binding SelectedCoinType, Mode=TwoWay}"/>
             <Button Grid.Row="1"  Margin="10,0,0,0"  Command="{Binding CreateCoinTypeCommand}" Width="25" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <StackPanel Orientation="Vertical">

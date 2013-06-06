@@ -380,7 +380,7 @@ namespace CashBook
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Versiune: 1.0.1");
+            MessageBox.Show("Versiune: 1.0.5");
         }
 
         private void MenuItem_LegalLimitations(object sender, RoutedEventArgs e)

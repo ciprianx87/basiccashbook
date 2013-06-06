@@ -36,7 +36,7 @@ namespace CashBook.ViewModels
 
             cashBookRepository = new CashBookRepository();
             settingsRepository = new SettingsRepository();
-
+            EditCoinTypeEnabled = true;
             CoinDecimals = 2;
             LoadData();
 
@@ -74,6 +74,21 @@ namespace CashBook.ViewModels
             }
         }
 
+
+        private bool editCoinTypeEnabled;
+        public bool EditCoinTypeEnabled
+        {
+            get { return editCoinTypeEnabled; }
+            set
+            {
+                if (editCoinTypeEnabled != value)
+                {
+                    editCoinTypeEnabled = value;
+                    this.NotifyPropertyChanged("EditCoinTypeEnabled");
+                }
+            }
+        }
+
         private string name;
         public string Name
         {
@@ -86,7 +101,8 @@ namespace CashBook.ViewModels
                 {
                     NameErrorVisibility = Visibility.Visible;
                 }
-                else {
+                else
+                {
                     NameErrorVisibility = Visibility.Collapsed;
                 }
             }
@@ -170,7 +186,7 @@ namespace CashBook.ViewModels
             }
         }
 
-             private byte selectedDecimal;
+        private byte selectedDecimal;
         public byte SelectedDecimal
         {
             get { return selectedDecimal; }
@@ -335,6 +351,7 @@ namespace CashBook.ViewModels
                 InitialBalance = currentEntity.InitialBalance;
                 InitialBalanceDate = currentEntity.InitialBalanceDate;
                 //SelectedCoinType = CoinType;
+                EditCoinTypeEnabled = false;
             }
             else
             {
