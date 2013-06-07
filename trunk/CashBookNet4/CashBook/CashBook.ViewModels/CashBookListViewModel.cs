@@ -105,6 +105,10 @@ namespace CashBook.ViewModels
             LoadData();
 
         }
+        private void UpdateLegalReglementations()
+        {
+
+        }
 
         DispatcherTimer dt;
         private void LoadData()
@@ -116,7 +120,7 @@ namespace CashBook.ViewModels
             {
                 var settingsRepository = new SettingsRepository();
                 VMUtils.LegalLimits = VMUtils.GetLegalLimits(settingsRepository);
-
+                UpdateLegalReglementations();
                 var tempCashBooks = new List<UserCashBook>();
                 CashBooks = new ObservableCollection<UserCashBook>();
                 var existingCashBooks = cashBookRepository.GetAll(cashBookListType);

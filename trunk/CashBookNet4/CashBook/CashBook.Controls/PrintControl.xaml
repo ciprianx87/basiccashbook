@@ -35,7 +35,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
             <Label Content="Registru de casa:" BorderThickness="0"/>
-            <ComboBox Width="300" HorizontalAlignment="Left" DisplayMemberPath="Name"  ItemsSource="{Binding CashBooks}" SelectedItem="{Binding SelectedCashBook, Mode=TwoWay}"  Margin="10,0,0,0"></ComboBox>
+            <ComboBox Width="300" HorizontalAlignment="Left" DisplayMemberPath="NameAndLocation"  ItemsSource="{Binding CashBooks}" SelectedItem="{Binding SelectedCashBook, Mode=TwoWay}"  Margin="10,0,0,0"></ComboBox>
         </StackPanel>
         <Grid Grid.Row="1" Margin="10,0,0,0">
             <Grid.RowDefinitions>

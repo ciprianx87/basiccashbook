@@ -26,6 +26,7 @@ using Microsoft.Win32;
 using System.IO;
 using System.Windows.Threading;
 using CashBook.ViewModels;
+using System.Diagnostics;
 
 namespace CashBook
 {
@@ -58,7 +59,7 @@ namespace CashBook
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ShowCashBookListScreen(CashBookListType.Any);
 
-            //CheckAppValidity();
+            CheckAppValidity();
 
             CopyDBIfNeeded();
         }
@@ -380,13 +381,38 @@ namespace CashBook
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Versiune: 1.0.5");
+            MessageBox.Show("Versiune: 1.0.8");
+        
         }
 
         private void MenuItem_LegalLimitations(object sender, RoutedEventArgs e)
         {
             ChangeContent(ContentTypes.LegalLimitations);
             
+        }
+
+        private void Help_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start("test.doc");
+                
+                using (var regWord = Registry.ClassesRoot.OpenSubKey("Word.Application"))
+                {
+                    if (regWord == null)
+                    {
+                        Console.WriteLine("Microsoft Word is not installed");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Microsoft Word is installed");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
         }
 
     }

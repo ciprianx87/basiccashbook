@@ -24,6 +24,7 @@
             </MenuItem>
             <MenuItem Header="Rapoarte" Click="MenuItem_Reports" ></MenuItem>
             <MenuItem Header="Ajutor">
+                <MenuItem Header="Flux registru de casa" Click="Help_Click"/>
                 <MenuItem Header="Despre" Click="About_Click"></MenuItem>
             </MenuItem>
 

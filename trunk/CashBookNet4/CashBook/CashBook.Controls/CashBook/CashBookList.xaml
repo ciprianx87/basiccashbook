@@ -104,7 +104,7 @@
                     <DataGridTemplateColumn Width="140" Header="Sold">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
-                                <TextBlock Text="{Binding CurrentBalanceString}"  Style="{StaticResource StandardTextBlock}"/>
+                                <TextBlock Text="{Binding CurrentBalanceString}"  Style="{StaticResource StandardTextBlock}" HorizontalAlignment="Right"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
