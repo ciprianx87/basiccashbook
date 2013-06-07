@@ -21,6 +21,13 @@ namespace CashBook.Data.Model
 
         public string LastDateTimeWithEntriesString { get; set; }
         public string CurrentBalanceString { get; set; }
+        public string NameAndLocation
+        {
+            get
+            {
+                return this.Name + " - " + this.Location;
+            }
+        }
         public UserCashBook()
         {
             
