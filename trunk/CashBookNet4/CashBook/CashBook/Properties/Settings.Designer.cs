@@ -58,5 +58,14 @@ namespace CashBook.Properties {
                 return ((int)(this["TotalPaymentLimit"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Documentatie.doc")]
+        public string DocumentationFileName {
+            get {
+                return ((string)(this["DocumentationFileName"]));
+            }
+        }
     }
 }

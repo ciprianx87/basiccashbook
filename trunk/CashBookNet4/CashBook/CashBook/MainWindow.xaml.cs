@@ -82,7 +82,7 @@ namespace CashBook
                     else
                     {
                         //copy the empty DB
-                       
+
                         FileInfo emptyFi = new FileInfo(emptyDbDir.FullName + "\\CashBookEmpty.sdf");
                         File.Copy(emptyFi.FullName, databaseDbDir.FullName + "\\CashBook.sdf");
                     }
@@ -382,35 +382,34 @@ namespace CashBook
         private void About_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Versiune: 1.0.8");
-        
+
         }
 
         private void MenuItem_LegalLimitations(object sender, RoutedEventArgs e)
         {
             ChangeContent(ContentTypes.LegalLimitations);
-            
+
         }
 
         private void Help_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Process.Start("test.doc");
-                
                 using (var regWord = Registry.ClassesRoot.OpenSubKey("Word.Application"))
                 {
                     if (regWord == null)
                     {
-                        Console.WriteLine("Microsoft Word is not installed");
+                        MessageBox.Show("Trebuie sa aveti instalat Office Word pentru a putea deschide acest document");
                     }
                     else
                     {
-                        Console.WriteLine("Microsoft Word is installed");
+                        Process.Start(Properties.Settings.Default.DocumentationFileName);
                     }
                 }
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Nu s-a putut deschide documentul");
                 Logger.Instance.LogException(ex);
             }
         }
