@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using CashBook.Common.Mediator;
 using System.Threading;
 using System.Windows.Threading;
+using System.IO;
 
 namespace CashBook.ViewModels
 {
@@ -107,7 +108,21 @@ namespace CashBook.ViewModels
         }
         private void UpdateLegalReglementations()
         {
-
+            var settingsRepository = new SettingsRepository();
+            var currentSetting = settingsRepository.GetSetting(Constants.LegalRelementationsKey);
+            if (currentSetting == null)
+            {
+                var sr = new StreamReader(File.Open("DefaultLegalReglementations.txt", FileMode.Open, FileAccess.Read));
+                string legalReglementations = sr.ReadToEnd();
+                settingsRepository.AddOrUpdateSetting(Constants.LegalRelementationsKey, legalReglementations);
+                try
+                {
+                    sr.Close();
+                }
+                catch
+                {
+                }
+            }
         }
 
         DispatcherTimer dt;
@@ -120,7 +135,9 @@ namespace CashBook.ViewModels
             {
                 var settingsRepository = new SettingsRepository();
                 VMUtils.LegalLimits = VMUtils.GetLegalLimits(settingsRepository);
+
                 UpdateLegalReglementations();
+
                 var tempCashBooks = new List<UserCashBook>();
                 CashBooks = new ObservableCollection<UserCashBook>();
                 var existingCashBooks = cashBookRepository.GetAll(cashBookListType);
