@@ -214,11 +214,11 @@ namespace CashBook.Data.Repositories
             CashBookEntry result = null;
             using (var context = GetContext())
             {
-                int currentYear = DateTime.Now.Year;
+                int currentYear = currentDay.Year;
                 result = context.CashBookEntries.FirstOrDefault(p => currentEntries.Contains(p.NrActCasa)
                     && ((currentCashBookId == p.RegistruCasaZi.RegistruCasaId && p.RegistruCasaZi.Data != currentDay)
                     || (currentCashBookId != p.RegistruCasaZi.RegistruCasaId)
-                    )
+                  ) && p.Incasari != 0
                     && p.RegistruCasaZi.Data.Year == currentYear);
                 if (result != null)
                 {

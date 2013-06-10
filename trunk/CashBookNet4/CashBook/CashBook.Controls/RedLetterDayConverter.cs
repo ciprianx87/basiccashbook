@@ -85,4 +85,47 @@ namespace CashBook.Controls
         }
     }
 
+
+
+    public class ThousandsConverter : IValueConverter
+    {
+       
+        public object Convert(object value, Type targetType,
+                              object parameter, CultureInfo culture)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+            try
+            {
+                decimal dec = 0;
+                decimal.TryParse(value.ToString(), out dec);
+                return DecimalConvertor.Instance.DecimalToString(dec, 0);
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType,
+                                  object parameter, CultureInfo culture)
+        {
+            if (value == null)
+            {
+                return 0;
+            }
+            try
+            {
+                var ret = DecimalConvertor.Instance.StringToDecimal(value.ToString());
+                return ret;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+    }
+
 }
