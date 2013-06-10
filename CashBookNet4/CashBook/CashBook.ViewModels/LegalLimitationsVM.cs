@@ -152,10 +152,135 @@ namespace CashBook.ViewModels
             }
         }
 
+        #region string versions
 
+        private int dailyCashingString;
+        public int DailyCashingString
+        {
+            get { return dailyCashingString; }
+            set
+            {
+                if (dailyCashingString != value)
+                {
+                    dailyCashingString = value;
+                    this.NotifyPropertyChanged("DailyCashingString");
+                }
+            }
+        }
+
+
+
+        private int totalCashingString;
+        public int TotalCashingString
+        {
+            get { return totalCashingString; }
+            set
+            {
+                if (totalCashingString != value)
+                {
+                    totalCashingString = value;
+                    this.NotifyPropertyChanged("TotalCashingString");
+                }
+            }
+        }
+
+
+        private int totalPaymentString;
+        public int TotalPaymentString
+        {
+            get { return totalPaymentString; }
+            set
+            {
+                if (totalPaymentString != value)
+                {
+                    totalPaymentString = value;
+                    this.NotifyPropertyChanged("TotalPaymentString");
+                }
+            }
+        }
+
+
+        private int dailyPaymentString;
+        public int DailyPaymentString
+        {
+            get { return dailyPaymentString; }
+            set
+            {
+                if (dailyPaymentString != value)
+                {
+                    dailyPaymentString = value;
+                    this.NotifyPropertyChanged("DailyPaymentString");
+                }
+            }
+        }
+
+        private int totalBalanceString;
+        public int TotalBalanceString
+        {
+            get { return totalBalanceString; }
+            set
+            {
+                if (totalBalanceString != value)
+                {
+                    totalBalanceString = value;
+                    this.NotifyPropertyChanged("TotalBalanceString");
+                }
+            }
+        }
+
+
+        private bool dailyCashingActiveString;
+        public bool DailyCashingActiveString
+        {
+            get { return dailyCashingActiveString; }
+            set
+            {
+                if (dailyCashingActiveString != value)
+                {
+                    dailyCashingActiveString = value;
+                    this.NotifyPropertyChanged("DailyCashingActiveString");
+                }
+            }
+        }
+
+
+        private bool totalCashingActiveString;
+        public bool TotalCashingActiveString
+        {
+            get { return totalCashingActiveString; }
+            set
+            {
+                if (totalCashingActiveString != value)
+                {
+                    totalCashingActiveString = value;
+                    this.NotifyPropertyChanged("TotalCashingActiveString");
+                }
+            }
+        }
+
+
+        private bool totalBalanceActiveString;
+        public bool TotalBalanceActiveString
+        {
+            get { return totalBalanceActiveString; }
+            set
+            {
+                if (totalBalanceActiveString != value)
+                {
+                    totalBalanceActiveString = value;
+                    this.NotifyPropertyChanged("TotalBalanceActiveString");
+                }
+            }
+        }
+
+        #endregion
         #endregion
 
         #region methods
+        private void UpdateStringFields()
+        {
+            //PlatiString = DecimalConvertor.Instance.DecimalToString(Plati);
+        }
         public string Error
         {
             get { throw new NotImplementedException(); }

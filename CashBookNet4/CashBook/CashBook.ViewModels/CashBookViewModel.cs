@@ -678,21 +678,21 @@ namespace CashBook.ViewModels
                             .ToList();
             if (duplicates.Count > 0)
             {
-                WindowHelper.OpenErrorDialog(string.Format("Nu se poate sa aveti doua acte de casa cu acelasi numar pentru incasari ({0})", duplicates[0]));
+                WindowHelper.OpenErrorDialog(string.Format("Nu se poate sa aveti doua acte de casa cu acelasi numar pentru incasari (\"{0}\")", duplicates[0]));
                 return false;
             }
             //also check for duplicates for all the current year
-            //DateTime? duplicateDate = null;
-            //string duplicateCashBook = "";
-            //var currentEntries = CashBookEntries.Select(p => p.NrActCasa).ToList();
-            //CashBookEntry existingDuplicate = cashBookEntryRepository.GetDuplicateEntryByNumber(currentEntries, SelectedCashBook.Id, Utils.DateTimeToDay(SelectedDate), out duplicateDate, out duplicateCashBook);
-            //if (existingDuplicate != null && duplicateDate.HasValue)
-            //{
-            //    //var cashBookRepository.Get(existingDuplicate.RegistruCasaZiId);
+            DateTime? duplicateDate = null;
+            string duplicateCashBook = "";
+            var currentEntries = CashBookEntries.Where(p => p.Incasari != 0).Select(p => p.NrActCasa).ToList();
+            CashBookEntry existingDuplicate = cashBookEntryRepository.GetDuplicateEntryByNumber(currentEntries, SelectedCashBook.Id, Utils.DateTimeToDay(SelectedDate), out duplicateDate, out duplicateCashBook);
+            if (existingDuplicate != null && duplicateDate.HasValue)
+            {
+                //var cashBookRepository.Get(existingDuplicate.RegistruCasaZiId);
 
-            //    WindowHelper.OpenErrorDialog(string.Format("Nu se poate sa aveti doua acte de casa cu acelasi numar pentru incasari ({0}, in data de {1}, registrul {2})", existingDuplicate.NrActCasa, Utils.DateTimeToStringDateOnly(duplicateDate.Value), duplicateCashBook));
-            //    return false;
-            //}
+                WindowHelper.OpenErrorDialog(string.Format("Nu se poate sa aveti doua acte de casa cu acelasi numar pentru incasari (\"{0}\", in data de {1}, registrul {2})", existingDuplicate.NrActCasa, Utils.DateTimeToStringDateOnly(duplicateDate.Value), duplicateCashBook));
+                return false;
+            }
             return true;
         }
 

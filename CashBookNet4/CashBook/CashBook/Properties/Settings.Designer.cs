@@ -61,7 +61,7 @@ namespace CashBook.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Documentatie.doc")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Documentation\\Documentatie.doc")]
         public string DocumentationFileName {
             get {
                 return ((string)(this["DocumentationFileName"]));

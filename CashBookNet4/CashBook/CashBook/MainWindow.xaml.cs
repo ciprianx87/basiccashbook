@@ -59,7 +59,7 @@ namespace CashBook
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ShowCashBookListScreen(CashBookListType.Any);
 
-            CheckAppValidity();
+            //CheckAppValidity();
 
             CopyDBIfNeeded();
         }
@@ -381,7 +381,7 @@ namespace CashBook
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Versiune: 1.0.9");
+            MessageBox.Show("Versiune: 1.0.13");
 
         }
 

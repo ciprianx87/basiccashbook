@@ -16,11 +16,11 @@ namespace CashBook.ViewModels
     {
         public static void ExtractCoinTypes(ISettingsRepository settingsRepository, ObservableCollection<string> coinTypes)
         {
-            //coinTypes = new ObservableCollection<string>();
             string allCoinTypes = settingsRepository.GetSetting(Constants.CoinTypesKey);
-            if (allCoinTypes == null)
+            //fix for old version of the coin types
+            if (allCoinTypes == null || allCoinTypes == "LEI;EURO;DOLARI")
             {
-                settingsRepository.AddOrUpdateSetting(Constants.CoinTypesKey, "LEI;EURO;DOLARI");
+                settingsRepository.AddOrUpdateSetting(Constants.CoinTypesKey, "LEI;EUR;USD");
             }
             allCoinTypes = settingsRepository.GetSetting(Constants.CoinTypesKey);
             if (allCoinTypes != null)
