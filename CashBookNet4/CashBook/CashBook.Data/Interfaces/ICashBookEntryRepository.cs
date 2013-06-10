@@ -21,5 +21,8 @@ namespace CashBook.Data.Interfaces
         decimal? GetExchangeRateForDay(Int64 selectedCashBookId, DateTime dateTime);
         List<DateTime> GetCompletedDays(long selectedCashBookId);
 
+
+        CashBookEntry GetDuplicateEntryByNumber(List<string> currentEntries, long currentCashBookId, DateTime currentDay,
+            out DateTime? date, out string registryName);
     }
 }
