@@ -381,7 +381,7 @@ namespace CashBook
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Versiune: 1.0.8");
+            MessageBox.Show("Versiune: 1.0.9");
 
         }
 

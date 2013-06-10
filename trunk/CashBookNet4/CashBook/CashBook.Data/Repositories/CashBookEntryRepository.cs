@@ -204,5 +204,33 @@ namespace CashBook.Data.Repositories
             }
             return result;
         }
+
+
+        public CashBookEntry GetDuplicateEntryByNumber(List<string> currentEntries, long currentCashBookId, DateTime currentDay,
+            out DateTime? date, out string registryName)
+        {
+            date = null;
+            registryName = "";
+            CashBookEntry result = null;
+            using (var context = GetContext())
+            {
+                int currentYear = DateTime.Now.Year;
+                result = context.CashBookEntries.FirstOrDefault(p => currentEntries.Contains(p.NrActCasa)
+                    && ((currentCashBookId == p.RegistruCasaZi.RegistruCasaId && p.RegistruCasaZi.Data != currentDay)
+                    || (currentCashBookId != p.RegistruCasaZi.RegistruCasaId)
+                    )
+                    && p.RegistruCasaZi.Data.Year == currentYear);
+                if (result != null)
+                {
+                    var dailyCashBook = context.DailyCashBooks.FirstOrDefault(p => p.Id == result.RegistruCasaZiId);
+                    if (dailyCashBook != null)
+                    {
+                        date = dailyCashBook.Data;
+                        registryName = dailyCashBook.RegistruCasa.NameAndLocation;
+                    }
+                }
+            }
+            return result;
+        }
     }
 }
