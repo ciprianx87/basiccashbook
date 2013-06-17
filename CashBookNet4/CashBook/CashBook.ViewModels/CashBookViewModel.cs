@@ -617,13 +617,12 @@ namespace CashBook.ViewModels
                     Logger.Instance.Log.Debug(string.Format("TotalBalance  {0} > {1}", TotalBalance, VMUtils.LegalLimits.TotalBalance));
                     errorMessage += Messages.LegalReglementationsNotificationsTotalBalance + Environment.NewLine;
                 }
-
-                if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    WindowHelper.OpenErrorDialog(errorMessage);
-                }
+             
             }
-
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                WindowHelper.OpenErrorDialog(errorMessage);
+            }
             bool moneyExchangeRateOk = true;
             try
             {

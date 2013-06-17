@@ -156,6 +156,10 @@ namespace CashBook.Controls
             }
         }
 
+        /// <summary>
+        /// allows printing multiple pages into the same document, when used in PDF or XPS printing
+        /// </summary>
+        /// <param name="pagesToPrint"></param>
         private void PrintVmPagesUpdated(List<ReportPageVM> pagesToPrint)
         {
             if (pagesToPrint == null || pagesToPrint.Count == 0)
@@ -168,7 +172,7 @@ namespace CashBook.Controls
 
             if (dialog.ShowDialog() != true) return;
 
-            FixedDocument myDocument = new FixedDocument();
+            FixedDocument fixedDocument = new FixedDocument();
 
             foreach (var page in pagesToPrint)
             {
@@ -202,10 +206,10 @@ namespace CashBook.Controls
 
 
                 //add page to document  
-                myDocument.Pages.Add(pageContent);
+                fixedDocument.Pages.Add(pageContent);
             }
             // dialog.PrintVisual(myDocument.DocumentPaginator "Raport");
-            dialog.PrintDocument(myDocument.DocumentPaginator, "Raport");
+            dialog.PrintDocument(fixedDocument.DocumentPaginator, "Raport");
 
 
         }

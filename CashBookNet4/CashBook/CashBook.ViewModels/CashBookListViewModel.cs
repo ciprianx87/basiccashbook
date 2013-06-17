@@ -39,6 +39,9 @@ namespace CashBook.ViewModels
             Mediator.Instance.Register(MediatorActionType.SetRemainingDays, SetRemainingDays);
 
             cashBookRepository = new CashBookRepository();
+            //set the message to the previously existing one (if any)
+            RemainingDays = CurrentRemainingDaysMessage;
+
             //SetRemainingDays(Constants.RemainingDays);
         }
 
@@ -83,10 +86,11 @@ namespace CashBook.ViewModels
                 //LoadData();
             }
         }
-
+        public static string CurrentRemainingDaysMessage = "";
         public void SetRemainingDays(object param)
         {
             RemainingDays = "Zile ramase: " + param;
+            CurrentRemainingDaysMessage = RemainingDays;
         }
 
         public void RefreshList(object param)
