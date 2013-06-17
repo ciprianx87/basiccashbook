@@ -51,7 +51,7 @@ namespace CashBook.Controls
 
         void pp_Loaded(object sender, RoutedEventArgs e)
         {
-            var lstItems=(sender as PrintedPage).GetLstItems();
+            var lstItems = (sender as PrintedPage).GetLstItems();
             var height = lstItems.ActualHeight;
             int maxRowsPerPage = (int)height / rowHeight;
             (this.DataContext as PrintControlVM).SetMaxEntriesPerPage(maxRowsPerPage);
@@ -119,7 +119,8 @@ namespace CashBook.Controls
             {
                 //grdReport.Children.Clear();
                 List<ReportPageVM> pagesToPrint = param as List<ReportPageVM>;
-                PrintVmPages(pagesToPrint);
+                //PrintVmPages(pagesToPrint);
+                PrintVmPagesUpdated(pagesToPrint);
             }
 
         }
@@ -130,9 +131,9 @@ namespace CashBook.Controls
             {
                 return;
             }
-           // PrintedPage pp = new PrintedPage();
+            // PrintedPage pp = new PrintedPage();
             PrintDialog dialog = new PrintDialog();
-            dialog.PrintTicket.PageOrientation = PageOrientation.Landscape; 
+            dialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
 
             if (dialog.ShowDialog() != true) return;
 
@@ -150,8 +151,127 @@ namespace CashBook.Controls
                 grdReport.UpdateLayout();
                 //grdReport.Arrange(new Rect(new Point(50, 50), grdReport.DesiredSize));
                 //grdReport.Visibility = System.Windows.Visibility.Hidden;
-      
+
                 dialog.PrintVisual(grdReport, "Raport");
+            }
+        }
+
+        private void PrintVmPagesUpdated(List<ReportPageVM> pagesToPrint)
+        {
+            if (pagesToPrint == null || pagesToPrint.Count == 0)
+            {
+                return;
+            }
+            // PrintedPage pp = new PrintedPage();
+            PrintDialog dialog = new PrintDialog();
+            dialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
+
+            if (dialog.ShowDialog() != true) return;
+
+            FixedDocument myDocument = new FixedDocument();
+
+            foreach (var page in pagesToPrint)
+            {
+                var printedPage = new PrintedPage();
+                printedPage.DataContext = page;
+                Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
+                grdReport = new Grid();
+                grdReport.Children.Clear();
+                grdReport.Children.Add(printedPage);
+                Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
+
+                grdReport.Measure(new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight));
+                grdReport.UpdateLayout();
+                //grdReport.Arrange(new Rect(new Point(50, 50), grdReport.DesiredSize));
+                //grdReport.Visibility = System.Windows.Visibility.Hidden;
+
+                // dialog.PrintVisual(grdReport, "Raport");
+
+                PageContent pageContent = new PageContent();
+                FixedPage pg = new FixedPage();
+                //page.Width = capabilities.PageImageableArea.ExtentWidth;
+                //page.Height = capabilities.PageImageableArea.ExtentHeight;
+
+                //container holds our visual...  
+                //VisualContainer myContainer = new VisualContainer();
+                //myContainer.AddVisual(drawingVisual);
+
+                //add container to the page  
+                pg.Children.Add(grdReport);
+                ((System.Windows.Markup.IAddChild)pageContent).AddChild(pg);
+
+
+                //add page to document  
+                myDocument.Pages.Add(pageContent);
+            }
+            // dialog.PrintVisual(myDocument.DocumentPaginator "Raport");
+            dialog.PrintDocument(myDocument.DocumentPaginator, "Raport");
+
+
+        }
+
+
+
+        private void PrintVisual(Control element, string description)
+        {
+            PrintDialog printDlg = new System.Windows.Controls.PrintDialog();
+
+            if (printDlg.ShowDialog() == true)
+            {
+                Size szOrg = new Size(element.ActualWidth, element.ActualHeight);
+                System.Printing.PrintCapabilities capabilities = printDlg.PrintQueue.GetPrintCapabilities(printDlg.PrintTicket);
+                double scale = capabilities.PageImageableArea.ExtentWidth / element.ActualWidth;
+                Size sz = new Size(capabilities.PageImageableArea.ExtentWidth, element.ActualHeight);
+
+                element.Measure(sz);
+                element.Arrange(new Rect(new Point(capabilities.PageImageableArea.OriginWidth, capabilities.PageImageableArea.OriginHeight), sz));
+
+
+                //Capture the image of the visual in the same size as Printing page.  
+                RenderTargetBitmap bmp = new RenderTargetBitmap((int)element.ActualWidth, (int)element.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+                bmp.Render(element);
+
+                FixedDocument myDocument = new FixedDocument();
+
+
+                for (int offset = 0; offset < element.ActualHeight; offset += (int)capabilities.PageImageableArea.ExtentHeight)
+                {
+                    DrawingVisual drawingVisual = new DrawingVisual();
+
+                    //create a drawing context so that image can be rendered to print  
+
+                    DrawingContext dc = drawingVisual.RenderOpen();
+
+                    dc.PushTransform(new TranslateTransform(0, -offset));
+                    dc.DrawImage(bmp, new System.Windows.Rect(sz));
+                    dc.Close();
+
+                    //now print the image visual to printer to fit on the one page.  
+
+                    PageContent pageContent = new PageContent();
+                    FixedPage page = new FixedPage();
+                    page.Width = capabilities.PageImageableArea.ExtentWidth;
+                    page.Height = capabilities.PageImageableArea.ExtentHeight;
+
+                    //container holds our visual...  
+                    VisualContainer myContainer = new VisualContainer();
+                    myContainer.AddVisual(drawingVisual);
+
+                    //add container to the page  
+                    page.Children.Add(myContainer);
+                    ((System.Windows.Markup.IAddChild)pageContent).AddChild(page);
+
+
+                    //add page to document  
+                    myDocument.Pages.Add(pageContent);
+
+                }
+
+                printDlg.PrintDocument(myDocument.DocumentPaginator, description);
+
+
+                element.Measure(szOrg);
+
             }
 
         }
@@ -162,7 +282,30 @@ namespace CashBook.Controls
             (this.DataContext as BaseViewModel).Dispose();
         }
     }
+    public class VisualContainer : FrameworkElement
+    {
+        private readonly VisualCollection children;
 
+        public VisualContainer()
+        {
+            children = new VisualCollection(this);
+        }
+
+        public void AddVisual(Visual v)
+        {
+            children.Add(v);
+        }
+
+        protected override Visual GetVisualChild(int index)
+        {
+            return children[index];
+        }
+
+        protected override int VisualChildrenCount
+        {
+            get { return children.Count; }
+        }
+    }
     public class TestClass
     {
         public string Test { get; set; }
