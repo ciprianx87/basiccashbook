@@ -35,6 +35,8 @@ namespace CashBook
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string version = "";
+
         //<!--<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/>-->
         public MainWindow()
         {
@@ -58,7 +60,7 @@ namespace CashBook
             PopupManager.Instance.Init();
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ShowCashBookListScreen(CashBookListType.Any);
-
+            version = "1.0.14";
             //CheckAppValidity();
 
             CopyDBIfNeeded();
@@ -381,7 +383,8 @@ namespace CashBook
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Versiune: 1.0.13");
+            string iconInfo="Icoanele au fost preluate de pe http://www.iconfinder.com/iconsets/finance_icons#readme";
+            MessageBox.Show(string.Format("Versiune: {0} {1}{2}",version, Environment.NewLine,iconInfo));
 
         }
 
