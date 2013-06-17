@@ -60,8 +60,8 @@ namespace CashBook
             PopupManager.Instance.Init();
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ShowCashBookListScreen(CashBookListType.Any);
-            version = "1.0.15 full";
-            //CheckAppValidity();
+            version = "1.0.15 demo";
+            CheckAppValidity();
 
             CopyDBIfNeeded();
         }
