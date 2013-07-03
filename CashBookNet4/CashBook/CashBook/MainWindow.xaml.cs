@@ -27,6 +27,7 @@ using System.IO;
 using System.Windows.Threading;
 using CashBook.ViewModels;
 using System.Diagnostics;
+using System.Management;
 
 namespace CashBook
 {
@@ -61,8 +62,9 @@ namespace CashBook
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ShowCashBookListScreen(CashBookListType.Any);
             version = "1.0.15 demo";
-            CheckAppValidity();
+            //CheckAppValidity();
 
+            CheckAppRegistrationStatus();
             CopyDBIfNeeded();
         }
 
@@ -108,6 +110,80 @@ namespace CashBook
             }
         }
 
+        private void CheckAppRegistrationStatus()
+        {
+            string serial = GetExistingSerial();
+            string motherBoardId = GetMotherBoardID();
+            // string mbId = GetMotherBoardId();
+            if (string.IsNullOrEmpty(serial))
+            {
+                motherBoardId = motherBoardId.Trim(new char[] { '\\', '/' });
+                int mbHash = motherBoardId.GetHashCode();
+                //prompt the user to enter the validation code
+                RegistrationDialog registrationDialog = new RegistrationDialog(motherBoardId, mbHash);
+                PopupManager.Instance.CenterPopup(registrationDialog);
+                bool? dialogResult = registrationDialog.ShowDialog();
+                if (dialogResult == true)
+                {
+                }
+                else
+                {
+                    Exit();
+                }
+            }
+        }
+        private string GetMotherBoardId()
+        {
+            string serial = "";
+            ManagementObjectSearcher MOS = new ManagementObjectSearcher("Select * From Win32_BaseBoard");
+            foreach (ManagementObject getserial in MOS.Get())
+            {
+                serial = getserial["SerialNumber"].ToString();
+            }
+            return serial;
+        }
+
+        public static string GetMotherBoardID()
+        {
+            string mbInfo = String.Empty;
+            ManagementScope scope = new ManagementScope("\\\\" + Environment.MachineName + "\\root\\cimv2");
+            scope.Connect();
+            ManagementObject wmiClass = new ManagementObject(scope, new ManagementPath("Win32_BaseBoard.Tag=\"Base Board\""), new ObjectGetOptions());
+
+            foreach (PropertyData propData in wmiClass.Properties)
+            {
+                if (propData.Name == "SerialNumber")
+                {
+                    mbInfo = propData.Value.ToString();
+                }
+                //mbInfo = String.Format("{0,-25}{1}", propData.Name, Convert.ToString(propData.Value));
+            }
+
+            return mbInfo;
+        }
+
+        private string GetExistingSerial()
+        {
+            string serial = "";
+            StreamWriter fileWriter = null;
+            try
+            {
+                string fileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Constants.SerialKeyFilename);
+                FileInfo file = new FileInfo(fileName);
+                if (file.Exists)
+                {
+                    //read current value
+                    StreamReader fs = new StreamReader(file.Open(FileMode.Open, FileAccess.Read));
+                    serial = fs.ReadLine();
+                    return serial;
+                }
+            }
+            catch
+            {
+            }
+            return serial;
+
+        }
         private bool ConfigureFile()
         {
             StreamWriter fileWriter = null;
