@@ -90,9 +90,8 @@ namespace CashBook.Controls.Popups
                 }
             }
         }
-        private void CenterPopup(Window popup)
+        public void CenterPopup(Window popup)
         {
-
             double primScreenHeight = System.Windows.SystemParameters.FullPrimaryScreenHeight;
             double primScreenWidth = System.Windows.SystemParameters.FullPrimaryScreenWidth;
             popup.Top = (primScreenHeight - popup.Height) / 2;
