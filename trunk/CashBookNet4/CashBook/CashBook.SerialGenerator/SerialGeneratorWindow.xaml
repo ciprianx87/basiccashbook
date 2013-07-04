@@ -1,4 +1,4 @@
-﻿<Window x:Class="CashBook.Controls.Popups.RegistrationDialog"
+﻿<Window x:Class="CashBook.SerialGenerator.SerialGeneratorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True"
@@ -13,14 +13,14 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="txtInformation" Text="Va rugam comunicati urmatorul cod furnizorului aplicatiei" FontSize="18" Margin="0"/>
-            <TextBlock x:Name="txtGeneratedKey" FontSize="24" Grid.Row="1"/>
-            <TextBlock FontSize="16" Grid.Row="2" Text="Introduceti codul furnizat:" />
-            <TextBox FontSize="24" Grid.Row="3" Text="" Width="300" HorizontalAlignment="Left" x:Name="txtSerialNumber"/>
+            <TextBlock FontSize="16" Grid.Row="0" Text="Introduceti codul furnizat:" />
+            <TextBox FontSize="24" Grid.Row="1" Text="" Width="300" HorizontalAlignment="Left" x:Name="txtSerialNumber"/>
+            <TextBlock FontSize="16" Grid.Row="2" Text="Codul generat:" />
+            <TextBox FontSize="24" Grid.Row="3" Text="" Width="300" HorizontalAlignment="Left" x:Name="txtGeneratedKey" IsReadOnly="True"/>
 
             <StackPanel Grid.Row="5" HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Content="Ok" Width="70" FontSize="16" Command="{Binding OKCommand}" Margin="10,10,10,10" Click="Ok_Click"></Button>
-                <Button Content="Cancel" Width="70" FontSize="16" Command="{Binding CancelCommand}"  Margin="10,10,10,10" Click="Cancel_Click"></Button>
+                <Button Content="Genereaza" Width="90" FontSize="16" Command="{Binding OKCommand}" Margin="10,10,10,10" Click="Genereaza_Click"></Button>
+                <Button Content="Iesire" Width="70" FontSize="16" Command="{Binding CancelCommand}"  Margin="10,10,10,10" Click="Cancel_Click"></Button>
             </StackPanel>
         </Grid>
     </Border>

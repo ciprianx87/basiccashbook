@@ -3,11 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace CashBook.Common
 {
     public static class Utils
     {
+        public static int GeneratePairedKey(string initialKey)
+        {
+            string constantKey = "CashRegister2013";
+            int hash = 23;
+            hash = hash * 2 + initialKey.GetHashCode();
+            hash = hash * 3 + constantKey.GetHashCode();
+            hash = Math.Abs(hash);
+            Debug.WriteLine("generated paired key: " + hash);
+            return hash;
+
+        }
+
         public static DateTime DateTimeToDay(DateTime date)
         {
             return date.Date;
@@ -42,21 +55,22 @@ namespace CashBook.Common
                 return decimalString;
             }
 
-            if (Count(decimalString, '.') == 0 && Count(decimalString, ',') ==1)
+            if (Count(decimalString, '.') == 0 && Count(decimalString, ',') == 1)
             {
                 return decimalString;
             }
             if (Count(decimalString, '.') >= 1 && Count(decimalString, ',') == 1)
             {
-                decimalString=decimalString.Replace(".", "");
+                decimalString = decimalString.Replace(".", "");
                 decimalString = decimalString.Replace(".", ",");
                 return decimalString;
             }
             return decimalString;
 
         }
-        private static int Count(string target, char ch){
+        private static int Count(string target, char ch)
+        {
             return target.Count(p => p == ch);
-    }
+        }
     }
 }

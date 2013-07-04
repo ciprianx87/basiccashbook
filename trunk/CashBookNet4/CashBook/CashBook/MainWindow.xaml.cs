@@ -112,26 +112,89 @@ namespace CashBook
 
         private void CheckAppRegistrationStatus()
         {
-            string serial = GetExistingSerial();
+            string existingHashKey = GetExistingSerial();
             string motherBoardId = GetMotherBoardID();
             // string mbId = GetMotherBoardId();
-            if (string.IsNullOrEmpty(serial))
+            motherBoardId = motherBoardId.Trim(new char[] { '\\', '/' });
+            if (motherBoardId.Length > 7)
             {
-                motherBoardId = motherBoardId.Trim(new char[] { '\\', '/' });
-                int mbHash = motherBoardId.GetHashCode();
-                //prompt the user to enter the validation code
-                RegistrationDialog registrationDialog = new RegistrationDialog(motherBoardId, mbHash);
-                PopupManager.Instance.CenterPopup(registrationDialog);
-                bool? dialogResult = registrationDialog.ShowDialog();
-                if (dialogResult == true)
+                motherBoardId = motherBoardId.Substring(0, 7);
+            }
+            if (string.IsNullOrEmpty(motherBoardId))
+            {
+                //if the serial is empty generate a new one
+                //hardcoded 
+                motherBoardId = "31T5RBY";
+            }
+            int mbHash = Utils.GeneratePairedKey(motherBoardId);
+            if (string.IsNullOrEmpty(existingHashKey))
+            {
+                PerformRegistration(motherBoardId, mbHash);
+            }
+            else
+            {
+                //verify the serial and the hash key
+                int existingKey = 0;
+                if (int.TryParse(existingHashKey, out existingKey))
                 {
+                    if (existingKey != mbHash)
+                    {
+                        MessageBox.Show("Eroare la licentierea aplicatiei.");
+                        PerformRegistration(motherBoardId, mbHash);
+                        //Thread.Sleep(5000);
+                        //Exit();
+                    }
                 }
                 else
                 {
-                    Exit();
+                    MessageBox.Show("Eroare la incarcarea informatiilor despre licenta.");
+                    PerformRegistration(motherBoardId, mbHash);
+                    //Thread.Sleep(5000);
+                    //Exit();
                 }
+
             }
         }
+
+        private void PerformRegistration(string motherBoardId, int mbHash)
+        {
+            //prompt the user to enter the validation code
+            RegistrationDialog registrationDialog = new RegistrationDialog(motherBoardId, mbHash);
+            PopupManager.Instance.CenterPopup(registrationDialog);
+            bool? dialogResult = registrationDialog.ShowDialog();
+            if (dialogResult == true)
+            {
+                StreamWriter fileWriter = null;
+                try
+                {
+                    //write the key into the file
+                    string fileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Constants.SerialKeyFilename);
+                    FileInfo file = new FileInfo(fileName);
+                    fileWriter = new StreamWriter(file.Open(FileMode.Create, FileAccess.Write));
+                    fileWriter.WriteLine(mbHash);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Instance.LogException(ex);
+                }
+                finally
+                {
+                    try
+                    {
+                        if (fileWriter != null)
+                        {
+                            fileWriter.Close();
+                        }
+                    }
+                    catch { }
+                }
+            }
+            else
+            {
+                Exit();
+            }
+        }
+
         private string GetMotherBoardId()
         {
             string serial = "";
