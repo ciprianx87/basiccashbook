@@ -10,24 +10,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using CashBook.ViewModels;
 
 
-namespace CashBook.Controls.Popups
+namespace CashBook.SerialGenerator
 {
     /// <summary>
-    /// Interaction logic for RegistrationDialog.xaml
+    /// Interaction logic for SerialGeneratorWindow.xaml
     /// </summary>
-    public partial class RegistrationDialog : Window, IDisposable
+    public partial class SerialGeneratorWindow : Window, IDisposable
     {
-        string motherBoardId;
-        int expectedSerial;
-        public RegistrationDialog(string motherBoardId, int expectedSerial)
+        public SerialGeneratorWindow()
         {
             InitializeComponent();
-            this.motherBoardId = motherBoardId;
-            this.expectedSerial = expectedSerial;
-            //this.DataContext = new YesNoDialogVM();
             this.Loaded += YesNoDialog_Loaded;
         }
 
@@ -35,33 +29,25 @@ namespace CashBook.Controls.Popups
         {
             this.Loaded -= YesNoDialog_Loaded;
             bool res = this.Activate();
-            this.Topmost = true;
-            txtGeneratedKey.Text = motherBoardId;
+            this.Topmost = true;          
         }
 
         public void Dispose()
         {
-            (this.DataContext as BaseViewModel).Dispose();
+           
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            //exit the application
-            this.DialogResult = false;
-            //Exit();
+            //exit the application           
+            Exit();
         }
 
-        private void Ok_Click(object sender, RoutedEventArgs e)
+        private void Genereaza_Click(object sender, RoutedEventArgs e)
         {
             string enteredKey = txtSerialNumber.Text;
-            if (enteredKey == expectedSerial.ToString())
-            {
-                this.DialogResult = true;
-            }
-            else
-            {
-                MessageBox.Show("Codul introdus nu este valid!");
-            }
+            int pairedKey = CashBook.Common.Utils.GeneratePairedKey(enteredKey);
+            txtGeneratedKey.Text = pairedKey.ToString();
         }
         private void Exit()
         {
