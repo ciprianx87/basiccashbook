@@ -59,21 +59,21 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="Auto" Header="">
+                    <DataGridTemplateColumn Width="100" Header="">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <Button Content="Selecteaza" Margin="0" CommandParameter="{Binding}" Click="SelectButton_Click"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="370" Header="Nume">
+                    <DataGridTemplateColumn Width="350" Header="Nume">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding Name}" Style="{StaticResource StandardTextBlock}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="*" Header="Locatie">
+                    <DataGridTemplateColumn Width="*" MinWidth="110" Header="Locatie">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding Location}"  Style="{StaticResource StandardTextBlock}"/>
@@ -87,7 +87,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="80" Header="Tip Moneda">
+                    <DataGridTemplateColumn Width="95" Header="Tip Moneda">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding CoinType}"  Style="{StaticResource StandardTextBlock}"/>
@@ -115,7 +115,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="150" Header="Actiuni">
+                    <DataGridTemplateColumn Width="95" Header="Actiuni">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <StackPanel Orientation="Horizontal">
