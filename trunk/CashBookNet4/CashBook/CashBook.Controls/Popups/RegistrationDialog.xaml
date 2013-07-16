@@ -14,7 +14,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock x:Name="txtInformation" Text="Va rugam comunicati urmatorul cod furnizorului aplicatiei" FontSize="18" Margin="0"/>
-            <TextBlock x:Name="txtGeneratedKey" FontSize="24" Grid.Row="1"/>
+            <TextBlock x:Name="txtGeneratedKey" FontSize="24" Grid.Row="1" Width="300" HorizontalAlignment="Left" Margin="10,0,0,0"/>
             <TextBlock FontSize="16" Grid.Row="2" Text="Introduceti codul furnizat:" />
             <TextBox FontSize="24" Grid.Row="3" Text="" Width="300" HorizontalAlignment="Left" x:Name="txtSerialNumber"/>
 

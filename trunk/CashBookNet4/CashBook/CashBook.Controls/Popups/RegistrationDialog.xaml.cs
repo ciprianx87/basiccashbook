@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CashBook.ViewModels;
+using CashBook.Common;
 
 
 namespace CashBook.Controls.Popups
@@ -25,6 +26,7 @@ namespace CashBook.Controls.Popups
         public RegistrationDialog(string motherBoardId, int expectedSerial)
         {
             InitializeComponent();
+            Logger.Instance.Log.Debug("RegistrationDialog motherBoardId " + motherBoardId + ", mbHash " + expectedSerial);
             this.motherBoardId = motherBoardId;
             this.expectedSerial = expectedSerial;
             //this.DataContext = new YesNoDialogVM();
@@ -37,6 +39,8 @@ namespace CashBook.Controls.Popups
             bool res = this.Activate();
             this.Topmost = true;
             txtGeneratedKey.Text = motherBoardId;
+            txtInformation.ToolTip = motherBoardId;
+            Logger.Instance.Log.Debug("YesNoDialog_Loaded set value to txtGeneratedKey.Text:" + txtGeneratedKey.Text);
         }
 
         public void Dispose()
@@ -54,12 +58,14 @@ namespace CashBook.Controls.Popups
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
             string enteredKey = txtSerialNumber.Text;
+            Logger.Instance.Log.Debug("Ok_Click enteredKey:" + enteredKey + " expectedSerial " + expectedSerial);
             if (enteredKey == expectedSerial.ToString())
             {
                 this.DialogResult = true;
             }
             else
             {
+                Logger.Instance.Log.Debug("Ok_Click Codul introdus nu este valid!");
                 MessageBox.Show("Codul introdus nu este valid!");
             }
         }
