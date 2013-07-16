@@ -61,7 +61,7 @@ namespace CashBook
             PopupManager.Instance.Init();
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ShowCashBookListScreen(CashBookListType.Any);
-            version = "1.0.15 demo";
+            version = "1.0.21 full";
             //CheckAppValidity();
 
             CheckAppRegistrationStatus();
@@ -114,21 +114,36 @@ namespace CashBook
         {
             string existingHashKey = GetExistingSerial();
             string motherBoardId = GetMotherBoardID();
+            Logger.Instance.Log.Debug("existingHashKey: " + existingHashKey);
+            Logger.Instance.Log.Debug("motherBoardId1: " + motherBoardId);
             // string mbId = GetMotherBoardId();
             motherBoardId = motherBoardId.Trim(new char[] { '\\', '/' });
+            //remove all the empty chars
+            motherBoardId = motherBoardId.Replace(" ", string.Empty);
+            Logger.Instance.Log.Debug("motherBoardId2: " + motherBoardId);
             if (motherBoardId.Length > 7)
             {
+                Logger.Instance.Log.Debug("motherBoardId length >7: " + motherBoardId);
                 motherBoardId = motherBoardId.Substring(0, 7);
+                Logger.Instance.Log.Debug("motherBoardId3: " + motherBoardId);
             }
             if (string.IsNullOrEmpty(motherBoardId))
             {
+                Logger.Instance.Log.Debug("string.IsNullOrEmpty(motherBoardId) " + motherBoardId);
                 //if the serial is empty generate a new one
                 //hardcoded 
                 motherBoardId = "31T5RBY";
             }
+            else
+            {
+                Logger.Instance.Log.Debug("motherBoardId is not empty " + motherBoardId);
+            }
+            Logger.Instance.Log.Debug("motherBoardId4: " + motherBoardId);
             int mbHash = Utils.GeneratePairedKey(motherBoardId);
+            Logger.Instance.Log.Debug("mbHash: " + mbHash);
             if (string.IsNullOrEmpty(existingHashKey))
             {
+                Logger.Instance.Log.Debug("string.IsNullOrEmpty(existingHashKey) true");
                 PerformRegistration(motherBoardId, mbHash);
             }
             else
@@ -137,6 +152,7 @@ namespace CashBook
                 int existingKey = 0;
                 if (int.TryParse(existingHashKey, out existingKey))
                 {
+                    Logger.Instance.Log.Debug("existingKey " + existingKey + " mbHash " + mbHash);
                     if (existingKey != mbHash)
                     {
                         MessageBox.Show("Eroare la licentierea aplicatiei.");
@@ -147,6 +163,7 @@ namespace CashBook
                 }
                 else
                 {
+                    Logger.Instance.Log.Debug("Eroare la incarcarea informatiilor despre licenta.");
                     MessageBox.Show("Eroare la incarcarea informatiilor despre licenta.");
                     PerformRegistration(motherBoardId, mbHash);
                     //Thread.Sleep(5000);
@@ -158,6 +175,7 @@ namespace CashBook
 
         private void PerformRegistration(string motherBoardId, int mbHash)
         {
+            Logger.Instance.Log.Debug("PerformRegistration motherBoardId " + motherBoardId + ", mbHash " + mbHash);
             //prompt the user to enter the validation code
             RegistrationDialog registrationDialog = new RegistrationDialog(motherBoardId, mbHash);
             PopupManager.Instance.CenterPopup(registrationDialog);
@@ -209,19 +227,26 @@ namespace CashBook
         public static string GetMotherBoardID()
         {
             string mbInfo = String.Empty;
-            ManagementScope scope = new ManagementScope("\\\\" + Environment.MachineName + "\\root\\cimv2");
-            scope.Connect();
-            ManagementObject wmiClass = new ManagementObject(scope, new ManagementPath("Win32_BaseBoard.Tag=\"Base Board\""), new ObjectGetOptions());
-
-            foreach (PropertyData propData in wmiClass.Properties)
+            try
             {
-                if (propData.Name == "SerialNumber")
-                {
-                    mbInfo = propData.Value.ToString();
-                }
-                //mbInfo = String.Format("{0,-25}{1}", propData.Name, Convert.ToString(propData.Value));
-            }
+                ManagementScope scope = new ManagementScope("\\\\" + Environment.MachineName + "\\root\\cimv2");
+                scope.Connect();
+                ManagementObject wmiClass = new ManagementObject(scope, new ManagementPath("Win32_BaseBoard.Tag=\"Base Board\""), new ObjectGetOptions());
 
+                foreach (PropertyData propData in wmiClass.Properties)
+                {
+                    if (propData.Name == "SerialNumber")
+                    {
+                        mbInfo = propData.Value.ToString();
+                    }
+                    //mbInfo = String.Format("{0,-25}{1}", propData.Name, Convert.ToString(propData.Value));
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
             return mbInfo;
         }
 
@@ -233,6 +258,7 @@ namespace CashBook
             {
                 string fileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Constants.SerialKeyFilename);
                 FileInfo file = new FileInfo(fileName);
+                Logger.Instance.Log.Debug("file.Exists: " + file.Exists);
                 if (file.Exists)
                 {
                     //read current value
@@ -240,9 +266,11 @@ namespace CashBook
                     serial = fs.ReadLine();
                     return serial;
                 }
+
             }
-            catch
+            catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
             }
             return serial;
 

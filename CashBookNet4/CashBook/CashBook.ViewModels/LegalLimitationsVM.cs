@@ -23,7 +23,7 @@ namespace CashBook.ViewModels
         public ICommand SaveCommand { get; set; }
         public LegalLimitationsVM()
         {
-            this.Title = "Detalii despre companie";
+            this.Title = "Limitari legislative";
             SaveCommand = new DelegateCommand(Save, CanSave);
             settingsRepository = new SettingsRepository();
 
