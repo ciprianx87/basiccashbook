@@ -140,7 +140,7 @@ namespace CashBook
             }
             Logger.Instance.Log.Debug("motherBoardId4: " + motherBoardId);
             int mbHash = Utils.GeneratePairedKey(motherBoardId);
-            Logger.Instance.Log.Debug("mbHash: " + mbHash);
+            //Logger.Instance.Log.Debug("mbHash: " + mbHash);
             if (string.IsNullOrEmpty(existingHashKey))
             {
                 Logger.Instance.Log.Debug("string.IsNullOrEmpty(existingHashKey) true");
@@ -152,7 +152,8 @@ namespace CashBook
                 int existingKey = 0;
                 if (int.TryParse(existingHashKey, out existingKey))
                 {
-                    Logger.Instance.Log.Debug("existingKey " + existingKey + " mbHash " + mbHash);
+                    //Logger.Instance.Log.Debug("existingKey " + existingKey + " mbHash " + mbHash);
+                    Logger.Instance.Log.Debug("existingKey " + existingKey);
                     if (existingKey != mbHash)
                     {
                         MessageBox.Show("Eroare la licentierea aplicatiei.");
@@ -175,7 +176,8 @@ namespace CashBook
 
         private void PerformRegistration(string motherBoardId, int mbHash)
         {
-            Logger.Instance.Log.Debug("PerformRegistration motherBoardId " + motherBoardId + ", mbHash " + mbHash);
+            //Logger.Instance.Log.Debug("PerformRegistration motherBoardId " + motherBoardId + ", mbHash " + mbHash);
+            Logger.Instance.Log.Debug("PerformRegistration motherBoardId " + motherBoardId);
             //prompt the user to enter the validation code
             RegistrationDialog registrationDialog = new RegistrationDialog(motherBoardId, mbHash);
             PopupManager.Instance.CenterPopup(registrationDialog);
