@@ -43,18 +43,32 @@ namespace CashBook.Controls
 
         void PrintControl_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= new RoutedEventHandler(PrintControl_Loaded);
-            PrintedPage pp = new PrintedPage();
-            pp.Loaded += new RoutedEventHandler(pp_Loaded);
-            grdReport.Children.Add(pp);
+            try
+            {
+                this.Loaded -= new RoutedEventHandler(PrintControl_Loaded);
+                PrintedPage pp = new PrintedPage();
+                pp.Loaded += new RoutedEventHandler(pp_Loaded);
+                grdReport.Children.Add(pp);
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
         }
 
         void pp_Loaded(object sender, RoutedEventArgs e)
         {
-            var lstItems = (sender as PrintedPage).GetLstItems();
-            var height = lstItems.ActualHeight;
-            int maxRowsPerPage = (int)height / rowHeight;
-            (this.DataContext as PrintControlVM).SetMaxEntriesPerPage(maxRowsPerPage);
+            try
+            {
+                var lstItems = (sender as PrintedPage).GetLstItems();
+                var height = lstItems.ActualHeight;
+                int maxRowsPerPage = (int)height / rowHeight;
+                (this.DataContext as PrintControlVM).SetMaxEntriesPerPage(maxRowsPerPage);
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
         }
 
         private void Print_Click(object sender, RoutedEventArgs e)
@@ -187,8 +201,10 @@ namespace CashBook.Controls
             {
                 if (pagesToPrint == null || pagesToPrint.Count == 0)
                 {
+                    Logger.Instance.Log.Debug("pagesToPrint == null || pagesToPrint.Count == 0");
                     return;
                 }
+                Logger.Instance.Log.Debug("trying to print");
                 // PrintedPage pp = new PrintedPage();
                 PrintDialog dialog = new PrintDialog();
                 dialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
@@ -200,20 +216,25 @@ namespace CashBook.Controls
 
                 foreach (var page in pagesToPrint)
                 {
+                    Logger.Instance.Log.Debug("trying to print page");
                     var printedPage = new PrintedPage();
                     printedPage.DataContext = page;
-                    Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
+                    //Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
                     grdReport = new Grid();
                     grdReport.Children.Clear();
                     grdReport.Children.Add(printedPage);
-                    Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
+                    //Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
 
+                    Logger.Instance.Log.Debug("before Measure");
+                    Logger.Instance.Log.Debug(string.Format("dialog.PrintableAreaWidth {0}, dialog.PrintableAreaHeight {1}", dialog.PrintableAreaWidth, dialog.PrintableAreaHeight));
                     grdReport.Measure(new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight));
+                    Logger.Instance.Log.Debug("UpdateLayout");
                     grdReport.UpdateLayout();
                     //grdReport.Arrange(new Rect(new Point(50, 50), grdReport.DesiredSize));
                     //grdReport.Visibility = System.Windows.Visibility.Hidden;
 
                     // dialog.PrintVisual(grdReport, "Raport");
+                    Logger.Instance.Log.Debug("after UpdateLayout");
 
                     PageContent pageContent = new PageContent();
                     FixedPage pg = new FixedPage();
@@ -227,18 +248,24 @@ namespace CashBook.Controls
                     //add container to the page  
                     pg.Children.Add(grdReport);
                     ((System.Windows.Markup.IAddChild)pageContent).AddChild(pg);
+                    Logger.Instance.Log.Debug("after AddChild");
 
 
                     //add page to document  
                     fixedDocument.Pages.Add(pageContent);
+                    Logger.Instance.Log.Debug("after  fixedDocument.Pages.Add(pageContent);");
                 }
                 // dialog.PrintVisual(myDocument.DocumentPaginator "Raport");
+                Logger.Instance.Log.Debug("before PrintDocument");
                 dialog.PrintDocument(fixedDocument.DocumentPaginator, "Raport");
+                Logger.Instance.Log.Debug("after PrintDocument");
 
             }
             catch (Exception ex)
             {
+                Logger.Instance.Log.Error(ex);
                 Logger.Instance.LogException(ex);
+
             }
         }
 

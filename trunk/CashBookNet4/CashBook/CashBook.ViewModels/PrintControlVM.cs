@@ -268,94 +268,101 @@ namespace CashBook.ViewModels
         bool isPreview = false;
         private void Print(object parameter)
         {
-            UpdateMaxEntriesPerPage();
-            isPreview = parameter.ToString() == "preview";
-            if (IsValid())
+            try
             {
-                //set the number of decimals to be used when calculating this 
-                DecimalConvertor.Instance.SetNumberOfDecimals(SelectedCashBook.CoinDecimals);
+                UpdateMaxEntriesPerPage();
+                isPreview = parameter.ToString() == "preview";
+                if (IsValid())
+                {
+                    //set the number of decimals to be used when calculating this 
+                    DecimalConvertor.Instance.SetNumberOfDecimals(SelectedCashBook.CoinDecimals);
 
-                List<DateTime> datesToPrint = new List<DateTime>();
-                if (CurrentDaySelected)
-                {
-                    datesToPrint.Add(DateTime.Now);
-                }
-                else if (CurrentMonthSelected)
-                {
-                    var currentDate = DateTime.Now;
-                    var currentDay = currentDate.Day;
-                    for (int i = 1; i <= currentDay; i++)
+                    List<DateTime> datesToPrint = new List<DateTime>();
+                    if (CurrentDaySelected)
                     {
-                        datesToPrint.Add(new DateTime(currentDate.Year, currentDate.Month, i));
+                        datesToPrint.Add(DateTime.Now);
                     }
-                }
-                else if (OtherPeriodSelected)
-                {
-                    var currentCounterDate = Utils.DateTimeToDay(SelectedStartDate);
-                    while (currentCounterDate <= Utils.DateTimeToDay(SelectedEndDate))
+                    else if (CurrentMonthSelected)
                     {
-                        datesToPrint.Add(currentCounterDate);
-                        currentCounterDate = currentCounterDate.AddDays(1);
-                    }
-                }
-                //gather the data that needs to be printed
-                List<ReportPageVM> pagesToPrint = new List<ReportPageVM>();
-                foreach (var date in datesToPrint)
-                {
-                    ReportPagesRetriever pagesRetriever = new ReportPagesRetriever();
-                    var returnedPages = pagesRetriever.GetPages(Company, SelectedCashBook, date, cashBookRepository, cashBookEntryRepository, MaxEntriesPerPage);
-                    if (returnedPages != null && returnedPages.Count > 0)
-                    {
-                        pagesToPrint.AddRange(returnedPages);
-                    }
-                }
-                if (pagesToPrint.Count == 0)
-                {
-                    if (isPreview)
-                    {
-                        WindowHelper.OpenInformationDialog("Nu exista rapoarte de previzualizat");
-                    }
-                    else
-                    {
-                        WindowHelper.OpenInformationDialog("Nu exista rapoarte de listat");
-                    }
-                }
-                else
-                {
-                    Logger.Instance.Log.Debug(string.Format("started printing {0} pages", pagesToPrint.Count));
-                    int counter = 1;
-                    foreach (var item in pagesToPrint)
-                    {
-                        Logger.Instance.Log.Debug(string.Format("info for page {0}:", counter));
-                        if (item.CurrentPageCashBookEntries != null && item.CurrentPageCashBookEntries.Count > 0)
+                        var currentDate = DateTime.Now;
+                        var currentDay = currentDate.Day;
+                        for (int i = 1; i <= currentDay; i++)
                         {
-                            foreach (var cbe in item.CurrentPageCashBookEntries)
-                            {
-                                Logger.Instance.Log.Debug(string.Format("cbe info: {0} {1}, {2} {3}, {4} {5}", cbe.Incasari, cbe.IncasariString, cbe.Plati, cbe.PlatiString, cbe.LeiValue, cbe.LeiValueString));
-                            }
+                            datesToPrint.Add(new DateTime(currentDate.Year, currentDate.Month, i));
                         }
-
-                        counter++;
                     }
-                    if (isPreview)
+                    else if (OtherPeriodSelected)
                     {
-                        Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.PrintPreview);
-                        Mediator.Instance.SendMessage(MediatorActionType.SetReportsToPreview, pagesToPrint);
-                        Mediator.Instance.SendMessage(MediatorActionType.SetPrintPreviewPrintModel, new PrintModel()
+                        var currentCounterDate = Utils.DateTimeToDay(SelectedStartDate);
+                        while (currentCounterDate <= Utils.DateTimeToDay(SelectedEndDate))
                         {
-                            CurrentDaySelected = CurrentDateSelected,
-                            CurrentMonthSelected = CurrentMonthSelected,
-                            EndDate = SelectedEndDate,
-                            OtherPeriodSelected = OtherPeriodSelected,
-                            StartDate = SelectedStartDate,
-                            SelectedCashBook = SelectedCashBook
-                        });
+                            datesToPrint.Add(currentCounterDate);
+                            currentCounterDate = currentCounterDate.AddDays(1);
+                        }
+                    }
+                    //gather the data that needs to be printed
+                    List<ReportPageVM> pagesToPrint = new List<ReportPageVM>();
+                    foreach (var date in datesToPrint)
+                    {
+                        ReportPagesRetriever pagesRetriever = new ReportPagesRetriever();
+                        var returnedPages = pagesRetriever.GetPages(Company, SelectedCashBook, date, cashBookRepository, cashBookEntryRepository, MaxEntriesPerPage);
+                        if (returnedPages != null && returnedPages.Count > 0)
+                        {
+                            pagesToPrint.AddRange(returnedPages);
+                        }
+                    }
+                    if (pagesToPrint.Count == 0)
+                    {
+                        if (isPreview)
+                        {
+                            WindowHelper.OpenInformationDialog("Nu exista rapoarte de previzualizat");
+                        }
+                        else
+                        {
+                            WindowHelper.OpenInformationDialog("Nu exista rapoarte de listat");
+                        }
                     }
                     else
                     {
-                        Mediator.Instance.SendMessage(MediatorActionType.StartPrinting, pagesToPrint);
+                        Logger.Instance.Log.Debug(string.Format("started printing {0} pages", pagesToPrint.Count));
+                        int counter = 1;
+                        foreach (var item in pagesToPrint)
+                        {
+                            Logger.Instance.Log.Debug(string.Format("info for page {0}:", counter));
+                            if (item.CurrentPageCashBookEntries != null && item.CurrentPageCashBookEntries.Count > 0)
+                            {
+                                foreach (var cbe in item.CurrentPageCashBookEntries)
+                                {
+                                    Logger.Instance.Log.Debug(string.Format("cbe info: {0} {1}, {2} {3}, {4} {5}", cbe.Incasari, cbe.IncasariString, cbe.Plati, cbe.PlatiString, cbe.LeiValue, cbe.LeiValueString));
+                                }
+                            }
+
+                            counter++;
+                        }
+                        if (isPreview)
+                        {
+                            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.PrintPreview);
+                            Mediator.Instance.SendMessage(MediatorActionType.SetReportsToPreview, pagesToPrint);
+                            Mediator.Instance.SendMessage(MediatorActionType.SetPrintPreviewPrintModel, new PrintModel()
+                            {
+                                CurrentDaySelected = CurrentDateSelected,
+                                CurrentMonthSelected = CurrentMonthSelected,
+                                EndDate = SelectedEndDate,
+                                OtherPeriodSelected = OtherPeriodSelected,
+                                StartDate = SelectedStartDate,
+                                SelectedCashBook = SelectedCashBook
+                            });
+                        }
+                        else
+                        {
+                            Mediator.Instance.SendMessage(MediatorActionType.StartPrinting, pagesToPrint);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
             }
         }
 

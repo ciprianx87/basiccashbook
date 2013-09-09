@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True"
-        Title="Stergere" Height="220" Width="500">
+        Title="Activare" Height="220" Width="500">
     <Border CornerRadius="10" BorderThickness="1" BorderBrush="Black" >
         <Grid Background="Transparent" Margin="10,10,0,0">
             <Grid.RowDefinitions>
