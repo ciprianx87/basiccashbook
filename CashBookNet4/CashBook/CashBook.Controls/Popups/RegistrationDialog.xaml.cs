@@ -26,7 +26,8 @@ namespace CashBook.Controls.Popups
         public RegistrationDialog(string motherBoardId, int expectedSerial)
         {
             InitializeComponent();
-            Logger.Instance.Log.Debug("RegistrationDialog motherBoardId " + motherBoardId + ", mbHash " + expectedSerial);
+            Logger.Instance.Log.Debug("RegistrationDialog motherBoardId " + motherBoardId);
+            //Logger.Instance.Log.Debug("RegistrationDialog motherBoardId " + motherBoardId + ", mbHash " + expectedSerial);
             this.motherBoardId = motherBoardId;
             this.expectedSerial = expectedSerial;
             //this.DataContext = new YesNoDialogVM();
@@ -58,7 +59,8 @@ namespace CashBook.Controls.Popups
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
             string enteredKey = txtSerialNumber.Text;
-            Logger.Instance.Log.Debug("Ok_Click enteredKey:" + enteredKey + " expectedSerial " + expectedSerial);
+            //Logger.Instance.Log.Debug("Ok_Click enteredKey:" + enteredKey + " expectedSerial " + expectedSerial);
+            Logger.Instance.Log.Debug("Ok_Click enteredKey:" + enteredKey);
             if (enteredKey == expectedSerial.ToString())
             {
                 this.DialogResult = true;
