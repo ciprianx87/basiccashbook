@@ -3,6 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" x:Name="mainMenu">
+            <MenuItem Header="FISIER">
+                <MenuItem Header="Iesire" Click="MenuItem_Iesire"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="CATALOAGE">
+                <MenuItem Header="Date Societati" Click="MenuItem_Companies"></MenuItem>
+                <MenuItem Header=".Indicatori calcul impozit profit" Click="MenuItem_TaxIndicators"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="CALCUL IMPOZIT PROFIT" Click="MenuItem_TaxCalculation">
+            </MenuItem>
+            <MenuItem Header="RAPOARTE" Click="MenuItem_Reports" ></MenuItem>
+            <MenuItem Header="AJUTOR">
+                <MenuItem Header="Flux" Click="Help_Click"/>
+                <MenuItem Header="Despre" Click="About_Click"></MenuItem>
+            </MenuItem>
+
+        </Menu>
+        <ContentControl Grid.Row="1" x:Name="contentControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </Window>
