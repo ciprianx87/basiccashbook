@@ -79,6 +79,7 @@
       <DependentUpon>CompanyList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters.cs" />
+    <Compile Include="Converters\IndicatorConverter.cs" />
     <Compile Include="Popups\PopupManager.cs" />
     <Compile Include="TaxIndicatorsList.xaml.cs">
       <DependentUpon>TaxIndicatorsList.xaml</DependentUpon>
@@ -117,6 +118,10 @@
     <ProjectReference Include="..\TaxCalculator.Common\TaxCalculator.Common.csproj">
       <Project>{D45D4BA8-A500-442D-8EBC-151C62296804}</Project>
       <Name>TaxCalculator.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaxCalculator.Data.Model\TaxCalculator.Data.Model.csproj">
+      <Project>{157172DA-B946-4ED1-821A-D9AF140E9D8E}</Project>
+      <Name>TaxCalculator.Data.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\TaxCalculator.ViewModel\TaxCalculator.ViewModel.csproj">
       <Project>{7E2CC5BD-D919-4F44-BEDC-857530721B2A}</Project>

@@ -45,6 +45,17 @@
     <Compile Include="Base\DelegateCommand.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Model\TaxIndicatorViewModel.cs" />
+    <Compile Include="ViewModels\TaxIndicatorListVm.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TaxCalculator.Data.Model\TaxCalculator.Data.Model.csproj">
+      <Project>{157172DA-B946-4ED1-821A-D9AF140E9D8E}</Project>
+      <Name>TaxCalculator.Data.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
