@@ -3,13 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}"
+             xmlns:model="clr-namespace:TaxCalculator.Data.Model;assembly=TaxCalculator.Data.Model"
+             xmlns:converter="clr-namespace:TaxCalculator.Controls.Converters"
+             mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}" 
             >
+    <UserControl.Resources>
+        <converter:IndicatorConverter x:Key="indicatorConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            
+
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="2" ItemsSource="{Binding CashBooks}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False">
+        <DataGrid Grid.Row="2" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" Width="1000">
             <DataGrid.Resources>
                 <Style TargetType="TextBlock" x:Key="StandardTextBlock" >
                     <Setter Property="TextAlignment" Value="Center"/>
@@ -24,54 +29,54 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTemplateColumn Width="100" Header="Nr Crt">                    
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="350" Header="Nume">
+                <!--CellStyle="{StaticResource NoFocusColumStyle}"-->
+                <DataGridTemplateColumn Width="50" FocusManager.IsFocusScope="False"  >
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <StackPanel.Resources>
+                                    <Style TargetType="TextBlock"  >
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <TextBlock Text="Nr." TextAlignment="Center" FontSize="12"/>
+                                <TextBlock Text="Crt." HorizontalAlignment="Stretch" FontSize="12" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding Name}" Style="{StaticResource StandardTextBlock}"/>
+                            <TextBlock Text="{Binding NrCrtString}" Style="{StaticResource StandardTextBlock}" Focusable="False" IsHitTestVisible="False" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="*" MinWidth="110" Header="Locatie">
+                <DataGridTemplateColumn Width="250" Header="Indicatori">
+
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding Location}"  Style="{StaticResource StandardTextBlock}"/>
+                            <DataTemplate.Resources>
+
+                            </DataTemplate.Resources>
+                            <!---->
+                            <!--Style="{StaticResource StandardTextBlock}"-->
+                            <!--Style="{Binding Type, Converter={StaticResource indicatorConverter}}"-->
+                            <TextBlock Text="{Binding Description}" FontWeight="{Binding FontWeight}">
+                            </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="170" Header="Nume Casier">
+                <DataGridTemplateColumn Width="250" Header="Tip Indicatori">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding CashierName}"  Style="{StaticResource StandardTextBlock}"/>
+                            <TextBlock Text="{Binding TypeDescription}" Style="{StaticResource StandardTextBlock}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="95" Header="Tip Moneda">
+                <DataGridTemplateColumn Width="*" Header="Mod de calcul Indicatori">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding CoinType}"  Style="{StaticResource StandardTextBlock}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="70" Header="Cont">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <TextBlock Text="{Binding Account}"  Style="{StaticResource StandardTextBlock}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="140" Header="Sold">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <TextBlock Text="{Binding CurrentBalanceString}"  Style="{StaticResource StandardTextBlock}" HorizontalAlignment="Right"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="150" Header="Data sold">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <TextBlock Text="{Binding LastDateTimeWithEntriesString}"  Style="{StaticResource StandardTextBlock}"/>
+                            <TextBlock Text="{Binding IndicatorFormula}" Style="{StaticResource StandardTextBlock}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
