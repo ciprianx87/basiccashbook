@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,10 +12,10 @@ using TaxCalculator.Data;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
-    public class TaxIndicatorListVm : BaseViewModel
+    public class TaxCalculationVm : BaseViewModel
     {
 
-        public TaxIndicatorListVm()
+        public TaxCalculationVm()
         {
             TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>()
             {
@@ -58,3 +59,4 @@ namespace TaxCalculator.ViewModel.ViewModels
 
     }
 }
+

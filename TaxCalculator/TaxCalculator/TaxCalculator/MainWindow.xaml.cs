@@ -43,7 +43,6 @@ namespace TaxCalculator
             PopupManager.Instance.Init();
             //Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ChangeContent(ContentTypes.TaxIndicatorList);
-            ShowCashBookListScreen(CashBookListType.Any);
             version = "1.0.22 demo";
             CheckAppValidity();
 
@@ -162,11 +161,13 @@ namespace TaxCalculator
 
         private void MenuItem_TaxIndicators(object sender, RoutedEventArgs e)
         {
+            ChangeContent(ContentTypes.TaxIndicatorList);
 
         }
 
         private void MenuItem_TaxCalculation(object sender, RoutedEventArgs e)
         {
+            ChangeContent(ContentTypes.TaxCalculation);
 
         }
 
