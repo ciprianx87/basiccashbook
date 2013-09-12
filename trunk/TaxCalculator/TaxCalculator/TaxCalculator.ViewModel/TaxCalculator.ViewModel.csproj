@@ -46,12 +46,17 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Model\TaxIndicatorViewModel.cs" />
+    <Compile Include="ViewModels\TaxCalculationVm.cs" />
     <Compile Include="ViewModels\TaxIndicatorListVm.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TaxCalculator.Data.Model\TaxCalculator.Data.Model.csproj">
       <Project>{157172DA-B946-4ED1-821A-D9AF140E9D8E}</Project>
       <Name>TaxCalculator.Data.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaxCalculator.Data\TaxCalculator.Data.csproj">
+      <Project>{8CF1BE47-3753-48A0-AC4C-4C28874E1B6D}</Project>
+      <Name>TaxCalculator.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

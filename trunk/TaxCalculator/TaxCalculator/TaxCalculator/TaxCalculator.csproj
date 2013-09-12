@@ -111,6 +111,10 @@
       <Project>{157172DA-B946-4ED1-821A-D9AF140E9D8E}</Project>
       <Name>TaxCalculator.Data.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TaxCalculator.Data\TaxCalculator.Data.csproj">
+      <Project>{8CF1BE47-3753-48A0-AC4C-4C28874E1B6D}</Project>
+      <Name>TaxCalculator.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
