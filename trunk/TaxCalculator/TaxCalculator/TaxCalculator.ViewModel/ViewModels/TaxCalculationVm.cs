@@ -9,6 +9,7 @@ using TaxCalculator.Data.Model;
 using TaxCalculator.ViewModel.ViewModels.Model;
 using System.Windows;
 using TaxCalculator.Data;
+using TaxCalculator.Common.Mediator;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -17,6 +18,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         public TaxCalculationVm()
         {
+            Mediator.Instance.Register(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
             TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>()
             {
                 new TaxIndicatorViewModel(){ NrCrt=1, Description="ind 1", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
@@ -35,15 +37,37 @@ namespace TaxCalculator.ViewModel.ViewModels
                 taxIndicators.Add(new TaxIndicatorViewModel()
                 {
                     NrCrtString = item.NrCrtString,
+                    NrCrt = string.IsNullOrEmpty(item.NrCrtString) ? 0 : Convert.ToInt32(item.NrCrtString),
                     Description = item.Description,
                     TypeDescription = item.TypeDescription,
                     IndicatorFormula = item.IndicatorFormula,
                     Type = GetIndicatorType(item.TypeDescription),
-                    Style = GetStyleInfo(GetIndicatorType(item.TypeDescription))
+                    Style = GetStyleInfo(GetIndicatorType(item.TypeDescription)),
+                    //ValueFieldNumeric=2
                 });
             }
+            Tests();
+            ExecuteTaxCalculation(null);
+        }
+        private void Tests()
+        {
+            //taxIndicators.First(p => p.NrCrt == 1).ValueField = "5";
+            //taxIndicators.First(p => p.NrCrt == 2).ValueField = "2";
+
+            string formula = "rd.(1-2)";
+            TaxFormula taxFormula = new TaxFormula(formula);
+            taxFormula.Execute(TaxIndicators.ToList());
         }
 
+        public void ExecuteTaxCalculation(object param)
+        {
+            var calculatedTaxIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
+            foreach (var item in calculatedTaxIndicators)
+            {
+                TaxFormula taxFormula = new TaxFormula(item.IndicatorFormula);
+                item.ValueField = taxFormula.Execute(TaxIndicators.ToList()).ToString();
+            }
+        }
         private TaxIndicatorViewModel.TaxIndicatorStyleInfo GetStyleInfo(TaxIndicatorType taxIndicatorType)
         {
             TaxIndicatorViewModel.TaxIndicatorStyleInfo styleInfo = new TaxIndicatorViewModel.TaxIndicatorStyleInfo();
@@ -101,6 +125,12 @@ namespace TaxCalculator.ViewModel.ViewModels
                     this.NotifyPropertyChanged("TaxIndicators");
                 }
             }
+        }
+        public override void Dispose()
+        {
+            base.Dispose();
+            Mediator.Instance.Unregister(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
+
         }
 
     }

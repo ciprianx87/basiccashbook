@@ -32,6 +32,7 @@ namespace TaxCalculator.Common.Mediator
         SetPrintControlPrintModel,
         CloseInformationPopup,
         SetCompletedDays,
+        ExecuteTaxCalculation,
 
     }
     public enum PopupType
