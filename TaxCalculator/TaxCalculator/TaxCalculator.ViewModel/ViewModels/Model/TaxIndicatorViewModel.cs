@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using TaxCalculator.Data.Model;
 using System.Windows;
+using TaxCalculator.Common.Mediator;
+using TaxCalculator.ViewModel.Base;
 
 namespace TaxCalculator.ViewModel.ViewModels.Model
 {
-    public class TaxIndicatorViewModel
+    public class TaxIndicatorViewModel : NotificationPoperty
     {
 
         public TaxIndicatorViewModel()
@@ -35,7 +37,15 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                 valueField = value;
                 try
                 {
+                    
                     ValueFieldNumeric = Convert.ToInt32(value);
+
+                    //execute the function
+                    if (Type != TaxIndicatorType.Calculat)
+                    {
+                        Mediator.Instance.SendMessage(MediatorActionType.ExecuteTaxCalculation, null);
+                    }
+                    NotifyPropertyChanged("ValueField");
                 }
                 catch (Exception)
                 {
@@ -43,6 +53,22 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                 }
             }
         }
+
+
+        //private string test;
+        //public string Test
+        //{
+        //    get { return test; }
+        //    set
+        //    {
+        //        if (test != value)
+        //        {
+        //            test = value;
+        //            this.NotifyPropertyChanged("Test");
+        //        }
+        //    }
+        //}
+
 
         public int ValueFieldNumeric { get; set; }
 

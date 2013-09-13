@@ -43,13 +43,20 @@
   <ItemGroup>
     <Compile Include="Base\BaseViewModel.cs" />
     <Compile Include="Base\DelegateCommand.cs" />
+    <Compile Include="Base\NotificationPoperty.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaxEvaluator.cs" />
+    <Compile Include="ViewModels\Model\TaxFormula.cs" />
     <Compile Include="ViewModels\Model\TaxIndicatorViewModel.cs" />
     <Compile Include="ViewModels\TaxCalculationVm.cs" />
     <Compile Include="ViewModels\TaxIndicatorListVm.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TaxCalculator.Common\TaxCalculator.Common.csproj">
+      <Project>{D45D4BA8-A500-442D-8EBC-151C62296804}</Project>
+      <Name>TaxCalculator.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaxCalculator.Data.Model\TaxCalculator.Data.Model.csproj">
       <Project>{157172DA-B946-4ED1-821A-D9AF140E9D8E}</Project>
       <Name>TaxCalculator.Data.Model</Name>

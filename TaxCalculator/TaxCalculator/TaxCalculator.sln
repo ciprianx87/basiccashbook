@@ -13,7 +13,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCalculator.Controls", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCalculator.Common", "TaxCalculator.Common\TaxCalculator.Common.csproj", "{D45D4BA8-A500-442D-8EBC-151C62296804}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCalculator.Tests", "TaxCalculator.Tests\TaxCalculator.Tests.csproj", "{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4BC458CD-7DC6-4073-87E1-3E97B7F71A08}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		TaxCalculator.vsmdi = TaxCalculator.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2E501362-227D-45A6-9441-621EFBEACBFA}"
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = TaxCalculator.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -83,8 +97,21 @@ Global
 		{D45D4BA8-A500-442D-8EBC-151C62296804}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D45D4BA8-A500-442D-8EBC-151C62296804}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D45D4BA8-A500-442D-8EBC-151C62296804}.Release|x86.ActiveCfg = Release|Any CPU
+		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4} = {2E501362-227D-45A6-9441-621EFBEACBFA}
 	EndGlobalSection
 EndGlobal
