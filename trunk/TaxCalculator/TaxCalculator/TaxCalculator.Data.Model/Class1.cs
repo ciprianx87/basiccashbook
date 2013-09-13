@@ -25,6 +25,9 @@ namespace TaxCalculator.Data.Model
     {
         Normal,
         Total,
-        Title
+        Title,
+        Numeric,
+        Text,
+        Calculat
     }
 }

@@ -12,18 +12,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TaxCalculator.ViewModel.ViewModels;
+using TaxCalculator.ViewModel.Base;
 
 namespace TaxCalculator.Controls
 {
     /// <summary>
     /// Interaction logic for TaxIndicatorsList.xaml
     /// </summary>
-    public partial class TaxIndicatorsList : UserControl
+    public partial class TaxIndicatorsList : UserControl, IDisposable
     {
         public TaxIndicatorsList()
         {
             InitializeComponent();
             this.DataContext = new TaxIndicatorListVm();
+        }
+
+        public void Dispose()
+        {
+            (this.DataContext as BaseViewModel).Dispose();
         }
     }
 }

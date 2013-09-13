@@ -40,6 +40,7 @@ namespace TaxCalculator.Data
                     var description = parts[1];
                     var type = parts[2];
                     var value = parts[3];
+                    if (value == "..") { value = ""; }
 
                     description = description.Replace('@', ',');
                     TaxIndicator ti = new TaxIndicator()
