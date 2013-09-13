@@ -14,7 +14,8 @@
         <Grid.RowDefinitions>
 
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="2" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" Width="1000">
+        <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
+                  CanUserResizeRows="False">
             <DataGrid.Resources>
                 <Style TargetType="TextBlock" x:Key="StandardTextBlock" >
                     <Setter Property="TextAlignment" Value="Center"/>
@@ -23,14 +24,15 @@
                     <Setter Property="Padding" Value="6,0,0,0"/>
                 </Style>
                 <Style TargetType="TextBox"  x:Key="StandardTextBox" >
-                    <Setter Property="TextAlignment" Value="Center"/>
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                    <Setter Property="FontSize" Value="30"/>
+                    <Setter Property="TextAlignment" Value="Left"/>
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="FontSize" Value="18"/>
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <!--CellStyle="{StaticResource NoFocusColumStyle}"-->
-                <DataGridTemplateColumn Width="50" FocusManager.IsFocusScope="False"  >
+                <DataGridTemplateColumn MinWidth="50" FocusManager.IsFocusScope="False"  >
                     <DataGridTemplateColumn.HeaderTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -51,8 +53,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="250" Header="Indicatori">
-
+                <DataGridTemplateColumn  MinWidth="400" Header="Indicatori">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <DataTemplate.Resources>
@@ -61,51 +62,29 @@
                             <!---->
                             <!--Style="{StaticResource StandardTextBlock}"-->
                             <!--Style="{Binding Type, Converter={StaticResource indicatorConverter}}"-->
-                            <TextBlock Text="{Binding Description}" FontWeight="{Binding FontWeight}">
+                            <TextBlock Text="{Binding Description}" FontWeight="{Binding Style.FontWeight}">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="250" Header="Tip Indicatori">
+                <DataGridTemplateColumn MinWidth="150" Header="Tip Indicatori">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding TypeDescription}" Style="{StaticResource StandardTextBlock}"/>
+                            <TextBlock Text="{Binding Type}" Style="{StaticResource StandardTextBlock}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="*" Header="Mod de calcul Indicatori">
+                <DataGridTemplateColumn MinWidth="250"  Width="*" Header="Mod de calcul Indicatori">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding IndicatorFormula}" Style="{StaticResource StandardTextBlock}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <!--<DataGridTemplateColumn Width="95" Header="Actiuni">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <StackPanel Orientation="Horizontal">
-                                <Button Margin="0,0,10,0" CommandParameter="{Binding}" Width="30" Height="20"  Click="DeleteCommand_Click">
-                                    <StackPanel>
-                                        <Image Source="/CashBook.Controls;component/Images/deleteButton3.png" Stretch="Uniform"  Width="30" Height="14"/>
-                                        <TextBlock Text=""/>
-                                    </StackPanel>
-                                    <Button.ToolTip>
-                                        <TextBlock Text="Stergere"/>
-                                    </Button.ToolTip>
-                                </Button>
-                                <Button CommandParameter="{Binding}" Width="30" Height="20" Click="EditCommand_Click">
-                                    <StackPanel>
-                                        <Image Source="/CashBook.Controls;component/Images/editButton.png"  Stretch="Uniform"  Width="30" Height="15"/>
-                                        <TextBlock Text=""/>
-                                    </StackPanel>
-                                    <Button.ToolTip>
-                                        <TextBlock Text="Editare"/>
-                                    </Button.ToolTip>
-                                </Button>
+                            <StackPanel>
+                                <TextBlock Text="{Binding IndicatorFormula}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}"/>
+                                <TextBox Text="{Binding ValueField, Mode=TwoWay}" Style="{StaticResource StandardTextBox}"  Visibility="{Binding Style.ValueFieldVisibility}"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>-->
+                </DataGridTemplateColumn>
+
             </DataGrid.Columns>
             <DataGrid.Items>
 
