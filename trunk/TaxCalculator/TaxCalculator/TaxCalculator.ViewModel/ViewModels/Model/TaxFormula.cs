@@ -69,6 +69,11 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                             var current = (curParam.ParamData as ValueData).Value;
                             currentValue *= current;
                         }
+                        if (curSign == ParamSignType.Division)
+                        {
+                            var current = (curParam.ParamData as ValueData).Value;
+                            currentValue /= current;
+                        }
                         //currentValue += current.ValueFieldNumeric * currentSign;
                     }
                 }
@@ -91,9 +96,60 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         {
             return taxIndicatorList.First(p => p.NrCrt == id);
         }
+
+        /// <summary>
+        /// from rd.(1-2-3-4+5+6-7+8-9)-Rd.(10-11+12)
+        /// to  rd.(1-2-3-4+5+6-7+8-9-10+11-12)
+        /// </summary>
+        /// <param name="formula"></param>
+        private void NormalizeFormula(ref string formula)
+        {
+            var formulaParts = formula.Split(new string[] { "rd." }, StringSplitOptions.RemoveEmptyEntries);
+            if (formulaParts.Length > 1)
+            {
+                string resultedFormula = formulaParts[0].Remove(formulaParts[0].Length - 2, 2);
+                //for each part starting from the second one, apply the sign (if minus in front of the rd)
+                for (int i = 1; i < formulaParts.Length; i++)
+                {
+                    var previous = formulaParts[i - 1];
+                    var current = formulaParts[i].ToList();
+                    var lastSign = previous[previous.Length - 1] == '-' ? -1 : 1;
+
+                    if (current[0] == '(' && current[current.Count - 1] == ')')
+                    {
+                        current.RemoveAt(0);
+                        current.RemoveAt(current.Count - 1);
+                        if (current[0] != '-' && current[0] != '+')
+                        {
+                            current.Insert(0, '+');
+                        }
+                        for (int j = 0; j < current.Count; j++)
+                        {
+                            if (current[j] == '-')
+                            {
+                                current[j] = '+';
+                            }
+                            else if (current[j] == '+')
+                            {
+                                current[j] = '-';
+                            }
+                        }
+                        string resultedString = "";
+                        current.ForEach(p => resultedString += p.ToString());
+                        resultedFormula += resultedString;
+                    }
+                }
+                resultedFormula += ")";
+                formula = "rd." + resultedFormula;
+            }
+        }
+
+
         private void ExtractFormula(string formula)
         {
             formula = formula.Trim().ToLower().Replace(" ", string.Empty);
+            NormalizeFormula(ref formula);
+
             if (formula.StartsWith("rd."))
             {
                 //string[] formulas = formula.Split(new string[] { "rd." });
@@ -155,25 +211,28 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                                 //get the first number
                                 if (int.TryParse(formulaParts[0], out onlyNumber))
                                 {
+                                    this.FormulaType = Model.FormulaType.Value;
+                                    FormulaParam par = new FormulaParam();
+                                    par.ParamType = ParamType.RowData;
+                                    par.ParamData = new RowData() { NrCrt = Math.Abs(onlyNumber) };
+                                    Params.Add(par);
+
+                                    par = new FormulaParam();
+                                    par.ParamType = ParamType.Sign;
+                                    par.ParamData = new ParamSign() { Sign = ParamSignType.Multiplication };
+                                    Params.Add(par);
+
                                     //get the second component
                                     var secondPart = formulaParts[1];
                                     //test if percentage
                                     if (secondPart.EndsWith("%"))
                                     {
+                                        //rd.41*16%
                                         secondPart = secondPart.TrimEnd('%');
                                         int percentage = 0;
                                         if (int.TryParse(secondPart, out percentage))
                                         {
-                                            this.FormulaType = Model.FormulaType.Value;
-                                            FormulaParam par = new FormulaParam();
-                                            par.ParamType = ParamType.RowData;
-                                            par.ParamData = new RowData() { NrCrt = Math.Abs(onlyNumber) };
-                                            Params.Add(par);
 
-                                            par = new FormulaParam();
-                                            par.ParamType = ParamType.Sign;
-                                            par.ParamData = new ParamSign() { Sign = ParamSignType.Multiplication };
-                                            Params.Add(par);
 
                                             par = new FormulaParam();
                                             par.ParamType = ParamType.Value;
@@ -189,6 +248,32 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                                     else
                                     {
                                         //test for "/" component
+                                        //rd.45*3/1000
+                                        if (secondPart.Contains('/'))
+                                        {
+                                            var divisionNumbers = secondPart.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                                            if (divisionNumbers.Length == 2)
+                                            {
+                                                int first = 0;
+                                                int second = 0;
+                                                if (int.TryParse(divisionNumbers[0], out first) && int.TryParse(divisionNumbers[1], out second))
+                                                {
+                                                    this.FormulaType = Model.FormulaType.Value;
+                                                    par = new FormulaParam();
+                                                    par.ParamType = ParamType.Value;
+                                                    par.ParamData = new ValueData() { Value = (decimal)first / second };
+                                                    Params.Add(par);
+                                                }
+                                                else
+                                                {
+                                                    //parse error
+                                                }
+                                            }
+                                            else
+                                            {
+                                                //error
+                                            }
+                                        }
                                     }
                                 }
                                 else
@@ -205,6 +290,14 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             }
             else if (formula.StartsWith("if"))
             {
+                //IF(C32*2%>0;C32*2%;0)
+                //IF(C31-C33>0;C31-C33;0)
+                //IF(C37*2%>0;C37*2%;0)
+                //IF(C36-C38>0;C36-C38;0)
+                //IF(C15>0;0;-C15)
+                //IF((C46>C48);C46;C48)
+                //IF(C49<C50;C49;C50)
+
                 this.FormulaType = Model.FormulaType.Condition;
             }
         }

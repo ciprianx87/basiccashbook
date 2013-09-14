@@ -15,6 +15,8 @@ namespace TaxCalculator.ViewModel
             Test1();
             Test2();
             Test3();
+            Test4();
+            Test5();
         }
 
         private void Test1()
@@ -56,6 +58,39 @@ namespace TaxCalculator.ViewModel
             TaxFormula taxFormula = new TaxFormula(formula);
             var rez = taxFormula.Execute(taxIndicators);
             if (rez != -5)
+            {
+                throw new Exception();
+            }
+        }
+
+        private void Test4()
+        {
+            //taxIndicators.First(p => p.NrCrt == 1).ValueField = "5";
+            taxIndicators.First(p => p.NrCrt == 2).ValueField = "10";
+
+            //string formula = "rd.(1-2)";
+            string formula = "rd.2*3/1000";
+            TaxFormula taxFormula = new TaxFormula(formula);
+            var rez = taxFormula.Execute(taxIndicators);
+            if (rez != (decimal)0.03)
+            {
+                throw new Exception();
+            }
+        }
+
+        private void Test5()
+        {
+            taxIndicators.First(p => p.NrCrt == 1).ValueField = "5";
+            taxIndicators.First(p => p.NrCrt == 2).ValueField = "1";
+            taxIndicators.First(p => p.NrCrt == 3).ValueField = "2";
+            taxIndicators.First(p => p.NrCrt == 4).ValueField = "3";
+            taxIndicators.First(p => p.NrCrt == 5).ValueField = "4";
+
+            //string formula = "rd.(1-2)";//4 -3=1
+            string formula = "rd.(1-2) -rd.(3-4+5)";
+            TaxFormula taxFormula = new TaxFormula(formula);
+            var rez = taxFormula.Execute(taxIndicators);
+            if (rez != 1)
             {
                 throw new Exception();
             }
