@@ -6,6 +6,7 @@ using TaxCalculator.Data.Model;
 using System.Windows;
 using TaxCalculator.Common.Mediator;
 using TaxCalculator.ViewModel.Base;
+using TaxCalculator.Common;
 
 namespace TaxCalculator.ViewModel.ViewModels.Model
 {
@@ -33,12 +34,18 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         {
             //get { return valueField; }
             get { return ValueFieldNumeric.ToString(); }
-            set {
-                valueField = value;
+            set
+            {
                 try
                 {
-                    
-                    ValueFieldNumeric = Convert.ToInt32(value);
+                    valueField = Utils.PrepareForConversion(value);
+                    if (!string.IsNullOrEmpty(valueField))
+                    {
+                        ValueFieldNumeric = DecimalConvertor.Instance.StringToDecimal(valueField);
+                    }
+                    valueField = DecimalConvertor.Instance.DecimalToString(ValueFieldNumeric);
+
+                    //ValueFieldNumeric = Convert.ToInt32(value);
 
                     //execute the function
                     if (Type != TaxIndicatorType.Calculat)
@@ -70,7 +77,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         //}
 
 
-        public int ValueFieldNumeric { get; set; }
+        public decimal ValueFieldNumeric { get; set; }
 
         public TaxIndicatorStyleInfo Style { get; set; }
         public class TaxIndicatorStyleInfo
