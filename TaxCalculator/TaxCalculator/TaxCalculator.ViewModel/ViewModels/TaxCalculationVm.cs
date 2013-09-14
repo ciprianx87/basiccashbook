@@ -48,7 +48,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
             Tests();
             
-            //ExecuteTaxCalculation(null);
+            ExecuteTaxCalculation(null);
         }
         private void Tests()
         {
