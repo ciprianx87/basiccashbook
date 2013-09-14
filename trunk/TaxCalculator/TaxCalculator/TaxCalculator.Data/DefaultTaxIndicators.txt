@@ -16,7 +16,7 @@
 15,Venituri din provizioane si ajustari neipozabile ct. 781,Numeric,..
 16,Venituri din ajustari financiare neimpozabile ct. 786,Numeric,..
 17,Alte venituri neimpozabile,Numeric,..
-15,Total baza de impozitare ,Calculat,rd.(13+14-15-16-17)
+15,Total baza de impozitare ,Calculat,rd.11
 ,Cheltuieli nedeductibile,Text,..
 16,Cheltuieli deplasare din ct. 625,Numeric,..
 17,Amenzi si penalitati din ct. 6581,Numeric,..

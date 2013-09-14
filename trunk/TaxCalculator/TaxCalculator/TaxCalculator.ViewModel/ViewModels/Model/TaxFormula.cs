@@ -32,24 +32,57 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public decimal Execute(List<TaxIndicatorViewModel> taxIndicatorList)
         {
             decimal currentValue = 0;
-            if (Params.Count > 0)
+            if (this.FormulaType == Model.FormulaType.Value)
             {
-                var firstParam = Params[0];
-                if (firstParam.ParamType == ParamType.RowData)
+                if (Params.Count > 0)
                 {
-                    var value = GetById((firstParam.ParamData as RowData).NrCrt, taxIndicatorList).ValueFieldNumeric;
-                    currentValue = value;
-                }
-                for (int i = 0; i < Params.Count; i += 2)
-                {
-                    //get sign
-                    var curParam = Params[i];
-                    var currentSign = (curParam.ParamData as ParamSign).Sign == ParamSignType.Plus ? 1 : -1;
-                    //get value
-                    curParam = Params[i + 1];
-                    var current = GetById((curParam.ParamData as RowData).NrCrt, taxIndicatorList);
+                    int startIndex = 0;
+                    var firstParam = Params[0];
+                    if (firstParam.ParamType == ParamType.RowData)
+                    {
+                        var value = GetById((firstParam.ParamData as RowData).NrCrt, taxIndicatorList).ValueFieldNumeric;
+                        currentValue = value;
+                        startIndex = 1;
+                    }
+                    for (int i = startIndex; i < Params.Count; i += 2)
+                    {
+                        //get sign
+                        var curParam = Params[i];
+                        var curSign = (curParam.ParamData as ParamSign).Sign;
+                        var currentSign = (curParam.ParamData as ParamSign).Sign == ParamSignType.Plus ? 1 : -1;
+                        //get value
+                        curParam = Params[i + 1];
 
-                    currentValue += current.ValueFieldNumeric * currentSign;
+
+                        if (curSign == ParamSignType.Plus)
+                        {
+                            var current = GetById((curParam.ParamData as RowData).NrCrt, taxIndicatorList);
+                            currentValue += current.ValueFieldNumeric;
+                        }
+                        if (curSign == ParamSignType.Minus)
+                        {
+                            var current = GetById((curParam.ParamData as RowData).NrCrt, taxIndicatorList);
+                            currentValue -= current.ValueFieldNumeric;
+                        }
+                        if (curSign == ParamSignType.Multiplication)
+                        {
+                            var current = (curParam.ParamData as ValueData).Value;
+                            currentValue *= current;
+                        }
+                        //currentValue += current.ValueFieldNumeric * currentSign;
+                    }
+                }
+            }
+            if (this.FormulaType == Model.FormulaType.SingleValue)
+            {
+                if (Params.Count == 1)
+                {
+                    var firstParam = Params[0];
+                    if (firstParam.ParamType == ParamType.RowData)
+                    {
+                        var value = GetById((firstParam.ParamData as RowData).NrCrt, taxIndicatorList).ValueFieldNumeric;
+                        currentValue = value;
+                    }
                 }
             }
             return currentValue;
@@ -60,7 +93,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         }
         private void ExtractFormula(string formula)
         {
-            formula = formula.Trim();
+            formula = formula.Trim().ToLower().Replace(" ", string.Empty);
             if (formula.StartsWith("rd."))
             {
                 //string[] formulas = formula.Split(new string[] { "rd." });
@@ -77,6 +110,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
 
                         try
                         {
+                            this.FormulaType = Model.FormulaType.Value;
                             Params = new List<FormulaParam>();
                             var nextNr = GetNextNumberWithSign(ref onlyFormula);
                             while (nextNr != 0)
@@ -97,33 +131,81 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                         catch
                         {
                         }
-                        //split by operators
-                        //var parts = onlyFormula.Split(TaxCalculatorConstants.AllowedRdOperations);
-                        //if (parts.Length > 0)
-                        //{
-                        //    foreach (var part in parts)
-                        //    {
 
-
-
-                        //    }
-
-                        //}
-                        //else
-                        //{
-                        //    throw new Exception();
-                        //}
                     }
                     else
                     {
                         //number only
                         //rd.23
+                        int onlyNumber = 0;
+                        if (int.TryParse(onlyFormula, out onlyNumber))
+                        {
+                            this.FormulaType = Model.FormulaType.SingleValue;
+                            FormulaParam par = new FormulaParam();
+                            par.ParamType = ParamType.RowData;
+                            par.ParamData = new RowData() { NrCrt = Math.Abs(onlyNumber) };
+                            Params.Add(par);
+                        }
+                        else
+                        {
+                            //split by *
+                            string[] formulaParts = onlyFormula.Split(new char[] { '*' });
+                            if (formulaParts.Length == 2)
+                            {
+                                //get the first number
+                                if (int.TryParse(formulaParts[0], out onlyNumber))
+                                {
+                                    //get the second component
+                                    var secondPart = formulaParts[1];
+                                    //test if percentage
+                                    if (secondPart.EndsWith("%"))
+                                    {
+                                        secondPart = secondPart.TrimEnd('%');
+                                        int percentage = 0;
+                                        if (int.TryParse(secondPart, out percentage))
+                                        {
+                                            this.FormulaType = Model.FormulaType.Value;
+                                            FormulaParam par = new FormulaParam();
+                                            par.ParamType = ParamType.RowData;
+                                            par.ParamData = new RowData() { NrCrt = Math.Abs(onlyNumber) };
+                                            Params.Add(par);
 
+                                            par = new FormulaParam();
+                                            par.ParamType = ParamType.Sign;
+                                            par.ParamData = new ParamSign() { Sign = ParamSignType.Multiplication };
+                                            Params.Add(par);
+
+                                            par = new FormulaParam();
+                                            par.ParamType = ParamType.Value;
+                                            par.ParamData = new ValueData() { Value = (decimal)percentage / 100 };
+                                            Params.Add(par);
+
+                                        }
+                                        else
+                                        {
+                                            //cannot parse
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //test for "/" component
+                                    }
+                                }
+                                else
+                                {
+                                }
+                            }
+                            // throw new Exception("invalid formula: " + formula);
+                        }
                     }
                 }
                 //else
                 //{
                 //}
+            }
+            else if (formula.StartsWith("if"))
+            {
+                this.FormulaType = Model.FormulaType.Condition;
             }
         }
 
@@ -136,7 +218,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             }
             var firstChar = formula[0];
             sbyte sign = 1;
-            if (TaxCalculatorConstants.AllowedRdOperations.Contains(firstChar))
+            if (Constants.AllowedRdOperations.Contains(firstChar))
             {
                 if (firstChar == '-')
                 {
@@ -145,7 +227,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                 formula = formula.Remove(0, 1);
             }
             int nextNumber = 0;
-            var parts = formula.Split(TaxCalculatorConstants.AllowedRdOperations);
+            var parts = formula.Split(Constants.AllowedRdOperations);
             if (parts.Length > 0)
             {
                 nextNumber = Convert.ToInt32(parts[0]);
@@ -161,7 +243,8 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
     public enum FormulaType
     {
         Condition,
-        Value
+        Value,
+        SingleValue
     }
     public class FormulaParam
     {
@@ -177,13 +260,16 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
     {
         Sign,
         RowData,
-        Formula
+        Formula,
+        Value
     }
 
     public enum ParamSignType
     {
         Minus,
-        Plus
+        Plus,
+        Multiplication,
+        Division
 
     }
     public class ParamSign
@@ -200,6 +286,15 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public override string ToString()
         {
             return NrCrt.ToString();
+        }
+    }
+
+    public class ValueData
+    {
+        public decimal Value { get; set; }
+        public override string ToString()
+        {
+            return Value.ToString();
         }
     }
 }

@@ -47,25 +47,35 @@ namespace TaxCalculator.ViewModel.ViewModels
                 });
             }
             Tests();
-            ExecuteTaxCalculation(null);
+            
+            //ExecuteTaxCalculation(null);
         }
         private void Tests()
         {
-            //taxIndicators.First(p => p.NrCrt == 1).ValueField = "5";
-            //taxIndicators.First(p => p.NrCrt == 2).ValueField = "2";
-
-            string formula = "rd.(1-2)";
-            TaxFormula taxFormula = new TaxFormula(formula);
-            taxFormula.Execute(TaxIndicators.ToList());
+            Tests t = new Tests();
+            t.PerformTests(TaxIndicators.ToList());
         }
 
+      
         public void ExecuteTaxCalculation(object param)
         {
-            var calculatedTaxIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
-            foreach (var item in calculatedTaxIndicators)
+            //return;
+            //execute this until all the values remain the same
+            bool hasChanged = true;
+            while (hasChanged)
             {
-                TaxFormula taxFormula = new TaxFormula(item.IndicatorFormula);
-                item.ValueField = taxFormula.Execute(TaxIndicators.ToList()).ToString();
+                hasChanged = false;
+                var calculatedTaxIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
+                foreach (var item in calculatedTaxIndicators)
+                {
+                    TaxFormula taxFormula = new TaxFormula(item.IndicatorFormula);
+                    var newValue = taxFormula.Execute(TaxIndicators.ToList()).ToString();
+                    if (item.ValueField != newValue)
+                    {
+                        hasChanged = true;
+                    }
+                    item.ValueField = newValue;
+                }
             }
         }
         private TaxIndicatorViewModel.TaxIndicatorStyleInfo GetStyleInfo(TaxIndicatorType taxIndicatorType)
