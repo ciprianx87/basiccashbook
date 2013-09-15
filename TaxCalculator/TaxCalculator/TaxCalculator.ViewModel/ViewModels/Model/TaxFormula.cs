@@ -34,60 +34,117 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             decimal currentValue = 0;
             if (this.FormulaType == Model.FormulaType.Value)
             {
-                if (Params.Count > 0)
+                currentValue = ParseValue(taxIndicatorList, currentValue);
+            }
+            else if (this.FormulaType == Model.FormulaType.SingleValue)
+            {
+                currentValue = ParseSingleValue(taxIndicatorList, currentValue);
+            }
+            else if (this.FormulaType == Model.FormulaType.ConstantValue)
+            {
+                currentValue = ParseConstantValue(currentValue);
+            }
+            else if (this.FormulaType == Model.FormulaType.Condition)
+            {
+                currentValue = ParseCondition(taxIndicatorList, currentValue);
+            }
+            return currentValue;
+        }
+
+        private decimal ParseValue(List<TaxIndicatorViewModel> taxIndicatorList, decimal currentValue)
+        {
+            if (Params.Count > 0)
+            {
+                int startIndex = 0;
+                var firstParam = Params[0];
+                if (firstParam.ParamType == ParamType.RowData)
                 {
-                    int startIndex = 0;
-                    var firstParam = Params[0];
-                    if (firstParam.ParamType == ParamType.RowData)
-                    {
-                        var value = GetById((firstParam.ParamData as RowData).NrCrt, taxIndicatorList).ValueFieldNumeric;
-                        currentValue = value;
-                        startIndex = 1;
-                    }
-                    for (int i = startIndex; i < Params.Count; i += 2)
-                    {
-                        //get sign
-                        var curParam = Params[i];
-                        var curSign = (curParam.ParamData as ParamSign).Sign;
-                        var currentSign = (curParam.ParamData as ParamSign).Sign == ParamSignType.Plus ? 1 : -1;
-                        //get value
-                        curParam = Params[i + 1];
+                    var value = GetById((firstParam.ParamData as RowData).NrCrt, taxIndicatorList).ValueFieldNumeric;
+                    currentValue = value;
+                    startIndex = 1;
+                }
+                for (int i = startIndex; i < Params.Count; i += 2)
+                {
+                    //get sign
+                    var curParam = Params[i];
+                    var curSign = (curParam.ParamData as ParamSign).Sign;
+                    var currentSign = (curParam.ParamData as ParamSign).Sign == ParamSignType.Plus ? 1 : -1;
+                    //get value
+                    curParam = Params[i + 1];
 
 
-                        if (curSign == ParamSignType.Plus)
-                        {
-                            var current = GetById((curParam.ParamData as RowData).NrCrt, taxIndicatorList);
-                            currentValue += current.ValueFieldNumeric;
-                        }
-                        if (curSign == ParamSignType.Minus)
-                        {
-                            var current = GetById((curParam.ParamData as RowData).NrCrt, taxIndicatorList);
-                            currentValue -= current.ValueFieldNumeric;
-                        }
-                        if (curSign == ParamSignType.Multiplication)
-                        {
-                            var current = (curParam.ParamData as ValueData).Value;
-                            currentValue *= current;
-                        }
-                        if (curSign == ParamSignType.Division)
-                        {
-                            var current = (curParam.ParamData as ValueData).Value;
-                            currentValue /= current;
-                        }
-                        //currentValue += current.ValueFieldNumeric * currentSign;
+                    if (curSign == ParamSignType.Plus)
+                    {
+                        var current = GetById((curParam.ParamData as RowData).NrCrt, taxIndicatorList);
+                        currentValue += current.ValueFieldNumeric;
                     }
+                    if (curSign == ParamSignType.Minus)
+                    {
+                        var current = GetById((curParam.ParamData as RowData).NrCrt, taxIndicatorList);
+                        currentValue -= current.ValueFieldNumeric;
+                    }
+                    if (curSign == ParamSignType.Multiplication)
+                    {
+                        var current = (curParam.ParamData as ValueData).Value;
+                        currentValue *= current;
+                    }
+                    if (curSign == ParamSignType.Division)
+                    {
+                        var current = (curParam.ParamData as ValueData).Value;
+                        currentValue /= current;
+                    }
+                    //currentValue += current.ValueFieldNumeric * currentSign;
                 }
             }
-            if (this.FormulaType == Model.FormulaType.SingleValue)
+            return currentValue;
+        }
+
+        private decimal ParseSingleValue(List<TaxIndicatorViewModel> taxIndicatorList, decimal currentValue)
+        {
+            if (Params.Count == 1)
             {
-                if (Params.Count == 1)
+                var firstParam = Params[0];
+                if (firstParam.ParamType == ParamType.RowData)
                 {
-                    var firstParam = Params[0];
-                    if (firstParam.ParamType == ParamType.RowData)
+                    var value = GetById((firstParam.ParamData as RowData).NrCrt, taxIndicatorList).ValueFieldNumeric;
+                    currentValue = value;
+                }
+            }
+            return currentValue;
+        }
+
+        private decimal ParseConstantValue(decimal currentValue)
+        {
+            if (Params.Count == 1)
+            {
+                var firstParam = Params[0];
+                if (firstParam.ParamType == ParamType.Value)
+                {
+                    var value = Convert.ToInt32(firstParam.ParamData);
+                    currentValue = value;
+                }
+            }
+            return currentValue;
+        }
+
+        private decimal ParseCondition(List<TaxIndicatorViewModel> taxIndicatorList, decimal currentValue)
+        {
+            if (Params.Count == 1)
+            {
+                var firstParam = Params[0];
+                if (firstParam.ParamType == ParamType.ConditionData)
+                {
+                    ConditionData cd = firstParam.ParamData as ConditionData;
+                    bool ifResult = cd.IfStatement.ExecuteCondition(taxIndicatorList);
+                    if (ifResult)
                     {
-                        var value = GetById((firstParam.ParamData as RowData).NrCrt, taxIndicatorList).ValueFieldNumeric;
-                        currentValue = value;
+                        currentValue = cd.ThenStatement.Execute(taxIndicatorList);
                     }
+                    else
+                    {
+                        currentValue = cd.ElseStatement.Execute(taxIndicatorList);
+                    }
+
                 }
             }
             return currentValue;
@@ -107,7 +164,16 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             var formulaParts = formula.Split(new string[] { "rd." }, StringSplitOptions.RemoveEmptyEntries);
             if (formulaParts.Length > 1)
             {
+                for (int j = 0; j < formulaParts.Length; j++)
+                {
+                    if (!formulaParts[j].StartsWith("("))
+                    {
+                        formulaParts[j] = "(" + formulaParts[j] + ")";
+                    }
+                }
+                //formulaParts[0].Remove(formulaParts[0].Length - 1, 1);
                 string resultedFormula = formulaParts[0].Remove(formulaParts[0].Length - 2, 2);
+                //string resultedFormula = formulaParts[0].Remove(formulaParts[0].Length - 1, 1);
                 //for each part starting from the second one, apply the sign (if minus in front of the rd)
                 for (int i = 1; i < formulaParts.Length; i++)
                 {
@@ -119,25 +185,26 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                     {
                         current.RemoveAt(0);
                         current.RemoveAt(current.Count - 1);
-                        if (current[0] != '-' && current[0] != '+')
-                        {
-                            current.Insert(0, '+');
-                        }
-                        for (int j = 0; j < current.Count; j++)
-                        {
-                            if (current[j] == '-')
-                            {
-                                current[j] = '+';
-                            }
-                            else if (current[j] == '+')
-                            {
-                                current[j] = '-';
-                            }
-                        }
-                        string resultedString = "";
-                        current.ForEach(p => resultedString += p.ToString());
-                        resultedFormula += resultedString;
                     }
+                    if (current[0] != '-' && current[0] != '+')
+                    {
+                        current.Insert(0, '+');
+                    }
+                    for (int j = 0; j < current.Count; j++)
+                    {
+                        if (current[j] == '-')
+                        {
+                            current[j] = '+';
+                        }
+                        else if (current[j] == '+')
+                        {
+                            current[j] = '-';
+                        }
+                    }
+                    string resultedString = "";
+                    current.ForEach(p => resultedString += p.ToString());
+                    resultedFormula += resultedString;
+
                 }
                 resultedFormula += ")";
                 formula = "rd." + resultedFormula;
@@ -149,7 +216,17 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         {
             formula = formula.Trim().ToLower().Replace(" ", string.Empty);
             NormalizeFormula(ref formula);
-
+            int constValue = 0;
+            if (int.TryParse(formula, out constValue))
+            {
+                //if the formula is a constant value
+                this.FormulaType = Model.FormulaType.ConstantValue;
+                this.Params.Add(new FormulaParam()
+                {
+                    ParamType = ParamType.Value,
+                    ParamData = constValue
+                });
+            }
             if (formula.StartsWith("rd."))
             {
                 //string[] formulas = formula.Split(new string[] { "rd." });
@@ -161,9 +238,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                         //formula
                         //rd.(1-2-3-4+5+6-7+8-9)
                         //remove ()
-                        onlyFormula = onlyFormula.Remove(0, 1);
-                        onlyFormula = onlyFormula.Remove(onlyFormula.Length - 1, 1);
-
+                        onlyFormula = RemoveParanthesis(onlyFormula);
                         try
                         {
                             this.FormulaType = Model.FormulaType.Value;
@@ -288,18 +363,79 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                 //{
                 //}
             }
+
+
             else if (formula.StartsWith("if"))
             {
-                //IF(C32*2%>0;C32*2%;0)
-                //IF(C31-C33>0;C31-C33;0)
-                //IF(C37*2%>0;C37*2%;0)
-                //IF(C36-C38>0;C36-C38;0)
-                //IF(C15>0;0;-C15)
-                //IF((C46>C48);C46;C48)
-                //IF(C49<C50;C49;C50)
+                formula = BuildIfStatement(formula);
 
-                this.FormulaType = Model.FormulaType.Condition;
             }
+        }
+
+        private string BuildIfStatement(string formula)
+        {
+            //IF(C32*2%>0;C32*2%;0)
+            //IF(C31-C33>0;C31-C33;0)
+            //IF(C37*2%>0;C37*2%;0)
+            //IF(C36-C38>0;C36-C38;0)
+            //IF(C15>0;0;-C15)
+            //IF((C46>C48);C46;C48)
+            //IF(C49<C50;C49;C50)
+
+            //if condition then value else value.
+            //obiect nou ce tine acest if si se evalueaza pe Evaluate
+            this.FormulaType = Model.FormulaType.Condition;
+
+            //remove the if
+            formula = formula.Remove(0, 2);
+            formula = formula.Replace("c", "rd.");
+
+            if (formula.StartsWith("(") && formula.EndsWith(")"))
+            {
+                //formula
+                //IF(C31-C33>0;C31-C33;0)
+                //remove ()
+                formula = RemoveParanthesis(formula);
+            }
+            //C31-C33>0;C31-C33;0
+            //split and get the if members
+            string[] ifMembers = formula.Split(new char[] { ';' });
+            if (ifMembers.Length != 3)
+            {
+                throw new Exception();
+            }
+            //get the condition
+            IfStatement ifStatement = new IfStatement(ifMembers[0]);
+
+
+
+            ThenStatement ts = new ThenStatement(ifMembers[1]);
+            // ts.Result = new TaxFormula();
+
+            ElseStatement es = new ElseStatement(ifMembers[2]);
+            //es.Result = new TaxFormula();
+
+            this.Params.Add(new FormulaParam()
+            {
+                ParamType = ParamType.ConditionData,
+                ParamData = new ConditionData()
+                {
+                    IfStatement = ifStatement,
+                    ThenStatement = ts,
+                    ElseStatement = es
+                }
+            });
+            return formula;
+        }
+
+        private static string RemoveParanthesis(string onlyFormula)
+        {
+            if (onlyFormula.StartsWith("(") && onlyFormula.EndsWith(")"))
+            {
+                onlyFormula = onlyFormula.Remove(0, 1);
+                onlyFormula = onlyFormula.Remove(onlyFormula.Length - 1, 1);
+            }
+            return onlyFormula;
         }
 
         private int GetNextNumberWithSign(ref string formula)
@@ -337,7 +473,8 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
     {
         Condition,
         Value,
-        SingleValue
+        SingleValue,
+        ConstantValue
     }
     public class FormulaParam
     {
@@ -354,7 +491,8 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         Sign,
         RowData,
         Formula,
-        Value
+        Value,
+        ConditionData
     }
 
     public enum ParamSignType
@@ -381,7 +519,6 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             return NrCrt.ToString();
         }
     }
-
     public class ValueData
     {
         public decimal Value { get; set; }
@@ -389,5 +526,138 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         {
             return Value.ToString();
         }
+    }
+
+    public class IfStatement
+    {
+        private string ifCondition;
+
+        public IfStatement()
+        {
+
+        }
+
+        public IfStatement(string ifCondition)
+        {
+            // TODO: Complete member initialization
+            this.ifCondition = ifCondition;
+            ParseCondition();
+        }
+
+        //public IfStatement(List<TaxIndicatorViewModel> taxIndicatorList)
+        //{
+        //    this.taxIndicatorList = taxIndicatorList;
+        //}
+        //private List<TaxIndicatorViewModel> taxIndicatorList;
+        public TaxFormula Left { get; set; }
+        public TaxFormula Right { get; set; }
+        public string Operator { get; set; }
+
+        private void ParseCondition()
+        {
+            //C31-C33>0
+            string op = "";
+            string leftStr = "";
+            string rightStr = "";
+
+
+            //extract the condition parts
+            GetOperatorAndComparisonMembers(ifCondition, ref op, ref leftStr, ref rightStr);
+
+            Operator = op;
+
+            Left = new TaxFormula(leftStr);
+            Right = new TaxFormula(rightStr);
+
+        }
+
+        private void GetOperatorAndComparisonMembers(string condition, ref string op, ref string left, ref string right)
+        {
+            string[] parts = null;
+            if (condition.Contains('<'))
+            {
+
+                parts = condition.Split(new char[] { '<' });
+                if (parts.Length == 2)
+                {
+                    op = "<";
+                }
+                else
+                {
+                    throw new Exception("invalid condition: " + condition);
+                }
+            }
+            else if (condition.Contains('>'))
+            {
+                parts = condition.Split(new char[] { '>' });
+                if (parts.Length == 2)
+                {
+                    op = ">";
+                }
+                else
+                {
+                    throw new Exception("invalid condition: " + condition);
+                }
+            }
+            else
+            {
+                throw new Exception("invalid condition: " + condition);
+            }
+            left = parts[0];
+            right = parts[1];
+
+        }
+
+        public bool ExecuteCondition(List<TaxIndicatorViewModel> taxIndicatorList)
+        {
+            var left = Left.Execute(taxIndicatorList);
+            var right = Right.Execute(taxIndicatorList);
+            bool result = false;
+            switch (Operator)
+            {
+                case "<":
+                    result = left < right;
+                    break;
+                case ">":
+                    result = left > right;
+                    break;
+                default:
+                    throw new Exception("invalid operator: " + Operator);
+            }
+            return result;
+        }
+    }
+    public class ThenStatement
+    {
+        public ThenStatement(string statement)
+        {
+            Result = new TaxFormula(statement);
+        }
+        public TaxFormula Result { get; set; }
+        public decimal Execute(List<TaxIndicatorViewModel> taxIndicatorList)
+        {
+            return Result.Execute(taxIndicatorList);
+        }
+    }
+
+    public class ElseStatement
+    {
+        public ElseStatement(string statement)
+        {
+            Result = new TaxFormula(statement);
+
+        }
+        public TaxFormula Result { get; set; }
+        public decimal Execute(List<TaxIndicatorViewModel> taxIndicatorList)
+        {
+            return Result.Execute(taxIndicatorList);
+        }
+    }
+
+    public class ConditionData
+    {
+        public IfStatement IfStatement { get; set; }
+        public ThenStatement ThenStatement { get; set; }
+        public ElseStatement ElseStatement { get; set; }
     }
 }
