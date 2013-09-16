@@ -22,9 +22,14 @@ namespace TaxCalculator.ViewModel
             //Test62();
             //Test7();
             //Test71();
-            Test8();
+            //Test8();
+            //Test9();
+            //Test9_1();
+           // Test9_2();
+            Test9_3();
+            Test9_4();
         }
-
+        #region old
         private void Test1()
         {
             //taxIndicators.First(p => p.NrCrt == 1).ValueField = "5";
@@ -54,7 +59,6 @@ namespace TaxCalculator.ViewModel
                 throw new Exception();
             }
         }
-
         private void Test3()
         {
             taxIndicators.First(p => p.NrCrt == 1).ValueField = "5";
@@ -68,7 +72,6 @@ namespace TaxCalculator.ViewModel
                 throw new Exception();
             }
         }
-
         private void Test4()
         {
             //taxIndicators.First(p => p.NrCrt == 1).ValueField = "5";
@@ -83,7 +86,6 @@ namespace TaxCalculator.ViewModel
                 throw new Exception();
             }
         }
-
         private void Test5()
         {
             taxIndicators.First(p => p.NrCrt == 1).ValueField = "5";
@@ -101,7 +103,6 @@ namespace TaxCalculator.ViewModel
                 throw new Exception();
             }
         }
-
         private void Test6()
         {
             taxIndicators.First(p => p.NrCrt == 1).ValueField = "5";
@@ -183,6 +184,76 @@ namespace TaxCalculator.ViewModel
             TaxFormula taxFormula = new TaxFormula(formula);
             var rez = taxFormula.Execute(taxIndicators);
             if (rez != (decimal)0.04)
+            {
+                throw new Exception();
+            }
+        }
+
+        private void Test9()
+        {
+            taxIndicators.First(p => p.NrCrt == 1).ValueField = "2";
+            taxIndicators.First(p => p.NrCrt == 2).ValueField = "4";
+
+            //string formula = "rd.(1-2)";//4 -3=1
+            string formula = "IF(C1>C2;C1;C2)";
+            TaxFormula taxFormula = new TaxFormula(formula);
+            var rez = taxFormula.Execute(taxIndicators);
+            if (rez != 4)
+            {
+                throw new Exception();
+            }
+        }
+
+        #endregion
+        private void Test9_1()
+        {
+            taxIndicators.First(p => p.NrCrt == 1).ValueField = "20";
+            taxIndicators.First(p => p.NrCrt == 2).ValueField = "4";
+
+            //string formula = "rd.(1-2)";//4 -3=1
+            string formula = "IF(C1>C2;C1;C2)";
+            TaxFormula taxFormula = new TaxFormula(formula);
+            var rez = taxFormula.Execute(taxIndicators);
+            if (rez != 20)
+            {
+                throw new Exception();
+            }
+        }
+        private void Test9_2()
+        {
+            taxIndicators.First(p => p.NrCrt == 1).ValueField = "20";
+            taxIndicators.First(p => p.NrCrt == 2).ValueField = "4";
+
+            //string formula = "rd.(1-2)";//4 -3=1
+            string formula = "IF((C1>C2);C1;C2)";
+            TaxFormula taxFormula = new TaxFormula(formula);
+            var rez = taxFormula.Execute(taxIndicators);
+            if (rez != 20)
+            {
+                throw new Exception();
+            }
+        }
+        private void Test9_3()
+        {
+            taxIndicators.First(p => p.NrCrt == 1).ValueField = "20";
+
+            string formula = "IF(C1>0;0;-C1)";
+            TaxFormula taxFormula = new TaxFormula(formula);
+            var rez = taxFormula.Execute(taxIndicators);
+            if (rez != 0)
+            {
+                throw new Exception();
+            }
+        }
+
+        private void Test9_4()
+        {
+            taxIndicators.First(p => p.NrCrt == 1).ValueField = "-20";
+
+            string formula = "IF(C1>0;0;-C1)";
+            TaxFormula taxFormula = new TaxFormula(formula);
+            var rez = taxFormula.Execute(taxIndicators);
+            if (rez != 20)
             {
                 throw new Exception();
             }
