@@ -78,17 +78,17 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                         var current = GetById((curParam.ParamData as RowData).NrCrt, taxIndicatorList);
                         currentValue += current.ValueFieldNumeric;
                     }
-                    if (curSign == ParamSignType.Minus)
+                    else if (curSign == ParamSignType.Minus)
                     {
                         var current = GetById((curParam.ParamData as RowData).NrCrt, taxIndicatorList);
                         currentValue -= current.ValueFieldNumeric;
                     }
-                    if (curSign == ParamSignType.Multiplication)
+                    else if (curSign == ParamSignType.Multiplication)
                     {
                         var current = (curParam.ParamData as ValueData).Value;
                         currentValue *= current;
                     }
-                    if (curSign == ParamSignType.Division)
+                    else if (curSign == ParamSignType.Division)
                     {
                         var current = (curParam.ParamData as ValueData).Value;
                         currentValue /= current;
@@ -405,6 +405,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                 throw new Exception();
             }
             //get the condition
+            ifMembers[0] = RemoveParanthesis(ifMembers[0]);
             IfStatement ifStatement = new IfStatement(ifMembers[0]);
 
 
@@ -539,7 +540,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
 
         public IfStatement(string ifCondition)
         {
-            // TODO: Complete member initialization
+
             this.ifCondition = ifCondition;
             ParseCondition();
         }
@@ -555,6 +556,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
 
         private void ParseCondition()
         {
+
             //C31-C33>0
             string op = "";
             string leftStr = "";
