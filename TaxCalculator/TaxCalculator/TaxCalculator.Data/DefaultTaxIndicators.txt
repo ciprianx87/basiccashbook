@@ -11,7 +11,7 @@
 10,Total cheltuieli,Numeric,..
 11, - rulaj ct.609,Numeric,..
 12, + rulaj ct.709,Numeric,..
-13,"Venituri - Cheltuieli,  sold ct. 121",Calculat,rd.(1-2-3-4+5+6-7+8-9)
+13,"Venituri - Cheltuieli,  sold ct. 121",Calculat,rd.(1-2-3-4+5+6-7+8-9)-Rd.(10-11+12)
 14,Cheltuieli nedeductibile (rd. 33),Calculat,rd.29
 15,Venituri din provizioane si ajustari neipozabile ct. 781,Numeric,..
 16,Venituri din ajustari financiare neimpozabile ct. 786,Numeric,..

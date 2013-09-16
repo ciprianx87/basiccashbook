@@ -46,7 +46,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                     //ValueFieldNumeric=2
                 });
             }
-            Tests();
+            //Tests();
             
             ExecuteTaxCalculation(null);
         }
@@ -59,7 +59,7 @@ namespace TaxCalculator.ViewModel.ViewModels
       
         public void ExecuteTaxCalculation(object param)
         {
-            return;
+            //return;
             //execute this until all the values remain the same
             bool hasChanged = true;
             while (hasChanged)
