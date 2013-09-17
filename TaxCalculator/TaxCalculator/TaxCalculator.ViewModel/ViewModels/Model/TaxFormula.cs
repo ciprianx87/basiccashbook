@@ -203,7 +203,18 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                     {
                         var previous = formulaParts[i - 1];
                         var current = formulaParts[i].ToList();
-                        var lastSign = previous[previous.Length - 1] == '-' ? -1 : 1;
+                        bool lastSignIsMinus = false;
+                        int signPosition = 0;
+                        if (previous.EndsWith(")"))
+                        {
+                            signPosition = previous.Length - 2;
+                        }
+                        else
+                        {
+                            signPosition = previous.Length - 1;
+                        }
+                        lastSignIsMinus = previous[signPosition] == '-';
+
 
                         if (current[0] == '(' && current[current.Count - 1] == ')')
                         {
@@ -214,15 +225,31 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                         {
                             current.Insert(0, '+');
                         }
-                        for (int j = 0; j < current.Count; j++)
+
+                        //if (current[0] != '-' && current[0] != '+')
+                        //{
+                        //    if (lastSignIsMinus)
+                        //    {
+                        //        current.Insert(0, '+');
+                        //    }
+                        //    else
+                        //    {
+                        //        current.Insert(0, '-');
+                        //    }
+                        //}
+
+                        if (lastSignIsMinus)
                         {
-                            if (current[j] == '-')
+                            for (int j = 0; j < current.Count; j++)
                             {
-                                current[j] = '+';
-                            }
-                            else if (current[j] == '+')
-                            {
-                                current[j] = '-';
+                                if (current[j] == '-')
+                                {
+                                    current[j] = '+';
+                                }
+                                else if (current[j] == '+')
+                                {
+                                    current[j] = '-';
+                                }
                             }
                         }
                         string resultedString = "";
@@ -257,7 +284,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                     ParamData = constValue
                 });
             }
-            if (formula.StartsWith("rd."))
+            else if (formula.StartsWith("rd."))
             {
                 ParseValueFormula(formula);
             }
