@@ -10,6 +10,7 @@ using TaxCalculator.ViewModel.ViewModels.Model;
 using System.Windows;
 using TaxCalculator.Data;
 using TaxCalculator.Common.Mediator;
+using System.Windows.Input;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -19,6 +20,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         public TaxCalculationTestVm()
         {
             Mediator.Instance.Register(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
+            this.SaveCommand = new DelegateCommand(Save, CanSave); 
             TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>()
             {
                 new TaxIndicatorViewModel(){ NrCrt=1, Description="ind 1", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
@@ -80,30 +82,41 @@ namespace TaxCalculator.ViewModel.ViewModels
                 var calculatedTaxIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
                 foreach (var item in calculatedTaxIndicators)
                 {
-                    TaxFormula taxFormula = null;
-                    try
-                    {
-                        taxFormula = new TaxFormula(item.IndicatorFormula);
-                    }
-                    catch (Exception ex)
-                    {
-                        item.SetError("eroare la interpretarea formulei");
-                    }
-                    try
-                    {
-                        var newValue = taxFormula.Execute(TaxIndicators.ToList()).ToString();
-                        if (item.ValueField != newValue)
-                        {
-                            hasChanged = true;
-                        }
-                        item.ValueField = newValue;
-                    }
-                    catch (Exception ex)
-                    {
-                        item.SetError("formula invalida");
-                    }
+                    hasChanged = ExecuteTaxCalculation(hasChanged, item);
                 }
             }
+        }
+
+        private bool ExecuteTaxCalculation(bool hasChanged, TaxIndicatorViewModel item)
+        {
+            TaxFormula taxFormula = null;
+            try
+            {
+                if (string.IsNullOrEmpty(item.IndicatorFormula))
+                {
+                    item.SetError("formula goala");
+                }
+                taxFormula = new TaxFormula(item.IndicatorFormula);
+            }
+            catch (Exception ex)
+            {
+                item.SetError("eroare la interpretarea formulei");
+            }
+            try
+            {
+                
+                var newValue = taxFormula.Execute(TaxIndicators.ToList()).ToString();
+                if (item.ValueField != newValue)
+                {
+                    hasChanged = true;
+                }
+                item.ValueField = newValue;
+            }
+            catch (Exception ex)
+            {
+                item.SetError("formula invalida");
+            }
+            return hasChanged;
         }
         private TaxIndicatorViewModel.TaxIndicatorStyleInfo GetStyleInfo(TaxIndicatorType taxIndicatorType)
         {
@@ -163,6 +176,30 @@ namespace TaxCalculator.ViewModel.ViewModels
                 }
             }
         }
+
+
+        public ICommand SaveCommand { get; set; }
+
+        private bool CanSave(object parameter)
+        {
+            return true;
+        }
+
+        private void Save(object parameter)
+        {
+            if (TaxIndicators != null)
+            {
+                var calculatedTaxIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
+
+                foreach (var item in calculatedTaxIndicators)
+                {
+                    ExecuteTaxCalculation(true, item);
+
+                    //item.IsValid();
+                }
+            }
+        } 
+
         public override void Dispose()
         {
             base.Dispose();

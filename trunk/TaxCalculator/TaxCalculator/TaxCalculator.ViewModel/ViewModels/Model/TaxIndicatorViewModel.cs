@@ -71,6 +71,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             set
             {
                 indicatorFormula = value;
+                this.FormulaTextColor = new SolidColorBrush(Colors.Black);
                 IsValid();
                 NotifyPropertyChanged("IndicatorFormula");
             }
@@ -128,16 +129,16 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
 
 
 
-        private Color textColor;
-        public Color TextColor
+        private System.Windows.Media.Brush formulaTextColor;
+        public System.Windows.Media.Brush FormulaTextColor
         {
-            get { return textColor; }
+            get { return formulaTextColor; }
             set
             {
-                if (textColor != value)
+                if (formulaTextColor != value)
                 {
-                    textColor = value;
-                    this.NotifyPropertyChanged("TextColor");
+                    formulaTextColor = value;
+                    this.NotifyPropertyChanged("FormulaTextColor");
                 }
             }
         }
@@ -203,7 +204,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         internal void SetError(string message)
         {
             this.ErrorMessage = message;
-            this.TextColor = Colors.Red;
+            this.FormulaTextColor = new SolidColorBrush(Colors.Red);
         }
     }
 

@@ -12,7 +12,10 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
                   CanUserResizeRows="False">
@@ -95,7 +98,12 @@
                             <StackPanel>
                                 <!--<TextBlock Text="{Binding IndicatorFormula}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}"/>-->
                                 <TextBox Text="{Binding Path=IndicatorFormula, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
-                                    ValidatesOnDataErrors=true, NotifyOnValidationError=true}" Foreground="{Binding TextColor}" Style="{StaticResource StandardTextBox}"  Visibility="{Binding Style.FormulaFieldVisibility}"/>
+                                    ValidatesOnDataErrors=true, NotifyOnValidationError=true}"  Style="{StaticResource StandardTextBox}"
+                                         Visibility="{Binding Style.FormulaFieldVisibility}" Foreground="{Binding FormulaTextColor}">
+                                    <TextBox.ToolTip>
+                                        <TextBlock Text="{Binding ErrorMessage}" FontWeight="Bold" Foreground="Red"/>
+                                    </TextBox.ToolTip>
+                                </TextBox>
                                 <!--<TextBox Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandardTextBox}"  Visibility="{Binding Style.ValueFieldVisibility}"/>-->
                             </StackPanel>
                         </DataTemplate>
@@ -119,5 +127,7 @@
 
             </DataGrid.Items>
         </DataGrid>
+        
+        <Button Grid.Row="3" Content="Save" Command="{Binding SaveCommand}" VerticalAlignment="Center" Width="100" Margin="0,30,0,0" Height="30"></Button>
     </Grid>
 </UserControl>
