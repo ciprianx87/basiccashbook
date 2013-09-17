@@ -42,7 +42,7 @@ namespace TaxCalculator
             InitSettings();
             PopupManager.Instance.Init();
             //Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
-            ChangeContent(ContentTypes.TaxCalculation);
+            ChangeContent(ContentTypes.TaxCalculationTest);
             version = "1.0.22 demo";
             CheckAppValidity();
 
@@ -65,6 +65,9 @@ namespace TaxCalculator
                     break;
                 case ContentTypes.TaxCalculation:
                     contentControl.Content = new TaxCalculator.Controls.TaxCalculation();
+                    break;
+                case ContentTypes.TaxCalculationTest:
+                    contentControl.Content = new TaxCalculator.Controls.TaxCalculationTest();
                     break;
                 //case ContentTypes.MainContent:
                 //    //contentControl.Content = new CashBook.Controls.MainContent();
@@ -182,6 +185,12 @@ namespace TaxCalculator
         private void About_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeContent(ContentTypes.TaxCalculationTest);
+            
         }
 
     }

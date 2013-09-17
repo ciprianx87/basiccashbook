@@ -22,6 +22,7 @@
                 <MenuItem Header="Flux" Click="Help_Click"/>
                 <MenuItem Header="Despre" Click="About_Click"></MenuItem>
             </MenuItem>
+            <MenuItem Header="TEST" Click="Test_Click"/>
 
         </Menu>
         <ContentControl Grid.Row="1" x:Name="contentControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>

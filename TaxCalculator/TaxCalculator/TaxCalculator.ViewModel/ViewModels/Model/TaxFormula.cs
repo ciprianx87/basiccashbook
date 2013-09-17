@@ -18,7 +18,16 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public TaxFormula(string formula)
             : this()
         {
-            ExtractFormula(formula);
+            try
+            {
+                this.FormulaType = Model.FormulaType.Invalid;
+                ExtractFormula(formula);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public TaxFormula()
@@ -32,7 +41,11 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public decimal Execute(List<TaxIndicatorViewModel> taxIndicatorList)
         {
             decimal currentValue = 0;
-            if (this.FormulaType == Model.FormulaType.Value)
+            if (this.FormulaType == Model.FormulaType.Invalid)
+            {
+                throw new Exception("invalid formula type");
+            }
+            else if (this.FormulaType == Model.FormulaType.Value)
             {
                 currentValue = ParseValue(taxIndicatorList, currentValue);
             }
@@ -47,6 +60,10 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             else if (this.FormulaType == Model.FormulaType.Condition)
             {
                 currentValue = ParseCondition(taxIndicatorList, currentValue);
+            }
+            else
+            {
+                throw new Exception("unknown formula type");
             }
             return currentValue;
         }
@@ -151,7 +168,12 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         }
         private TaxIndicatorViewModel GetById(int id, List<TaxIndicatorViewModel> taxIndicatorList)
         {
-            return taxIndicatorList.First(p => p.NrCrt == id);
+            var existing = taxIndicatorList.FirstOrDefault(p => p.NrCrt == id);
+            if (existing == null)
+            {
+                throw new Exception("could not find taxIndicator with id " + id);
+            }
+            return existing;
         }
 
         /// <summary>
@@ -161,53 +183,61 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         /// <param name="formula"></param>
         private void NormalizeFormula(ref string formula)
         {
-            var formulaParts = formula.Split(new string[] { "rd." }, StringSplitOptions.RemoveEmptyEntries);
-            if (formulaParts.Length > 1)
+            try
             {
-                for (int j = 0; j < formulaParts.Length; j++)
+                var formulaParts = formula.Split(new string[] { "rd." }, StringSplitOptions.RemoveEmptyEntries);
+                if (formulaParts.Length > 1)
                 {
-                    if (!formulaParts[j].StartsWith("("))
+                    for (int j = 0; j < formulaParts.Length; j++)
                     {
-                        formulaParts[j] = "(" + formulaParts[j] + ")";
-                    }
-                }
-                //formulaParts[0].Remove(formulaParts[0].Length - 1, 1);
-                string resultedFormula = formulaParts[0].Remove(formulaParts[0].Length - 2, 2);
-                //string resultedFormula = formulaParts[0].Remove(formulaParts[0].Length - 1, 1);
-                //for each part starting from the second one, apply the sign (if minus in front of the rd)
-                for (int i = 1; i < formulaParts.Length; i++)
-                {
-                    var previous = formulaParts[i - 1];
-                    var current = formulaParts[i].ToList();
-                    var lastSign = previous[previous.Length - 1] == '-' ? -1 : 1;
-
-                    if (current[0] == '(' && current[current.Count - 1] == ')')
-                    {
-                        current.RemoveAt(0);
-                        current.RemoveAt(current.Count - 1);
-                    }
-                    if (current[0] != '-' && current[0] != '+')
-                    {
-                        current.Insert(0, '+');
-                    }
-                    for (int j = 0; j < current.Count; j++)
-                    {
-                        if (current[j] == '-')
+                        if (!formulaParts[j].StartsWith("("))
                         {
-                            current[j] = '+';
-                        }
-                        else if (current[j] == '+')
-                        {
-                            current[j] = '-';
+                            formulaParts[j] = "(" + formulaParts[j] + ")";
                         }
                     }
-                    string resultedString = "";
-                    current.ForEach(p => resultedString += p.ToString());
-                    resultedFormula += resultedString;
+                    //formulaParts[0].Remove(formulaParts[0].Length - 1, 1);
+                    string resultedFormula = formulaParts[0].Remove(formulaParts[0].Length - 2, 2);
+                    //string resultedFormula = formulaParts[0].Remove(formulaParts[0].Length - 1, 1);
+                    //for each part starting from the second one, apply the sign (if minus in front of the rd)
+                    for (int i = 1; i < formulaParts.Length; i++)
+                    {
+                        var previous = formulaParts[i - 1];
+                        var current = formulaParts[i].ToList();
+                        var lastSign = previous[previous.Length - 1] == '-' ? -1 : 1;
 
+                        if (current[0] == '(' && current[current.Count - 1] == ')')
+                        {
+                            current.RemoveAt(0);
+                            current.RemoveAt(current.Count - 1);
+                        }
+                        if (current[0] != '-' && current[0] != '+')
+                        {
+                            current.Insert(0, '+');
+                        }
+                        for (int j = 0; j < current.Count; j++)
+                        {
+                            if (current[j] == '-')
+                            {
+                                current[j] = '+';
+                            }
+                            else if (current[j] == '+')
+                            {
+                                current[j] = '-';
+                            }
+                        }
+                        string resultedString = "";
+                        current.ForEach(p => resultedString += p.ToString());
+                        resultedFormula += resultedString;
+
+                    }
+                    resultedFormula += ")";
+                    formula = "rd." + resultedFormula;
                 }
-                resultedFormula += ")";
-                formula = "rd." + resultedFormula;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
 
@@ -229,147 +259,153 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             }
             if (formula.StartsWith("rd."))
             {
-                //string[] formulas = formula.Split(new string[] { "rd." });
-                // if (formulas.Length == 1)
+                ParseValueFormula(formula);
+            }
+            else if (formula.StartsWith("if"))
+            {
+                formula = BuildIfStatement(formula);
+            }
+            else
+            {
+                throw new Exception("invalid formula");
+            }
+        }
+
+        private void ParseValueFormula(string formula)
+        {
+            //string[] formulas = formula.Split(new string[] { "rd." });
+            // if (formulas.Length == 1)
+            {
+                string onlyFormula = formula.Replace("rd.", "");
+                if (onlyFormula.StartsWith("(") && onlyFormula.EndsWith(")"))
                 {
-                    string onlyFormula = formula.Replace("rd.", "");
-                    if (onlyFormula.StartsWith("(") && onlyFormula.EndsWith(")"))
+                    //formula
+                    //rd.(1-2-3-4+5+6-7+8-9)
+                    //remove ()
+                    onlyFormula = RemoveParanthesis(onlyFormula);
+                    try
                     {
-                        //formula
-                        //rd.(1-2-3-4+5+6-7+8-9)
-                        //remove ()
-                        onlyFormula = RemoveParanthesis(onlyFormula);
-                        try
+                        this.FormulaType = Model.FormulaType.Value;
+                        Params = new List<FormulaParam>();
+                        var nextNr = GetNextNumberWithSign(ref onlyFormula);
+                        while (nextNr != 0)
                         {
-                            this.FormulaType = Model.FormulaType.Value;
-                            Params = new List<FormulaParam>();
-                            var nextNr = GetNextNumberWithSign(ref onlyFormula);
-                            while (nextNr != 0)
-                            {
 
-                                FormulaParam par = new FormulaParam();
-                                par.ParamType = ParamType.Sign;
-                                par.ParamData = new ParamSign() { Sign = nextNr > 0 ? ParamSignType.Plus : ParamSignType.Minus };
-                                Params.Add(par);
+                            FormulaParam par = new FormulaParam();
+                            par.ParamType = ParamType.Sign;
+                            par.ParamData = new ParamSign() { Sign = nextNr > 0 ? ParamSignType.Plus : ParamSignType.Minus };
+                            Params.Add(par);
 
-                                par = new FormulaParam();
-                                par.ParamType = ParamType.RowData;
-                                par.ParamData = new RowData() { NrCrt = Math.Abs(nextNr) };
-                                Params.Add(par);
-                                nextNr = GetNextNumberWithSign(ref onlyFormula);
-                            }
+                            par = new FormulaParam();
+                            par.ParamType = ParamType.RowData;
+                            par.ParamData = new RowData() { NrCrt = Math.Abs(nextNr) };
+                            Params.Add(par);
+                            nextNr = GetNextNumberWithSign(ref onlyFormula);
                         }
-                        catch
-                        {
-                        }
+                    }
+                    catch
+                    {
+                        throw;
+                    }
 
+                }
+                else
+                {
+                    //number only
+                    //rd.23
+                    int onlyNumber = 0;
+                    if (int.TryParse(onlyFormula, out onlyNumber))
+                    {
+                        this.FormulaType = Model.FormulaType.SingleValue;
+                        FormulaParam par = new FormulaParam();
+                        par.ParamType = ParamType.RowData;
+                        par.ParamData = new RowData() { NrCrt = Math.Abs(onlyNumber) };
+                        Params.Add(par);
                     }
                     else
                     {
-                        //number only
-                        //rd.23
-                        int onlyNumber = 0;
-                        if (int.TryParse(onlyFormula, out onlyNumber))
+                        //split by *
+                        string[] formulaParts = onlyFormula.Split(new char[] { '*' });
+                        if (formulaParts.Length == 2)
                         {
-                            this.FormulaType = Model.FormulaType.SingleValue;
-                            FormulaParam par = new FormulaParam();
-                            par.ParamType = ParamType.RowData;
-                            par.ParamData = new RowData() { NrCrt = Math.Abs(onlyNumber) };
-                            Params.Add(par);
-                        }
-                        else
-                        {
-                            //split by *
-                            string[] formulaParts = onlyFormula.Split(new char[] { '*' });
-                            if (formulaParts.Length == 2)
+                            //get the first number
+                            if (int.TryParse(formulaParts[0], out onlyNumber))
                             {
-                                //get the first number
-                                if (int.TryParse(formulaParts[0], out onlyNumber))
+                                this.FormulaType = Model.FormulaType.Value;
+                                FormulaParam par = new FormulaParam();
+                                par.ParamType = ParamType.RowData;
+                                par.ParamData = new RowData() { NrCrt = Math.Abs(onlyNumber) };
+                                Params.Add(par);
+
+                                par = new FormulaParam();
+                                par.ParamType = ParamType.Sign;
+                                par.ParamData = new ParamSign() { Sign = ParamSignType.Multiplication };
+                                Params.Add(par);
+
+                                //get the second component
+                                var secondPart = formulaParts[1];
+                                //test if percentage
+                                if (secondPart.EndsWith("%"))
                                 {
-                                    this.FormulaType = Model.FormulaType.Value;
-                                    FormulaParam par = new FormulaParam();
-                                    par.ParamType = ParamType.RowData;
-                                    par.ParamData = new RowData() { NrCrt = Math.Abs(onlyNumber) };
-                                    Params.Add(par);
-
-                                    par = new FormulaParam();
-                                    par.ParamType = ParamType.Sign;
-                                    par.ParamData = new ParamSign() { Sign = ParamSignType.Multiplication };
-                                    Params.Add(par);
-
-                                    //get the second component
-                                    var secondPart = formulaParts[1];
-                                    //test if percentage
-                                    if (secondPart.EndsWith("%"))
+                                    //rd.41*16%
+                                    secondPart = secondPart.TrimEnd('%');
+                                    int percentage = 0;
+                                    if (int.TryParse(secondPart, out percentage))
                                     {
-                                        //rd.41*16%
-                                        secondPart = secondPart.TrimEnd('%');
-                                        int percentage = 0;
-                                        if (int.TryParse(secondPart, out percentage))
-                                        {
-
-
-                                            par = new FormulaParam();
-                                            par.ParamType = ParamType.Value;
-                                            par.ParamData = new ValueData() { Value = (decimal)percentage / 100 };
-                                            Params.Add(par);
-
-                                        }
-                                        else
-                                        {
-                                            //cannot parse
-                                        }
+                                        par = new FormulaParam();
+                                        par.ParamType = ParamType.Value;
+                                        par.ParamData = new ValueData() { Value = (decimal)percentage / 100 };
+                                        Params.Add(par);
                                     }
                                     else
                                     {
-                                        //test for "/" component
-                                        //rd.45*3/1000
-                                        if (secondPart.Contains('/'))
-                                        {
-                                            var divisionNumbers = secondPart.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-                                            if (divisionNumbers.Length == 2)
-                                            {
-                                                int first = 0;
-                                                int second = 0;
-                                                if (int.TryParse(divisionNumbers[0], out first) && int.TryParse(divisionNumbers[1], out second))
-                                                {
-                                                    this.FormulaType = Model.FormulaType.Value;
-                                                    par = new FormulaParam();
-                                                    par.ParamType = ParamType.Value;
-                                                    par.ParamData = new ValueData() { Value = (decimal)first / second };
-                                                    Params.Add(par);
-                                                }
-                                                else
-                                                {
-                                                    //parse error
-                                                }
-                                            }
-                                            else
-                                            {
-                                                //error
-                                            }
-                                        }
+                                        throw new Exception("cannot parse");
                                     }
                                 }
                                 else
                                 {
+                                    //test for "/" component
+                                    //rd.45*3/1000
+                                    if (secondPart.Contains('/'))
+                                    {
+                                        var divisionNumbers = secondPart.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                                        if (divisionNumbers.Length == 2)
+                                        {
+                                            int first = 0;
+                                            int second = 0;
+                                            if (int.TryParse(divisionNumbers[0], out first) && int.TryParse(divisionNumbers[1], out second))
+                                            {
+                                                this.FormulaType = Model.FormulaType.Value;
+                                                par = new FormulaParam();
+                                                par.ParamType = ParamType.Value;
+                                                par.ParamData = new ValueData() { Value = (decimal)first / second };
+                                                Params.Add(par);
+                                            }
+                                            else
+                                            {
+                                                throw new Exception("parse error");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            throw new Exception(" error");
+                                        }
+                                    }
                                 }
                             }
-                            // throw new Exception("invalid formula: " + formula);
+                            else
+                            {
+                                throw new Exception("parse error");
+
+                            }
                         }
+                        // throw new Exception("invalid formula: " + formula);
                     }
                 }
-                //else
-                //{
-                //}
             }
-
-
-            else if (formula.StartsWith("if"))
-            {
-                formula = BuildIfStatement(formula);
-
-            }
+            //else
+            //{
+            //}
         }
 
         private string BuildIfStatement(string formula)
@@ -408,13 +444,8 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             ifMembers[0] = RemoveParanthesis(ifMembers[0]);
             IfStatement ifStatement = new IfStatement(ifMembers[0]);
 
-
-
             ThenStatement ts = new ThenStatement(ifMembers[1]);
-            // ts.Result = new TaxFormula();
-
             ElseStatement es = new ElseStatement(ifMembers[2]);
-            //es.Result = new TaxFormula();
 
             this.Params.Add(new FormulaParam()
             {
@@ -465,201 +496,11 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
 
                 return nextNumber * sign;
             }
-            else return 0;
-            throw new Exception("invalid input: " + formula);
-        }
-    }
-
-    public enum FormulaType
-    {
-        Condition,
-        Value,
-        SingleValue,
-        ConstantValue
-    }
-    public class FormulaParam
-    {
-        public ParamType ParamType { get; set; }
-        public object ParamData { get; set; }
-        public override string ToString()
-        {
-            return ParamType + " " + ParamData.ToString();
-        }
-    }
-
-    public enum ParamType
-    {
-        Sign,
-        RowData,
-        Formula,
-        Value,
-        ConditionData
-    }
-
-    public enum ParamSignType
-    {
-        Minus,
-        Plus,
-        Multiplication,
-        Division
-
-    }
-    public class ParamSign
-    {
-        public ParamSignType Sign { get; set; }
-        public override string ToString()
-        {
-            return Sign.ToString();
-        }
-    }
-    public class RowData
-    {
-        public int NrCrt { get; set; }
-        public override string ToString()
-        {
-            return NrCrt.ToString();
-        }
-    }
-    public class ValueData
-    {
-        public decimal Value { get; set; }
-        public override string ToString()
-        {
-            return Value.ToString();
-        }
-    }
-
-    public class IfStatement
-    {
-        private string ifCondition;
-
-        public IfStatement()
-        {
-
-        }
-
-        public IfStatement(string ifCondition)
-        {
-
-            this.ifCondition = ifCondition;
-            ParseCondition();
-        }
-
-        //public IfStatement(List<TaxIndicatorViewModel> taxIndicatorList)
-        //{
-        //    this.taxIndicatorList = taxIndicatorList;
-        //}
-        //private List<TaxIndicatorViewModel> taxIndicatorList;
-        public TaxFormula Left { get; set; }
-        public TaxFormula Right { get; set; }
-        public string Operator { get; set; }
-
-        private void ParseCondition()
-        {
-
-            //C31-C33>0
-            string op = "";
-            string leftStr = "";
-            string rightStr = "";
-
-
-            //extract the condition parts
-            GetOperatorAndComparisonMembers(ifCondition, ref op, ref leftStr, ref rightStr);
-
-            Operator = op;
-
-            Left = new TaxFormula(leftStr);
-            Right = new TaxFormula(rightStr);
-
-        }
-
-        private void GetOperatorAndComparisonMembers(string condition, ref string op, ref string left, ref string right)
-        {
-            string[] parts = null;
-            if (condition.Contains('<'))
-            {
-
-                parts = condition.Split(new char[] { '<' });
-                if (parts.Length == 2)
-                {
-                    op = "<";
-                }
-                else
-                {
-                    throw new Exception("invalid condition: " + condition);
-                }
-            }
-            else if (condition.Contains('>'))
-            {
-                parts = condition.Split(new char[] { '>' });
-                if (parts.Length == 2)
-                {
-                    op = ">";
-                }
-                else
-                {
-                    throw new Exception("invalid condition: " + condition);
-                }
-            }
             else
             {
-                throw new Exception("invalid condition: " + condition);
+                return 0;
+                throw new Exception("invalid input: " + formula);
             }
-            left = parts[0];
-            right = parts[1];
-
         }
-
-        public bool ExecuteCondition(List<TaxIndicatorViewModel> taxIndicatorList)
-        {
-            var left = Left.Execute(taxIndicatorList);
-            var right = Right.Execute(taxIndicatorList);
-            bool result = false;
-            switch (Operator)
-            {
-                case "<":
-                    result = left < right;
-                    break;
-                case ">":
-                    result = left > right;
-                    break;
-                default:
-                    throw new Exception("invalid operator: " + Operator);
-            }
-            return result;
-        }
-    }
-    public class ThenStatement
-    {
-        public ThenStatement(string statement)
-        {
-            Result = new TaxFormula(statement);
-        }
-        public TaxFormula Result { get; set; }
-        public decimal Execute(List<TaxIndicatorViewModel> taxIndicatorList)
-        {
-            return Result.Execute(taxIndicatorList);
-        }
-    }
-
-    public class ElseStatement
-    {
-        public ElseStatement(string statement)
-        {
-            Result = new TaxFormula(statement);
-
-        }
-        public TaxFormula Result { get; set; }
-        public decimal Execute(List<TaxIndicatorViewModel> taxIndicatorList)
-        {
-            return Result.Execute(taxIndicatorList);
-        }
-    }
-
-    public class ConditionData
-    {
-        public IfStatement IfStatement { get; set; }
-        public ThenStatement ThenStatement { get; set; }
-        public ElseStatement ElseStatement { get; set; }
     }
 }

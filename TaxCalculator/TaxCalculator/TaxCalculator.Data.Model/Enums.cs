@@ -17,7 +17,8 @@ namespace TaxCalculator.Data.Model
         PrintPreview,
         LegalLimitations,
         TaxIndicatorList,
-        TaxCalculation
+        TaxCalculation,
+        TaxCalculationTest
     }
 
     public enum CashBookListType
