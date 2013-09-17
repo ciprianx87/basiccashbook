@@ -7,10 +7,12 @@ using System.Windows;
 using TaxCalculator.Common.Mediator;
 using TaxCalculator.ViewModel.Base;
 using TaxCalculator.Common;
+using System.ComponentModel;
+using System.Windows.Media;
 
 namespace TaxCalculator.ViewModel.ViewModels.Model
 {
-    public class TaxIndicatorViewModel : NotificationPoperty
+    public class TaxIndicatorViewModel : NotificationPoperty, IDataErrorInfo
     {
 
         public TaxIndicatorViewModel()
@@ -25,7 +27,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public string NrCrtString { get; set; }
         public string Description { get; set; }
         public string TypeDescription { get; set; }
-        public string IndicatorFormula { get; set; }
+        //public string IndicatorFormula { get; set; }
         public TaxIndicatorType Type { get; set; }
 
         private string valueField;
@@ -61,6 +63,106 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             }
         }
 
+        private string indicatorFormula;
+
+        public string IndicatorFormula
+        {
+            get { return indicatorFormula; }
+            set
+            {
+                indicatorFormula = value;
+                IsValid();
+                NotifyPropertyChanged("IndicatorFormula");
+            }
+        }
+
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string result = null;
+                return result;
+                switch (columnName)
+                {
+                    case "IndicatorFormula":
+                        //return null;
+                        if (string.IsNullOrEmpty(IndicatorFormula))
+                        {
+                            result = "Camp obligatoriu";
+                        }
+                        break;
+                }
+                return result;
+            }
+        }
+
+        private string errorMessage;
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                if (errorMessage != value)
+                {
+                    errorMessage = value;
+                    this.NotifyPropertyChanged("ErrorMessage");
+                    ErrorVisible = string.IsNullOrEmpty(errorMessage) ? Visibility.Hidden : Visibility.Visible;
+                }
+            }
+        }
+
+        private Visibility errorVisible;
+        public Visibility ErrorVisible
+        {
+            get { return errorVisible; }
+            set
+            {
+                if (errorVisible != value)
+                {
+                    errorVisible = value;
+                    this.NotifyPropertyChanged("ErrorVisible");
+                }
+            }
+        }
+
+
+
+        private Color textColor;
+        public Color TextColor
+        {
+            get { return textColor; }
+            set
+            {
+                if (textColor != value)
+                {
+                    textColor = value;
+                    this.NotifyPropertyChanged("TextColor");
+                }
+            }
+        }
+
+
+
+        public bool IsValid()
+        {
+            bool result = true;
+            string message = "";
+
+            if (string.IsNullOrEmpty(IndicatorFormula))
+            {
+                message = "IndicatorFormula este obligatoriu";
+            }
+
+            ErrorMessage = message;
+            result = string.IsNullOrEmpty(message);
+            if (!result)
+            {
+                // WindowHelper.OpenErrorDialog(message);
+            }
+            return result;
+        }
+
 
         //private string test;
         //public string Test
@@ -91,6 +193,17 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         {
 
             return new TaxIndicatorViewModel() { };
+        }
+
+        public string Error
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        internal void SetError(string message)
+        {
+            this.ErrorMessage = message;
+            this.TextColor = Colors.Red;
         }
     }
 
