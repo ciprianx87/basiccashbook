@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TaxCalculator.ViewModel.ViewModels;
 
 namespace TaxCalculator.Controls
 {
@@ -22,6 +23,23 @@ namespace TaxCalculator.Controls
         public CompanyList()
         {
             InitializeComponent();
+            this.DataContext = new CompanyListVm();
+        }
+
+        private void SelectButton_Click(object sender, RoutedEventArgs e)
+        {
+            var but = (sender as Button);
+            (this.DataContext as CompanyListVm).Select(but.CommandParameter);
+        }
+        private void DeleteCommand_Click(object sender, RoutedEventArgs e)
+        {
+            var but = (sender as Button);
+            (this.DataContext as CompanyListVm).Delete(but.CommandParameter);
+        }
+        private void EditCommand_Click(object sender, RoutedEventArgs e)
+        {
+            var but = (sender as Button);
+            (this.DataContext as CompanyListVm).Edit(but.CommandParameter);
         }
     }
 }
