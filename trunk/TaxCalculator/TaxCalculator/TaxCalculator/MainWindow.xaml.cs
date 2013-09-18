@@ -124,7 +124,7 @@ namespace TaxCalculator
 
         private void CopyDBIfNeeded()
         {
-
+            DbHelper.CopyDBIfNeeded("TaxCalculatorEmpty.sdf", "TaxCalculator.sdf", "Resources", "Database");                
         }
 
         private void CheckAppValidity()

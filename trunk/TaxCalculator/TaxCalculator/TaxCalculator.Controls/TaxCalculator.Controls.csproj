@@ -79,10 +79,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl1.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="CompanyList.xaml.cs">
       <DependentUpon>CompanyList.xaml</DependentUpon>
     </Compile>
@@ -97,10 +93,6 @@
     </Compile>
     <Compile Include="TaxIndicatorsList.xaml.cs">
       <DependentUpon>TaxIndicatorsList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +133,13 @@
       <Project>{7E2CC5BD-D919-4F44-BEDC-857530721B2A}</Project>
       <Name>TaxCalculator.ViewModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\createButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\deleteButton3.png" />
+    <EmbeddedResource Include="Images\editButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
