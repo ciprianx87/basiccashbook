@@ -272,7 +272,10 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         private void ExtractFormula(string formula)
         {
             formula = formula.Trim().ToLower().Replace(" ", string.Empty);
-            NormalizeFormula(ref formula);
+            if (!formula.StartsWith("if"))
+            {
+                NormalizeFormula(ref formula);
+            }
             int constValue = 0;
             if (int.TryParse(formula, out constValue))
             {
@@ -284,14 +287,14 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                     ParamData = constValue
                 });
             }
-            else if (formula.StartsWith("rd."))
-            {
-                ParseValueFormula(formula);
-            }
             else if (formula.StartsWith("if"))
             {
                 formula = BuildIfStatement(formula);
             }
+            else if (formula.StartsWith("rd."))
+            {
+                ParseValueFormula(formula);
+            }           
             else
             {
                 throw new Exception("invalid formula");
@@ -375,19 +378,21 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                                 if (secondPart.EndsWith("%"))
                                 {
                                     //rd.41*16%
+                                    //rd.1*2,5%
                                     secondPart = secondPart.TrimEnd('%');
-                                    int percentage = 0;
-                                    if (int.TryParse(secondPart, out percentage))
+                                    decimal percentage =  DecimalConvertor.Instance.StringToDecimal(secondPart);
+                                   
+                                    //if (decimal.TryParse(secondPart, out percentage))
                                     {
                                         par = new FormulaParam();
                                         par.ParamType = ParamType.Value;
                                         par.ParamData = new ValueData() { Value = (decimal)percentage / 100 };
                                         Params.Add(par);
                                     }
-                                    else
-                                    {
-                                        throw new Exception("cannot parse");
-                                    }
+                                    //else
+                                    //{
+                                    //    throw new Exception("cannot parse");
+                                    //}
                                 }
                                 else
                                 {
@@ -398,9 +403,9 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                                         var divisionNumbers = secondPart.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
                                         if (divisionNumbers.Length == 2)
                                         {
-                                            int first = 0;
-                                            int second = 0;
-                                            if (int.TryParse(divisionNumbers[0], out first) && int.TryParse(divisionNumbers[1], out second))
+                                            decimal first = DecimalConvertor.Instance.StringToDecimal(divisionNumbers[0]);
+                                            decimal second = DecimalConvertor.Instance.StringToDecimal(divisionNumbers[1]);
+                                            //if (int.TryParse(divisionNumbers[0], out first) && int.TryParse(divisionNumbers[1], out second))
                                             {
                                                 this.FormulaType = Model.FormulaType.Value;
                                                 par = new FormulaParam();
@@ -408,10 +413,10 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                                                 par.ParamData = new ValueData() { Value = (decimal)first / second };
                                                 Params.Add(par);
                                             }
-                                            else
-                                            {
-                                                throw new Exception("parse error");
-                                            }
+                                            //else
+                                            //{
+                                            //    throw new Exception("parse error");
+                                            //}
                                         }
                                         else
                                         {

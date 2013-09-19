@@ -13,7 +13,7 @@
             </MenuItem>
             <MenuItem Header="CATALOAGE">
                 <MenuItem Header="Date Societati" Click="MenuItem_Companies"></MenuItem>
-                <MenuItem Header=".Indicatori calcul impozit profit" Click="MenuItem_TaxIndicators"></MenuItem>
+                <MenuItem Header="Indicatori calcul impozit profit" Click="MenuItem_TaxIndicators"></MenuItem>
             </MenuItem>
             <MenuItem Header="CALCUL IMPOZIT PROFIT" Click="MenuItem_TaxCalculation">
             </MenuItem>
