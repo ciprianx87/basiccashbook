@@ -69,6 +69,9 @@ namespace TaxCalculator
                 case ContentTypes.TaxCalculationTest:
                     contentControl.Content = new TaxCalculator.Controls.TaxCalculationTest();
                     break;
+                case ContentTypes.CompanyList:
+                    contentControl.Content = new TaxCalculator.Controls.CompanyList();
+                    break;
                 //case ContentTypes.MainContent:
                 //    //contentControl.Content = new CashBook.Controls.MainContent();
                 //    break;
@@ -157,7 +160,7 @@ namespace TaxCalculator
 
         private void MenuItem_Iesire(object sender, RoutedEventArgs e)
         {
-
+            ChangeContent(ContentTypes.CompanyList);
         }
 
         private void MenuItem_Companies(object sender, RoutedEventArgs e)
