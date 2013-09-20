@@ -12,7 +12,6 @@ namespace TaxCalculator.Data.Interfaces
         Company GetCompany(Int64 id);
         void Create(Company entity);
         void Delete(Int64 id);
-
-
+        List<Company> GetAll();
     }
 }

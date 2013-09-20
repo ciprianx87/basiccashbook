@@ -76,5 +76,14 @@ namespace TaxCalculator.Data.Repositories
                 }
             }
         }
+
+        public List<Company> GetAll()
+        {
+            using (var context = GetContext())
+            {
+                var list = context.Companies.ToList();               
+                return list;
+            }
+        }
     }
 }

@@ -63,6 +63,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Popups\CreateEditCompany.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Popups\DeleteDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TaxCalculationTest.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -84,6 +92,12 @@
     </Compile>
     <Compile Include="Converters.cs" />
     <Compile Include="Converters\IndicatorConverter.cs" />
+    <Compile Include="Popups\CreateEditCompany.xaml.cs">
+      <DependentUpon>CreateEditCompany.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popups\DeleteDialog.xaml.cs">
+      <DependentUpon>DeleteDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TaxCalculationTest.xaml.cs">
       <DependentUpon>TaxCalculationTest.xaml</DependentUpon>
     </Compile>
@@ -135,11 +149,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Images\createButton.png" />
+    <Resource Include="Images\createButton.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Images\deleteButton3.png" />
-    <EmbeddedResource Include="Images\editButton.png" />
+    <Resource Include="Images\deleteButton.png" />
+    <Resource Include="Images\editButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -46,6 +46,7 @@ namespace TaxCalculator.Common.Mediator
         PaymentInformation,
         YesNoDialog,
         CrudCoinTypes,
-        InformationModal
+        InformationModal,
+        CreateOrEditCompany
     }
 }

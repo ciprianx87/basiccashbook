@@ -42,7 +42,7 @@ namespace TaxCalculator
             InitSettings();
             PopupManager.Instance.Init();
             //Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
-            ChangeContent(ContentTypes.TaxCalculationTest);
+            ChangeContent(ContentTypes.CompanyList);
             version = "1.0.22 demo";
             CheckAppValidity();
 

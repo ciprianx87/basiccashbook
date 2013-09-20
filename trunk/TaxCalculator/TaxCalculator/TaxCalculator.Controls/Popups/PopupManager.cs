@@ -48,9 +48,9 @@ namespace TaxCalculator.Controls.Popups
                 Window popup = null;
                 switch (popupType)
                 {
-                    //case PopupType.DeleteDialog:
-                    //    popup = new DeleteDialog();
-                    //    break;
+                    case PopupType.DeleteDialog:
+                        popup = new DeleteDialog();
+                        break;
                     //case PopupType.InformationModal:
                     //    popup = new InformationPopup(true);
                     //    break;
@@ -60,21 +60,12 @@ namespace TaxCalculator.Controls.Popups
                     //case PopupType.ErrorDialog:
                     //    popup = new ErrorDialog();
                     //    break;
-                    //case PopupType.CreateOrEditCashBook:
-                    //    popup = new CreateOrEditCashBook();
-                    //    break;
-                    //case PopupType.LegalReglementations:
-                    //    popup = new LegalReglementationsPopup();
-                    //    break;
-                    //case PopupType.PaymentInformation:
-                    //    popup = new PaymentInformationPopup();
-                    //    break;
+                    case PopupType.CreateOrEditCompany:
+                        popup = new CreateEditCompany();
+                        break;                  
                     //case PopupType.YesNoDialog:
                     //    popup = new YesNoDialog();
-                    //    break;
-                    //case PopupType.CrudCoinTypes:
-                    //    popup = new CrudCoinTypes();
-                    //    break;
+                    //    break;                   
                     default:
                         break;
                 }

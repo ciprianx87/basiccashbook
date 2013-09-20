@@ -38,6 +38,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,15 +51,18 @@
     <Compile Include="Base\DelegateCommand.cs" />
     <Compile Include="Base\NotificationPoperty.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="EntityDeleter.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaxEvaluator.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="ViewModels\CompanyListVm.cs" />
+    <Compile Include="ViewModels\CreateEditCompanyVm.cs" />
     <Compile Include="ViewModels\Model\ElseStatement.cs" />
     <Compile Include="ViewModels\Model\IfStatement.cs" />
     <Compile Include="ViewModels\Model\TaxFormulaModels.cs" />
     <Compile Include="ViewModels\Model\ThenStatement.cs" />
+    <Compile Include="ViewModels\Popups\DeleteDialogVm.cs" />
     <Compile Include="ViewModels\TaxCalculationTestVm.cs" />
     <Compile Include="ViewModels\Model\TaxFormula.cs" />
     <Compile Include="ViewModels\Model\TaxIndicatorViewModel.cs" />

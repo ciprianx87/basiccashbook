@@ -46,6 +46,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DbHelper.cs" />
     <Compile Include="DecimalConverter.cs" />
+    <Compile Include="Exceptions\DuplicateCompanyNameException.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Mediator\Enums.cs" />
     <Compile Include="Mediator\Mediator.cs" />
