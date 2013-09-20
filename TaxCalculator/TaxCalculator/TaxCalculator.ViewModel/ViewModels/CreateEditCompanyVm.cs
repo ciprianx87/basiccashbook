@@ -11,11 +11,12 @@ using TaxCalculator.Data.Model;
 using TaxCalculator.Common.Mediator;
 using System.Windows.Input;
 using TaxCalculator.Common.Exceptions;
+using TaxCalculator.ViewModel.ViewModels.Model;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
 
-    public class CreateEditCompanyVm : BaseViewModel, IDataErrorInfo
+    public class CreateEditCompanyVm : BaseViewModel
     {
         ICompanyRepository companyRepository;
         Company currentEntity;
@@ -35,38 +36,21 @@ namespace TaxCalculator.ViewModel.ViewModels
         }
 
         #region properties
-        private string name;
-        public string Name
+
+        private CompanyViewModel companyViewModel;
+        public CompanyViewModel CompanyViewModel
         {
-            get { return name; }
+            get { return companyViewModel; }
             set
             {
-                name = value;
-                NotifyPropertyChanged("Name");
+                if (companyViewModel != value)
+                {
+                    companyViewModel = value;
+                    this.NotifyPropertyChanged("CompanyViewModel");
+                }
             }
         }
 
-        private string address;
-        public string Address
-        {
-            get { return address; }
-            set
-            {
-                address = value;
-                NotifyPropertyChanged("Address");
-            }
-        }
-
-        private string cui;
-        public string Cui
-        {
-            get { return cui; }
-            set
-            {
-                cui = value;
-                NotifyPropertyChanged("Cui");
-            }
-        }
 
         #endregion
 
@@ -84,67 +68,25 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         public void SetEntityToEdit(object param)
         {
+            CompanyViewModel = new CompanyViewModel();
             if (param is Company)
             {
                 this.Title = "Editare Societate";
                 currentEntity = param as Company;
-                Name = currentEntity.Nume;
-                Cui = currentEntity.CUI;
-                Address = currentEntity.Adresa;
+                CompanyViewModel.Name = currentEntity.Nume;
+                CompanyViewModel.Cui = currentEntity.CUI;
+                CompanyViewModel.Address = currentEntity.Adresa;
             }
             else
             {
                 this.Title = "Creare Societate";
-                Name = "";
-                Cui = "";
-                Address = "";
-            }
-            NotifyPropertyChanged("Name");
-            NotifyPropertyChanged("");
-            Name = "";
-            Name = "adad";
-        }
-
-
-        public string Error
-        {
-            get
-            {
-                return (this as IDataErrorInfo).Error;
-                //    throw new NotImplementedException(); 
+                CompanyViewModel.Name = "";
+                CompanyViewModel.Cui = "";
+                CompanyViewModel.Address = "";
             }
         }
 
-        public string this[string propertyName]
-        {
-            get
-            {
-                string result = "";
-                switch (propertyName)
-                {
-                    case "Name":
-                        if (string.IsNullOrEmpty(Name))
-                        {
-                            result = "Camp obligatoriu";
-                        }
-                        break;
-                    case "Address":
-                        if (string.IsNullOrEmpty(Address))
-                        {
-                            result = "Camp obligatoriu";
-                        }
-                        break;
-                    case "Cui":
-                        if (string.IsNullOrEmpty(Cui))
-                        {
-                            result = "Camp obligatoriu";
-                        }
-                        break;
-                }
 
-                return result;
-            }
-        }
 
         private void LoadData()
         {
@@ -208,13 +150,13 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void UpdateFields()
         {
-            currentEntity.Nume = Name;
-            currentEntity.Adresa = Address;
-            currentEntity.CUI = Cui;
+            currentEntity.Nume = CompanyViewModel.Name;
+            currentEntity.Adresa = CompanyViewModel.Address;
+            currentEntity.CUI = CompanyViewModel.Cui;
         }
         private bool IsValid()
         {
-            return !string.IsNullOrEmpty(Address) && !string.IsNullOrEmpty(Cui) && !string.IsNullOrEmpty(Name);
+            return !string.IsNullOrEmpty(CompanyViewModel.Address) && !string.IsNullOrEmpty(CompanyViewModel.Cui) && !string.IsNullOrEmpty(CompanyViewModel.Name);
         }
 
         public bool CanSave(object param)

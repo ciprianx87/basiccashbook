@@ -58,6 +58,7 @@
     <Compile Include="Tests.cs" />
     <Compile Include="ViewModels\CompanyListVm.cs" />
     <Compile Include="ViewModels\CreateEditCompanyVm.cs" />
+    <Compile Include="ViewModels\Model\CompanyViewModel.cs" />
     <Compile Include="ViewModels\Model\ElseStatement.cs" />
     <Compile Include="ViewModels\Model\IfStatement.cs" />
     <Compile Include="ViewModels\Model\TaxFormulaModels.cs" />
