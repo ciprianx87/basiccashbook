@@ -12,13 +12,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TaxCalculator.ViewModel.ViewModels;
+using TaxCalculator.ViewModel.Base;
 
 namespace TaxCalculator.Controls
 {
     /// <summary>
     /// Interaction logic for CompanyList.xaml
     /// </summary>
-    public partial class CompanyList : UserControl
+    public partial class CompanyList : UserControl, IDisposable
     {
         public CompanyList()
         {
@@ -40,6 +41,11 @@ namespace TaxCalculator.Controls
         {
             var but = (sender as Button);
             (this.DataContext as CompanyListVm).Edit(but.CommandParameter);
+        }
+
+        public void Dispose()
+        {
+            (this.DataContext as BaseViewModel).Dispose();
         }
     }
 }

@@ -9,12 +9,16 @@ using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using TaxCalculator.Common;
 using TaxCalculator.Data.Model;
+using TaxCalculator.Data.Repositories;
+using TaxCalculator.Data.Interfaces;
 
 namespace TaxCalculator.ViewModel.ViewModels
-{   
+{
     public class CompanyListVm : BaseViewModel
     {
-        //ICashBookRepository cashBookRepository;
+        ICompanyRepository companyRepository;
+        DispatcherTimer dt;
+
 
         public ICommand SaveCommand { get; set; }
         public ICommand CreateCommand { get; set; }
@@ -23,7 +27,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         public ICommand SelectCommand { get; set; }
         public CompanyListVm()
         {
-            this.Title = "Registre de casa";
+            this.Title = "Societati";
             SaveCommand = new DelegateCommand(Save, CanSave);
             CreateCommand = new DelegateCommand(Create, CanCreate);
             DeleteCommand = new DelegateCommand(Delete, CanDelete);
@@ -31,29 +35,31 @@ namespace TaxCalculator.ViewModel.ViewModels
             SelectCommand = new DelegateCommand(Select, CanSelect);
 
             //Mediator.Instance.Register(MediatorActionType.SetCashBookListType, SetCashBookListType);
-            //Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
+            Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
 
-         //   cashBookRepository = new CashBookRepository();
+            companyRepository = new CompanyRepository();
+
+            RefreshList(null);
         }
 
         #region properties
 
-        //private ObservableCollection<UserCashBook> cashBooks;
-        //public ObservableCollection<UserCashBook> CashBooks
-        //{
-        //    get { return cashBooks; }
-        //    set
-        //    {
-        //        cashBooks = value;
-        //        NotifyPropertyChanged("CashBooks");
-        //    }
-        //}
+        private ObservableCollection<Company> companies;
+        public ObservableCollection<Company> Companies
+        {
+            get { return companies; }
+            set
+            {
+                companies = value;
+                NotifyPropertyChanged("Companies");
+            }
+        }
 
 
         #endregion
 
         #region methods
-     
+
         public void RefreshList(object param)
         {
             IsBusy = true;
@@ -68,66 +74,34 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             dt.Tick -= new EventHandler(dt_Tick);
             dt.Stop();
-          //  LoadData();
+            LoadData();
 
         }
-        
 
-        DispatcherTimer dt;
-        //private void LoadData()
-        //{
-        //    //IsBusy = true;
-        //    //Thread.Sleep(3000);
-        //    try
-        //    {
-        //        var settingsRepository = new SettingsRepository();
-        //        VMUtils.LegalLimits = VMUtils.GetLegalLimits(settingsRepository);
 
-        //        UpdateLegalReglementations();
-
-        //        var tempCashBooks = new List<UserCashBook>();
-        //        CashBooks = new ObservableCollection<UserCashBook>();
-        //        var existingCashBooks = cashBookRepository.GetAll(cashBookListType);
-        //        if (existingCashBooks != null)
-        //        {
-        //            foreach (var item in existingCashBooks)
-        //            {
-        //                item.InitialBalanceDateString = item.InitialBalanceDate.HasValue ? Utils.DateTimeToStringDateOnly(item.InitialBalanceDate.Value) : "";
-        //                item.InitialBalanceString = DecimalConvertor.Instance.DecimalToString(item.InitialBalance);
-        //                DateTime? lastDateWithEntries = null;
-        //                decimal currentBalanceForDay = cashBookRepository.GetCurrentBalanceForDay(item.Id, DateTime.Now, out lastDateWithEntries);
-        //                item.CurrentBalanceString = DecimalConvertor.Instance.DecimalToString(currentBalanceForDay, item.CoinDecimals);
-        //                if (lastDateWithEntries.HasValue)
-        //                {
-        //                    item.LastDateTimeWithEntriesString = Utils.DateTimeToStringDateOnly(lastDateWithEntries.Value);
-        //                }
-        //                else
-        //                {
-        //                    if (item.InitialBalanceDate.HasValue)
-        //                    {
-        //                        item.LastDateTimeWithEntriesString = Utils.DateTimeToStringDateOnly(item.InitialBalanceDate.Value);
-        //                        //item.LastDateTimeWithEntriesString = "";
-        //                    }
-        //                }
-        //                CashBooks.Add(item);
-        //            }
-
-        //            //Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() =>
-        //            //{
-        //            //    foreach (var item in tempCashBooks)
-        //            //    {
-        //            //        CashBooks.Add(item);
-        //            //    }
-        //            //}));
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Instance.LogException(ex);
-        //        WindowHelper.OpenErrorDialog("Nu s-au putut citi datele");
-        //    }
-        //    IsBusy = false;
-        //}
+        private void LoadData()
+        {
+            //IsBusy = true;
+            //Thread.Sleep(3000);
+            try
+            {
+                Companies = new ObservableCollection<Company>();
+                var existingCompanies = companyRepository.GetAll();
+                if (existingCompanies != null)
+                {
+                    foreach (var item in existingCompanies)
+                    {
+                        Companies.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+                WindowHelper.OpenErrorDialog("Nu s-au putut citi datele");
+            }
+            IsBusy = false;
+        }
 
         public void Save(object param)
         {
@@ -150,13 +124,12 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             try
             {
-                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CreateOrEditCashBook);
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CreateOrEditCompany);
                 Mediator.Instance.SendMessage(MediatorActionType.SetEntityToEdit, null);
             }
             catch (Exception ex)
             {
                 Logger.Instance.LogException(ex);
-
             }
         }
 
@@ -168,7 +141,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             try
             {
-                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CreateOrEditCashBook);
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CreateOrEditCompany);
                 Mediator.Instance.SendMessage(MediatorActionType.SetEntityToEdit, param);
             }
             catch (Exception ex)
