@@ -51,18 +51,18 @@ namespace TaxCalculator.Controls.Popups
                     case PopupType.DeleteDialog:
                         popup = new DeleteDialog();
                         break;
-                    //case PopupType.InformationModal:
-                    //    popup = new InformationPopup(true);
-                    //    break;
-                    //case PopupType.Information:
-                    //    popup = new InformationPopup(false);
-                    //    break;
-                    //case PopupType.ErrorDialog:
-                    //    popup = new ErrorDialog();
-                    //    break;
+                    case PopupType.InformationModal:
+                        popup = new InformationPopup(true);
+                        break;
+                    case PopupType.Information:
+                        popup = new InformationPopup(false);
+                        break;
+                    case PopupType.ErrorDialog:
+                        popup = new ErrorDialog();
+                        break;
                     case PopupType.CreateOrEditCompany:
                         popup = new CreateEditCompany();
-                        break;                  
+                        break;
                     //case PopupType.YesNoDialog:
                     //    popup = new YesNoDialog();
                     //    break;                   

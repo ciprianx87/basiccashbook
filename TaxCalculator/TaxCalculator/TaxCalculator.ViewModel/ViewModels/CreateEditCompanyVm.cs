@@ -10,6 +10,7 @@ using TaxCalculator.Common;
 using TaxCalculator.Data.Model;
 using TaxCalculator.Common.Mediator;
 using System.Windows.Input;
+using TaxCalculator.Common.Exceptions;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -70,7 +71,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         #endregion
 
         #region methods
-      
+
         private bool CanCancel(object parameter)
         {
             return true;
@@ -98,20 +99,28 @@ namespace TaxCalculator.ViewModel.ViewModels
                 Cui = "";
                 Address = "";
             }
+            NotifyPropertyChanged("Name");
+            NotifyPropertyChanged("");
+            Name = "";
+            Name = "adad";
         }
 
 
         public string Error
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                return (this as IDataErrorInfo).Error;
+                //    throw new NotImplementedException(); 
+            }
         }
 
-        public string this[string columnName]
+        public string this[string propertyName]
         {
             get
             {
-                string result = null;
-                switch (columnName)
+                string result = "";
+                switch (propertyName)
                 {
                     case "Name":
                         if (string.IsNullOrEmpty(Name))
@@ -164,7 +173,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 if (IsValid())
                 {
                     //update fields
-                    if (currentEntity == null)
+                    if (currentEntity == null || currentEntity.Id == 0)
                     {
                         //create
                         currentEntity = new Company();
@@ -176,7 +185,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                         //edit
                         UpdateFields();
                         companyRepository.Edit(currentEntity);
-                    }       
+                    }
                     WindowHelper.OpenInformationDialog("Informatia a fost salvata");
                     Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
                     Mediator.Instance.SendMessage(MediatorActionType.RefreshList, this.Guid);
@@ -185,6 +194,10 @@ namespace TaxCalculator.ViewModel.ViewModels
                 {
                     WindowHelper.OpenErrorDialog("Va rugam completati toate campurile");
                 }
+            }
+            catch (DuplicateCompanyNameException dcne)
+            {
+                WindowHelper.OpenErrorDialog("Exista deja o societate cu acelasi nume!");
             }
             catch (Exception ex)
             {
