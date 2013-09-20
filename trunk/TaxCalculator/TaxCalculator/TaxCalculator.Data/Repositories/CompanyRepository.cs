@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using TaxCalculator.Data.Interfaces;
 using TaxCalculator.Data.Model;
+using TaxCalculator.Common.Exceptions;
 //using System.Data.en
 
 namespace TaxCalculator.Data.Repositories
@@ -35,6 +36,12 @@ namespace TaxCalculator.Data.Repositories
                 }
                 else
                 {
+                    //get companies with the same name but different id
+                    var existingEntity = context.Companies.FirstOrDefault(p => p.Nume == entity.Nume && p.Id != entity.Id);
+                    if (existingEntity != null)
+                    {
+                        throw new DuplicateCompanyNameException();
+                    }
                     existingCompany.Adresa = entity.Adresa;
                     existingCompany.Nume = entity.Nume;
                     existingCompany.CUI = entity.CUI;
@@ -47,6 +54,11 @@ namespace TaxCalculator.Data.Repositories
         {
             using (var context = GetContext())
             {
+                var existingEntity = context.Companies.FirstOrDefault(p => p.Nume == entity.Nume);
+                if (existingEntity != null)
+                {
+                    throw new DuplicateCompanyNameException();
+                }
                 Company soc = new Company()
                 {
                     Id = DbIdHelper.GetNextID(),
@@ -81,7 +93,7 @@ namespace TaxCalculator.Data.Repositories
         {
             using (var context = GetContext())
             {
-                var list = context.Companies.ToList();               
+                var list = context.Companies.ToList();
                 return list;
             }
         }

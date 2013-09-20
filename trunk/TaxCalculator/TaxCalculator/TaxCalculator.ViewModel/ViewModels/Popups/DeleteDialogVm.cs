@@ -91,6 +91,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Popups
 
         public void SetEntityToDelete(object param)
         {
+            entityToDelete = param;
             if (param is Company)
             {
                 var currentEntity = param as Company;

@@ -63,6 +63,8 @@
     <Compile Include="ViewModels\Model\TaxFormulaModels.cs" />
     <Compile Include="ViewModels\Model\ThenStatement.cs" />
     <Compile Include="ViewModels\Popups\DeleteDialogVm.cs" />
+    <Compile Include="ViewModels\Popups\ErrorDialogVm.cs" />
+    <Compile Include="ViewModels\Popups\InformationDialogVm.cs" />
     <Compile Include="ViewModels\TaxCalculationTestVm.cs" />
     <Compile Include="ViewModels\Model\TaxFormula.cs" />
     <Compile Include="ViewModels\Model\TaxIndicatorViewModel.cs" />

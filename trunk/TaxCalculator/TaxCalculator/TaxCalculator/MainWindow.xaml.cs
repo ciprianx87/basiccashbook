@@ -117,7 +117,7 @@ namespace TaxCalculator
 
         private void InitSettings()
         {
-
+            AppSettings.InformationPopupCloseInterval = 5000;
         }
 
         private void InitCulture()
