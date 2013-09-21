@@ -37,13 +37,13 @@ namespace TaxCalculator.Data.Repositories
                 else
                 {
                     //get companies with the same name but different id
-                    var existingEntity = context.Companies.FirstOrDefault(p => p.Nume == entity.Nume && p.Id != entity.Id);
+                    var existingEntity = context.Companies.FirstOrDefault(p => p.Name == entity.Name && p.Id != entity.Id);
                     if (existingEntity != null)
                     {
                         throw new DuplicateCompanyNameException();
                     }
-                    existingCompany.Adresa = entity.Adresa;
-                    existingCompany.Nume = entity.Nume;
+                    existingCompany.Address = entity.Address;
+                    existingCompany.Name = entity.Name;
                     existingCompany.CUI = entity.CUI;
                     base.Commit(context);
                 }
@@ -54,7 +54,7 @@ namespace TaxCalculator.Data.Repositories
         {
             using (var context = GetContext())
             {
-                var existingEntity = context.Companies.FirstOrDefault(p => p.Nume == entity.Nume);
+                var existingEntity = context.Companies.FirstOrDefault(p => p.Name == entity.Name);
                 if (existingEntity != null)
                 {
                     throw new DuplicateCompanyNameException();
@@ -62,8 +62,8 @@ namespace TaxCalculator.Data.Repositories
                 Company soc = new Company()
                 {
                     Id = DbIdHelper.GetNextID(),
-                    Adresa = entity.Adresa,
-                    Nume = entity.Nume,
+                    Address = entity.Address,
+                    Name = entity.Name,
                     CUI = entity.CUI
                 };
                 context.Companies.AddObject(soc);

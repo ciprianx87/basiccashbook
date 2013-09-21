@@ -57,6 +57,7 @@
     <Compile Include="TaxEvaluator.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="ViewModels\CompanyListVm.cs" />
+    <Compile Include="ViewModels\TaxIndicatorsListVm.cs" />
     <Compile Include="ViewModels\CreateEditCompanyVm.cs" />
     <Compile Include="ViewModels\Model\CompanyViewModel.cs" />
     <Compile Include="ViewModels\Model\ElseStatement.cs" />
@@ -70,7 +71,7 @@
     <Compile Include="ViewModels\Model\TaxFormula.cs" />
     <Compile Include="ViewModels\Model\TaxIndicatorViewModel.cs" />
     <Compile Include="ViewModels\TaxCalculationVm.cs" />
-    <Compile Include="ViewModels\TaxIndicatorListVm.cs" />
+    <Compile Include="ViewModels\XTaxIndicatorListVm.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TaxCalculator.Common\TaxCalculator.Common.csproj">

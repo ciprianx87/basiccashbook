@@ -24,8 +24,26 @@ namespace TaxCalculator.Controls
         public TaxIndicatorsList()
         {
             InitializeComponent();
-            this.DataContext = new TaxIndicatorListVm();
+            this.DataContext = new TaxIndicatorsListVm();
         }
+
+
+        private void SelectButton_Click(object sender, RoutedEventArgs e)
+        {
+            var but = (sender as Button);
+            (this.DataContext as CompanyListVm).Select(but.CommandParameter);
+        }
+        private void DeleteCommand_Click(object sender, RoutedEventArgs e)
+        {
+            var but = (sender as Button);
+            (this.DataContext as CompanyListVm).Delete(but.CommandParameter);
+        }
+        private void EditCommand_Click(object sender, RoutedEventArgs e)
+        {
+            var but = (sender as Button);
+            (this.DataContext as CompanyListVm).Edit(but.CommandParameter);
+        }
+
 
         public void Dispose()
         {

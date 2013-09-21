@@ -73,9 +73,9 @@ namespace TaxCalculator.ViewModel.ViewModels
             {
                 this.Title = "Editare Societate";
                 currentEntity = param as Company;
-                CompanyViewModel.Name = currentEntity.Nume;
+                CompanyViewModel.Name = currentEntity.Name;
                 CompanyViewModel.Cui = currentEntity.CUI;
-                CompanyViewModel.Address = currentEntity.Adresa;
+                CompanyViewModel.Address = currentEntity.Address;
             }
             else
             {
@@ -150,8 +150,8 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void UpdateFields()
         {
-            currentEntity.Nume = CompanyViewModel.Name;
-            currentEntity.Adresa = CompanyViewModel.Address;
+            currentEntity.Name = CompanyViewModel.Name;
+            currentEntity.Address = CompanyViewModel.Address;
             currentEntity.CUI = CompanyViewModel.Cui;
         }
         private bool IsValid()

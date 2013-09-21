@@ -80,6 +80,22 @@ namespace TaxCalculator.Data.Model
             }
         }
         private ObjectSet<Company> _Companies;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Indicator> Indicators
+        {
+            get
+            {
+                if ((_Indicators == null))
+                {
+                    _Indicators = base.CreateObjectSet<Indicator>("Indicators");
+                }
+                return _Indicators;
+            }
+        }
+        private ObjectSet<Indicator> _Indicators;
 
         #endregion
 
@@ -91,6 +107,14 @@ namespace TaxCalculator.Data.Model
         public void AddToCompanies(Company company)
         {
             base.AddObject("Companies", company);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Indicators EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToIndicators(Indicator indicator)
+        {
+            base.AddObject("Indicators", indicator);
         }
 
         #endregion
@@ -115,15 +139,15 @@ namespace TaxCalculator.Data.Model
         /// Create a new Company object.
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="nume">Initial value of the Nume property.</param>
-        /// <param name="adresa">Initial value of the Adresa property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="address">Initial value of the Address property.</param>
         /// <param name="cUI">Initial value of the CUI property.</param>
-        public static Company CreateCompany(global::System.Int64 id, global::System.String nume, global::System.String adresa, global::System.String cUI)
+        public static Company CreateCompany(global::System.Int64 id, global::System.String name, global::System.String address, global::System.String cUI)
         {
             Company company = new Company();
             company.Id = id;
-            company.Nume = nume;
-            company.Adresa = adresa;
+            company.Name = name;
+            company.Address = address;
             company.CUI = cUI;
             return company;
         }
@@ -164,48 +188,48 @@ namespace TaxCalculator.Data.Model
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String Nume
+        public global::System.String Name
         {
             get
             {
-                return _Nume;
+                return _Name;
             }
             set
             {
-                OnNumeChanging(value);
-                ReportPropertyChanging("Nume");
-                _Nume = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Nume");
-                OnNumeChanged();
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
             }
         }
-        private global::System.String _Nume;
-        partial void OnNumeChanging(global::System.String value);
-        partial void OnNumeChanged();
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String Adresa
+        public global::System.String Address
         {
             get
             {
-                return _Adresa;
+                return _Address;
             }
             set
             {
-                OnAdresaChanging(value);
-                ReportPropertyChanging("Adresa");
-                _Adresa = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Adresa");
-                OnAdresaChanged();
+                OnAddressChanging(value);
+                ReportPropertyChanging("Address");
+                _Address = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Address");
+                OnAddressChanged();
             }
         }
-        private global::System.String _Adresa;
-        partial void OnAdresaChanging(global::System.String value);
-        partial void OnAdresaChanged();
+        private global::System.String _Address;
+        partial void OnAddressChanging(global::System.String value);
+        partial void OnAddressChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -230,6 +254,167 @@ namespace TaxCalculator.Data.Model
         private global::System.String _CUI;
         partial void OnCUIChanging(global::System.String value);
         partial void OnCUIChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="TaxCalculatorModel", Name="Indicator")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Indicator : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Indicator object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="content">Initial value of the Content property.</param>
+        /// <param name="createdTimestamp">Initial value of the CreatedTimestamp property.</param>
+        /// <param name="isDefault">Initial value of the IsDefault property.</param>
+        public static Indicator CreateIndicator(global::System.Int64 id, global::System.String name, global::System.String content, global::System.DateTime createdTimestamp, global::System.Boolean isDefault)
+        {
+            Indicator indicator = new Indicator();
+            indicator.Id = id;
+            indicator.Name = name;
+            indicator.Content = content;
+            indicator.CreatedTimestamp = createdTimestamp;
+            indicator.IsDefault = isDefault;
+            return indicator;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Content
+        {
+            get
+            {
+                return _Content;
+            }
+            set
+            {
+                OnContentChanging(value);
+                ReportPropertyChanging("Content");
+                _Content = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Content");
+                OnContentChanged();
+            }
+        }
+        private global::System.String _Content;
+        partial void OnContentChanging(global::System.String value);
+        partial void OnContentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedTimestamp
+        {
+            get
+            {
+                return _CreatedTimestamp;
+            }
+            set
+            {
+                OnCreatedTimestampChanging(value);
+                ReportPropertyChanging("CreatedTimestamp");
+                _CreatedTimestamp = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedTimestamp");
+                OnCreatedTimestampChanged();
+            }
+        }
+        private global::System.DateTime _CreatedTimestamp;
+        partial void OnCreatedTimestampChanging(global::System.DateTime value);
+        partial void OnCreatedTimestampChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsDefault
+        {
+            get
+            {
+                return _IsDefault;
+            }
+            set
+            {
+                OnIsDefaultChanging(value);
+                ReportPropertyChanging("IsDefault");
+                _IsDefault = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsDefault");
+                OnIsDefaultChanged();
+            }
+        }
+        private global::System.Boolean _IsDefault;
+        partial void OnIsDefaultChanging(global::System.Boolean value);
+        partial void OnIsDefaultChanged();
 
         #endregion
 

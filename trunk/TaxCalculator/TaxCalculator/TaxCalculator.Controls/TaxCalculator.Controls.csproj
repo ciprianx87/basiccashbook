@@ -81,6 +81,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TaxIndicatorsListOld.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Popups\CreateEditCompany.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -119,6 +123,9 @@
     <Compile Include="Converters.cs" />
     <Compile Include="Converters\IndicatorConverter.cs" />
     <Compile Include="Converters\ValidationConverter.cs" />
+    <Compile Include="TaxIndicatorsListOld.xaml.cs">
+      <DependentUpon>TaxIndicatorsListOld.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Popups\CreateEditCompany.xaml.cs">
       <DependentUpon>CreateEditCompany.xaml</DependentUpon>
     </Compile>
