@@ -7,15 +7,26 @@
     <Schema Namespace="TaxCalculatorModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
   <EntityContainer Name="TaxCalculatorModelStoreContainer">
     <EntitySet Name="Companies" EntityType="TaxCalculatorModel.Store.Companies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Indicators" EntityType="TaxCalculatorModel.Store.Indicators" store:Type="Tables" Schema="dbo" />
   </EntityContainer>
   <EntityType Name="Companies">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="bigint" Nullable="false" />
-    <Property Name="Nume" Type="nvarchar" Nullable="false" />
-    <Property Name="Adresa" Type="nvarchar" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" Nullable="false" />
     <Property Name="CUI" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Indicators">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+    <Property Name="Content" Type="nvarchar" Nullable="false" />
+    <Property Name="CreatedTimestamp" Type="datetime" Nullable="false" />
+    <Property Name="IsDefault" Type="bit" Nullable="false" />
   </EntityType>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -23,15 +34,26 @@
       <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TaxCalculatorModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
         <EntityContainer Name="TaxCalculatorModelContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Companies" EntityType="TaxCalculatorModel.Company" />
+          <EntitySet Name="Indicators" EntityType="TaxCalculatorModel.Indicator" />
         </EntityContainer>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Type="String" Name="Nume" Nullable="false" />
-          <Property Type="String" Name="Adresa" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" />
           <Property Type="String" Name="CUI" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Indicator">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Content" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedTimestamp" Nullable="false" />
+          <Property Type="Boolean" Name="IsDefault" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -43,9 +65,20 @@
       <EntityTypeMapping TypeName="IsTypeOf(TaxCalculatorModel.Company)">
         <MappingFragment StoreEntitySet="Companies">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Nume" ColumnName="Nume" />
-          <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="CUI" ColumnName="CUI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Indicators">
+      <EntityTypeMapping TypeName="IsTypeOf(TaxCalculatorModel.Indicator)">
+        <MappingFragment StoreEntitySet="Indicators">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="CreatedTimestamp" ColumnName="CreatedTimestamp" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -69,6 +102,7 @@
     <edmx:Diagrams>
       <Diagram Name="TaxCalculatorModel" >
         <EntityTypeShape EntityType="TaxCalculatorModel.Company" Width="1.5" PointX="5.9118249741903623" PointY="28.808270736042537" />
+        <EntityTypeShape EntityType="TaxCalculatorModel.Indicator" Width="1.5" PointX="9.125" PointY="29.125" Height="1.9802864583333353" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

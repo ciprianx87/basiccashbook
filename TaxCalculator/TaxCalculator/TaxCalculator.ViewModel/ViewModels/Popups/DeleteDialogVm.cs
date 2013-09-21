@@ -95,7 +95,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Popups
             if (param is Company)
             {
                 var currentEntity = param as Company;
-                this.Message = "Sunteti sigur ca doriti sa stergeti " + currentEntity.Nume + " ?".Replace(Environment.NewLine, "");
+                this.Message = "Sunteti sigur ca doriti sa stergeti " + currentEntity.Name + " ?".Replace(Environment.NewLine, "");
             }
         }
         #endregion
