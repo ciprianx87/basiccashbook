@@ -68,15 +68,40 @@ namespace TaxCalculator.ViewModel.ViewModels
                 var calculatedTaxIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
                 foreach (var item in calculatedTaxIndicators)
                 {
-                    TaxFormula taxFormula = new TaxFormula(item.IndicatorFormula);
-                    var newValue = taxFormula.Execute(TaxIndicators.ToList()).ToString();
-                    if (item.ValueField != newValue)
-                    {
-                        hasChanged = true;
-                    }
-                    item.ValueField = newValue;
+                    hasChanged = ExecuteTaxCalculation(hasChanged, item);
                 }
             }
+        }
+        private bool ExecuteTaxCalculation(bool hasChanged, TaxIndicatorViewModel item)
+        {
+            TaxFormula taxFormula = null;
+            try
+            {
+                if (item.Type==TaxIndicatorType.Calculat && string.IsNullOrEmpty(item.IndicatorFormula))
+                {
+                    item.SetError("formula goala");
+                }
+                taxFormula = new TaxFormula(item.IndicatorFormula);
+            }
+            catch (Exception ex)
+            {
+                item.SetError("eroare la interpretarea formulei");
+            }
+            try
+            {
+
+                var newValue = taxFormula.Execute(TaxIndicators.ToList()).ToString();
+                if (item.ValueField != newValue)
+                {
+                    hasChanged = true;
+                }
+                item.ValueField = newValue;
+            }
+            catch (Exception ex)
+            {
+                item.SetError("formula invalida");
+            }
+            return hasChanged;
         }
         private TaxIndicatorViewModel.TaxIndicatorStyleInfo GetStyleInfo(TaxIndicatorType taxIndicatorType)
         {
