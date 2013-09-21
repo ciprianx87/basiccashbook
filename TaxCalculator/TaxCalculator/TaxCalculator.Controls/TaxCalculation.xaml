@@ -17,6 +17,11 @@
         <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
                   CanUserResizeRows="False">
             <DataGrid.Resources>
+                <Style TargetType="DataGridCell"  x:Key="NoFocusColumStyle">
+                    <Setter Property="IsTabStop" Value="False"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                </Style>
                 <Style TargetType="TextBlock" x:Key="StandardTextBlock" >
                     <Setter Property="TextAlignment" Value="Center"/>
                     <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -88,8 +93,28 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <StackPanel>
-                                <TextBlock Text="{Binding IndicatorFormula}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}"/>
+                                <!--<TextBlock Text="{Binding IndicatorFormula}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}"/>-->
+                                <TextBox Text="{Binding Path=IndicatorFormula, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                    ValidatesOnDataErrors=true, NotifyOnValidationError=true}"  Style="{StaticResource StandardTextBox}"
+                                         Visibility="{Binding Style.FormulaFieldVisibility}" Foreground="{Binding FormulaTextColor}">
+                                    <TextBox.ToolTip>
+                                        <TextBlock Text="{Binding ErrorMessage}" FontWeight="Bold" Foreground="Red"/>
+                                    </TextBox.ToolTip>
+                                </TextBox>
                                 <!--<TextBox Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandardTextBox}"  Visibility="{Binding Style.ValueFieldVisibility}"/>-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="60" Header="Eroare"  CellStyle="{StaticResource NoFocusColumStyle}" FocusManager.IsFocusScope="False"   >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock  Margin="0,0,10,0" Width="60"  Focusable="False" Text="!" FontWeight="Bold" Foreground="Red" Visibility="{Binding ErrorVisible}" VerticalAlignment="Center">                                         
+                                            <TextBlock.ToolTip>
+                                                <TextBlock Text="{Binding ErrorMessage}" FontWeight="Bold" Foreground="Red"/>
+                                            </TextBlock.ToolTip>
+                                        </TextBlock>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

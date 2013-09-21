@@ -23,7 +23,7 @@
 18,Cheltuieli protocol din ct. 623 (rd. 34),Calculat,rd.34
 19,Alte cheltuieli nedeductibile din ct. 6588,Numeric,..
 20,Combustibil nedeductibil din ct. 6022,Numeric,..
-21,Actiuni sociale nedeductibile din ct. 6458 (rd. 39),Calculat,
+21,Actiuni sociale nedeductibile din ct. 6458 (rd. 39),Calculat,rd.39
 22,Amortizare nedeductibila din ct. 6811,Numeric,..
 23,TVA nedeductibila din ct. 635,Numeric,..
 24,Cheltuieli cu donatii si subventii ct. 6582,Numeric,..

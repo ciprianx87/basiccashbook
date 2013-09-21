@@ -88,7 +88,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                 {
                     case "IndicatorFormula":
                         //return null;
-                        if (string.IsNullOrEmpty(IndicatorFormula))
+                        if (Type == TaxIndicatorType.Calculat && string.IsNullOrEmpty(IndicatorFormula))
                         {
                             result = "Camp obligatoriu";
                         }
@@ -150,7 +150,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             bool result = true;
             string message = "";
 
-            if (string.IsNullOrEmpty(IndicatorFormula))
+            if (Type == TaxIndicatorType.Calculat &&  string.IsNullOrEmpty(IndicatorFormula))
             {
                 message = "IndicatorFormula este obligatoriu";
             }

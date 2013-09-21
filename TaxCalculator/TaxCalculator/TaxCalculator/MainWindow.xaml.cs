@@ -196,5 +196,10 @@ namespace TaxCalculator
             
         }
 
+        private void TestDefault_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeContent(ContentTypes.TaxCalculation);
+        }
+
     }
 }
