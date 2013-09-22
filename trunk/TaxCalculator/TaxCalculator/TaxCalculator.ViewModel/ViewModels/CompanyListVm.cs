@@ -179,7 +179,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             catch (Exception ex)
             {
                 Logger.Instance.LogException(ex);
-                WindowHelper.OpenErrorDialog(Messages.CannotDeleteCashBook);
+                WindowHelper.OpenErrorDialog(Messages.CannotDeleteEntity);
             }
         }
 

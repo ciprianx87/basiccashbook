@@ -16,37 +16,35 @@ using TaxCalculator.ViewModel.ViewModels.Model;
 namespace TaxCalculator.ViewModel.ViewModels
 {
 
-    public class CreateEditCompanyVm : BaseViewModel
+    public class CreateEditIndicatorVm : BaseViewModel
     {
-        ICompanyRepository companyRepository;
-        Company currentEntity;
+        IIndicatorRepository indicatorRepository;
+        Indicator currentEntity;
 
         public ICommand SaveCommand { get; set; }
         public ICommand CancelCommand { get; set; }
 
-        public CreateEditCompanyVm()
+        public CreateEditIndicatorVm()
         {
             Mediator.Instance.Register(MediatorActionType.SetEntityToEdit, SetEntityToEdit);
             SaveCommand = new DelegateCommand(Save, CanSave);
             this.CancelCommand = new DelegateCommand(Cancel, CanCancel);
-            companyRepository = new CompanyRepository();
-
-            LoadData();
+            indicatorRepository = new IndicatorRepository();
 
         }
 
         #region properties
 
-        private CompanyViewModel companyViewModel;
-        public CompanyViewModel CompanyViewModel
+        private IndicatorViewModel indicatorViewModel;
+        public IndicatorViewModel IndicatorViewModel
         {
-            get { return companyViewModel; }
+            get { return indicatorViewModel; }
             set
             {
-                if (companyViewModel != value)
+                if (indicatorViewModel != value)
                 {
-                    companyViewModel = value;
-                    this.NotifyPropertyChanged("CompanyViewModel");
+                    indicatorViewModel = value;
+                    this.NotifyPropertyChanged("IndicatorViewModel");
                 }
             }
         }
@@ -68,46 +66,23 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         public void SetEntityToEdit(object param)
         {
-            CompanyViewModel = new CompanyViewModel();
-            if (param is Company)
+            IndicatorViewModel = new IndicatorViewModel();
+            if (param is Indicator)
             {
-                this.Title = "Editare Societate";
-                currentEntity = param as Company;
-                CompanyViewModel.Name = currentEntity.Name;
-                CompanyViewModel.Cui = currentEntity.CUI;
-                CompanyViewModel.Address = currentEntity.Address;
+                this.Title = "Editare Indicator";
+                currentEntity = param as Indicator;
+                IndicatorViewModel.Name = currentEntity.Name;
+                IndicatorViewModel.IsDefault = currentEntity.IsDefault;
             }
             else
             {
-                this.Title = "Creare Societate";
-                CompanyViewModel.Name = "";
-                CompanyViewModel.Cui = "";
-                CompanyViewModel.Address = "";
+                this.Title = "Creare Indicator";
+                IndicatorViewModel.Name = "";
+                IndicatorViewModel.IsDefault = false   ;
             }
         }
 
-
-
-        private void LoadData()
-        {
-            //try
-            //{
-            //    //throw new ArgumentNullException("a");
-            //    var currentCompany = companyRepository.GetCompany();
-            //    if (currentCompany != null)
-            //    {
-            //        this.CompanyName = currentCompany.Nume;
-            //        this.Address = currentCompany.Adresa;
-            //        this.Cui = currentCompany.CUI;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Logger.Instance.LogException(ex);
-            //    WindowHelper.OpenErrorDialog("Eroare la preluarea informatiei");
-            //}
-        }
-
+         
         public void Save(object param)
         {
             try
@@ -118,15 +93,15 @@ namespace TaxCalculator.ViewModel.ViewModels
                     if (currentEntity == null || currentEntity.Id == 0)
                     {
                         //create
-                        currentEntity = new Company();
+                        currentEntity = new Indicator();
                         UpdateFields();
-                        companyRepository.Create(currentEntity);
+                        indicatorRepository.Create(currentEntity);
                     }
                     else
                     {
                         //edit
                         UpdateFields();
-                        companyRepository.Edit(currentEntity);
+                        indicatorRepository.Edit(currentEntity);
                     }
                     WindowHelper.OpenInformationDialog("Informatia a fost salvata");
                     Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
@@ -139,7 +114,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
             catch (DuplicateEntityNameException dcne)
             {
-                WindowHelper.OpenErrorDialog("Exista deja o societate cu acelasi nume!");
+                WindowHelper.OpenErrorDialog("Exista deja un indicator cu acelasi nume!");
             }
             catch (Exception ex)
             {
@@ -150,13 +125,12 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void UpdateFields()
         {
-            currentEntity.Name = CompanyViewModel.Name;
-            currentEntity.Address = CompanyViewModel.Address;
-            currentEntity.CUI = CompanyViewModel.Cui;
+            currentEntity.Name = IndicatorViewModel.Name;
+            currentEntity.IsDefault  = IndicatorViewModel.IsDefault;
         }
         private bool IsValid()
         {
-            return !string.IsNullOrEmpty(CompanyViewModel.Address) && !string.IsNullOrEmpty(CompanyViewModel.Cui) && !string.IsNullOrEmpty(CompanyViewModel.Name);
+            return !string.IsNullOrEmpty(IndicatorViewModel.Name);
         }
 
         public bool CanSave(object param)

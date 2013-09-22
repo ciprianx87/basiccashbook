@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 09/21/2013 16:20:56
+-- Date Created: 09/21/2013 16:23:12
 -- Generated from EDMX file: D:\Dropbox\Dropbox\proiecte\work\Vs2010\TaxCalculator\TaxCalculator\TaxCalculator.Data.Model\TaxCalculatorModel.edmx
 -- --------------------------------------------------
 
@@ -19,6 +19,8 @@
 -- --------------------------------------------------
 
     DROP TABLE [Companies];
+GO
+    DROP TABLE [Indicators];
 GO
 
 -- --------------------------------------------------

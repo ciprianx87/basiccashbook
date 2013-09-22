@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TaxCalculator.Common.Exceptions
 {
-    public class DuplicateCompanyNameException : Exception
+    public class DuplicateEntityNameException : Exception
     {
     }
 }
