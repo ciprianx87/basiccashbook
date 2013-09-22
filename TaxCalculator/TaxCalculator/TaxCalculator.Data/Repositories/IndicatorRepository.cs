@@ -11,79 +11,110 @@ namespace TaxCalculator.Data.Repositories
 {
     public class IndicatorRepository : BaseRepository, IIndicatorRepository
     {
-
+        private static readonly object syncObj = new object();
         public Indicator Get(Int64 id)
         {
             using (var context = GetContext())
             {
-                var existingCompany = context.Indicators.FirstOrDefault(p => p.Id == id);               
+                var existingCompany = context.Indicators.FirstOrDefault(p => p.Id == id);
                 return existingCompany;
             }
         }
 
         public void Edit(Indicator entity)
         {
-            using (var context = GetContext())
+            lock (syncObj)
             {
-                var existingIndicator = context.Indicators.FirstOrDefault(p => p.Id == entity.Id);
-                if (existingIndicator == null)
+                using (var context = GetContext())
                 {
-                    throw new Exception("invalid Indicator id: " + entity.Id);
-                }
-                else
-                {
-                    //get companies with the same name but different id
-                    var existingEntity = context.Indicators.FirstOrDefault(p => p.Name == entity.Name && p.Id != entity.Id);
-                    if (existingEntity != null)
+                    var existingIndicator = context.Indicators.FirstOrDefault(p => p.Id == entity.Id);
+                    if (existingIndicator == null)
                     {
-                        throw new DuplicateEntityNameException();
+                        throw new Exception("invalid Indicator id: " + entity.Id);
                     }
-                    existingIndicator.Name = entity.Name;
-                    existingIndicator.Content = entity.Content;
-                    existingIndicator.IsDefault = entity.IsDefault;
-                    existingIndicator.CreatedTimestamp = entity.CreatedTimestamp;
+                    else
+                    {
+                        //get companies with the same name but different id
+                        var existingEntity = context.Indicators.FirstOrDefault(p => p.Name == entity.Name && p.Id != entity.Id);
+                        if (existingEntity != null)
+                        {
+                            throw new DuplicateEntityNameException();
+                        }
+                        SetAllIndicatorsDefaultValue(context, entity);
 
-                    base.Commit(context);
+                        existingIndicator.Name = entity.Name;
+                        existingIndicator.Content = entity.Content;
+                        existingIndicator.IsDefault = entity.IsDefault;
+                        existingIndicator.CreatedTimestamp = entity.CreatedTimestamp;
+
+                        base.Commit(context);
+                    }
                 }
+            }
+        }
+
+        private static void SetAllIndicatorsDefaultValue(TaxCalculatorModelContainer context, Indicator entity)
+        {
+            if (entity.IsDefault)
+            {
+                var allIntems = context.Indicators.ToList();
+                //set everything as notDefault
+                allIntems.ForEach(p => p.IsDefault = false);
             }
         }
 
         public void Create(Indicator entity)
         {
-            using (var context = GetContext())
+            lock (syncObj)
             {
-                var existingEntity = context.Indicators.FirstOrDefault(p => p.Name == entity.Name);
-                if (existingEntity != null)
+                using (var context = GetContext())
                 {
-                    throw new DuplicateEntityNameException();
-                }
-                Indicator soc = new Indicator()
-                {
-                    Id = DbIdHelper.GetNextID(),                  
-                    Name = entity.Name,
-                    Content=entity.Content,
-                    CreatedTimestamp=entity.CreatedTimestamp,
-                    IsDefault=entity.IsDefault
-                };
-                context.Indicators.AddObject(soc);
+                    var existingEntity = context.Indicators.FirstOrDefault(p => p.Name == entity.Name);
+                    if (existingEntity != null)
+                    {
+                        throw new DuplicateEntityNameException();
+                    }
+                    SetAllIndicatorsDefaultValue(context, entity);
+                    Indicator soc = new Indicator()
+                    {
+                        Id = DbIdHelper.GetNextID(),
+                        Name = entity.Name,
+                        Content = entity.Content,
+                        CreatedTimestamp = entity.CreatedTimestamp,
+                        IsDefault = entity.IsDefault
+                    };
+                    context.Indicators.AddObject(soc);
 
-                base.Commit(context);
+                    base.Commit(context);
+                }
             }
         }
 
         public void Delete(long id)
         {
-            using (var context = GetContext())
+            lock (syncObj)
             {
-                var entity = context.Indicators.FirstOrDefault(p => p.Id == id);
-                if (entity == null)
+                using (var context = GetContext())
                 {
-                    throw new Exception("invalid Indicator id: " + entity.Id);
-                }
-                else
-                {
-                    context.DeleteObject(entity);
-                    base.Commit(context);
+                    var entity = context.Indicators.FirstOrDefault(p => p.Id == id);
+                    if (entity == null)
+                    {
+                        throw new Exception("invalid Indicator id: " + entity.Id);
+                    }
+                    else
+                    {
+                        //if the deleted entity is the default one then make the first one default
+                        if (entity.IsDefault)
+                        {
+                            var allItems = context.Indicators.Where(p => p.Id != entity.Id).ToList();
+                            if (allItems.Count > 0)
+                            {
+                                allItems.First().IsDefault = true;
+                            }
+                        }
+                        context.DeleteObject(entity);
+                        base.Commit(context);
+                    }
                 }
             }
         }

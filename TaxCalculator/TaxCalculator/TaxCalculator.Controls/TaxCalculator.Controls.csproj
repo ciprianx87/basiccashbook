@@ -127,6 +127,7 @@
     <Compile Include="Converters.cs" />
     <Compile Include="Converters\IndicatorConverter.cs" />
     <Compile Include="Converters\ValidationConverter.cs" />
+    <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="Popups\CreateEditIndicator.xaml.cs">
       <DependentUpon>CreateEditIndicator.xaml</DependentUpon>
     </Compile>

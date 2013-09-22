@@ -8,6 +8,9 @@
             xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}" 
             >
+    <UserControl.Resources>
+        <converter:VisibilityConverter x:Key="visibilityConverter"/>
+    </UserControl.Resources>
     <xctk:BusyIndicator IsBusy="{Binding IsBusy}" BusyContent="Se incarca datele..." >
         <Grid>
             <Grid.RowDefinitions>
@@ -43,19 +46,20 @@
                     <DataGridTemplateColumn MinWidth="350" Width="*" Header="Nume">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
-                                <TextBlock Text="{Binding Nume}" Style="{StaticResource StandardTextBlock}"/>
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource StandardTextBlock}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="70" MinWidth="70" Header="Implicit?">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
-                                <TextBlock Text="{Binding Adresa}"  Style="{StaticResource StandardTextBlock}"/>
+                                <CheckBox IsChecked="{Binding IsDefault}" IsEnabled="False"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <!--<TextBlock Text="{Binding IsDefault}"  Style="{StaticResource StandardTextBlock}"/>-->
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                    
-                    <DataGridTemplateColumn Width="95" Header="Actiuni">
+                    <DataGridTemplateColumn Width="135" Header="Actiuni">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <StackPanel Orientation="Horizontal">
@@ -74,6 +78,21 @@
                                         <Button.ToolTip>
                                             <TextBlock Text="Editare"/>
                                         </Button.ToolTip>
+                                    </Button>
+
+                                    <Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="SetAsDefaultCommand_Click" Margin="10,0,0,0" Visibility="{Binding IsDefault, Converter={StaticResource visibilityConverter}}">
+                                        <StackPanel>
+                                            <TextBlock Text="Implicit"/>
+                                            <!--<Image Source="/TaxCalculator.Controls;component/Images/editButton.png"  Stretch="Uniform"  Width="30" Height="15"/>-->
+                                        </StackPanel>
+                                        <Button.ToolTip>
+                                            <TextBlock Text="Setare ca implicit"/>
+                                        </Button.ToolTip>
+                                        <!--<Button.Triggers>
+                                            <DataTrigger Binding="{Binding IsDefault}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Button.Triggers>-->
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>
