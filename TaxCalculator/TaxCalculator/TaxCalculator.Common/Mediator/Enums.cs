@@ -47,6 +47,7 @@ namespace TaxCalculator.Common.Mediator
         YesNoDialog,
         CrudCoinTypes,
         InformationModal,
-        CreateOrEditCompany
+        CreateOrEditCompany,
+        CreateOrEditIndicator
     }
 }

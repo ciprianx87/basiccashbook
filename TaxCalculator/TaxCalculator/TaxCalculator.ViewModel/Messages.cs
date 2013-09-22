@@ -7,7 +7,7 @@ namespace TaxCalculator.ViewModel
 {
     public static class Messages
     {
-        public static string CannotDeleteCashBook = "Registrul de casa nu poate fi sters!";
+        public static string CannotDeleteEntity = "Entitatea nu a putut fi stearsa!";
         public static string CannotDeleteCashBookEntry = "Intrarea nu a putut fi stearsa!";
         public static string GenericError = "Ne pare rau, a intervenit o eroare";
         public static string LegalReglementationsNotifications = "Ati depasit plafonul de plati! Doriti sa cititi reglementarile legale?";

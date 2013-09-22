@@ -50,13 +50,14 @@
     <Compile Include="Base\BaseViewModel.cs" />
     <Compile Include="Base\DelegateCommand.cs" />
     <Compile Include="Base\NotificationPoperty.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="EntityDeleter.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaxEvaluator.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="ViewModels\CompanyListVm.cs" />
+    <Compile Include="ViewModels\CreateEditIndicatorVm.cs" />
+    <Compile Include="ViewModels\Model\IndicatorViewModel.cs" />
     <Compile Include="ViewModels\TaxIndicatorsListVm.cs" />
     <Compile Include="ViewModels\CreateEditCompanyVm.cs" />
     <Compile Include="ViewModels\Model\CompanyViewModel.cs" />

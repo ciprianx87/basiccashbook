@@ -9,64 +9,63 @@ using TaxCalculator.Common.Exceptions;
 
 namespace TaxCalculator.Data.Repositories
 {
-    public class CompanyRepository : BaseRepository, ICompanyRepository
+    public class IndicatorRepository : BaseRepository, IIndicatorRepository
     {
 
-        public Company Get(Int64 id)
+        public Indicator Get(Int64 id)
         {
             using (var context = GetContext())
             {
-                var existingCompany = context.Companies.FirstOrDefault(p => p.Id == id);
-                //if (existingCompany == null)
-                //{
-                //    throw new CompanyNotFoundException();
-                //}
+                var existingCompany = context.Indicators.FirstOrDefault(p => p.Id == id);               
                 return existingCompany;
             }
         }
 
-        public void Edit(Company entity)
+        public void Edit(Indicator entity)
         {
             using (var context = GetContext())
             {
-                var existingCompany = context.Companies.FirstOrDefault(p => p.Id == entity.Id);
-                if (existingCompany == null)
+                var existingIndicator = context.Indicators.FirstOrDefault(p => p.Id == entity.Id);
+                if (existingIndicator == null)
                 {
-                    throw new Exception("invalid company id: " + entity.Id);
+                    throw new Exception("invalid Indicator id: " + entity.Id);
                 }
                 else
                 {
                     //get companies with the same name but different id
-                    var existingEntity = context.Companies.FirstOrDefault(p => p.Name == entity.Name && p.Id != entity.Id);
+                    var existingEntity = context.Indicators.FirstOrDefault(p => p.Name == entity.Name && p.Id != entity.Id);
                     if (existingEntity != null)
                     {
                         throw new DuplicateEntityNameException();
                     }
-                    existingCompany.Address = entity.Address;
-                    existingCompany.Name = entity.Name;
-                    existingCompany.CUI = entity.CUI;
+                    existingIndicator.Name = entity.Name;
+                    existingIndicator.Content = entity.Content;
+                    existingIndicator.IsDefault = entity.IsDefault;
+                    existingIndicator.CreatedTimestamp = entity.CreatedTimestamp;
+
                     base.Commit(context);
                 }
             }
         }
 
-        public void Create(Company entity)
+        public void Create(Indicator entity)
         {
             using (var context = GetContext())
             {
-                var existingEntity = context.Companies.FirstOrDefault(p => p.Name == entity.Name);
+                var existingEntity = context.Indicators.FirstOrDefault(p => p.Name == entity.Name);
                 if (existingEntity != null)
                 {
                     throw new DuplicateEntityNameException();
                 }
-                Company soc = new Company()
+                Indicator soc = new Indicator()
                 {
-                    Id = DbIdHelper.GetNextID(),
-                    Address = entity.Address,
+                    Id = DbIdHelper.GetNextID(),                  
                     Name = entity.Name,
-                    CUI = entity.CUI
+                    Content=entity.Content,
+                    CreatedTimestamp=entity.CreatedTimestamp,
+                    IsDefault=entity.IsDefault
                 };
-                context.Companies.AddObject(soc);
+                context.Indicators.AddObject(soc);
 
                 base.Commit(context);
             }
@@ -76,10 +75,10 @@ namespace TaxCalculator.Data.Repositories
         {
             using (var context = GetContext())
             {
-                var entity = context.Companies.FirstOrDefault(p => p.Id == id);
+                var entity = context.Indicators.FirstOrDefault(p => p.Id == id);
                 if (entity == null)
                 {
-                    throw new Exception("invalid company id: " + entity.Id);
+                    throw new Exception("invalid Indicator id: " + entity.Id);
                 }
                 else
                 {
@@ -89,11 +88,11 @@ namespace TaxCalculator.Data.Repositories
             }
         }
 
-        public List<Company> GetAll()
+        public List<Indicator> GetAll()
         {
             using (var context = GetContext())
             {
-                var list = context.Companies.ToList();
+                var list = context.Indicators.ToList();
                 return list;
             }
         }

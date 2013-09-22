@@ -6,12 +6,12 @@ using TaxCalculator.Data.Model;
 
 namespace TaxCalculator.Data.Interfaces
 {
-    public interface ICompanyRepository
+    public interface IIndicatorRepository
     {
-        void Edit(Company entity);
-        Company Get(Int64 id);
-        void Create(Company entity);
+        void Edit(Indicator entity);
+        Indicator Get(Int64 id);
+        void Create(Indicator entity);
         void Delete(Int64 id);
-        List<Company> GetAll();
+        List<Indicator> GetAll();
     }
 }

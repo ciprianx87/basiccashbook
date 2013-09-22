@@ -16,7 +16,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 {
     public class TaxIndicatorsListVm : BaseViewModel
     {
-        ICompanyRepository companyRepository;
+        IIndicatorRepository indicatorRepository;
         DispatcherTimer dt;
 
 
@@ -24,28 +24,25 @@ namespace TaxCalculator.ViewModel.ViewModels
         public ICommand CreateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand EditCommand { get; set; }
-        public ICommand SelectCommand { get; set; }
         public TaxIndicatorsListVm()
         {
-            this.Title = "Societati";
+            this.Title = "Indicatori";
             SaveCommand = new DelegateCommand(Save, CanSave);
             CreateCommand = new DelegateCommand(Create, CanCreate);
             DeleteCommand = new DelegateCommand(Delete, CanDelete);
             EditCommand = new DelegateCommand(Edit, CanEdit);
-            SelectCommand = new DelegateCommand(Select, CanSelect);
 
-            //Mediator.Instance.Register(MediatorActionType.SetCashBookListType, SetCashBookListType);
             Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
 
-            companyRepository = new CompanyRepository();
+            indicatorRepository = new IndicatorRepository();
 
             RefreshList(null);
         }
 
         #region properties
 
-        private ObservableCollection<Company> taxIndicatorList;
-        public ObservableCollection<Company> TaxIndicatorList
+        private ObservableCollection<Indicator> taxIndicatorList;
+        public ObservableCollection<Indicator> TaxIndicatorList
         {
             get { return taxIndicatorList; }
             set
@@ -81,15 +78,13 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void LoadData()
         {
-            //IsBusy = true;
-            //Thread.Sleep(3000);
             try
             {
-                TaxIndicatorList = new ObservableCollection<Company>();
-                var existingCompanies = companyRepository.GetAll();
-                if (existingCompanies != null)
+                TaxIndicatorList = new ObservableCollection<Indicator>();
+                var existingIndicators = indicatorRepository.GetAll();
+                if (existingIndicators != null)
                 {
-                    foreach (var item in existingCompanies)
+                    foreach (var item in existingIndicators)
                     {
                         TaxIndicatorList.Add(item);
                     }
@@ -124,7 +119,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             try
             {
-                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CreateOrEditCompany);
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CreateOrEditIndicator);
                 Mediator.Instance.SendMessage(MediatorActionType.SetEntityToEdit, null);
             }
             catch (Exception ex)
@@ -141,7 +136,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             try
             {
-                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CreateOrEditCompany);
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CreateOrEditIndicator);
                 Mediator.Instance.SendMessage(MediatorActionType.SetEntityToEdit, param);
             }
             catch (Exception ex)
@@ -150,19 +145,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 Logger.Instance.LogException(ex);
             }
         }
-
-        public bool CanSelect(object param)
-        {
-            return true;
-        }
-
-        public void Select(object param)
-        {
-            Logger.Instance.Log.Debug(string.Format("param != null {0}", param != null));
-            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.CashBook);
-            Mediator.Instance.SendMessage(MediatorActionType.SetSelectedCashBook, param);
-        }
-
+              
         public bool CanCreate(object param)
         {
             return true;
@@ -179,7 +162,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             catch (Exception ex)
             {
                 Logger.Instance.LogException(ex);
-                WindowHelper.OpenErrorDialog(Messages.CannotDeleteCashBook);
+                WindowHelper.OpenErrorDialog(Messages.CannotDeleteEntity);
             }
         }
 
@@ -190,8 +173,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         public override void Dispose()
         {
-            //Mediator.Instance.Unregister(MediatorActionType.RefreshList, RefreshList);
-            //Mediator.Instance.Unregister(MediatorActionType.SetCashBookListType, SetCashBookListType);
+            Mediator.Instance.Unregister(MediatorActionType.RefreshList, RefreshList);
             base.Dispose();
         }
 
