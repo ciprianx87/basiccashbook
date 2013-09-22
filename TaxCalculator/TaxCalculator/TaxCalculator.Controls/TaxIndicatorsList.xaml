@@ -9,7 +9,7 @@
              mc:Ignorable="d"  Style="{DynamicResource StandardUserControl}" 
             >
     <UserControl.Resources>
-        <converter:VisibilityConverter x:Key="visibilityConverter"/>
+        <converter:InvertVisibilityConverter x:Key="invertVisibilityConverter"/>
     </UserControl.Resources>
     <xctk:BusyIndicator IsBusy="{Binding IsBusy}" BusyContent="Se incarca datele..." >
         <Grid>
@@ -42,7 +42,22 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                   
+                    <DataGridTemplateColumn Width="110" Header="">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <StackPanel Orientation="Horizontal">
+                                    <Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="SetAsDefaultCommand_Click" Margin="5,0,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="Editeaza Formule"/>
+                                        </StackPanel>
+                                        <Button.ToolTip>
+                                            <TextBlock Text="Editeaza Formule"/>
+                                        </Button.ToolTip>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn MinWidth="350" Width="*" Header="Nume">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
@@ -58,7 +73,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                   
+
                     <DataGridTemplateColumn Width="135" Header="Actiuni">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
@@ -80,7 +95,7 @@
                                         </Button.ToolTip>
                                     </Button>
 
-                                    <Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="SetAsDefaultCommand_Click" Margin="10,0,0,0" Visibility="{Binding IsDefault, Converter={StaticResource visibilityConverter}}">
+                                    <Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="SetAsDefaultCommand_Click" Margin="10,0,0,0" Visibility="{Binding IsDefault, Converter={StaticResource invertVisibilityConverter}}">
                                         <StackPanel>
                                             <TextBlock Text="Implicit"/>
                                             <!--<Image Source="/TaxCalculator.Controls;component/Images/editButton.png"  Stretch="Uniform"  Width="30" Height="15"/>-->
@@ -88,11 +103,6 @@
                                         <Button.ToolTip>
                                             <TextBlock Text="Setare ca implicit"/>
                                         </Button.ToolTip>
-                                        <!--<Button.Triggers>
-                                            <DataTrigger Binding="{Binding IsDefault}" Value="False">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                            </DataTrigger>
-                                        </Button.Triggers>-->
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>
