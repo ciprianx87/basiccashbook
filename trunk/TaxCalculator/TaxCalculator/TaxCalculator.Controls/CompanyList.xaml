@@ -46,14 +46,14 @@
                     <DataGridTemplateColumn MinWidth="350" Header="Nume">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
-                                <TextBlock Text="{Binding Nume}" Style="{StaticResource StandardTextBlock}"/>
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource StandardTextBlock}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="*" MinWidth="310" Header="Adresa">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
-                                <TextBlock Text="{Binding Adresa}"  Style="{StaticResource StandardTextBlock}"/>
+                                <TextBlock Text="{Binding Address}"  Style="{StaticResource StandardTextBlock}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

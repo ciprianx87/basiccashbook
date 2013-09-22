@@ -73,16 +73,18 @@ namespace TaxCalculator.ViewModel.ViewModels
                 currentEntity = param as Indicator;
                 IndicatorViewModel.Name = currentEntity.Name;
                 IndicatorViewModel.IsDefault = currentEntity.IsDefault;
+                IndicatorViewModel.IsDefaultEnabled = false;
             }
             else
             {
                 this.Title = "Creare Indicator";
                 IndicatorViewModel.Name = "";
-                IndicatorViewModel.IsDefault = false   ;
+                IndicatorViewModel.IsDefault = false;
+                IndicatorViewModel.IsDefaultEnabled = true;
             }
         }
 
-         
+
         public void Save(object param)
         {
             try
@@ -95,6 +97,12 @@ namespace TaxCalculator.ViewModel.ViewModels
                         //create
                         currentEntity = new Indicator();
                         UpdateFields();
+                        var allItems = indicatorRepository.GetAll();
+                        if (allItems.Count == 0)
+                        {
+                            //force IsDefault;
+                            currentEntity.IsDefault = true;
+                        }
                         indicatorRepository.Create(currentEntity);
                     }
                     else
@@ -126,7 +134,9 @@ namespace TaxCalculator.ViewModel.ViewModels
         private void UpdateFields()
         {
             currentEntity.Name = IndicatorViewModel.Name;
-            currentEntity.IsDefault  = IndicatorViewModel.IsDefault;
+            currentEntity.IsDefault = IndicatorViewModel.IsDefault;
+            currentEntity.Content = "";
+            currentEntity.CreatedTimestamp = DateTime.Now;
         }
         private bool IsValid()
         {

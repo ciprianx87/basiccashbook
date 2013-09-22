@@ -63,6 +63,9 @@ namespace TaxCalculator.Controls.Popups
                     case PopupType.CreateOrEditCompany:
                         popup = new CreateEditCompany();
                         break;
+                    case PopupType.CreateOrEditIndicator:
+                        popup = new CreateEditIndicator();
+                        break;
                     //case PopupType.YesNoDialog:
                     //    popup = new YesNoDialog();
                     //    break;                   

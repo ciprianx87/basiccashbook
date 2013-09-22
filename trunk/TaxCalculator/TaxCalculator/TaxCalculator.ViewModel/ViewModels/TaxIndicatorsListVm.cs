@@ -24,6 +24,9 @@ namespace TaxCalculator.ViewModel.ViewModels
         public ICommand CreateCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand EditCommand { get; set; }
+
+        public ICommand SetAsDefaultCommand { get; set; }
+
         public TaxIndicatorsListVm()
         {
             this.Title = "Indicatori";
@@ -31,6 +34,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             CreateCommand = new DelegateCommand(Create, CanCreate);
             DeleteCommand = new DelegateCommand(Delete, CanDelete);
             EditCommand = new DelegateCommand(Edit, CanEdit);
+            this.SetAsDefaultCommand = new DelegateCommand(SetAsDefault, CanSetAsDefault);
 
             Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
 
@@ -145,7 +149,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 Logger.Instance.LogException(ex);
             }
         }
-              
+
         public bool CanCreate(object param)
         {
             return true;
@@ -169,6 +173,27 @@ namespace TaxCalculator.ViewModel.ViewModels
         public bool CanDelete(object param)
         {
             return true;
+        }
+
+        private bool CanSetAsDefault(object parameter)
+        {
+            return true;
+        }
+
+        public void SetAsDefault(object parameter)
+        {
+            try
+            {
+                var indicator = parameter as Indicator;
+                indicator.IsDefault = true;
+                indicatorRepository.Edit(indicator);
+                Mediator.Instance.SendMessage (MediatorActionType.RefreshList, null);
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+                WindowHelper.OpenErrorDialog(Messages.GenericError);
+            }
         }
 
         public override void Dispose()

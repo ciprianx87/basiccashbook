@@ -36,6 +36,21 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         }
 
 
+        private bool isDefaultEnabled;
+        public bool IsDefaultEnabled
+        {
+            get { return isDefaultEnabled; }
+            set
+            {
+                if (isDefaultEnabled != value)
+                {
+                    isDefaultEnabled = value;
+                    this.NotifyPropertyChanged("IsDefaultEnabled");
+                }
+            }
+        }
+
+
 
         public string Error
         {
