@@ -50,7 +50,7 @@
                   />
 
         <TextBlock Grid.Row="1" Text="Implicit:"/>
-        <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding IndicatorViewModel.IsDefault, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsDefaultEnabled}"
+        <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding IndicatorViewModel.IsDefault, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IndicatorViewModel.IsDefaultEnabled}"
                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" >
             <CheckBox.RenderTransform>
                 <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="0.5" CenterY="0.5"/>
