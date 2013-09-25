@@ -46,7 +46,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                     //ValueFieldNumeric=2
                 });
             }
-            //Tests();
+            Tests();
             
             ExecuteTaxCalculation(null);
         }
@@ -59,7 +59,7 @@ namespace TaxCalculator.ViewModel.ViewModels
       
         public void ExecuteTaxCalculation(object param)
         {
-            //return;
+            return;
             //execute this until all the values remain the same
             bool hasChanged = true;
             while (hasChanged)
@@ -143,6 +143,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 case "numeric": return TaxIndicatorType.Numeric; break;
                 case "text": return TaxIndicatorType.Text; break;
                 case "calculat": return TaxIndicatorType.Calculat; break;
+                case "": return TaxIndicatorType.Calculat; break;
                 default: throw new ArgumentException(type);
             }
         }

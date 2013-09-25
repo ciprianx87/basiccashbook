@@ -43,6 +43,14 @@ namespace TaxCalculator.Controls
             var but = (sender as Button);
             (this.DataContext as TaxIndicatorsListVm).SetAsDefault(but.CommandParameter);
         }
+       
+
+        private void EditIndicatorsCommand_Click(object sender, RoutedEventArgs e)
+        {
+            var but = (sender as Button);
+            (this.DataContext as TaxIndicatorsListVm).EditIndicators(but.CommandParameter);
+        }
+
         public void Dispose()
         {
             (this.DataContext as BaseViewModel).Dispose();
