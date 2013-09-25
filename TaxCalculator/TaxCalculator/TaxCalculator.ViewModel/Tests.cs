@@ -25,9 +25,10 @@ namespace TaxCalculator.ViewModel
             //Test8();
             //Test9();
             //Test9_1();
-           // Test9_2();
-            Test9_3();
-            Test9_4();
+            //Test9_2();
+            //Test9_3();
+            //Test9_4();
+            Test9_5();
         }
         #region old
         private void Test1()
@@ -254,6 +255,62 @@ namespace TaxCalculator.ViewModel
             TaxFormula taxFormula = new TaxFormula(formula);
             var rez = taxFormula.Execute(taxIndicators);
             if (rez != 20)
+            {
+                throw new Exception();
+            }
+        }
+
+        private void Test9_5()
+        {
+            taxIndicators.First(p => p.NrCrt == 18).ValueField = "20";
+            taxIndicators.First(p => p.NrCrt == 43).ValueField = "20";
+
+            //string formula = "IF(rd.18-rd.43<0;-(rd.18-rd.43);0)";
+            //string formula = "IF(rd.18-rd.43<0;rd.18-rd.43;0)";
+            string formula = "IF(rd.18-rd.43<0;-rd.18+rd.43;0)";
+            TaxFormula taxFormula = new TaxFormula(formula);
+            var rez = taxFormula.Execute(taxIndicators);
+            if (rez != 0)
+            {
+                throw new Exception();
+            }
+
+            taxIndicators.First(p => p.NrCrt == 18).ValueField = "2";
+            taxIndicators.First(p => p.NrCrt == 43).ValueField = "20";
+
+            //string formula = "IF(rd.18-rd.43<0;-(rd.18-rd.43);0)";
+            //string formula = "IF(rd.18-rd.43<0;rd.18-rd.43;0)";
+            formula = "IF(rd.18-rd.43<0;-rd.18+rd.43;0)";
+            taxFormula = new TaxFormula(formula);
+            rez = taxFormula.Execute(taxIndicators);
+            if (rez != 18)
+            {
+                throw new Exception();
+            }
+
+
+            taxIndicators.First(p => p.NrCrt == 18).ValueField = "2";
+            taxIndicators.First(p => p.NrCrt == 43).ValueField = "20";
+
+            formula = "IF(rd.18-rd.43<0;-(rd.18-rd.43);0)";
+            //string formula = "IF(rd.18-rd.43<0;rd.18-rd.43;0)";
+            //formula = "IF(rd.18-rd.43<0;-rd.18+rd.43;0)";
+            taxFormula = new TaxFormula(formula);
+            rez = taxFormula.Execute(taxIndicators);
+            if (rez != 18)
+            {
+                throw new Exception();
+            }
+
+            taxIndicators.First(p => p.NrCrt == 18).ValueField = "20";
+            taxIndicators.First(p => p.NrCrt == 43).ValueField = "2";
+
+            formula = "IF(rd.18-rd.43<0;-(rd.18-rd.43);0)";
+            //string formula = "IF(rd.18-rd.43<0;rd.18-rd.43;0)";
+            //formula = "IF(rd.18-rd.43<0;-rd.18+rd.43;0)";
+            taxFormula = new TaxFormula(formula);
+            rez = taxFormula.Execute(taxIndicators);
+            if (rez != 0)
             {
                 throw new Exception();
             }

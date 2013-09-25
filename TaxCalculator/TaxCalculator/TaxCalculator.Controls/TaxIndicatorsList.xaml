@@ -46,7 +46,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <StackPanel Orientation="Horizontal">
-                                    <Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="SetAsDefaultCommand_Click" Margin="5,0,0,0">
+                                    <Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="EditIndicatorsCommand_Click" Margin="5,0,0,0">
                                         <StackPanel>
                                             <TextBlock Text="Editeaza Formule"/>
                                         </StackPanel>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TaxCalculator.Common;
+using System.Diagnostics;
 
 namespace TaxCalculator.ViewModel.ViewModels.Model
 {
@@ -185,6 +186,24 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         {
             try
             {
+                if (formula.StartsWith("-") || formula.StartsWith("+"))
+                {
+                    if (formula.StartsWith("-(") && formula.EndsWith(")"))
+                    {
+                        formula = formula.Substring(2, formula.Length - 3);
+                        //if it does not begin with any sign, add a +
+                        if (!formula.StartsWith("-") && !formula.StartsWith("+"))
+                        {
+                            formula = "+" + formula;
+                        }
+                        formula = InvertSigns(formula);
+                    }
+                    if (formula.StartsWith("+(") && formula.EndsWith(")"))
+                    {
+                        //remove the starting +
+                        formula = formula.Substring(1);
+                    }
+                }
                 var formulaParts = formula.Split(new string[] { "rd." }, StringSplitOptions.RemoveEmptyEntries);
                 if (formulaParts.Length > 1)
                 {
@@ -254,11 +273,24 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                         }
                         string resultedString = "";
                         current.ForEach(p => resultedString += p.ToString());
+                        if (resultedFormula.Length > 0)
+                        {
+                            if (resultedFormula.Last() == '+')
+                            {
+                                resultedString = InvertSigns(resultedString);
+                                resultedFormula = resultedFormula.Substring(0, resultedFormula.Length - 1);
+                            }
+                            if (resultedFormula.Last() == '-')
+                            {
+                                resultedFormula = resultedFormula.Substring(0, resultedFormula.Length - 1);
+                            }
+                        }
                         resultedFormula += resultedString;
 
                     }
                     resultedFormula += ")";
                     formula = "rd." + resultedFormula;
+                    Debug.WriteLine("resulted formula: " + formula);
                 }
             }
             catch (Exception ex)
@@ -268,7 +300,24 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             }
         }
 
-
+        private string InvertSigns(string initialString)
+        {
+            var current = initialString.ToList();
+            for (int j = 0; j < current.Count; j++)
+            {
+                if (current[j] == '-')
+                {
+                    current[j] = '+';
+                }
+                else if (current[j] == '+')
+                {
+                    current[j] = '-';
+                }
+            }
+            string resultedString = "";
+            current.ForEach(p => resultedString += p.ToString());
+            return resultedString;
+        }
         private void ExtractFormula(string formula)
         {
             formula = formula.Trim().ToLower().Replace(" ", string.Empty);
