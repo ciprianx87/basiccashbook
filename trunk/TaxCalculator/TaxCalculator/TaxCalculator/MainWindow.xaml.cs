@@ -36,7 +36,7 @@ namespace TaxCalculator
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            XmlConfigurator.Configure(new FileInfo("log4net.config"));
+            XmlConfigurator.Configure();
             Logger.Instance.Log.Debug("application start");
 
             InitCulture();
