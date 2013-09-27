@@ -18,6 +18,7 @@ using TaxCalculator.Data.Model;
 using Microsoft.Win32;
 using System.Diagnostics;
 using TaxCalculator.Common;
+using System.IO;
 
 namespace TaxCalculator
 {
@@ -35,7 +36,7 @@ namespace TaxCalculator
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            XmlConfigurator.Configure();
+            XmlConfigurator.Configure(new FileInfo("log4net.config"));
             Logger.Instance.Log.Debug("application start");
 
             InitCulture();
@@ -121,6 +122,7 @@ namespace TaxCalculator
         private void InitSettings()
         {
             AppSettings.InformationPopupCloseInterval = 5000;
+            DecimalConvertor.Instance.SetNumberOfDecimals(2);
         }
 
         private void InitCulture()
@@ -163,11 +165,12 @@ namespace TaxCalculator
 
         private void MenuItem_Iesire(object sender, RoutedEventArgs e)
         {
-            ChangeContent(ContentTypes.CompanyList);
+            Exit();
         }
 
         private void MenuItem_Companies(object sender, RoutedEventArgs e)
         {
+            ChangeContent(ContentTypes.CompanyList);
 
         }
 
@@ -203,6 +206,15 @@ namespace TaxCalculator
         {
             ChangeContent(ContentTypes.TaxCalculation);
         }
-
+        private void Exit()
+        {
+            try
+            {
+                Application.Current.Shutdown();
+            }
+            catch
+            {
+            }
+        }
     }
 }

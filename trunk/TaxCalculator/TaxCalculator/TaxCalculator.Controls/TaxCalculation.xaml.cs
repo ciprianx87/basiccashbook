@@ -32,5 +32,16 @@ namespace TaxCalculator.Controls
         {
             (this.DataContext as BaseViewModel).Dispose();
         }
+
+        private void AddBefore_Click(object sender, RoutedEventArgs e)
+        {
+            //var selectedRow = dgTaxIndicators.SelectedItem;
+            //this.DataContext = new TaxCalculationVm();
+        }
+
+        private void AddAfter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

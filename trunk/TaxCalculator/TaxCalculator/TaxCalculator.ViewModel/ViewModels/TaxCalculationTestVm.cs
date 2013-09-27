@@ -21,37 +21,27 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             Mediator.Instance.Register(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
             this.SaveCommand = new DelegateCommand(Save, CanSave); 
-            TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>()
-            {
-                new TaxIndicatorViewModel(){ NrCrt=1, Description="ind 1", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
-                new TaxIndicatorViewModel(){ NrCrt=2, Description="ind 2", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
-                //new TaxIndicatorViewModel(){ NrCrt=22, Description="ind 3", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Title },
-                new TaxIndicatorViewModel(){ NrCrt=3, Description="ind 3", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
-                new TaxIndicatorViewModel(){ NrCrt=4, Description="ind 4", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
-                //new TaxIndicatorViewModel(){ NrCrt=4, Description="ind 4", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Total},
-                new TaxIndicatorViewModel(){ NrCrt=5, Description="ind 5", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal}
-            };
+            
             List<TaxIndicator> testTaxIndicators = new List<TaxIndicator>()
             {
-                  new TaxIndicator(){ NrCrtString="1", Description="ind 1", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
-                new TaxIndicator(){ NrCrtString="2", Description="ind 2", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
+                  new TaxIndicator(){ NrCrtString="1", Description="ind 1", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Numeric},
+                new TaxIndicator(){ NrCrtString="2", Description="ind 2", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Numeric},
                 //new TaxIndicatorViewModel(){ NrCrt=22, Description="ind 3", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Title },
-                new TaxIndicator(){ NrCrtString="3", Description="ind 3", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
-                new TaxIndicator(){ NrCrtString="4", Description="ind 4", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
+                new TaxIndicator(){ NrCrtString="3", Description="ind 3", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Numeric},
+                new TaxIndicator(){ NrCrtString="4", Description="ind 4", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Numeric},
                 //new TaxIndicatorViewModel(){ NrCrt=4, Description="ind 4", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Total},
-                new TaxIndicator(){ NrCrtString="5",Description="ind 5", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
+                new TaxIndicator(){ NrCrtString="5",Description="ind 5", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Numeric},
                 new TaxIndicator(){NrCrtString="6", Description="FORMULA", TypeDescription="Calculat", IndicatorFormula="rd.2", Type= TaxIndicatorType.Calculat}
          
             };
 
-            taxIndicators.Clear();
+            TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>();
             var defaultIndicators = DefaultTaxIndicators.GetDefaultIndicators();
             foreach (var item in testTaxIndicators)
             {
                 taxIndicators.Add(new TaxIndicatorViewModel()
                 {
-                    NrCrtString = item.NrCrtString,
-                    NrCrt = string.IsNullOrEmpty(item.NrCrtString) ? 0 : Convert.ToInt32(item.NrCrtString),
+                    NrCrt = item.NrCrt,
                     Description = item.Description,
                     TypeDescription = item.TypeDescription,
                     IndicatorFormula = item.IndicatorFormula,
@@ -104,7 +94,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
             try
             {
-                
+
                 var newValue = taxFormula.Execute(TaxIndicators.ToList()).ToString();
                 if (item.ValueField != newValue)
                 {
@@ -124,12 +114,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
             switch (taxIndicatorType)
             {
-                case TaxIndicatorType.Normal:
-                    break;
-                case TaxIndicatorType.Total:
-                    break;
-                case TaxIndicatorType.Title:
-                    break;
+
                 case TaxIndicatorType.Numeric:
                     styleInfo.FontWeight = FontWeights.Normal;
                     styleInfo.FormulaFieldVisibility = Visibility.Collapsed;
@@ -198,7 +183,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                     //item.IsValid();
                 }
             }
-        } 
+        }
 
         public override void Dispose()
         {

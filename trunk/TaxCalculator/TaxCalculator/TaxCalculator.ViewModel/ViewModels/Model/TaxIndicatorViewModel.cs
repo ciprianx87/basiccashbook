@@ -23,8 +23,34 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             Style.ValueFieldVisibility = Visibility.Visible;
         }
 
-        public int NrCrt { get; set; }
-        public string NrCrtString { get; set; }
+       // public int? NrCrt { get; set; }
+
+        private int? nrCrt;
+        public int? NrCrt
+        {
+            get { return nrCrt; }
+            set
+            {
+                if (nrCrt != value)
+                {
+                    nrCrt = value;
+                    this.NotifyPropertyChanged("NrCrt");
+                    this.NotifyPropertyChanged("NrCrtString");
+                }
+            }
+        }
+
+        public string NrCrtString
+        {
+            get
+            {
+                if (NrCrt == null)
+                {
+                    return "";
+                }
+                return NrCrt.ToString();
+            }
+        }
         public string Description { get; set; }
         public string TypeDescription { get; set; }
         //public string IndicatorFormula { get; set; }
@@ -35,7 +61,12 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public string ValueField
         {
             //get { return valueField; }
-            get { return ValueFieldNumeric.ToString(); }
+            get
+            {
+                //var val = DecimalConvertor.Instance.DecimalToString(ValueFieldNumeric);
+                //return val;
+                return  ValueFieldNumeric.ToString(); 
+            }
             set
             {
                 try
@@ -150,7 +181,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             bool result = true;
             string message = "";
 
-            if (Type == TaxIndicatorType.Calculat &&  string.IsNullOrEmpty(IndicatorFormula))
+            if (Type == TaxIndicatorType.Calculat && string.IsNullOrEmpty(IndicatorFormula))
             {
                 message = "IndicatorFormula este obligatoriu";
             }

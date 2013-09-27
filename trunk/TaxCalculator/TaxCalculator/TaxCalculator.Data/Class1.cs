@@ -56,10 +56,17 @@ namespace TaxCalculator.Data
                         var value = parts[3];
                         if (value == "..") { value = ""; }
 
+                        int? nrCrt = null;
+                        int normalNr=0;
+                        if (int.TryParse(nr, out normalNr))
+                        {
+                            nrCrt = normalNr;
+                        }
+
                         description = description.Replace('@', ',');
                         TaxIndicator ti = new TaxIndicator()
                         {
-                            NrCrtString = nr,
+                            NrCrt = nrCrt,
                             Description = description,
                             TypeDescription = type,
                             IndicatorFormula = value

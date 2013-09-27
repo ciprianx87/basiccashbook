@@ -11,7 +11,7 @@ namespace TaxCalculator.Data.Model
 
     public partial class TaxIndicator
     {
-        public int NrCrt { get; set; }
+        public int? NrCrt { get; set; }
         public string NrCrtString { get; set; }
         public string Description { get; set; }
         public string TypeDescription { get; set; }
@@ -22,10 +22,7 @@ namespace TaxCalculator.Data.Model
     }
 
     public enum TaxIndicatorType
-    {
-        Normal,
-        Total,
-        Title,
+    { 
         Numeric,
         Text,
         Calculat

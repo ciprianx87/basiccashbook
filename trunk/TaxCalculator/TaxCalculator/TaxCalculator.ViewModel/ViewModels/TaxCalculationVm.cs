@@ -10,44 +10,37 @@ using TaxCalculator.ViewModel.ViewModels.Model;
 using System.Windows;
 using TaxCalculator.Data;
 using TaxCalculator.Common.Mediator;
+using TaxCalculator.Common;
+using System.Windows.Input;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
     public class TaxCalculationVm : BaseViewModel
     {
 
+        public ICommand AddBeforeCommand { get; set; }
+
         public TaxCalculationVm()
         {
-            Mediator.Instance.Register(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
-            TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>()
-            {
-                new TaxIndicatorViewModel(){ NrCrt=1, Description="ind 1", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
-                new TaxIndicatorViewModel(){ NrCrt=2, Description="ind 2", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
-                new TaxIndicatorViewModel(){ NrCrt=22, Description="ind 3", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Title },
-                new TaxIndicatorViewModel(){ NrCrt=3, Description="ind 3", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
-                new TaxIndicatorViewModel(){ NrCrt=4, Description="ind 4", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal},
-                new TaxIndicatorViewModel(){ NrCrt=4, Description="ind 4", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Total},
-                new TaxIndicatorViewModel(){ NrCrt=5, Description="ind 5", TypeDescription="Numeric", IndicatorFormula="..", Type= TaxIndicatorType.Normal}
-            };
 
-            taxIndicators.Clear();
+            this.AddBeforeCommand = new DelegateCommand(AddBefore, CanAddBefore);
+            Mediator.Instance.Register(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
+            TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>();
             var defaultIndicators = DefaultTaxIndicators.GetDefaultIndicators();
             foreach (var item in defaultIndicators)
             {
                 taxIndicators.Add(new TaxIndicatorViewModel()
                 {
-                    NrCrtString = item.NrCrtString,
-                    NrCrt = string.IsNullOrEmpty(item.NrCrtString) ? 0 : Convert.ToInt32(item.NrCrtString),
+                    NrCrt = item.NrCrt,
                     Description = item.Description,
                     TypeDescription = item.TypeDescription,
                     IndicatorFormula = item.IndicatorFormula,
                     Type = GetIndicatorType(item.TypeDescription),
                     Style = GetStyleInfo(GetIndicatorType(item.TypeDescription)),
-                    //ValueFieldNumeric=2
                 });
             }
-            Tests();
-            
+            //Tests();
+
             ExecuteTaxCalculation(null);
         }
         private void Tests()
@@ -56,10 +49,10 @@ namespace TaxCalculator.ViewModel.ViewModels
             t.PerformTests(TaxIndicators.ToList());
         }
 
-      
+
         public void ExecuteTaxCalculation(object param)
         {
-            return;
+            //return;
             //execute this until all the values remain the same
             bool hasChanged = true;
             while (hasChanged)
@@ -72,12 +65,14 @@ namespace TaxCalculator.ViewModel.ViewModels
                 }
             }
         }
+
+
         private bool ExecuteTaxCalculation(bool hasChanged, TaxIndicatorViewModel item)
         {
             TaxFormula taxFormula = null;
             try
             {
-                if (item.Type==TaxIndicatorType.Calculat && string.IsNullOrEmpty(item.IndicatorFormula))
+                if (item.Type == TaxIndicatorType.Calculat && string.IsNullOrEmpty(item.IndicatorFormula))
                 {
                     item.SetError("formula goala");
                 }
@@ -90,7 +85,9 @@ namespace TaxCalculator.ViewModel.ViewModels
             try
             {
 
+                //var newValue = taxFormula.Execute(TaxIndicators.ToList());//.ToString();
                 var newValue = taxFormula.Execute(TaxIndicators.ToList()).ToString();
+                //var newValueConverted = DecimalConvertor.Instance.DecimalToString(newValue);
                 if (item.ValueField != newValue)
                 {
                     hasChanged = true;
@@ -103,18 +100,14 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
             return hasChanged;
         }
+
         private TaxIndicatorViewModel.TaxIndicatorStyleInfo GetStyleInfo(TaxIndicatorType taxIndicatorType)
         {
             TaxIndicatorViewModel.TaxIndicatorStyleInfo styleInfo = new TaxIndicatorViewModel.TaxIndicatorStyleInfo();
 
             switch (taxIndicatorType)
             {
-                case TaxIndicatorType.Normal:
-                    break;
-                case TaxIndicatorType.Total:
-                    break;
-                case TaxIndicatorType.Title:
-                    break;
+
                 case TaxIndicatorType.Numeric:
                     styleInfo.FontWeight = FontWeights.Normal;
                     styleInfo.FormulaFieldVisibility = Visibility.Collapsed;
@@ -149,6 +142,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         }
 
 
+
         private ObservableCollection<TaxIndicatorViewModel> taxIndicators;
         public ObservableCollection<TaxIndicatorViewModel> TaxIndicators
         {
@@ -162,6 +156,72 @@ namespace TaxCalculator.ViewModel.ViewModels
                 }
             }
         }
+
+
+        private TaxIndicatorViewModel selectedItem;
+        public TaxIndicatorViewModel SelectedItem
+        {
+            get { return selectedItem; }
+            set
+            {
+                if (selectedItem != value)
+                {
+                    selectedItem = value;
+                    this.NotifyPropertyChanged("SelectedItem");
+                }
+            }
+        }
+
+        private bool CanAddBefore(object parameter)
+        {
+            return true;
+        }
+
+        private void AddBefore(object parameter)
+        {
+            //test for items with no number
+            //test for corner cases , first, last position
+
+            if (SelectedItem != null)
+            {
+                var indexOf = TaxIndicators.IndexOf(SelectedItem);
+
+                var previousItems = TaxIndicators.Take(indexOf);
+                var itemsToUpdate = TaxIndicators.Skip(indexOf).ToList();
+
+                int maxNrCrt = 1;
+                foreach (var item in previousItems.Reverse())
+                {
+                    if (item.NrCrt.HasValue)
+                    {
+                        maxNrCrt = item.NrCrt.Value + 1;
+                        break;
+                    }
+                }
+
+                TaxIndicators.Insert(indexOf, GetEmptyRow(maxNrCrt));
+                foreach (var item in itemsToUpdate)
+                {
+                    if (item.NrCrt.HasValue)
+                    {
+                        item.NrCrt++;
+                    }
+                }
+            }
+        }
+
+        private TaxIndicatorViewModel GetEmptyRow(int? id)
+        {
+            TaxIndicatorViewModel newItem = new TaxIndicatorViewModel();
+            newItem.NrCrt = id;
+            newItem.Type = TaxIndicatorType.Numeric;
+            newItem.Description = "";
+            newItem.IndicatorFormula = "";
+            newItem.ValueFieldNumeric = 0;
+            newItem.Style = GetStyleInfo(newItem.Type);
+            return newItem;
+        }
+
         public override void Dispose()
         {
             base.Dispose();

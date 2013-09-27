@@ -9,13 +9,21 @@
             >
     <UserControl.Resources>
         <converter:IndicatorConverter x:Key="indicatorConverter"/>
+        <converter:BackgroundColorConverter x:Key="backgroundColorConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
 
         </Grid.RowDefinitions>
         <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
-                  CanUserResizeRows="False">
+                  CanUserResizeRows="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <!--Click="AddBefore_Click"-->
+                    <MenuItem Header="Adauga inainte"  Command="{Binding AddBeforeCommand}"/>
+                    <MenuItem Header="Adauga dupa" Click="AddAfter_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.Resources>
                 <Style TargetType="DataGridCell"  x:Key="NoFocusColumStyle">
                     <Setter Property="IsTabStop" Value="False"/>
@@ -23,8 +31,9 @@
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 </Style>
                 <Style TargetType="TextBlock" x:Key="StandardTextBlock" >
-                    <Setter Property="TextAlignment" Value="Center"/>
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="TextAlignment" Value="Left"/>
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalAlignment" Value="Stretch"/>
                     <Setter Property="FontSize" Value="18"/>
                     <Setter Property="Padding" Value="6,0,0,0"/>
                 </Style>
@@ -54,7 +63,8 @@
                     </DataGridTemplateColumn.HeaderTemplate>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding NrCrtString}" Style="{StaticResource StandardTextBlock}" Focusable="False" IsHitTestVisible="False" />
+                            <TextBlock Text="{Binding NrCrtString}" Style="{StaticResource StandardTextBlock}" Focusable="False" IsHitTestVisible="False" 
+                                       Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -67,7 +77,8 @@
                             <!---->
                             <!--Style="{StaticResource StandardTextBlock}"-->
                             <!--Style="{Binding Type, Converter={StaticResource indicatorConverter}}"-->
-                            <TextBlock Text="{Binding Description}" FontWeight="{Binding Style.FontWeight}">
+                            <TextBlock Text="{Binding Description}" FontWeight="{Binding Style.FontWeight}" 
+                                       Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -75,17 +86,22 @@
                 <DataGridTemplateColumn MinWidth="150" Header="Tip Indicatori">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding Type}" Style="{StaticResource StandardTextBlock}"/>
+                            <TextBlock Text="{Binding Type}" Style="{StaticResource StandardTextBlock}" Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn MinWidth="100"  Width="100" Header="Valoare">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <StackPanel>
-                                <TextBox Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandardTextBox}"  Visibility="{Binding Style.ValueFieldVisibility}"/>
-                                <TextBlock Text="{Binding ValueField}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}"/>
-                            </StackPanel>
+                            <Grid>
+                                <TextBlock Style="{StaticResource StandardTextBlock}" Height="30"  Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}"/>
+                                <StackPanel>
+                                    <TextBox  Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandardTextBox}" 
+                                          Visibility="{Binding Style.ValueFieldVisibility}"/>
+                                    <TextBlock Text="{Binding ValueField}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}" 
+                                           Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}" Height="30"/>
+                                </StackPanel>
+                            </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
