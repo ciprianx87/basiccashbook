@@ -129,6 +129,7 @@
       <DependentUpon>CompanyList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters.cs" />
+    <Compile Include="Converters\BackgroundColorConverter.cs" />
     <Compile Include="Converters\IndicatorConverter.cs" />
     <Compile Include="Converters\ValidationConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
