@@ -204,10 +204,12 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             return true;
         }
+     
 
         public void EditIndicators(object parameter)
         {
             Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.EditIndicators);
+            Mediator.Instance.SendMessage(MediatorActionType.SetTaxIndicatorToEditFormula, parameter);
 
         }
 

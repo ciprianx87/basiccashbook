@@ -16,9 +16,7 @@ namespace TaxCalculator.Data.Model
         public string Description { get; set; }
         public string TypeDescription { get; set; }
         public string IndicatorFormula { get; set; }
-        public TaxIndicatorType Type { get; set; }
-
-       
+        public TaxIndicatorType Type { get; set; }       
     }
 
     public enum TaxIndicatorType

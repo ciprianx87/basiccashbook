@@ -11,6 +11,7 @@ using System.Windows;
 using TaxCalculator.Data;
 using TaxCalculator.Common.Mediator;
 using System.Windows.Input;
+using TaxCalculator.ViewModel.Extensions;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -37,19 +38,20 @@ namespace TaxCalculator.ViewModel.ViewModels
 
             TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>();
             var defaultIndicators = DefaultTaxIndicators.GetDefaultIndicators();
-            foreach (var item in testTaxIndicators)
-            {
-                taxIndicators.Add(new TaxIndicatorViewModel()
-                {
-                    NrCrt = item.NrCrt,
-                    Description = item.Description,
-                    TypeDescription = item.TypeDescription,
-                    IndicatorFormula = item.IndicatorFormula,
-                    Type = GetIndicatorType(item.TypeDescription),
-                    Style = GetStyleInfo(GetIndicatorType(item.TypeDescription)),
-                    //ValueFieldNumeric=2
-                });
-            }
+            TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>(defaultIndicators.ToVmList());
+            //foreach (var item in testTaxIndicators)
+            //{
+            //    taxIndicators.Add(new TaxIndicatorViewModel()
+            //    {
+            //        NrCrt = item.NrCrt,
+            //        Description = item.Description,
+            //        TypeDescription = item.TypeDescription,
+            //        IndicatorFormula = item.IndicatorFormula,
+            //        Type = GetIndicatorType(item.TypeDescription),
+            //        Style = GetStyleInfo(GetIndicatorType(item.TypeDescription)),
+            //        //ValueFieldNumeric=2
+            //    });
+            //}
             //Tests();
 
             ExecuteTaxCalculation(null);

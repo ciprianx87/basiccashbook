@@ -12,6 +12,9 @@ using TaxCalculator.Data;
 using TaxCalculator.Common.Mediator;
 using TaxCalculator.Common;
 using System.Windows.Input;
+using TaxCalculator.Data.Interfaces;
+using TaxCalculator.Data.Repositories;
+using TaxCalculator.ViewModel.Extensions;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -19,36 +22,38 @@ namespace TaxCalculator.ViewModel.ViewModels
     {
 
         public ICommand AddBeforeCommand { get; set; }
+        public ICommand SaveAsCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
+
+        IIndicatorRepository indicatorRepository;
 
         public TaxCalculationVm()
         {
-
             this.AddBeforeCommand = new DelegateCommand(AddBefore, CanAddBefore);
+            this.SaveCommand = new DelegateCommand(Save, CanSave);
+            this.SaveAsCommand = new DelegateCommand(SaveAs, CanSaveAs);
+            indicatorRepository = new IndicatorRepository();
+
             Mediator.Instance.Register(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
+            Mediator.Instance.Register(MediatorActionType.SetTaxIndicatorToEditFormula, SetTaxIndicatorToEditFormula);
             TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>();
-            var defaultIndicators = DefaultTaxIndicators.GetDefaultIndicators();
-            foreach (var item in defaultIndicators)
-            {
-                taxIndicators.Add(new TaxIndicatorViewModel()
-                {
-                    NrCrt = item.NrCrt,
-                    Description = item.Description,
-                    TypeDescription = item.TypeDescription,
-                    IndicatorFormula = item.IndicatorFormula,
-                    Type = GetIndicatorType(item.TypeDescription),
-                    Style = GetStyleInfo(GetIndicatorType(item.TypeDescription)),
-                });
-            }
+
             //Tests();
 
             ExecuteTaxCalculation(null);
         }
+
+        private void AddDefaultIndicators()
+        {
+            var defaultIndicators = DefaultTaxIndicators.GetDefaultIndicators();
+            TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>(defaultIndicators.ToVmList());
+        }
+
         private void Tests()
         {
             Tests t = new Tests();
             t.PerformTests(TaxIndicators.ToList());
         }
-
 
         public void ExecuteTaxCalculation(object param)
         {
@@ -101,45 +106,6 @@ namespace TaxCalculator.ViewModel.ViewModels
             return hasChanged;
         }
 
-        private TaxIndicatorViewModel.TaxIndicatorStyleInfo GetStyleInfo(TaxIndicatorType taxIndicatorType)
-        {
-            TaxIndicatorViewModel.TaxIndicatorStyleInfo styleInfo = new TaxIndicatorViewModel.TaxIndicatorStyleInfo();
-
-            switch (taxIndicatorType)
-            {
-
-                case TaxIndicatorType.Numeric:
-                    styleInfo.FontWeight = FontWeights.Normal;
-                    styleInfo.FormulaFieldVisibility = Visibility.Collapsed;
-                    styleInfo.ValueFieldVisibility = Visibility.Visible;
-                    break;
-                case TaxIndicatorType.Text:
-                    styleInfo.FontWeight = FontWeights.Bold;
-                    styleInfo.FormulaFieldVisibility = Visibility.Collapsed;
-                    styleInfo.ValueFieldVisibility = Visibility.Collapsed;
-                    break;
-                case TaxIndicatorType.Calculat:
-                    styleInfo.FontWeight = FontWeights.Bold;
-                    styleInfo.FormulaFieldVisibility = Visibility.Visible;
-                    styleInfo.ValueFieldVisibility = Visibility.Collapsed;
-                    break;
-                default:
-                    break;
-            }
-            return styleInfo;
-        }
-
-        private TaxIndicatorType GetIndicatorType(string type)
-        {
-            switch (type.ToLower())
-            {
-                case "numeric": return TaxIndicatorType.Numeric; break;
-                case "text": return TaxIndicatorType.Text; break;
-                case "calculat": return TaxIndicatorType.Calculat; break;
-                case "": return TaxIndicatorType.Calculat; break;
-                default: throw new ArgumentException(type);
-            }
-        }
 
 
 
@@ -172,6 +138,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
         }
 
+        #region methods
         private bool CanAddBefore(object parameter)
         {
             return true;
@@ -218,17 +185,97 @@ namespace TaxCalculator.ViewModel.ViewModels
             newItem.Description = "";
             newItem.IndicatorFormula = "";
             newItem.ValueFieldNumeric = 0;
-            newItem.Style = GetStyleInfo(newItem.Type);
+            newItem.Style = VmUtils.GetStyleInfo(newItem.Type);
             return newItem;
+        }
+
+        private bool CanSave(object parameter)
+        {
+            return true;
+        }
+
+        private void Save(object parameter)
+        {
+            try
+            {
+                var taxIndicatorModelList = TaxIndicators.ToList().ToModelList();
+                currentTaxIndicator.Content = VmUtils.SerializeEntity(taxIndicatorModelList);
+                indicatorRepository.Edit(currentTaxIndicator);
+                WindowHelper.OpenInformationDialog(Messages.InfoWasSaved);
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+                WindowHelper.OpenErrorDialog(Messages.ErrorSavingInfo);
+            }
+        }
+
+        public void SaveAsCallBackAction(Indicator newIndicator)
+        {
+            try
+            {
+                //the new formula was created - callback
+                //replace the current indicator with the new one
+                currentTaxIndicator = newIndicator;
+                //save the formula data
+                var taxIndicatorModelList = TaxIndicators.ToList().ToModelList();
+                currentTaxIndicator.Content = VmUtils.SerializeEntity(taxIndicatorModelList);
+                indicatorRepository.Edit(currentTaxIndicator);
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+                WindowHelper.OpenErrorDialog(Messages.ErrorSavingInfo);
+            }
+        }
+
+        private bool CanSaveAs(object parameter)
+        {
+            return true;
+        }
+
+        private void SaveAs(object parameter)
+        {
+            try
+            {
+                Action<Indicator> saveAsCallBackAction = new Action<Indicator>(SaveAsCallBackAction);
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.CreateOrEditIndicator);
+                Mediator.Instance.SendMessage(MediatorActionType.SetEntityToEdit, null);
+                Mediator.Instance.SendMessage(MediatorActionType.SetSaveAsCallBackAction, saveAsCallBackAction);
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
+        }
+
+        Indicator currentTaxIndicator;
+        public void SetTaxIndicatorToEditFormula(object param)
+        {
+            currentTaxIndicator = param as Indicator;
+            if (currentTaxIndicator != null)
+            {
+                if (currentTaxIndicator.Content == null)
+                {
+                    //add the default indicators if none is present
+                    AddDefaultIndicators();
+                }
+                else
+                {
+                    var dbIndicators = VmUtils.Deserialize<List<TaxIndicator>>(currentTaxIndicator.Content);
+                    TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>(dbIndicators.ToVmList());
+                }
+            }
         }
 
         public override void Dispose()
         {
             base.Dispose();
             Mediator.Instance.Unregister(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
+            Mediator.Instance.Unregister(MediatorActionType.SetTaxIndicatorToEditFormula, SetTaxIndicatorToEditFormula);
 
         }
-
+        #endregion
     }
 }
 

@@ -24,7 +24,7 @@
     </Key>
     <Property Name="Id" Type="bigint" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" />
-    <Property Name="Content" Type="nvarchar" Nullable="false" />
+    <Property Name="Content" Type="nvarchar" Nullable="true" MaxLength="Max" />
     <Property Name="CreatedTimestamp" Type="datetime" Nullable="false" />
     <Property Name="IsDefault" Type="bit" Nullable="false" />
   </EntityType>
@@ -51,7 +51,7 @@
           </Key>
           <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Content" Nullable="false" />
+          <Property Type="String" Name="Content" Nullable="true" MaxLength="Max" />
           <Property Type="DateTime" Name="CreatedTimestamp" Nullable="false" />
           <Property Type="Boolean" Name="IsDefault" Nullable="false" />
         </EntityType>

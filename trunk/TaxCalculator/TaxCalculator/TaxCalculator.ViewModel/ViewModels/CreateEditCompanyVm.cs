@@ -128,7 +128,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                         UpdateFields();
                         companyRepository.Edit(currentEntity);
                     }
-                    WindowHelper.OpenInformationDialog("Informatia a fost salvata");
+                    WindowHelper.OpenInformationDialog(Messages.InfoWasSaved);
                     Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
                     Mediator.Instance.SendMessage(MediatorActionType.RefreshList, this.Guid);
                 }
@@ -144,7 +144,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             catch (Exception ex)
             {
                 Logger.Instance.LogException(ex);
-                WindowHelper.OpenErrorDialog("Eroare la salvarea informatiei");
+                WindowHelper.OpenErrorDialog(Messages.ErrorSavingInfo);
             }
         }
 

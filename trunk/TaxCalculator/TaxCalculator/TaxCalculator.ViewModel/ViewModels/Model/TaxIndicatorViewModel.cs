@@ -195,22 +195,6 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             return result;
         }
 
-
-        //private string test;
-        //public string Test
-        //{
-        //    get { return test; }
-        //    set
-        //    {
-        //        if (test != value)
-        //        {
-        //            test = value;
-        //            this.NotifyPropertyChanged("Test");
-        //        }
-        //    }
-        //}
-
-
         public decimal ValueFieldNumeric { get; set; }
 
         public TaxIndicatorStyleInfo Style { get; set; }

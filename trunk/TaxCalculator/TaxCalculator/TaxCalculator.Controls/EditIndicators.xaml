@@ -12,7 +12,10 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
                   CanUserResizeRows="False">
@@ -79,7 +82,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn MinWidth="100"  Width="100" Header="Valoare">
+                <DataGridTemplateColumn MinWidth="100"  Width="100" Header="Valoare" Visibility="Collapsed">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <StackPanel>
@@ -124,5 +127,9 @@
 
             </DataGrid.Items>
         </DataGrid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button  Content="Save" Command="{Binding SaveCommand}" VerticalAlignment="Center" Width="100"  Height="30"></Button>
+            <Button  Content="Salvare ca" Command="{Binding SaveAsCommand}" VerticalAlignment="Center" Width="100" Height="30" Margin="100,0,0,0"></Button>
+        </StackPanel>
     </Grid>
 </UserControl>
