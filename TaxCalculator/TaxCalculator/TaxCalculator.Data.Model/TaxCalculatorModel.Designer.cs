@@ -275,15 +275,13 @@ namespace TaxCalculator.Data.Model
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="name">Initial value of the Name property.</param>
-        /// <param name="content">Initial value of the Content property.</param>
         /// <param name="createdTimestamp">Initial value of the CreatedTimestamp property.</param>
         /// <param name="isDefault">Initial value of the IsDefault property.</param>
-        public static Indicator CreateIndicator(global::System.Int64 id, global::System.String name, global::System.String content, global::System.DateTime createdTimestamp, global::System.Boolean isDefault)
+        public static Indicator CreateIndicator(global::System.Int64 id, global::System.String name, global::System.DateTime createdTimestamp, global::System.Boolean isDefault)
         {
             Indicator indicator = new Indicator();
             indicator.Id = id;
             indicator.Name = name;
-            indicator.Content = content;
             indicator.CreatedTimestamp = createdTimestamp;
             indicator.IsDefault = isDefault;
             return indicator;
@@ -347,7 +345,7 @@ namespace TaxCalculator.Data.Model
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String Content
         {
@@ -359,7 +357,7 @@ namespace TaxCalculator.Data.Model
             {
                 OnContentChanging(value);
                 ReportPropertyChanging("Content");
-                _Content = StructuralObject.SetValidValue(value, false);
+                _Content = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("Content");
                 OnContentChanged();
             }

@@ -86,6 +86,7 @@ namespace TaxCalculator.Data.Repositories
                     context.Indicators.AddObject(soc);
 
                     base.Commit(context);
+                    entity.Id = soc.Id;
                 }
             }
         }

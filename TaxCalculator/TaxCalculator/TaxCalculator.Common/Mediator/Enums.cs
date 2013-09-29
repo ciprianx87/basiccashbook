@@ -33,6 +33,8 @@ namespace TaxCalculator.Common.Mediator
         CloseInformationPopup,
         SetCompletedDays,
         ExecuteTaxCalculation,
+        SetSaveAsCallBackAction,
+        SetTaxIndicatorToEditFormula,
 
     }
     public enum PopupType

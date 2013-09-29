@@ -43,18 +43,14 @@ namespace TaxCalculator
             InitSettings();
             PopupManager.Instance.Init();
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
-            ChangeContent(ContentTypes.TaxCalculation);
+            ChangeContent(ContentTypes.TaxIndicatorList);
             version = "1.0.22 demo";
             CheckAppValidity();
 
             //CheckAppRegistrationStatus();
             CopyDBIfNeeded();
         }
-        private void ShowCashBookListScreen(CashBookListType type)
-        {
-            ChangeContent(ContentTypes.CashBookList);
-            Mediator.Instance.SendMessage(MediatorActionType.SetCashBookListType, type);
-        }
+      
         private void ChangeContent(object contentType)
         {
             DisposeCurrentContent();

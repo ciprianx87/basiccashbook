@@ -27,6 +27,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         public CreateEditIndicatorVm()
         {
             Mediator.Instance.Register(MediatorActionType.SetEntityToEdit, SetEntityToEdit);
+            Mediator.Instance.Register(MediatorActionType.SetSaveAsCallBackAction, SetSaveAsCallBackAction);
             SaveCommand = new DelegateCommand(Save, CanSave);
             this.CancelCommand = new DelegateCommand(Cancel, CanCancel);
             indicatorRepository = new IndicatorRepository();
@@ -64,6 +65,12 @@ namespace TaxCalculator.ViewModel.ViewModels
             Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
         }
 
+        Action<Indicator> saveAsCallBackAction;
+        public void SetSaveAsCallBackAction(object param)
+        {
+            saveAsCallBackAction = param as Action<Indicator>;
+        }
+
         public void SetEntityToEdit(object param)
         {
             IndicatorViewModel = new IndicatorViewModel();
@@ -97,6 +104,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                         //create
                         currentEntity = new Indicator();
                         UpdateFields();
+                        currentEntity.Content = null;
+                        currentEntity.CreatedTimestamp = DateTime.Now;
                         var allItems = indicatorRepository.GetAll();
                         if (allItems.Count == 0)
                         {
@@ -111,9 +120,13 @@ namespace TaxCalculator.ViewModel.ViewModels
                         UpdateFields();
                         indicatorRepository.Edit(currentEntity);
                     }
-                    WindowHelper.OpenInformationDialog("Informatia a fost salvata");
+                    WindowHelper.OpenInformationDialog(Messages.InfoWasSaved);
                     Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
                     Mediator.Instance.SendMessage(MediatorActionType.RefreshList, this.Guid);
+                    if (saveAsCallBackAction != null)
+                    {
+                        saveAsCallBackAction(currentEntity);
+                    }
                 }
                 else
                 {
@@ -127,16 +140,14 @@ namespace TaxCalculator.ViewModel.ViewModels
             catch (Exception ex)
             {
                 Logger.Instance.LogException(ex);
-                WindowHelper.OpenErrorDialog("Eroare la salvarea informatiei");
+                WindowHelper.OpenErrorDialog(Messages.ErrorSavingInfo);
             }
         }
 
         private void UpdateFields()
         {
             currentEntity.Name = IndicatorViewModel.Name;
-            currentEntity.IsDefault = IndicatorViewModel.IsDefault;
-            currentEntity.Content = "";
-            currentEntity.CreatedTimestamp = DateTime.Now;
+            currentEntity.IsDefault = IndicatorViewModel.IsDefault;            
         }
         private bool IsValid()
         {
@@ -151,6 +162,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         public override void Dispose()
         {
             Mediator.Instance.Unregister(MediatorActionType.SetEntityToEdit, SetEntityToEdit);
+            Mediator.Instance.Unregister(MediatorActionType.SetSaveAsCallBackAction, SetSaveAsCallBackAction);
             base.Dispose();
         }
 

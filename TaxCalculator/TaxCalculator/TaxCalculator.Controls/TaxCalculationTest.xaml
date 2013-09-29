@@ -127,7 +127,8 @@
 
             </DataGrid.Items>
         </DataGrid>
-        
-        <Button Grid.Row="3" Content="Save" Command="{Binding SaveCommand}" VerticalAlignment="Center" Width="100" Margin="0,30,0,0" Height="30"></Button>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button  Content="Salvare" Command="{Binding SaveCommand}" VerticalAlignment="Center" Width="100"  Height="30"></Button>
+           </StackPanel>
     </Grid>
 </UserControl>
