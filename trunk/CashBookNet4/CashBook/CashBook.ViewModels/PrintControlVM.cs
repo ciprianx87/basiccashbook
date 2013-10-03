@@ -285,8 +285,8 @@ namespace CashBook.ViewModels
                     else if (CurrentMonthSelected)
                     {
                         var currentDate = DateTime.Now;
-                        var currentDay = currentDate.Day;
-                        for (int i = 1; i <= currentDay; i++)
+                        var daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+                        for (int i = 1; i <= daysInMonth; i++)
                         {
                             datesToPrint.Add(new DateTime(currentDate.Year, currentDate.Month, i));
                         }
@@ -430,7 +430,7 @@ namespace CashBook.ViewModels
                 SelectedEndDate = pm.EndDate;
                 OtherPeriodSelected = pm.OtherPeriodSelected;
                 SelectedStartDate = pm.StartDate;
-                SelectedCashBook = CashBooks.First(p=>p.Id== pm.SelectedCashBook.Id);
+                SelectedCashBook = CashBooks.First(p => p.Id == pm.SelectedCashBook.Id);
             }
         }
         public void SetPaymentInformationPopupMessage(object param)
