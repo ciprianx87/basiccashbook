@@ -36,6 +36,7 @@ namespace CashBook
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool isFullVersion;
         private string version = "";
 
         //<!--<supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/>-->
@@ -49,6 +50,8 @@ namespace CashBook
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            isFullVersion = false;
+            version = "1.0.23 demo";
             //var x = SystemParameters.VirtualScreenWidth;
             //Configure();
             //DisableWPFTabletSupport();
@@ -61,10 +64,15 @@ namespace CashBook
             PopupManager.Instance.Init();
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ShowCashBookListScreen(CashBookListType.Any);
-            version = "1.0.22 demo";
-            CheckAppValidity();
-
-            //CheckAppRegistrationStatus();
+            
+            if (isFullVersion)
+            {
+                CheckAppRegistrationStatus();
+            }
+            else
+            {
+                CheckAppValidity();
+            }
             CopyDBIfNeeded();
         }
 
