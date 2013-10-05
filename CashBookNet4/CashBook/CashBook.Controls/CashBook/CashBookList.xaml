@@ -118,10 +118,10 @@
                     <DataGridTemplateColumn Width="95" Header="Actiuni">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal">                                  
                                     <Button Margin="0,0,10,0" CommandParameter="{Binding}" Width="30" Height="20"  Click="DeleteCommand_Click">
                                         <StackPanel>
-                                            <Image Source="/CashBook.Controls;component/Images/deleteButton3.png" Stretch="Uniform"  Width="30" Height="14"/>
+                                            <Image Source="/CashBook.Controls;component/Images/deleteButton3.png" Stretch="Uniform" Width="30" Height="15"/>
                                             <TextBlock Text=""/>
                                         </StackPanel>
                                         <Button.ToolTip>
