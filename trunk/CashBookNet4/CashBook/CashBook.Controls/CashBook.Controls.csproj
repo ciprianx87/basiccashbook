@@ -276,10 +276,14 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\deleteButton3.png" />
+    <Resource Include="Images\deleteButton3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\createButton.png" />
+    <Resource Include="Images\createButton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\cashBookIcon.png">
