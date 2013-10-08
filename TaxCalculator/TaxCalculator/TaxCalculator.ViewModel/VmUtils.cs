@@ -6,6 +6,9 @@ using Newtonsoft.Json;
 using System.Windows;
 using TaxCalculator.ViewModel.ViewModels.Model;
 using TaxCalculator.Data.Model;
+using System.Collections.ObjectModel;
+using TaxCalculator.Data.Interfaces;
+using TaxCalculator.Common;
 
 namespace TaxCalculator.ViewModel
 {
@@ -83,6 +86,42 @@ namespace TaxCalculator.ViewModel
                 case "": return TaxIndicatorType.Calculat; break;
                 default: throw new ArgumentException(type);
             }
+        }
+
+
+        public static void ExtractCoinTypes(ISettingsRepository settingsRepository, ObservableCollection<string> coinTypes)
+        {
+            string allCoinTypes = settingsRepository.GetSetting(Constants.CoinTypesKey);
+            //fix for old version of the coin types
+            if (allCoinTypes == null || allCoinTypes == "LEI;EURO;DOLARI")
+            {
+                settingsRepository.AddOrUpdateSetting(Constants.CoinTypesKey, "LEI;EUR;USD");
+            }
+            allCoinTypes = settingsRepository.GetSetting(Constants.CoinTypesKey);
+            if (allCoinTypes != null)
+            {
+                var allCoinTypesArray = allCoinTypes.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                if (allCoinTypesArray != null)
+                {
+                    foreach (var item in allCoinTypesArray)
+                    {
+                        coinTypes.Add(item);
+                    }
+                }
+            }
+            else
+            {
+            }
+        }
+
+        public static void SaveCoinTypes(ISettingsRepository settingsRepository, List<string> coinTypes)
+        {
+            string coinTypesString = "";
+            foreach (var item in coinTypes)
+            {
+                coinTypesString += item + ";";
+            }
+            settingsRepository.AddOrUpdateSetting(Constants.CoinTypesKey, coinTypesString);
         }
 
     }

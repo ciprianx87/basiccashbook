@@ -96,6 +96,22 @@ namespace TaxCalculator.Data.Model
             }
         }
         private ObjectSet<Indicator> _Indicators;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Settings> Settings
+        {
+            get
+            {
+                if ((_Settings == null))
+                {
+                    _Settings = base.CreateObjectSet<Settings>("Settings");
+                }
+                return _Settings;
+            }
+        }
+        private ObjectSet<Settings> _Settings;
 
         #endregion
 
@@ -115,6 +131,14 @@ namespace TaxCalculator.Data.Model
         public void AddToIndicators(Indicator indicator)
         {
             base.AddObject("Indicators", indicator);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Settings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSettings(Settings settings)
+        {
+            base.AddObject("Settings", settings);
         }
 
         #endregion
@@ -413,6 +437,115 @@ namespace TaxCalculator.Data.Model
         private global::System.Boolean _IsDefault;
         partial void OnIsDefaultChanging(global::System.Boolean value);
         partial void OnIsDefaultChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="TaxCalculatorModel", Name="Settings")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Settings : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Settings object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="key">Initial value of the Key property.</param>
+        /// <param name="value">Initial value of the Value property.</param>
+        public static Settings CreateSettings(global::System.Int64 id, global::System.String key, global::System.String value)
+        {
+            Settings settings = new Settings();
+            settings.Id = id;
+            settings.Key = key;
+            settings.Value = value;
+            return settings;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Key
+        {
+            get
+            {
+                return _Key;
+            }
+            set
+            {
+                OnKeyChanging(value);
+                ReportPropertyChanging("Key");
+                _Key = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Key");
+                OnKeyChanged();
+            }
+        }
+        private global::System.String _Key;
+        partial void OnKeyChanging(global::System.String value);
+        partial void OnKeyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Value
+        {
+            get
+            {
+                return _Value;
+            }
+            set
+            {
+                OnValueChanging(value);
+                ReportPropertyChanging("Value");
+                _Value = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Value");
+                OnValueChanged();
+            }
+        }
+        private global::System.String _Value;
+        partial void OnValueChanging(global::System.String value);
+        partial void OnValueChanged();
 
         #endregion
 

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 09/29/2013 15:02:00
+-- Date Created: 10/08/2013 13:14:57
 -- Generated from EDMX file: D:\Dropbox\Dropbox\proiecte\work\Vs2010\TaxCalculator\TaxCalculator\TaxCalculator.Data.Model\TaxCalculatorModel.edmx
 -- --------------------------------------------------
 
@@ -22,6 +22,8 @@
 GO
     DROP TABLE [Indicators];
 GO
+    DROP TABLE [Settings];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -40,9 +42,17 @@ GO
 CREATE TABLE [Indicators] (
     [Id] bigint  NOT NULL,
     [Name] nvarchar(4000)  NOT NULL,
-    [Content] ntext  NULL,
+    [Content] nvarchar(4000)  NULL,
     [CreatedTimestamp] datetime  NOT NULL,
     [IsDefault] bit  NOT NULL
+);
+GO
+
+-- Creating table 'Settings'
+CREATE TABLE [Settings] (
+    [Id] bigint  NOT NULL,
+    [Key] nvarchar(4000)  NOT NULL,
+    [Value] nvarchar(4000)  NOT NULL
 );
 GO
 
@@ -59,6 +69,12 @@ GO
 -- Creating primary key on [Id] in table 'Indicators'
 ALTER TABLE [Indicators]
 ADD CONSTRAINT [PK_Indicators]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'Settings'
+ALTER TABLE [Settings]
+ADD CONSTRAINT [PK_Settings]
     PRIMARY KEY ([Id] );
 GO
 
