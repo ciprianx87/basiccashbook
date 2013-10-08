@@ -66,6 +66,9 @@ namespace TaxCalculator.Controls.Popups
                     case PopupType.CreateOrEditIndicator:
                         popup = new CreateEditIndicator();
                         break;
+                    case PopupType.CrudCoinTypes:
+                        popup = new CrudCoinTypes();
+                        break;
                     //case PopupType.YesNoDialog:
                     //    popup = new YesNoDialog();
                     //    break;                   

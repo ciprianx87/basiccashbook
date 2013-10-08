@@ -93,6 +93,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Popups\CrudCoinTypes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TaxCalculationSetup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TaxIndicatorsListOld.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -142,6 +150,12 @@
     </Compile>
     <Compile Include="Popups\CreateEditIndicator.xaml.cs">
       <DependentUpon>CreateEditIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popups\CrudCoinTypes.xaml.cs">
+      <DependentUpon>CrudCoinTypes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TaxCalculationSetup.xaml.cs">
+      <DependentUpon>TaxCalculationSetup.xaml</DependentUpon>
     </Compile>
     <Compile Include="TaxIndicatorsListOld.xaml.cs">
       <DependentUpon>TaxIndicatorsListOld.xaml</DependentUpon>

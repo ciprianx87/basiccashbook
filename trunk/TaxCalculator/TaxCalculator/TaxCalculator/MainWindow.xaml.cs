@@ -50,7 +50,7 @@ namespace TaxCalculator
             //CheckAppRegistrationStatus();
             CopyDBIfNeeded();
         }
-      
+
         private void ChangeContent(object contentType)
         {
             DisposeCurrentContent();
@@ -71,6 +71,9 @@ namespace TaxCalculator
                     break;
                 case ContentTypes.EditIndicators:
                     contentControl.Content = new TaxCalculator.Controls.EditIndicators();
+                    break;
+                case ContentTypes.TaxCalculationSetup:
+                    contentControl.Content = new TaxCalculator.Controls.TaxCalculationSetup();
                     break;
                 //case ContentTypes.MainContent:
                 //    //contentControl.Content = new CashBook.Controls.MainContent();
@@ -128,7 +131,7 @@ namespace TaxCalculator
 
         private void CopyDBIfNeeded()
         {
-            DbHelper.CopyDBIfNeeded("TaxCalculatorEmpty.sdf", "TaxCalculator.sdf", "Resources", "Database");                
+            DbHelper.CopyDBIfNeeded("TaxCalculatorEmpty.sdf", "TaxCalculator.sdf", "Resources", "Database");
         }
 
         private void CheckAppValidity()
@@ -178,7 +181,7 @@ namespace TaxCalculator
 
         private void MenuItem_TaxCalculation(object sender, RoutedEventArgs e)
         {
-            ChangeContent(ContentTypes.TaxCalculation);
+            ChangeContent(ContentTypes.TaxCalculationSetup);
 
         }
 
@@ -195,7 +198,7 @@ namespace TaxCalculator
         private void Test_Click(object sender, RoutedEventArgs e)
         {
             ChangeContent(ContentTypes.TaxCalculationTest);
-            
+
         }
 
         private void TestDefault_Click(object sender, RoutedEventArgs e)

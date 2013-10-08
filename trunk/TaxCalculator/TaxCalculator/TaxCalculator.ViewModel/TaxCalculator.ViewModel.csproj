@@ -62,6 +62,8 @@
     <Compile Include="ViewModels\CompanyListVm.cs" />
     <Compile Include="ViewModels\CreateEditIndicatorVm.cs" />
     <Compile Include="ViewModels\Model\IndicatorViewModel.cs" />
+    <Compile Include="ViewModels\Popups\CrudCoinTypesVm.cs" />
+    <Compile Include="ViewModels\TaxCalculationSetupVm.cs" />
     <Compile Include="ViewModels\TaxIndicatorsListVm.cs" />
     <Compile Include="ViewModels\CreateEditCompanyVm.cs" />
     <Compile Include="ViewModels\Model\CompanyViewModel.cs" />

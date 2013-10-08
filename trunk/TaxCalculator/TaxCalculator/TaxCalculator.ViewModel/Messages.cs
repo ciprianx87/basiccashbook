@@ -16,5 +16,8 @@ namespace TaxCalculator.ViewModel
         public static string LegalReglementationsNotificationsTotalBalance = "Ati depasit plafonul pentru soldul total!";
         public static string ErrorSavingInfo = "Eroare la salvarea informatiei";
         public static string InfoWasSaved = "Informatia a fost salvata";
+        public static string Error_NoCompanies = "Nu exista nici o companie!";
+        public static string Error_NoTaxIndicatorList = "Nu exista nici o lista de formule!";
+
     }
 }
