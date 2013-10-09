@@ -65,7 +65,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"  Margin="5">
                     <TextBlock  Text="Curs Valutar:"/>
-                    <TextBox Text="{Binding InitialBalanceString,Mode=TwoWay}"/>
+                    <TextBox Text="{Binding ExchangeRateString,Mode=TwoWay}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"  Margin="5">
                     <TextBlock  Text="Numar Zecimale:"/>

@@ -34,6 +34,7 @@ namespace TaxCalculator.ViewModel.Extensions
                 IndicatorFormula = item.IndicatorFormula,
                 Type = VmUtils.GetIndicatorType(item.TypeDescription),
                 Style = VmUtils.GetStyleInfo(VmUtils.GetIndicatorType(item.TypeDescription)), 
+                 //IsValid=item.isv
             };
 
             return result;

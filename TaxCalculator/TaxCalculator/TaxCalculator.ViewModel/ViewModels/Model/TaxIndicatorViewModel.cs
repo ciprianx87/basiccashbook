@@ -103,8 +103,23 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             {
                 indicatorFormula = value;
                 this.FormulaTextColor = new SolidColorBrush(Colors.Black);
-                IsValid();
+                IsIndicatorValid();
                 NotifyPropertyChanged("IndicatorFormula");
+            }
+        }
+
+
+        private bool isValid;
+        public bool IsValid
+        {
+            get { return isValid; }
+            set
+            {
+                if (isValid != value)
+                {
+                    isValid = value;
+                    this.NotifyPropertyChanged("IsValid");
+                }
             }
         }
 
@@ -176,7 +191,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
 
 
 
-        public bool IsValid()
+        public bool IsIndicatorValid()
         {
             bool result = true;
             string message = "";

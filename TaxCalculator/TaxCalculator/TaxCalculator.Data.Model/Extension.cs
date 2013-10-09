@@ -16,5 +16,13 @@ namespace  TaxCalculator.Data.Model
         {
             
         }
+
+        public bool IsValid
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(Content);
+            }
+        }
     }
 }

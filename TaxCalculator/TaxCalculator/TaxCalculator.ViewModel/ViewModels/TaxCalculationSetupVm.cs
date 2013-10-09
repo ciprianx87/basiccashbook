@@ -11,6 +11,7 @@ using TaxCalculator.Data.Repositories;
 using System.Windows.Input;
 using TaxCalculator.Common.Mediator;
 using TaxCalculator.Data.Model;
+using TaxCalculator.ViewModel.ViewModels.Model;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -21,6 +22,8 @@ namespace TaxCalculator.ViewModel.ViewModels
         IIndicatorRepository indicatorRepository;
         public ICommand AddValuesCommand { get; set; }
         public ICommand CreateCoinTypeCommand { get; set; }
+
+        private int exchangeRateDefaultNrOfDecimals = 2;
         public TaxCalculationSetupVm()
         {
 
@@ -186,43 +189,43 @@ namespace TaxCalculator.ViewModel.ViewModels
         }
 
 
-        private string initialBalanceString;
-        public string InitialBalanceString
+        private string exchangeRateString;
+        public string ExchangeRateString
         {
-            get { return initialBalanceString; }
+            get { return exchangeRateString; }
             set
             {
-                if (initialBalanceString != value)
+                if (exchangeRateString != value)
                 {
-                    initialBalanceString = value;
+                    exchangeRateString = value;
 
-                    initialBalanceString = Utils.PrepareForConversion(value);
-                    if (!string.IsNullOrEmpty(initialBalanceString))
+                    exchangeRateString = Utils.PrepareForConversion(value);
+                    if (!string.IsNullOrEmpty(exchangeRateString))
                     {
-                        InitialBalance = DecimalConvertor.Instance.StringToDecimal(initialBalanceString);
+                        ExchangeRate = DecimalConvertor.Instance.StringToDecimal(exchangeRateString);
                     }
-                    initialBalanceString = DecimalConvertor.Instance.DecimalToString(InitialBalance, SelectedNrOfDecimals);
-                    this.NotifyPropertyChanged("InitialBalanceString");
+                    exchangeRateString = DecimalConvertor.Instance.DecimalToString(ExchangeRate, exchangeRateDefaultNrOfDecimals);
+                    this.NotifyPropertyChanged("ExchangeRateString");
                 }
             }
         }
 
-        private decimal initialBalance;
-        public decimal InitialBalance
+        private decimal exchangeRate;
+        public decimal ExchangeRate
         {
-            get { return initialBalance; }
+            get { return exchangeRate; }
             set
             {
                 if (value == 0)
                 {
-                    initialBalance = 0;
-                    InitialBalanceString = "0";
+                    exchangeRate = 0;
+                    ExchangeRateString = "0";
                 }
-                else if (initialBalance != value)
+                else if (exchangeRate != value)
                 {
-                    initialBalance = value;
-                    this.NotifyPropertyChanged("InitialBalance");
-                    InitialBalanceString = DecimalConvertor.Instance.DecimalToString(InitialBalance, SelectedNrOfDecimals);
+                    exchangeRate = value;
+                    this.NotifyPropertyChanged("ExchangeRate");
+                    ExchangeRateString = DecimalConvertor.Instance.DecimalToString(ExchangeRate, exchangeRateDefaultNrOfDecimals);
                 }
             }
         }
@@ -311,7 +314,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             AvailableNrOfDecimals = new ObservableCollection<int>() { 0, 1, 2 };
             Months = new ObservableCollection<string>() { "Ianuarie", "Feburarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie" };
             SelectedMonth = Months[0];
-            InitialBalanceString = "0";
+            ExchangeRateString = "0";
             try
             {
                 ExistingCoinTypes = new ObservableCollection<string>();
@@ -361,7 +364,20 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void AddValues(object parameter)
         {
-            //load the selected data
+            //load the selected data and navigate to the fill-in screen
+            TaxCalculationSetupModel setupModel = new TaxCalculationSetupModel()
+            {
+                CoinType = SelectedCoinType,
+                ExchangeRate = ExchangeRate,
+                Month = SelectedMonth,
+                NrOfDecimals = SelectedNrOfDecimals,
+                Rectifying = Rectifying,
+                SelectedCompany = SelectedCompany,
+                SelectedIndicatorList = SelectedIndicatorList
+            };
+
+            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.TaxCalculationCompletion);
+            Mediator.Instance.SendMessage(MediatorActionType.SetSetupModel, setupModel);
         }
         #endregion
 

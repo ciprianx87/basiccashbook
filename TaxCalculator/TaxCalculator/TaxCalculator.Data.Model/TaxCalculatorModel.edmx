@@ -130,7 +130,7 @@
       <Diagram Name="TaxCalculatorModel" ZoomLevel="109" >
         <EntityTypeShape EntityType="TaxCalculatorModel.Company" Width="1.5" PointX="3" PointY="0.5" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="TaxCalculatorModel.Indicator" Width="1.5" PointX="6.25" PointY="0.875" Height="1.9802864583333353" />
-        <EntityTypeShape EntityType="TaxCalculatorModel.Settings" Width="1.5" PointX="9.1234956854598117" PointY="7.73965202632344" />
+        <EntityTypeShape EntityType="TaxCalculatorModel.Settings" Width="1.5" PointX="4.125" PointY="2.875" Height="1.5956835937499996" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

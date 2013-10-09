@@ -35,6 +35,7 @@ namespace TaxCalculator.Common.Mediator
         ExecuteTaxCalculation,
         SetSaveAsCallBackAction,
         SetTaxIndicatorToEditFormula,
+        SetSetupModel,
 
     }
     public enum PopupType

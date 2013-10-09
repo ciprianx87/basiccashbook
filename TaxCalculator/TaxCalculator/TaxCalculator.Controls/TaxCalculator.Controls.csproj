@@ -85,6 +85,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TaxCalculationCompletion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="EditIndicators.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -145,6 +149,9 @@
     <Compile Include="Converters\IndicatorConverter.cs" />
     <Compile Include="Converters\ValidationConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
+    <Compile Include="TaxCalculationCompletion.xaml.cs">
+      <DependentUpon>TaxCalculationCompletion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditIndicators.xaml.cs">
       <DependentUpon>EditIndicators.xaml</DependentUpon>
     </Compile>

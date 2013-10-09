@@ -75,6 +75,9 @@ namespace TaxCalculator
                 case ContentTypes.TaxCalculationSetup:
                     contentControl.Content = new TaxCalculator.Controls.TaxCalculationSetup();
                     break;
+                case ContentTypes.TaxCalculationCompletion:
+                    contentControl.Content = new TaxCalculator.Controls.TaxCalculationCompletion();
+                    break;
                 //case ContentTypes.MainContent:
                 //    //contentControl.Content = new CashBook.Controls.MainContent();
                 //    break;

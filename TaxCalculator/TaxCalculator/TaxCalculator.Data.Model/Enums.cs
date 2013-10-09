@@ -21,7 +21,8 @@ namespace TaxCalculator.Data.Model
         TaxCalculationTest,
         CompanyList,
         EditIndicators,
-        TaxCalculationSetup
+        TaxCalculationSetup,
+        TaxCalculationCompletion
     }
 
     public enum CashBookListType
