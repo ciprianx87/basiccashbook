@@ -60,8 +60,10 @@
     <Compile Include="TaxEvaluator.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="ViewModels\CompanyListVm.cs" />
+    <Compile Include="ViewModels\TaxCalculationCompletionVm.cs" />
     <Compile Include="ViewModels\CreateEditIndicatorVm.cs" />
     <Compile Include="ViewModels\Model\IndicatorViewModel.cs" />
+    <Compile Include="ViewModels\Model\TaxCalculationSetupModel.cs" />
     <Compile Include="ViewModels\Popups\CrudCoinTypesVm.cs" />
     <Compile Include="ViewModels\TaxCalculationSetupVm.cs" />
     <Compile Include="ViewModels\TaxIndicatorsListVm.cs" />

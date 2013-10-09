@@ -42,7 +42,7 @@ GO
 CREATE TABLE [Indicators] (
     [Id] bigint  NOT NULL,
     [Name] nvarchar(4000)  NOT NULL,
-    [Content] nvarchar(4000)  NULL,
+    [Content] ntext  NULL,
     [CreatedTimestamp] datetime  NOT NULL,
     [IsDefault] bit  NOT NULL
 );

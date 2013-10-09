@@ -20,7 +20,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 {
     public class TaxCalculationVm : BaseViewModel
     {
-
+     
         public ICommand AddBeforeCommand { get; set; }
         public ICommand SaveAsCommand { get; set; }
         public ICommand SaveCommand { get; set; }
@@ -36,6 +36,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
             Mediator.Instance.Register(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
             Mediator.Instance.Register(MediatorActionType.SetTaxIndicatorToEditFormula, SetTaxIndicatorToEditFormula);
+        
             TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>();
 
             //Tests();
@@ -268,14 +269,23 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
         }
 
+    
+
+        private void LoadInitialData()
+        {
+
+        }
+
         public override void Dispose()
         {
             base.Dispose();
             Mediator.Instance.Unregister(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
             Mediator.Instance.Unregister(MediatorActionType.SetTaxIndicatorToEditFormula, SetTaxIndicatorToEditFormula);
+          
 
         }
         #endregion
+
     }
 }
 

@@ -18,6 +18,7 @@ namespace TaxCalculator.ViewModel
         public static string InfoWasSaved = "Informatia a fost salvata";
         public static string Error_NoCompanies = "Nu exista nici o companie!";
         public static string Error_NoTaxIndicatorList = "Nu exista nici o lista de formule!";
+        public static string Error_LoadingData = "Eroare la incarcarea informatiei";
 
     }
 }

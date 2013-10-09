@@ -73,7 +73,14 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
+                    <DataGridTemplateColumn Width="70" MinWidth="70" Header="Valid?">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <CheckBox IsChecked="{Binding IsValid, Mode=OneTime}" IsEnabled="False"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <!--<TextBlock Text="{Binding IsDefault}"  Style="{StaticResource StandardTextBlock}"/>-->
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="135" Header="Actiuni">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
