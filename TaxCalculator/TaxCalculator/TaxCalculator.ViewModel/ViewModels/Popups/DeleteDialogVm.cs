@@ -6,6 +6,7 @@ using TaxCalculator.ViewModel.Base;
 using TaxCalculator.Common.Mediator;
 using System.Windows.Input;
 using TaxCalculator.Data.Model;
+using TaxCalculator.ViewModel.ViewModels.Model;
 
 namespace TaxCalculator.ViewModel.ViewModels.Popups
 {
@@ -100,6 +101,11 @@ namespace TaxCalculator.ViewModel.ViewModels.Popups
             if (param is Indicator)
             {
                 var currentEntity = param as Indicator;
+                this.Message = "Sunteti sigur ca doriti sa stergeti " + currentEntity.Name + " ?".Replace(Environment.NewLine, "");
+            }
+            if (param is TaxCalculationsViewModel)
+            {
+                var currentEntity = param as TaxCalculationsViewModel;
                 this.Message = "Sunteti sigur ca doriti sa stergeti " + currentEntity.Name + " ?".Replace(Environment.NewLine, "");
             }
         }

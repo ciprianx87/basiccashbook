@@ -21,7 +21,7 @@ namespace TaxCalculator.ViewModel.ViewModels
     public class TaxCalculationCompletionVm : BaseViewModel
     {
         IIndicatorRepository indicatorRepository;
-         
+        ITaxCalculationsRepository taxCalculationRepository;
         private TaxCalculationSetupModel setupModel;
         public TaxCalculationCompletionVm()
         {
@@ -30,6 +30,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             this.SaveCommand = new DelegateCommand(Save, CanSave);
 
             indicatorRepository = new IndicatorRepository();
+            taxCalculationRepository = new TaxCalculationsRepository();
         }
 
         public void ExecuteTaxCalculation(object param)
@@ -79,44 +80,6 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
             return hasChanged;
         }
-        private TaxIndicatorViewModel.TaxIndicatorStyleInfo GetStyleInfo(TaxIndicatorType taxIndicatorType)
-        {
-            TaxIndicatorViewModel.TaxIndicatorStyleInfo styleInfo = new TaxIndicatorViewModel.TaxIndicatorStyleInfo();
-
-            switch (taxIndicatorType)
-            {
-
-                case TaxIndicatorType.Numeric:
-                    styleInfo.FontWeight = FontWeights.Normal;
-                    styleInfo.FormulaFieldVisibility = Visibility.Collapsed;
-                    styleInfo.ValueFieldVisibility = Visibility.Visible;
-                    break;
-                case TaxIndicatorType.Text:
-                    styleInfo.FontWeight = FontWeights.Bold;
-                    styleInfo.FormulaFieldVisibility = Visibility.Collapsed;
-                    styleInfo.ValueFieldVisibility = Visibility.Collapsed;
-                    break;
-                case TaxIndicatorType.Calculat:
-                    styleInfo.FontWeight = FontWeights.Bold;
-                    styleInfo.FormulaFieldVisibility = Visibility.Visible;
-                    styleInfo.ValueFieldVisibility = Visibility.Collapsed;
-                    break;
-                default:
-                    break;
-            }
-            return styleInfo;
-        }
-
-        private TaxIndicatorType GetIndicatorType(string type)
-        {
-            switch (type.ToLower())
-            {
-                case "numeric": return TaxIndicatorType.Numeric; break;
-                case "text": return TaxIndicatorType.Text; break;
-                case "calculat": return TaxIndicatorType.Calculat; break;
-                default: throw new ArgumentException(type);
-            }
-        }
 
 
         private ObservableCollection<TaxIndicatorViewModel> taxIndicators;
@@ -143,16 +106,64 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void Save(object parameter)
         {
-            if (TaxIndicators != null)
+            try
             {
-                var calculatedTaxIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
-
-                foreach (var item in calculatedTaxIndicators)
+                if (TaxIndicators != null)
                 {
-                    ExecuteTaxCalculation(true, item);
+                    //perform validation
 
-                    //item.IsValid();
+                    //save with the selected name
+
+                    Action<string> saveAsCallBackAction = new Action<string>(SaveAsCallBack);
+                    Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.ChooseTaxCompletionName);
+                    Mediator.Instance.SendMessage(MediatorActionType.SetSaveAsCallBackAction, saveAsCallBackAction);
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+                WindowHelper.OpenErrorDialog(Messages.ErrorSavingInfo);
+            }
+        }
+        private void SaveAsCallBack(string chosenName)
+        {
+            try
+            {
+                //canceled was pressed
+                if (string.IsNullOrEmpty(chosenName))
+                {
+
+                }
+                else
+                {
+                    var taxIndicatorModelList = TaxIndicators.ToList().ToModelList();
+                    var content = VmUtils.SerializeEntity(taxIndicatorModelList);
+                    TaxCalculationOtherData otherData = new TaxCalculationOtherData()
+                    {
+                        VerifiedBy = setupModel.VerifiedBy,
+                        CreatedBy = setupModel.CreatedBy,
+                        CoinType = setupModel.CoinType,
+                        ExchangeRate = setupModel.ExchangeRate,
+                        Month = setupModel.Month,
+                        NrOfDecimals = setupModel.NrOfDecimals,
+                        Name = chosenName
+                    };
+                    //save the data in the DB
+                    TaxCalculations tc = new TaxCalculations()
+                    {
+                        CompanyId = setupModel.SelectedCompany.Id,
+                        IndicatorId = setupModel.SelectedIndicatorList.Id,
+                        Rectifying = setupModel.Rectifying,
+                        Content = content,
+                        OtherData = VmUtils.SerializeEntity(otherData)
+                    };
+                    taxCalculationRepository.Create(tc);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+                WindowHelper.OpenErrorDialog(Messages.ErrorSavingInfo);
             }
         }
         public void SetSetupModel(object param)

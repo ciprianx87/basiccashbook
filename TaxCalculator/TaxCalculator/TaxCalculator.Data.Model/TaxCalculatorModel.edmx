@@ -9,6 +9,15 @@
     <EntitySet Name="Companies" EntityType="TaxCalculatorModel.Store.Companies" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Indicators" EntityType="TaxCalculatorModel.Store.Indicators" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Settings" EntityType="TaxCalculatorModel.Store.Settings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TaxCalculations" EntityType="TaxCalculatorModel.Store.TaxCalculations" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="TaxCalculationsIndicator" Association="TaxCalculatorModel.Store.TaxCalculationsIndicator">
+      <End Role="TaxCalculations" EntitySet="TaxCalculations" />
+      <End Role="Indicator" EntitySet="Indicators" />
+    </AssociationSet>
+    <AssociationSet Name="TaxCalculationsCompany" Association="TaxCalculatorModel.Store.TaxCalculationsCompany">
+      <End Role="TaxCalculations" EntitySet="TaxCalculations" />
+      <End Role="Company" EntitySet="Companies" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Companies">
     <Key>
@@ -37,6 +46,41 @@
     <Property Name="Key" Type="nvarchar" Nullable="false" />
     <Property Name="Value" Type="nvarchar" Nullable="false" />
   </EntityType>
+  <EntityType Name="TaxCalculations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" Nullable="false" />
+    <Property Name="Content" Type="nvarchar" Nullable="true" />
+    <Property Name="IndicatorId" Type="bigint" Nullable="false" />
+    <Property Name="Rectifying" Type="bit" Nullable="false" />
+    <Property Name="CompanyId" Type="bigint" Nullable="false" />
+    <Property Name="OtherData" Type="nvarchar" Nullable="true" />
+  </EntityType>
+  <Association Name="TaxCalculationsIndicator">
+    <End Role="TaxCalculations" Type="TaxCalculatorModel.Store.TaxCalculations" Multiplicity="*" />
+    <End Role="Indicator" Type="TaxCalculatorModel.Store.Indicators" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Indicator">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TaxCalculations">
+        <PropertyRef Name="IndicatorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TaxCalculationsCompany">
+    <End Role="TaxCalculations" Type="TaxCalculatorModel.Store.TaxCalculations" Multiplicity="*" />
+    <End Role="Company" Type="TaxCalculatorModel.Store.Companies" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TaxCalculations">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -45,6 +89,15 @@
           <EntitySet Name="Companies" EntityType="TaxCalculatorModel.Company" />
           <EntitySet Name="Indicators" EntityType="TaxCalculatorModel.Indicator" />
           <EntitySet Name="Settings" EntityType="TaxCalculatorModel.Settings" />
+          <EntitySet Name="TaxCalculations" EntityType="TaxCalculatorModel.TaxCalculations" />
+          <AssociationSet Name="TaxCalculationsIndicator" Association="TaxCalculatorModel.TaxCalculationsIndicator">
+            <End Role="TaxCalculations" EntitySet="TaxCalculations" />
+            <End Role="Indicator" EntitySet="Indicators" />
+          </AssociationSet>
+          <AssociationSet Name="TaxCalculationsCompany" Association="TaxCalculatorModel.TaxCalculationsCompany">
+            <End Role="TaxCalculations" EntitySet="TaxCalculations" />
+            <End Role="Company" EntitySet="Companies" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -73,6 +126,43 @@
           <Property Type="String" Name="Key" Nullable="false" />
           <Property Type="String" Name="Value" Nullable="false" />
         </EntityType>
+        <EntityType Name="TaxCalculations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="String" Name="Content" Nullable="true" />
+          <NavigationProperty Name="Indicator" Relationship="TaxCalculatorModel.TaxCalculationsIndicator" FromRole="TaxCalculations" ToRole="Indicator" />
+          <Property Type="Int64" Name="IndicatorId" Nullable="false" />
+          <Property Type="Boolean" Name="Rectifying" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="TaxCalculatorModel.TaxCalculationsCompany" FromRole="TaxCalculations" ToRole="Company" />
+          <Property Type="Int64" Name="CompanyId" Nullable="false" />
+          <Property Type="String" Name="OtherData" Nullable="true" />
+        </EntityType>
+        <Association Name="TaxCalculationsIndicator">
+          <End Type="TaxCalculatorModel.TaxCalculations" Role="TaxCalculations" Multiplicity="*" />
+          <End Type="TaxCalculatorModel.Indicator" Role="Indicator" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Indicator">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaxCalculations">
+              <PropertyRef Name="IndicatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TaxCalculationsCompany">
+          <End Type="TaxCalculatorModel.TaxCalculations" Role="TaxCalculations" Multiplicity="*" />
+          <End Type="TaxCalculatorModel.Company" Role="Company" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TaxCalculations">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -109,6 +199,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TaxCalculations">
+      <EntityTypeMapping TypeName="IsTypeOf(TaxCalculatorModel.TaxCalculations)">
+        <MappingFragment StoreEntitySet="TaxCalculations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="IndicatorId" ColumnName="IndicatorId" />
+          <ScalarProperty Name="Rectifying" ColumnName="Rectifying" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="OtherData" ColumnName="OtherData" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -127,10 +229,20 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram Name="TaxCalculatorModel" ZoomLevel="109" >
-        <EntityTypeShape EntityType="TaxCalculatorModel.Company" Width="1.5" PointX="3" PointY="0.5" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="TaxCalculatorModel.Indicator" Width="1.5" PointX="6.25" PointY="0.875" Height="1.9802864583333353" />
-        <EntityTypeShape EntityType="TaxCalculatorModel.Settings" Width="1.5" PointX="4.125" PointY="2.875" Height="1.5956835937499996" />
+      <Diagram Name="TaxCalculatorModel" ZoomLevel="94" >
+        <EntityTypeShape EntityType="TaxCalculatorModel.Company" Width="1.5" PointX="0.5" PointY="0.5" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="TaxCalculatorModel.Indicator" Width="1.5" PointX="2.75" PointY="0.5" Height="1.9802864583333353" />
+        <EntityTypeShape EntityType="TaxCalculatorModel.Settings" Width="1.5" PointX="7.125" PointY="0.625" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="TaxCalculatorModel.TaxCalculations" Width="1.5" PointX="5.25" PointY="0.5" Height="2.5571907552083331" />
+        <AssociationConnector Association="TaxCalculatorModel.TaxCalculationsIndicator">
+          <ConnectorPoint PointX="5.25" PointY="1.4901432291666676" />
+          <ConnectorPoint PointX="4.25" PointY="1.4901432291666676" />
+        </AssociationConnector>
+        <AssociationConnector Association="TaxCalculatorModel.TaxCalculationsCompany">
+          <ConnectorPoint PointX="5.25" PointY="2.7999886067708344" />
+          <ConnectorPoint PointX="1.25" PointY="2.7999886067708344" />
+          <ConnectorPoint PointX="1.25" PointY="2.2879850260416674" />
+        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

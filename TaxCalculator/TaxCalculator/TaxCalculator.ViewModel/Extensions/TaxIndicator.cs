@@ -33,8 +33,8 @@ namespace TaxCalculator.ViewModel.Extensions
                 TypeDescription = item.TypeDescription,
                 IndicatorFormula = item.IndicatorFormula,
                 Type = VmUtils.GetIndicatorType(item.TypeDescription),
-                Style = VmUtils.GetStyleInfo(VmUtils.GetIndicatorType(item.TypeDescription)), 
-                 //IsValid=item.isv
+                Style = VmUtils.GetStyleInfo(VmUtils.GetIndicatorType(item.TypeDescription)),
+                //IsValid=item.isv
             };
 
             return result;
@@ -50,6 +50,33 @@ namespace TaxCalculator.ViewModel.Extensions
                 TypeDescription = item.TypeDescription,
                 IndicatorFormula = item.IndicatorFormula,
                 Type = VmUtils.GetIndicatorType(item.TypeDescription),
+            };
+
+            return result;
+        }
+
+        public static List<TaxCalculationsViewModel> ToVmList(this List<TaxCalculations> list)
+        {
+            var taxIndicators = new List<TaxCalculationsViewModel>();
+            taxIndicators.AddRange(list.Select(p => ToVm(p)));
+            return taxIndicators;
+        }
+
+        public static TaxCalculationsViewModel ToVm(this TaxCalculations item)
+        {
+            TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(item.OtherData);
+
+            var result = new TaxCalculationsViewModel()
+            {
+                Id = item.Id,
+                CoinType = otherData.CoinType,
+                CreatedBy = otherData.CreatedBy,
+                ExchangeRate = otherData.ExchangeRate,
+                Month = otherData.Month,
+                Name = otherData.Name,
+                NrOfDecimals = otherData.NrOfDecimals,
+                Rectifying = item.Rectifying,
+                VerifiedBy = otherData.VerifiedBy
             };
 
             return result;

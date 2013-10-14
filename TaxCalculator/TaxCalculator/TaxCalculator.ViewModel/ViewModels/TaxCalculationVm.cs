@@ -256,10 +256,12 @@ namespace TaxCalculator.ViewModel.ViewModels
             currentTaxIndicator = param as Indicator;
             if (currentTaxIndicator != null)
             {
+                //CS: do not add the default ones, show error
                 if (currentTaxIndicator.Content == null)
                 {
+                    WindowHelper.OpenErrorDialog(Messages.Error_LoadingData);
                     //add the default indicators if none is present
-                    AddDefaultIndicators();
+                    //AddDefaultIndicators();
                 }
                 else
                 {

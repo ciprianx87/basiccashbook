@@ -86,7 +86,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn MinWidth="150" Header="Tip Indicatori">
+                <DataGridTemplateColumn MinWidth="150" Header="Tip Indicatori"  Visibility="Collapsed">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <TextBlock Text="{Binding Type}" Style="{StaticResource StandardTextBlock}" Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}"/>
@@ -108,7 +108,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn MinWidth="250"  Width="*" Header="Mod de calcul Indicatori">
+                <DataGridTemplateColumn MinWidth="250"  Width="*" Header="Mod de calcul Indicatori"  Visibility="Collapsed">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <StackPanel>
@@ -125,7 +125,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="60" Header="Eroare"  CellStyle="{StaticResource NoFocusColumStyle}" FocusManager.IsFocusScope="False"   >
+                <DataGridTemplateColumn Width="60" Header="Eroare"  CellStyle="{StaticResource NoFocusColumStyle}" FocusManager.IsFocusScope="False"  Visibility="Collapsed"  >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <StackPanel Orientation="Horizontal">
@@ -144,8 +144,7 @@
             </DataGrid.Items>
         </DataGrid>
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button  Content="Save" Command="{Binding SaveCommand}" VerticalAlignment="Center" Width="100"  Height="30"></Button>
-            <Button  Content="Salvare ca" Command="{Binding SaveAsCommand}" VerticalAlignment="Center" Width="100" Height="30" Margin="100,0,0,0"></Button>
+            <Button  Content="Salvare" Command="{Binding SaveCommand}" VerticalAlignment="Center" Width="100"  Height="30"></Button>
         </StackPanel>
     </Grid>
 </UserControl>

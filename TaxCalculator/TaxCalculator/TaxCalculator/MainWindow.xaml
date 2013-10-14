@@ -17,7 +17,10 @@
             </MenuItem>
             <MenuItem Header="CALCUL IMPOZIT PROFIT" Click="MenuItem_TaxCalculation">
             </MenuItem>
-            <MenuItem Header="RAPOARTE" Click="MenuItem_Reports" ></MenuItem>
+            <MenuItem Header="RAPOARTE" Click="MenuItem_Reports" >
+                <MenuItem Header="Calcul impozit profit" Click="Report_TaxCalculation_Click"/>
+                <MenuItem Header="Calcul impozit profit « Rectificative »" Click="Report_TaxCalculation_Rectifying_Click"/>
+            </MenuItem>
             <MenuItem Header="AJUTOR">
                 <MenuItem Header="Flux" Click="Help_Click"/>
                 <MenuItem Header="Despre" Click="About_Click"></MenuItem>
