@@ -69,6 +69,9 @@ namespace TaxCalculator.Controls.Popups
                     case PopupType.CrudCoinTypes:
                         popup = new CrudCoinTypes();
                         break;
+                    case PopupType.ChooseTaxCompletionName:
+                        popup = new ChooseTaxCompletionName();
+                        break;
                     //case PopupType.YesNoDialog:
                     //    popup = new YesNoDialog();
                     //    break;                   
@@ -80,9 +83,9 @@ namespace TaxCalculator.Controls.Popups
                     popup.Loaded += Popup_Loaded;
                     popup.Closed += popup_Closed;
                     popup.Tag = popupType;
-
                     CenterPopup(popup);
                     popup.Show();
+                    popup.Topmost = true;
                     //popup.Focus();
                 }
             }

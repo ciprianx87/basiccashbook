@@ -17,6 +17,13 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
+#region EDM Relationship Metadata
+
+[assembly: EdmRelationshipAttribute("TaxCalculatorModel", "TaxCalculationsIndicator", "TaxCalculations", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TaxCalculator.Data.Model.TaxCalculations), "Indicator", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TaxCalculator.Data.Model.Indicator), true)]
+[assembly: EdmRelationshipAttribute("TaxCalculatorModel", "TaxCalculationsCompany", "TaxCalculations", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TaxCalculator.Data.Model.TaxCalculations), "Company", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TaxCalculator.Data.Model.Company), true)]
+
+#endregion
+
 namespace TaxCalculator.Data.Model
 {
     #region Contexts
@@ -112,6 +119,22 @@ namespace TaxCalculator.Data.Model
             }
         }
         private ObjectSet<Settings> _Settings;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<TaxCalculations> TaxCalculations
+        {
+            get
+            {
+                if ((_TaxCalculations == null))
+                {
+                    _TaxCalculations = base.CreateObjectSet<TaxCalculations>("TaxCalculations");
+                }
+                return _TaxCalculations;
+            }
+        }
+        private ObjectSet<TaxCalculations> _TaxCalculations;
 
         #endregion
 
@@ -139,6 +162,14 @@ namespace TaxCalculator.Data.Model
         public void AddToSettings(Settings settings)
         {
             base.AddObject("Settings", settings);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the TaxCalculations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTaxCalculations(TaxCalculations taxCalculations)
+        {
+            base.AddObject("TaxCalculations", taxCalculations);
         }
 
         #endregion
@@ -550,6 +581,269 @@ namespace TaxCalculator.Data.Model
         #endregion
 
     
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="TaxCalculatorModel", Name="TaxCalculations")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class TaxCalculations : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new TaxCalculations object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="indicatorId">Initial value of the IndicatorId property.</param>
+        /// <param name="rectifying">Initial value of the Rectifying property.</param>
+        /// <param name="companyId">Initial value of the CompanyId property.</param>
+        public static TaxCalculations CreateTaxCalculations(global::System.Int64 id, global::System.Int64 indicatorId, global::System.Boolean rectifying, global::System.Int64 companyId)
+        {
+            TaxCalculations taxCalculations = new TaxCalculations();
+            taxCalculations.Id = id;
+            taxCalculations.IndicatorId = indicatorId;
+            taxCalculations.Rectifying = rectifying;
+            taxCalculations.CompanyId = companyId;
+            return taxCalculations;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Content
+        {
+            get
+            {
+                return _Content;
+            }
+            set
+            {
+                OnContentChanging(value);
+                ReportPropertyChanging("Content");
+                _Content = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Content");
+                OnContentChanged();
+            }
+        }
+        private global::System.String _Content;
+        partial void OnContentChanging(global::System.String value);
+        partial void OnContentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 IndicatorId
+        {
+            get
+            {
+                return _IndicatorId;
+            }
+            set
+            {
+                OnIndicatorIdChanging(value);
+                ReportPropertyChanging("IndicatorId");
+                _IndicatorId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IndicatorId");
+                OnIndicatorIdChanged();
+            }
+        }
+        private global::System.Int64 _IndicatorId;
+        partial void OnIndicatorIdChanging(global::System.Int64 value);
+        partial void OnIndicatorIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Rectifying
+        {
+            get
+            {
+                return _Rectifying;
+            }
+            set
+            {
+                OnRectifyingChanging(value);
+                ReportPropertyChanging("Rectifying");
+                _Rectifying = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Rectifying");
+                OnRectifyingChanged();
+            }
+        }
+        private global::System.Boolean _Rectifying;
+        partial void OnRectifyingChanging(global::System.Boolean value);
+        partial void OnRectifyingChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 CompanyId
+        {
+            get
+            {
+                return _CompanyId;
+            }
+            set
+            {
+                OnCompanyIdChanging(value);
+                ReportPropertyChanging("CompanyId");
+                _CompanyId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CompanyId");
+                OnCompanyIdChanged();
+            }
+        }
+        private global::System.Int64 _CompanyId;
+        partial void OnCompanyIdChanging(global::System.Int64 value);
+        partial void OnCompanyIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String OtherData
+        {
+            get
+            {
+                return _OtherData;
+            }
+            set
+            {
+                OnOtherDataChanging(value);
+                ReportPropertyChanging("OtherData");
+                _OtherData = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("OtherData");
+                OnOtherDataChanged();
+            }
+        }
+        private global::System.String _OtherData;
+        partial void OnOtherDataChanging(global::System.String value);
+        partial void OnOtherDataChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("TaxCalculatorModel", "TaxCalculationsIndicator", "Indicator")]
+        public Indicator Indicator
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Indicator>("TaxCalculatorModel.TaxCalculationsIndicator", "Indicator").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Indicator>("TaxCalculatorModel.TaxCalculationsIndicator", "Indicator").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Indicator> IndicatorReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Indicator>("TaxCalculatorModel.TaxCalculationsIndicator", "Indicator");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Indicator>("TaxCalculatorModel.TaxCalculationsIndicator", "Indicator", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("TaxCalculatorModel", "TaxCalculationsCompany", "Company")]
+        public Company Company
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Company>("TaxCalculatorModel.TaxCalculationsCompany", "Company").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Company>("TaxCalculatorModel.TaxCalculationsCompany", "Company").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Company> CompanyReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Company>("TaxCalculatorModel.TaxCalculationsCompany", "Company");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Company>("TaxCalculatorModel.TaxCalculationsCompany", "Company", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
 
     #endregion

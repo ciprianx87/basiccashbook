@@ -51,6 +51,7 @@ namespace TaxCalculator.Common.Mediator
         CrudCoinTypes,
         InformationModal,
         CreateOrEditCompany,
-        CreateOrEditIndicator
+        CreateOrEditIndicator,
+        ChooseTaxCompletionName
     }
 }

@@ -60,6 +60,8 @@
     <Compile Include="TaxEvaluator.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="ViewModels\CompanyListVm.cs" />
+    <Compile Include="ViewModels\Model\TaxCalculationViewModel.cs" />
+    <Compile Include="ViewModels\TaxCalculationListVm.cs" />
     <Compile Include="ViewModels\TaxCalculationCompletionVm.cs" />
     <Compile Include="ViewModels\CreateEditIndicatorVm.cs" />
     <Compile Include="ViewModels\Model\IndicatorViewModel.cs" />

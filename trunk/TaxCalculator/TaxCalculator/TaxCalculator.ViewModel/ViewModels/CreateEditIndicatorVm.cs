@@ -12,6 +12,7 @@ using TaxCalculator.Common.Mediator;
 using System.Windows.Input;
 using TaxCalculator.Common.Exceptions;
 using TaxCalculator.ViewModel.ViewModels.Model;
+using TaxCalculator.Data;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -104,7 +105,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                         //create
                         currentEntity = new Indicator();
                         UpdateFields();
-                        currentEntity.Content = null;
+                        currentEntity.Content = GetDefaultIndicators();
                         currentEntity.CreatedTimestamp = DateTime.Now;
                         var allItems = indicatorRepository.GetAll();
                         if (allItems.Count == 0)
@@ -142,6 +143,12 @@ namespace TaxCalculator.ViewModel.ViewModels
                 Logger.Instance.LogException(ex);
                 WindowHelper.OpenErrorDialog(Messages.ErrorSavingInfo);
             }
+        }
+
+        private string GetDefaultIndicators()
+        {
+            var defaultIndicatorsString = VmUtils.SerializeEntity(DefaultTaxIndicators.GetDefaultIndicators());
+            return defaultIndicatorsString;
         }
 
         private void UpdateFields()

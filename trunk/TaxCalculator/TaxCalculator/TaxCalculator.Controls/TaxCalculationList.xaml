@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TaxCalculator.Controls.TaxIndicatorsList"
+﻿<UserControl x:Class="TaxCalculator.Controls.TaxCalculationList"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -20,14 +20,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Button Grid.Row="1"  Margin="0,20,0,0"  Command="{Binding CreateCommand}" Width="70" Height="60" HorizontalAlignment="Left">
-                <StackPanel Orientation="Vertical">
-                    <Image Source="/TaxCalculator.Controls;component/Images/createButton.png" Stretch="Uniform"  Width="30" Height="34"/>
-                    <TextBlock Text="Creare" FontSize="15"/>
-                </StackPanel>
-            </Button>
-            <DataGrid Grid.Row="2" ItemsSource="{Binding TaxIndicatorList}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" MinWidth="800">
+            </Grid.RowDefinitions>           
+            <DataGrid Grid.Row="2" ItemsSource="{Binding TaxCalculationList}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" MinWidth="800">
                 <DataGrid.Resources>
                     <Style TargetType="TextBlock" x:Key="StandardTextBlock" >
                         <Setter Property="TextAlignment" Value="Center"/>
@@ -46,30 +40,58 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <StackPanel Orientation="Horizontal">
-                                    <Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="EditIndicatorsCommand_Click" Margin="5,0,0,0">
+                                    <Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="VizualizareCommand_Click" Margin="5,0,0,0">
                                         <StackPanel>
-                                            <TextBlock Text="Editeaza Formule"/>
+                                            <TextBlock Text="Vizualizare"/>
                                         </StackPanel>
                                         <Button.ToolTip>
-                                            <TextBlock Text="Editeaza Formule"/>
+                                            <TextBlock Text="Vizualizare"/>
                                         </Button.ToolTip>
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn MinWidth="350" Width="*" Header="Nume">
+                    <DataGridTemplateColumn MinWidth="250" Width="*" Header="Nume">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding Name}" Style="{StaticResource StandardTextBlock}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="70" MinWidth="70" Header="Implicit?">
+                    <!--CoinType = otherData.CoinType,
+                CreatedBy = otherData.CreatedBy,
+                ExchangeRate = otherData.ExchangeRate,
+                Month = otherData.Month,
+                Name = otherData.Name,
+                NrOfDecimals = otherData.NrOfDecimals,
+                Rectifying = item.Rectifying,
+                VerifiedBy = otherData.VerifiedBy-->
+                    <DataGridTemplateColumn MinWidth="70" Width="*" Header="Luna">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
-                                <CheckBox IsChecked="{Binding IsDefault}" IsEnabled="False"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                <!--<TextBlock Text="{Binding IsDefault}"  Style="{StaticResource StandardTextBlock}"/>-->
+                                <TextBlock Text="{Binding Month}" Style="{StaticResource StandardTextBlock}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn MinWidth="120" Width="*" Header="Verificat de">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock Text="{Binding VerifiedBy}" Style="{StaticResource StandardTextBlock}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn MinWidth="120" Width="*" Header="Creat de">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock Text="{Binding CreatedBy}" Style="{StaticResource StandardTextBlock}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="100" MinWidth="100" Header="Rectificativa?">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <CheckBox IsChecked="{Binding Rectifying}" IsEnabled="False"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -99,17 +121,7 @@
                                         <Button.ToolTip>
                                             <TextBlock Text="Editare"/>
                                         </Button.ToolTip>
-                                    </Button>
-
-                                    <Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="SetAsDefaultCommand_Click" Margin="10,0,0,0" Visibility="{Binding IsDefault, Converter={StaticResource invertVisibilityConverter}}">
-                                        <StackPanel>
-                                            <TextBlock Text="Implicit"/>
-                                            <!--<Image Source="/TaxCalculator.Controls;component/Images/editButton.png"  Stretch="Uniform"  Width="30" Height="15"/>-->
-                                        </StackPanel>
-                                        <Button.ToolTip>
-                                            <TextBlock Text="Setare ca implicit"/>
-                                        </Button.ToolTip>
-                                    </Button>
+                                    </Button>                                 
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

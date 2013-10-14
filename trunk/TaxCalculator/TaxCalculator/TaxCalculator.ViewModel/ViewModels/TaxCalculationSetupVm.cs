@@ -373,7 +373,9 @@ namespace TaxCalculator.ViewModel.ViewModels
                 NrOfDecimals = SelectedNrOfDecimals,
                 Rectifying = Rectifying,
                 SelectedCompany = SelectedCompany,
-                SelectedIndicatorList = SelectedIndicatorList
+                SelectedIndicatorList = SelectedIndicatorList,
+                VerifiedBy = VerifiedBy,
+                CreatedBy = CreatedBy
             };
 
             Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.TaxCalculationCompletion);

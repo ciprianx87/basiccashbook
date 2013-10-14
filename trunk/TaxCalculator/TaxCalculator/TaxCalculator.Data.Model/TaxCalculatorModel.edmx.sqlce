@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 10/08/2013 13:14:57
+-- Date Created: 10/14/2013 07:10:44
 -- Generated from EDMX file: D:\Dropbox\Dropbox\proiecte\work\Vs2010\TaxCalculator\TaxCalculator\TaxCalculator.Data.Model\TaxCalculatorModel.edmx
 -- --------------------------------------------------
 
@@ -12,6 +12,10 @@
 -- NOTE: if the constraint does not exist, an ignorable error will be reported.
 -- --------------------------------------------------
 
+    ALTER TABLE [TaxCalculations] DROP CONSTRAINT [FK_TaxCalculationsIndicator];
+GO
+    ALTER TABLE [TaxCalculations] DROP CONSTRAINT [FK_TaxCalculationsCompany];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -23,6 +27,8 @@ GO
     DROP TABLE [Indicators];
 GO
     DROP TABLE [Settings];
+GO
+    DROP TABLE [TaxCalculations];
 GO
 
 -- --------------------------------------------------
@@ -56,6 +62,17 @@ CREATE TABLE [Settings] (
 );
 GO
 
+-- Creating table 'TaxCalculations'
+CREATE TABLE [TaxCalculations] (
+    [Id] bigint  NOT NULL,
+    [Content] ntext  NULL,
+    [IndicatorId] bigint  NOT NULL,
+    [Rectifying] bit  NOT NULL,
+    [CompanyId] bigint  NOT NULL,
+    [OtherData] nvarchar(4000)  NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -78,9 +95,43 @@ ADD CONSTRAINT [PK_Settings]
     PRIMARY KEY ([Id] );
 GO
 
+-- Creating primary key on [Id] in table 'TaxCalculations'
+ALTER TABLE [TaxCalculations]
+ADD CONSTRAINT [PK_TaxCalculations]
+    PRIMARY KEY ([Id] );
+GO
+
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
+
+-- Creating foreign key on [IndicatorId] in table 'TaxCalculations'
+ALTER TABLE [TaxCalculations]
+ADD CONSTRAINT [FK_TaxCalculationsIndicator]
+    FOREIGN KEY ([IndicatorId])
+    REFERENCES [Indicators]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_TaxCalculationsIndicator'
+CREATE INDEX [IX_FK_TaxCalculationsIndicator]
+ON [TaxCalculations]
+    ([IndicatorId]);
+GO
+
+-- Creating foreign key on [CompanyId] in table 'TaxCalculations'
+ALTER TABLE [TaxCalculations]
+ADD CONSTRAINT [FK_TaxCalculationsCompany]
+    FOREIGN KEY ([CompanyId])
+    REFERENCES [Companies]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_TaxCalculationsCompany'
+CREATE INDEX [IX_FK_TaxCalculationsCompany]
+ON [TaxCalculations]
+    ([CompanyId]);
+GO
 
 -- --------------------------------------------------
 -- Script has ended

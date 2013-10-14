@@ -22,7 +22,9 @@ namespace TaxCalculator.Data.Model
         CompanyList,
         EditIndicators,
         TaxCalculationSetup,
-        TaxCalculationCompletion
+        TaxCalculationCompletion,
+        TaxCalculationList,
+        TaxCalculationListRectifying
     }
 
     public enum CashBookListType

@@ -78,30 +78,12 @@ namespace TaxCalculator
                 case ContentTypes.TaxCalculationCompletion:
                     contentControl.Content = new TaxCalculator.Controls.TaxCalculationCompletion();
                     break;
-                //case ContentTypes.MainContent:
-                //    //contentControl.Content = new CashBook.Controls.MainContent();
-                //    break;
-                //case ContentTypes.CompanyDetails:
-                //    contentControl.Content = new CashBook.Controls.CompanyDataWindow();
-                //    break;
-                //case ContentTypes.LegalReglementations:
-                //    contentControl.Content = new CashBook.Controls.LegalReglementations();
-                //    break;
-                //case ContentTypes.CashBookList:
-                //    contentControl.Content = new CashBook.Controls.CashBookList();
-                //    break;
-                //case ContentTypes.Reports:
-                //    contentControl.Content = new Report();
-                //    break;
-                //case ContentTypes.PrintControl:
-                //    contentControl.Content = new CashBook.Controls.PrintControl();
-                //    break;
-                //case ContentTypes.PrintPreview:
-                //    contentControl.Content = new CashBook.Controls.Printing.PrintPreview();
-                //    break;
-                //case ContentTypes.LegalLimitations:
-                //    contentControl.Content = new CashBook.Controls.LegalLimitations();
-                //    break;
+                case ContentTypes.TaxCalculationList:
+                    contentControl.Content = new TaxCalculator.Controls.TaxCalculationList(false);
+                    break;
+                case ContentTypes.TaxCalculationListRectifying:
+                    contentControl.Content = new TaxCalculator.Controls.TaxCalculationList(true);
+                    break;
                 default:
                     MessageBox.Show("invalid contentType: " + type);
                     break;
@@ -217,6 +199,18 @@ namespace TaxCalculator
             catch
             {
             }
+        }
+
+        private void Report_TaxCalculation_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeContent(ContentTypes.TaxCalculationList);
+
+        }
+
+        private void Report_TaxCalculation_Rectifying_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeContent(ContentTypes.TaxCalculationListRectifying);
+
         }
     }
 }
