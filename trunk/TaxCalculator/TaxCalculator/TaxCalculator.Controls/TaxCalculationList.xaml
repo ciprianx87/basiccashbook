@@ -113,15 +113,7 @@
                                         <Button.ToolTip>
                                             <TextBlock Text="Stergere"/>
                                         </Button.ToolTip>
-                                    </Button>
-                                    <Button CommandParameter="{Binding}" Width="30" Height="20" Click="EditCommand_Click">
-                                        <StackPanel>
-                                            <Image Source="/TaxCalculator.Controls;component/Images/editButton.png"  Stretch="Uniform"  Width="30" Height="15"/>
-                                        </StackPanel>
-                                        <Button.ToolTip>
-                                            <TextBlock Text="Editare"/>
-                                        </Button.ToolTip>
-                                    </Button>                                 
+                                    </Button>                                                           
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

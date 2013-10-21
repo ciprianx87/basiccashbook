@@ -14,8 +14,10 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public string Month { get; set; }
         public bool Rectifying { get; set; }
         public string CoinType { get; set; }
-        public int NrOfDecimals { get; set; }
+        public byte NrOfDecimals { get; set; }
         public string VerifiedBy { get; set; }
         public string CreatedBy { get; set; }
+        public int Year { get; set; }
+        public TaxCalculationSelection SelectedTaxCalculation { get; set; }
     }
 }

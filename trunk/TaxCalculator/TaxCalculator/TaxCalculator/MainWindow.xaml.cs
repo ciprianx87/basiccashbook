@@ -43,7 +43,7 @@ namespace TaxCalculator
             InitSettings();
             PopupManager.Instance.Init();
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
-            ChangeContent(ContentTypes.TaxIndicatorList);
+            ChangeContent(ContentTypes.TaxCalculationList);
             version = "1.0.22 demo";
             CheckAppValidity();
 
@@ -84,6 +84,9 @@ namespace TaxCalculator
                 case ContentTypes.TaxCalculationListRectifying:
                     contentControl.Content = new TaxCalculator.Controls.TaxCalculationList(true);
                     break;
+                case ContentTypes.PrintPreview:
+                    contentControl.Content = new TaxCalculator.Controls.Printing.PrintControl();
+                    break;
                 default:
                     MessageBox.Show("invalid contentType: " + type);
                     break;
@@ -105,7 +108,7 @@ namespace TaxCalculator
 
         private void InitSettings()
         {
-            AppSettings.InformationPopupCloseInterval = 5000;
+            AppSettings.InformationPopupCloseInterval = 2000;
             DecimalConvertor.Instance.SetNumberOfDecimals(2);
         }
 

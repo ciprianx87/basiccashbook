@@ -5,7 +5,7 @@ using System.Text;
 using TaxCalculator.Data.Interfaces;
 using TaxCalculator.Data.Model;
 using TaxCalculator.Common.Exceptions;
-//using System.Data.en
+using System.Data.Entity;
 
 namespace TaxCalculator.Data.Repositories
 {
@@ -16,8 +16,8 @@ namespace TaxCalculator.Data.Repositories
         {
             using (var context = GetContext())
             {
-                var existingCompany = context.Indicators.FirstOrDefault(p => p.Id == id);
-                return existingCompany;
+                var existingEntity = context.Indicators.FirstOrDefault(p => p.Id == id);
+                return existingEntity;
             }
         }
 

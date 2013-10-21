@@ -14,6 +14,7 @@ namespace TaxCalculator.Data.Model
         public string TypeDescription { get; set; }
         public string IndicatorFormula { get; set; }
         public TaxIndicatorType Type { get; set; }
+        public string Value { get; set; }
     }
 
     public enum TaxIndicatorType
@@ -41,5 +42,19 @@ namespace TaxCalculator.Data.Model
         public int NrOfDecimals { get; set; }
         public string CreatedBy { get; set; }
         public string VerifiedBy { get; set; }
+        public int Year { get; set; }
+    }
+    public class TaxCalculationSelection
+    {
+        public Int64 Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public enum ReportTaxIndicatorType
+    {
+        Numeric,
+        Text,
+        Calculat,
+
     }
 }

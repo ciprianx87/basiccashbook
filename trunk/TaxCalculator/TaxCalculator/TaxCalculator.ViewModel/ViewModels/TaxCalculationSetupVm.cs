@@ -12,6 +12,7 @@ using System.Windows.Input;
 using TaxCalculator.Common.Mediator;
 using TaxCalculator.Data.Model;
 using TaxCalculator.ViewModel.ViewModels.Model;
+using System.Windows;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -20,6 +21,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         ISettingsRepository settingsRepository;
         ICompanyRepository companyRepository;
         IIndicatorRepository indicatorRepository;
+        ITaxCalculationsRepository taxCalculationsRepository;
         public ICommand AddValuesCommand { get; set; }
         public ICommand CreateCoinTypeCommand { get; set; }
 
@@ -33,9 +35,10 @@ namespace TaxCalculator.ViewModel.ViewModels
             settingsRepository = new SettingsRepository();
             companyRepository = new CompanyRepository();
             indicatorRepository = new IndicatorRepository();
-
+            taxCalculationsRepository = new TaxCalculationsRepository();
             CreatedBy = "";
             VerifiedBy = "";
+            Rectifying = false;
             LoadData();
         }
 
@@ -70,6 +73,36 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
         }
 
+        private ObservableCollection<int> years;
+        public ObservableCollection<int> Years
+        {
+            get { return years; }
+            set
+            {
+                if (years != value)
+                {
+                    years = value;
+                    this.NotifyPropertyChanged("Years");
+                }
+            }
+        }
+
+
+        private int selectedYear;
+        public int SelectedYear
+        {
+            get { return selectedYear; }
+            set
+            {
+                if (selectedYear != value)
+                {
+                    selectedYear = value;
+                    this.NotifyPropertyChanged("SelectedYear");
+                }
+            }
+        }
+
+
 
         private ObservableCollection<Indicator> taxIndicatorLists;
         public ObservableCollection<Indicator> TaxIndicatorLists
@@ -96,6 +129,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 {
                     selectedIndicatorList = value;
                     this.NotifyPropertyChanged("SelectedIndicatorList");
+                    LoadTaxCalculations();
                 }
             }
         }
@@ -111,6 +145,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 {
                     selectedCompany = value;
                     this.NotifyPropertyChanged("SelectedCompany");
+                    LoadTaxCalculations();
                 }
             }
         }
@@ -130,8 +165,8 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
         }
 
-        private ObservableCollection<int> availableNrOfDecimals;
-        public ObservableCollection<int> AvailableNrOfDecimals
+        private ObservableCollection<byte> availableNrOfDecimals;
+        public ObservableCollection<byte> AvailableNrOfDecimals
         {
             get { return availableNrOfDecimals; }
             set
@@ -145,8 +180,8 @@ namespace TaxCalculator.ViewModel.ViewModels
         }
 
 
-        private int selectedNrOfDecimals;
-        public int SelectedNrOfDecimals
+        private byte selectedNrOfDecimals;
+        public byte SelectedNrOfDecimals
         {
             get { return selectedNrOfDecimals; }
             set
@@ -267,10 +302,57 @@ namespace TaxCalculator.ViewModel.ViewModels
             get { return rectifying; }
             set
             {
-                if (rectifying != value)
+                //if (rectifying != value)
                 {
                     rectifying = value;
                     this.NotifyPropertyChanged("Rectifying");
+                    TaxCalculationSelectionVisible = value ? Visibility.Visible : Visibility.Collapsed;
+                    LoadTaxCalculations();
+                }
+            }
+        }
+
+
+        private ObservableCollection<TaxCalculationSelection> taxCalculationlist;
+        public ObservableCollection<TaxCalculationSelection> TaxCalculationList
+        {
+            get { return taxCalculationlist; }
+            set
+            {
+                if (taxCalculationlist != value)
+                {
+                    taxCalculationlist = value;
+                    this.NotifyPropertyChanged("TaxCalculationList");
+                }
+            }
+        }
+
+
+        private TaxCalculationSelection selectedTaxCalculation;
+        public TaxCalculationSelection SelectedTaxCalculation
+        {
+            get { return selectedTaxCalculation; }
+            set
+            {
+                if (selectedTaxCalculation != value)
+                {
+                    selectedTaxCalculation = value;
+                    this.NotifyPropertyChanged("SelectedTaxCalculation");
+                }
+            }
+        }
+
+
+        private Visibility taxCalculationSelectionVisible;
+        public Visibility TaxCalculationSelectionVisible
+        {
+            get { return taxCalculationSelectionVisible; }
+            set
+            {
+                if (taxCalculationSelectionVisible != value)
+                {
+                    taxCalculationSelectionVisible = value;
+                    this.NotifyPropertyChanged("TaxCalculationSelectionVisible");
                 }
             }
         }
@@ -311,7 +393,9 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void LoadData()
         {
-            AvailableNrOfDecimals = new ObservableCollection<int>() { 0, 1, 2 };
+            Years = new ObservableCollection<int>() { 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 };
+            SelectedYear = Years[0];
+            AvailableNrOfDecimals = new ObservableCollection<byte>() { 0, 1, 2 };
             Months = new ObservableCollection<string>() { "Ianuarie", "Feburarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie" };
             SelectedMonth = Months[0];
             ExchangeRateString = "0";
@@ -354,6 +438,47 @@ namespace TaxCalculator.ViewModel.ViewModels
             catch (Exception ex)
             {
                 Logger.Instance.LogException(ex);
+                WindowHelper.OpenErrorDialog(Messages.Error_LoadingData);
+            }
+        }
+
+        private void LoadTaxCalculations()
+        {
+            if (!Rectifying)
+            {
+                return;
+            }
+            try
+            {
+                TaxCalculationList = new ObservableCollection<TaxCalculationSelection>();
+                //load existing tax calculations
+                if (SelectedCompany != null && SelectedIndicatorList != null)
+                {
+                    List<TaxCalculations> existingTaxCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && p.IndicatorId == SelectedIndicatorList.Id && !p.Rectifying).ToList();
+                    if (existingTaxCalculations != null && existingTaxCalculations.Count > 0)
+                    {
+                        foreach (var item in existingTaxCalculations)
+                        {
+                            TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(item.OtherData);
+                            TaxCalculationList.Add(new TaxCalculationSelection()
+                            {
+                                Id = item.Id,
+                                Name = otherData.Name
+                            });
+                        }
+                        SelectedTaxCalculation = TaxCalculationList[0];
+                    }
+                    else
+                    {
+                        WindowHelper.OpenErrorDialog(Messages.Error_NoTaxCalculationsSelection);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+                WindowHelper.OpenErrorDialog(Messages.Error_LoadingData);
             }
         }
 
@@ -364,6 +489,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void AddValues(object parameter)
         {
+
             //load the selected data and navigate to the fill-in screen
             TaxCalculationSetupModel setupModel = new TaxCalculationSetupModel()
             {
@@ -375,7 +501,9 @@ namespace TaxCalculator.ViewModel.ViewModels
                 SelectedCompany = SelectedCompany,
                 SelectedIndicatorList = SelectedIndicatorList,
                 VerifiedBy = VerifiedBy,
-                CreatedBy = CreatedBy
+                CreatedBy = CreatedBy,
+                Year = SelectedYear,
+                SelectedTaxCalculation = SelectedTaxCalculation
             };
 
             Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.TaxCalculationCompletion);

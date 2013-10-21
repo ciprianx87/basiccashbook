@@ -78,6 +78,11 @@
                       ItemsSource="{Binding Months}" SelectedItem="{Binding SelectedMonth, Mode=TwoWay}" ></ComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"  Margin="5">
+                    <TextBlock  Text="An:"/>
+                    <ComboBox  Width="100" HorizontalAlignment="Left" DisplayMemberPath="" 
+                      ItemsSource="{Binding Years}" SelectedItem="{Binding SelectedYear, Mode=TwoWay}" ></ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"  Margin="5">
                     <TextBlock  Text="Intocmit:"/>
                     <TextBox  Text="{Binding Path=CreatedBy,UpdateSourceTrigger=PropertyChanged,  ValidatesOnDataErrors=true, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                     <TextBlock  Text="Nume persoana, Functie" Width="250" Margin="20,0"/>
@@ -94,6 +99,11 @@
                             <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="0.5" CenterY="0.5"/>
                         </CheckBox.RenderTransform>
                     </CheckBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"  Margin="5" Visibility="{Binding TaxCalculationSelectionVisible}">
+                    <TextBlock  Text="Lista Documente:"/>
+                    <ComboBox  Width="200" HorizontalAlignment="Left" DisplayMemberPath="Name" 
+                      ItemsSource="{Binding TaxCalculationList}" SelectedItem="{Binding SelectedTaxCalculation, Mode=TwoWay}" ></ComboBox>
                 </StackPanel>
                 <Button Content="Introduceti Valori" Width="150" Height="35" HorizontalAlignment="Left" Margin="30,0,0,0" Command="{Binding AddValuesCommand}"/>
             </StackPanel>

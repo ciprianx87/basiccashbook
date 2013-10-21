@@ -60,7 +60,11 @@ namespace TaxCalculator.Common
 
             CultureInfo ci = new CultureInfo("ro-RO");
             format = "N" + nrDecimals;
-            var converted = number.ToString(format);
+            if (nrDecimals == 0)
+            {
+                format = "0";
+            }
+            var converted = number.ToString(format, ci);
             return converted;
 
             var index = converted.IndexOf('.');
