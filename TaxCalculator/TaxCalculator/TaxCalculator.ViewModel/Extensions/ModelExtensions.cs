@@ -34,6 +34,7 @@ namespace TaxCalculator.ViewModel.Extensions
                 IndicatorFormula = item.IndicatorFormula,
                 Type = VmUtils.GetIndicatorType(item.TypeDescription),
                 Style = VmUtils.GetStyleInfo(VmUtils.GetIndicatorType(item.TypeDescription)),
+                // ValueField = item.Value
                 //IsValid=item.isv
             };
 
@@ -50,6 +51,7 @@ namespace TaxCalculator.ViewModel.Extensions
                 TypeDescription = item.TypeDescription,
                 IndicatorFormula = item.IndicatorFormula,
                 Type = VmUtils.GetIndicatorType(item.TypeDescription),
+                // Value = item.ValueField
             };
 
             return result;
@@ -80,6 +82,67 @@ namespace TaxCalculator.ViewModel.Extensions
             };
 
             return result;
+        }
+
+
+        public static List<CompletedIndicatorVm> ToCompletedList(this List<TaxIndicatorViewModel> list)
+        {
+            var taxIndicators = new List<CompletedIndicatorVm>();
+            taxIndicators.AddRange(list.Select(p => ToCompleted(p)));
+            return taxIndicators;
+        }
+
+        public static CompletedIndicatorVm ToCompleted(this TaxIndicatorViewModel item)
+        {
+            var result = new CompletedIndicatorVm()
+            {
+                NrCrt = item.NrCrtString,
+                Description = item.Description,
+                Value = item.ValueField,
+                Type = item.Type
+            };
+
+            return result;
+        }
+
+        public static List<TaxIndicatorViewModel> ToVmList(this List<CompletedIndicatorVm> list)
+        {
+            var taxIndicators = new List<TaxIndicatorViewModel>();
+            taxIndicators.AddRange(list.Select(p => ToVm(p)));
+            return taxIndicators;
+        }
+
+        public static TaxIndicatorViewModel ToVm(this CompletedIndicatorVm item)
+        {
+            var result = new TaxIndicatorViewModel()
+            {
+                NrCrt = string.IsNullOrEmpty(item.NrCrt) ? new Nullable<int>() : Convert.ToInt32(item.NrCrt),
+                Description = item.Description,
+                ValueField = item.Value,
+                Type = item.Type
+            };
+
+            return result;
+        }
+
+        public static PrintRow ToPrintRow(this CompletedIndicatorVm item)
+        {
+            var result = new PrintRow()
+                {
+                    Description = item.Description,
+                    NrCrt = item.NrCrt,
+                    Value = item.Value,
+                    Type = item.Type
+                };
+
+            return result;
+        }
+
+        public static List<PrintRow> ToPrintRowList(this List<CompletedIndicatorVm> list)
+        {
+            var resultedList = new List<PrintRow>();
+            resultedList.AddRange(list.Select(p => p.ToPrintRow()));
+            return resultedList;
         }
     }
 }

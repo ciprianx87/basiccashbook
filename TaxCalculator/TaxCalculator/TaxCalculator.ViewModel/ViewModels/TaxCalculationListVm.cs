@@ -74,7 +74,8 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         public void View(object parameter)
         {
-
+            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.PrintPreview);
+            Mediator.Instance.SendMessage(MediatorActionType.SetReportData, parameter);
         }
 
         public void RefreshList(object param)
@@ -106,6 +107,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 {
                     foreach (var item in existingIndicators)
                     {
+                        //TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(item.ot);
                         TaxCalculationList.Add(item);
                     }
                 }

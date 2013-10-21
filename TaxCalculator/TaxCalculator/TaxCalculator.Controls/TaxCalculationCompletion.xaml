@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
-                  CanUserResizeRows="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
+                  CanUserResizeRows="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" GotFocus="dgTaxIndicators_GotFocus" >
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <!--Click="AddBefore_Click"-->
@@ -32,6 +32,8 @@
                     <Setter Property="IsTabStop" Value="False"/>
                     <Setter Property="BorderThickness" Value="0"/>
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="Black"/>
                 </Style>
                 <Style TargetType="TextBlock" x:Key="StandardTextBlock" >
                     <Setter Property="TextAlignment" Value="Left"/>
@@ -45,11 +47,11 @@
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
                     <Setter Property="HorizontalContentAlignment" Value="Left"/>
                     <Setter Property="FontSize" Value="18"/>
-                </Style>
+                </Style>              
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <!--CellStyle="{StaticResource NoFocusColumStyle}"-->
-                <DataGridTemplateColumn MinWidth="50" FocusManager.IsFocusScope="False"  >
+                <DataGridTemplateColumn MinWidth="50" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}" >
                     <DataGridTemplateColumn.HeaderTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -71,7 +73,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn  MinWidth="400" Header="Indicatori">
+                <DataGridTemplateColumn  MinWidth="400" Header="Indicatori" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <DataTemplate.Resources>
@@ -86,29 +88,31 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn MinWidth="150" Header="Tip Indicatori"  Visibility="Collapsed">
+                <DataGridTemplateColumn MinWidth="150" Header="Tip Indicatori"  Visibility="Collapsed" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <TextBlock Text="{Binding Type}" Style="{StaticResource StandardTextBlock}" Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn MinWidth="100"  Width="100" Header="Valoare">
+                <DataGridTemplateColumn MinWidth="100"  Width="100" Header="Valoare" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <Grid>
-                                <TextBlock Style="{StaticResource StandardTextBlock}" Height="30"  Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}"/>
+                                <TextBlock Style="{StaticResource StandardTextBlock}" Height="30"  Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}" FocusManager.IsFocusScope="False"/>
                                 <StackPanel>
-                                    <TextBox  Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandardTextBox}" 
-                                          Visibility="{Binding Style.ValueFieldVisibility}"/>
+                                    <TextBox  Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Style="{StaticResource StandardTextBox}" 
+                                          Visibility="{Binding Style.ValueFieldVisibility}" GotFocus="TextBox_GotFocus" HorizontalContentAlignment="Right" 
+                                              TextAlignment="Right" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton" MouseDoubleClick="TextBox_MouseDoubleClick" 
+                                              GotKeyboardFocus="TextBox_MouseDoubleClick" KeyDown="TextBox_KeyDown"/>
                                     <TextBlock Text="{Binding ValueField}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}" 
-                                           Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}" Height="30"/>
+                                           Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}" Height="30" TextAlignment="Right" Padding="0,0,4,0" FocusManager.IsFocusScope="False"/>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn MinWidth="250"  Width="*" Header="Mod de calcul Indicatori"  Visibility="Collapsed">
+                <DataGridTemplateColumn MinWidth="250"  Width="*" Header="Mod de calcul Indicatori"  Visibility="Collapsed" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <StackPanel>
@@ -129,7 +133,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock  Margin="0,0,10,0" Width="60"  Focusable="False" Text="!" FontWeight="Bold" Foreground="Red" Visibility="{Binding ErrorVisible}" VerticalAlignment="Center">                                         
+                                <TextBlock  Margin="0,0,10,0" Width="60"  Focusable="False" Text="!" FontWeight="Bold" Foreground="Red" Visibility="{Binding ErrorVisible}" VerticalAlignment="Center" FocusManager.IsFocusScope="False">                                         
                                             <TextBlock.ToolTip>
                                                 <TextBlock Text="{Binding ErrorMessage}" FontWeight="Bold" Foreground="Red"/>
                                             </TextBlock.ToolTip>

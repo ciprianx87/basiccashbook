@@ -60,13 +60,13 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
 
         public string ValueField
         {
-            //get { return valueField; }
-            get
-            {
-                //var val = DecimalConvertor.Instance.DecimalToString(ValueFieldNumeric);
-                //return val;
-                return  ValueFieldNumeric.ToString(); 
-            }
+            get { return valueField; }
+            //get
+            //{
+            //    //var val = DecimalConvertor.Instance.DecimalToString(ValueFieldNumeric);
+            //    //return val;
+            //    return  ValueFieldNumeric.ToString(); 
+            //}
             set
             {
                 try
@@ -85,7 +85,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                     {
                         Mediator.Instance.SendMessage(MediatorActionType.ExecuteTaxCalculation, null);
                     }
-                    NotifyPropertyChanged("ValueField");
+                    NotifyPropertyChanged("ValueField");                    
                 }
                 catch (Exception)
                 {

@@ -69,6 +69,10 @@ namespace TaxCalculator.Common
         }
         private static int Count(string target, char ch)
         {
+            //if (target == null)
+            //{
+            //    return 0;
+            //}
             return target.Count(p => p == ch);
         }
     }
