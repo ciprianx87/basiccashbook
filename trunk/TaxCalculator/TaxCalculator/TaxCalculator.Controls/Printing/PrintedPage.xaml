@@ -88,7 +88,7 @@
                 <Label Content="Perioada" HorizontalAlignment="Center"  Style="{x:Null}" Height="25" Width="100" HorizontalContentAlignment="Center"/>
             </StackPanel>
             <StackPanel  Grid.Row="6"   Grid.Column="3" VerticalAlignment="Center" Visibility="{Binding RectifyingVisibility}">
-                <Label Content="{Binding FirstPageData.MonthYear,FallbackValue='Martie 2013'}" HorizontalAlignment="Center" Style="{x:Null}"/>
+                <Label Content="{Binding FirstPageData.InitialMonthYear,FallbackValue='Mai 2013'}" HorizontalAlignment="Center" Style="{x:Null}"/>
             </StackPanel>
             <!--table header-->
             <Border Grid.Row="5" Grid.RowSpan="3"   Grid.Column="0" Margin="1,0,0,0"/>
@@ -156,11 +156,11 @@
                         <Label Grid.Column="2" Content=""  HorizontalContentAlignment="Right"  Padding="{StaticResource textPadding}"    Visibility="{Binding Type, Converter={StaticResource rowTypeToVisibilityConverter}, ConverterParameter='Text'}"/>
 
                         <Label Grid.Column="3" Visibility="{Binding DataContext.RectifyingVisibility, ElementName='root'}"  Padding="{StaticResource textPadding}">
-                            <Label HorizontalAlignment="Stretch"  Content="{Binding Value}"  HorizontalContentAlignment="Right"   BorderThickness="0"
+                            <Label HorizontalAlignment="Stretch"  Content="{Binding InitialValue}"  HorizontalContentAlignment="Right"   BorderThickness="0"
                                    Visibility="{Binding Type, Converter={StaticResource rowTypeToVisibilityConverter}, ConverterParameter='Numeric'}"/>
                         </Label>
                         <Label  Grid.Column="3" Visibility="{Binding DataContext.RectifyingVisibility, ElementName='root'}"  Padding="{StaticResource textPadding}">
-                            <Label HorizontalAlignment="Stretch"  Content="{Binding Value}"  HorizontalContentAlignment="Right"   BorderThickness="0"
+                            <Label HorizontalAlignment="Stretch"  Content="{Binding InitialValue}"  HorizontalContentAlignment="Right"   BorderThickness="0"
                                    Visibility="{Binding Type, Converter={StaticResource rowTypeToVisibilityConverter}, ConverterParameter='Calculat'}"/>
                         </Label>
                         <Label  Grid.Column="3" Visibility="{Binding DataContext.RectifyingVisibility, ElementName='root'}"  Padding="{StaticResource textPadding}">

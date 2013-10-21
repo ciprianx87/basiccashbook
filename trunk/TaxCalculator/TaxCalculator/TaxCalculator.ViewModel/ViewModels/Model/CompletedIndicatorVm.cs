@@ -17,6 +17,6 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
    public class CompletedIndicatorDbModel
    {
        public List<CompletedIndicatorVm> CompletedIndicators { get; set; }
-       public Int64? CurrentIndicatorId { get; set; }
+       public Int64? PreviousIndicatorId { get; set; }
    }
 }

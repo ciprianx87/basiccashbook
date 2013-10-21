@@ -27,8 +27,10 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public string NrCrt { get; set; }
         public string Value { get; set; }
         public TaxIndicatorType Type { get; set; }
-
+       
+        public string InitialValue { get; set; }
     }
+
     public class FirstPageData
     {
         public string Company { get; set; }
@@ -42,6 +44,16 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             get
             {
                 return string.Format("{0} {1}", Month, Year);
+            }
+        }
+
+        public string InitialMonth { get; set; }
+        public string InitialYear { get; set; }
+        public string InitialMonthYear
+        {
+            get
+            {
+                return string.Format("{0} {1}", InitialMonth, InitialYear);
             }
         }
     }
