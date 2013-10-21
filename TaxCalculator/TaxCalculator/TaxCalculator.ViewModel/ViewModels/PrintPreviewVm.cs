@@ -226,13 +226,37 @@ namespace TaxCalculator.ViewModel.ViewModels
             try
             {
                 var calculation = taxCalculationRepository.Get(selectedVm.Id);
-                List<CompletedIndicatorVm> savedEntities = VmUtils.Deserialize<List<CompletedIndicatorVm>>(calculation.Content);
+                var completedIndicatorDbModel = VmUtils.Deserialize<CompletedIndicatorDbModel>(calculation.Content);
+                List<CompletedIndicatorVm> savedEntities = completedIndicatorDbModel.CompletedIndicators;
                 TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(calculation.OtherData);
+
+                TaxCalculationOtherData initialOtherData = null;
+                List<CompletedIndicatorVm> initialSavedEntities = null;
+                List<PrintRow> initialPrintRowList = null;
+                if (calculation.Rectifying)
+                {
+                    //load the initial data also
+                    var initialCalculation = taxCalculationRepository.Get(completedIndicatorDbModel.PreviousIndicatorId.Value);
+                    initialOtherData = VmUtils.Deserialize<TaxCalculationOtherData>(initialCalculation.OtherData);
+
+                    var initialCompletedIndicatorDbModel = VmUtils.Deserialize<CompletedIndicatorDbModel>(initialCalculation.Content);
+                    initialSavedEntities = initialCompletedIndicatorDbModel.CompletedIndicators;
+
+                    initialPrintRowList = initialSavedEntities.ToPrintRowList();
+                    //AddExtraRows(initialPrintRowList, selectedVm.VerifiedBy, selectedVm.CreatedBy);
+                    AddEmptyRows(initialPrintRowList);
+                }
 
                 var printRowList = savedEntities.ToPrintRowList();
                 AddExtraRows(printRowList, selectedVm.VerifiedBy, selectedVm.CreatedBy);
-                PrintData.Pages = BuildPages(printRowList);
-
+                if (calculation.Rectifying)
+                {
+                    PrintData.Pages = BuildPages(printRowList, initialPrintRowList);
+                }
+                else
+                {
+                    PrintData.Pages = BuildPages(printRowList);
+                }
                 //add first page details
                 if (PrintData.Pages.Count > 0)
                 {
@@ -247,8 +271,16 @@ namespace TaxCalculator.ViewModel.ViewModels
                         CoinType = otherData.CoinType
                     };
                     firstPage.FirstPage = true;
+
+                    PrintData.Pages.ForEach(p => p.RectifyingVisibility = calculation.Rectifying ? Visibility.Visible : Visibility.Collapsed);
+
+                    if (calculation.Rectifying)
+                    {
+                        firstPage.FirstPageData.InitialMonth = initialOtherData.Month;
+                        firstPage.FirstPageData.InitialYear = initialOtherData.Year.ToString();
+
+                    }
                 }
-                PrintData.Pages.ForEach(p => p.RectifyingVisibility = calculation.Rectifying ? Visibility.Visible : Visibility.Collapsed);
             }
             catch (Exception ex)
             {
@@ -338,6 +370,47 @@ namespace TaxCalculator.ViewModel.ViewModels
                 pages.Add(newPrintPage);
 
                 allEntities = allEntities.Skip(itemsPerPage).ToList();
+            }
+
+            return pages;
+
+        }
+
+        private List<PrintPage> BuildPages(List<PrintRow> allEntities, List<PrintRow> initialEntities)
+        {
+            List<PrintPage> pages = new List<PrintPage>();
+            int pageCount = 0;
+            while (allEntities.Count > 0)
+            {
+                pageCount++;
+                int itemsPerPage = maxItemsPerPage;
+                if (pageCount == 1)
+                {
+                    itemsPerPage = maxItemsForFirstPage;
+                }
+                var newGroup = allEntities.Take(itemsPerPage);
+                var initialNewGroup = initialEntities.Take(itemsPerPage);
+                var newPrintPage = new PrintPage() { Rows = new List<PrintRow>() };
+                foreach (var item in newGroup)
+                {
+                    int indexOf = newGroup.ToList().IndexOf(item);
+                    var newRow = new PrintRow()
+                    {
+                        Description = item.Description,
+                        NrCrt = item.NrCrt,
+                        Value = item.Value,
+                        Type = item.Type,
+                    };
+                    if (initialEntities.Count > indexOf)
+                    {
+                        newRow.InitialValue = initialEntities[indexOf].Value;
+                    }
+                    newPrintPage.Rows.Add(newRow);
+                }
+                pages.Add(newPrintPage);
+
+                allEntities = allEntities.Skip(itemsPerPage).ToList();
+                initialEntities = initialEntities.Skip(itemsPerPage).ToList();
             }
 
             return pages;

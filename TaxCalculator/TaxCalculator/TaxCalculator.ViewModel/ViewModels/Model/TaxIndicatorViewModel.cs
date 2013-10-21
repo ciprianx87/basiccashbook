@@ -71,6 +71,11 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             {
                 try
                 {
+                    if (value == null)
+                    {
+                        valueField = null;
+                        return;
+                    }
                     valueField = Utils.PrepareForConversion(value);
                     if (!string.IsNullOrEmpty(valueField))
                     {
