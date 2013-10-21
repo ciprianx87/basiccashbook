@@ -90,6 +90,13 @@
             <StackPanel  Grid.Row="6"   Grid.Column="3" VerticalAlignment="Center" Visibility="{Binding RectifyingVisibility}">
                 <Label Content="{Binding FirstPageData.InitialMonthYear,FallbackValue='Mai 2013'}" HorizontalAlignment="Center" Style="{x:Null}"/>
             </StackPanel>
+            
+            <StackPanel  Grid.Row="7"   Grid.Column="2" VerticalAlignment="Center" Visibility="{Binding RectifyingVisibility}">
+                <Label Content="inainte de impozit" HorizontalAlignment="Center" Style="{x:Null}" FontSize="12" Padding="0"/>
+            </StackPanel>
+            <StackPanel  Grid.Row="7"   Grid.Column="3" VerticalAlignment="Center" Visibility="{Binding RectifyingVisibility}">
+                <Label Content="dupa impozit" HorizontalAlignment="Center" Style="{x:Null}"/>
+            </StackPanel>
             <!--table header-->
             <Border Grid.Row="5" Grid.RowSpan="3"   Grid.Column="0" Margin="1,0,0,0"/>
             <Border Grid.Row="5" Grid.RowSpan="3"   Grid.Column="1"/>

@@ -6,7 +6,7 @@
     <Border CornerRadius="10" BorderThickness="1" BorderBrush="Black">
         <Grid>
             <TextBlock Height="Auto" HorizontalAlignment="Left" Margin="12,12,0,0"  Text="Introduceti numele:" VerticalAlignment="Top" FontSize="20"/>
-            <TextBox Height="Auto" HorizontalAlignment="Left" Margin="12,41,0,0" Name="txtName" VerticalAlignment="Top" Width="234" FontSize="20"/>
+            <TextBox Height="Auto" HorizontalAlignment="Left" Margin="12,41,0,0" Name="txtName" VerticalAlignment="Top" Width="234" FontSize="20" FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}"/>
             <Button Content="Salvare" Height="23" HorizontalAlignment="Left" Margin="41,80,0,0" Name="btnSave" VerticalAlignment="Top" Width="75" Click="btnSave_Click" />
             <Button Content="Inchide" Height="23" HorizontalAlignment="Left" Margin="150,81,0,0" Name="btnClose" VerticalAlignment="Top" Width="75" Click="btnClose_Click" />
         </Grid>

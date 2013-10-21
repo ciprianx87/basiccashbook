@@ -74,14 +74,14 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn MinWidth="120" Width="*" Header="Verificat de">
+                    <DataGridTemplateColumn MinWidth="120" Width="*" Header="Verificat de"  Visibility="Collapsed">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding VerifiedBy}" Style="{StaticResource StandardTextBlock}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn MinWidth="120" Width="*" Header="Creat de">
+                    <DataGridTemplateColumn MinWidth="120" Width="*" Header="Creat de" Visibility="Collapsed">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding CreatedBy}" Style="{StaticResource StandardTextBlock}"/>

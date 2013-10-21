@@ -24,8 +24,28 @@ namespace TaxCalculator.Controls
         public TaxCalculationCompletion()
         {
             InitializeComponent();
+            this.DataContextChanged += new DependencyPropertyChangedEventHandler(TaxCalculationCompletion_DataContextChanged);
             this.DataContext = new TaxCalculationCompletionVm();
+            (this.DataContext as TaxCalculationCompletionVm).PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(TaxCalculationCompletion_PropertyChanged);
             //dgTaxIndicators.ItemsSource = new List<object>() { 1 };
+        }
+
+        void TaxCalculationCompletion_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Rectifying")
+            {
+                var initialValueColumn = dgTaxIndicators.Columns.FirstOrDefault(p => p.Header != null && p.Header.ToString() == "Valoare Initiala");
+                if (initialValueColumn != null)
+                {
+                    initialValueColumn.Visibility = (this.DataContext as TaxCalculationCompletionVm).Rectifying;
+                }
+            }
+        }
+
+        void TaxCalculationCompletion_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+          
+
         }
 
         public void Dispose()
@@ -92,7 +112,7 @@ namespace TaxCalculator.Controls
 
         private void dgTaxIndicators_GotFocus(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
     }

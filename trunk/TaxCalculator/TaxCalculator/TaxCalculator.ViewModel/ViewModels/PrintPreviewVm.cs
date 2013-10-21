@@ -226,6 +226,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             try
             {
                 var calculation = taxCalculationRepository.Get(selectedVm.Id);
+                calculation.Rectifying = false;
                 var completedIndicatorDbModel = VmUtils.Deserialize<CompletedIndicatorDbModel>(calculation.Content);
                 List<CompletedIndicatorVm> savedEntities = completedIndicatorDbModel.CompletedIndicators;
                 TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(calculation.OtherData);
