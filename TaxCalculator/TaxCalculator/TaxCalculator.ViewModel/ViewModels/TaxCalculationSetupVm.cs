@@ -393,10 +393,10 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void LoadData()
         {
-            Years = new ObservableCollection<int>() { 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 };
+            Years = new ObservableCollection<int>(Constants.AvailableYears);
             SelectedYear = Years[0];
             AvailableNrOfDecimals = new ObservableCollection<byte>() { 0, 1, 2 };
-            Months = new ObservableCollection<string>() { "Ianuarie", "Feburarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie" };
+            Months = new ObservableCollection<string>(Constants.AvailableMonths);
             SelectedMonth = Months[0];
             ExchangeRateString = "0";
             try

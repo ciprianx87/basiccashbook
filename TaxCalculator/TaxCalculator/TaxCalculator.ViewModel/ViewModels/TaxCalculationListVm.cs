@@ -19,6 +19,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 {
     public class TaxCalculationListVm : BaseViewModel
     {
+        ICompanyRepository companyRepository;
         ITaxCalculationsRepository taxCalculationRepository;
         DispatcherTimer dt;
         private bool isRectifying = false;
@@ -29,6 +30,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         public ICommand EditCommand { get; set; }
         public ICommand EditIndicatorsCommand { get; set; }
         public ICommand ViewCommand { get; set; }
+        public ICommand FilterCommand { get; set; }
 
 
         public TaxCalculationListVm(bool isRectifying)
@@ -41,16 +43,128 @@ namespace TaxCalculator.ViewModel.ViewModels
             EditCommand = new DelegateCommand(Edit, CanEdit);
             this.EditIndicatorsCommand = new DelegateCommand(EditIndicators, CanEditIndicators);
             this.ViewCommand = new DelegateCommand(View, CanView);
-
+            this.FilterCommand = new DelegateCommand(Filter, CanFilter);
             Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
 
             taxCalculationRepository = new TaxCalculationsRepository();
-
+            companyRepository = new CompanyRepository();
+            LoadInitialData();
+            //if no company exists, do not continue loading data
+            if (SelectedCompany == null)
+            {
+                return;
+            }
             RefreshList(null);
+
+        }
+
+        private void LoadInitialData()
+        {
+            Years = new ObservableCollection<int>(Constants.AvailableYears);
+            SelectedYear = Years[0];
+            Months = new ObservableCollection<string>(Constants.AvailableMonths);
+            SelectedMonth = Months[0];
+            Companies = new ObservableCollection<Company>(companyRepository.GetAll());
+            if (Companies.Count > 0)
+            {
+                SelectedCompany = Companies[0];
+            }
+            else
+            {
+                //error message
+                WindowHelper.OpenErrorDialog(Messages.Error_NoCompanies);
+            }
         }
 
         #region properties
 
+
+        private Company selectedCompany;
+        public Company SelectedCompany
+        {
+            get { return selectedCompany; }
+            set
+            {
+                if (selectedCompany != value)
+                {
+                    selectedCompany = value;
+                    this.NotifyPropertyChanged("SelectedCompany");
+                }
+            }
+        }
+
+
+        private ObservableCollection<Company> companies;
+        public ObservableCollection<Company> Companies
+        {
+            get { return companies; }
+            set
+            {
+                if (companies != value)
+                {
+                    companies = value;
+                    this.NotifyPropertyChanged("Companies");
+                }
+            }
+        }
+
+
+        private string selectedMonth;
+        public string SelectedMonth
+        {
+            get { return selectedMonth; }
+            set
+            {
+                if (selectedMonth != value)
+                {
+                    selectedMonth = value;
+                    this.NotifyPropertyChanged("SelectedMonth");
+                }
+            }
+        }
+
+        private ObservableCollection<string> months;
+        public ObservableCollection<string> Months
+        {
+            get { return months; }
+            set
+            {
+                if (months != value)
+                {
+                    months = value;
+                    this.NotifyPropertyChanged("Months");
+                }
+            }
+        }
+
+        private ObservableCollection<int> years;
+        public ObservableCollection<int> Years
+        {
+            get { return years; }
+            set
+            {
+                if (years != value)
+                {
+                    years = value;
+                    this.NotifyPropertyChanged("Years");
+                }
+            }
+        }
+
+
+        private int selectedYear;
+        public int SelectedYear
+        {
+            get { return selectedYear; }
+            set
+            {
+                if (selectedYear != value)
+                {
+                    selectedYear = value;
+                    this.NotifyPropertyChanged("SelectedYear");
+                }
+            }
+        }
         private ObservableCollection<TaxCalculationsViewModel> taxCalculationList;
         public ObservableCollection<TaxCalculationsViewModel> TaxCalculationList
         {
@@ -67,6 +181,16 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         #region methods
 
+
+        private bool CanFilter(object parameter)
+        {
+            return true;
+        }
+
+        private void Filter(object parameter)
+        {
+            LoadData();
+        }
         private bool CanView(object parameter)
         {
             return true;
@@ -102,22 +226,45 @@ namespace TaxCalculator.ViewModel.ViewModels
             try
             {
                 TaxCalculationList = new ObservableCollection<TaxCalculationsViewModel>();
-                var existingIndicators = taxCalculationRepository.GetAll().Where(p => p.Rectifying == isRectifying).ToList().ToVmList();
-                if (existingIndicators != null)
+                var existingIndicators = taxCalculationRepository.GetAll().Where(p => p.Rectifying == isRectifying).ToList();
+                ApplyFilter(existingIndicators);
+                var existingIndicatorsVm = existingIndicators.ToVmList();
+                if (existingIndicatorsVm != null)
                 {
-                    foreach (var item in existingIndicators)
+                    foreach (var item in existingIndicatorsVm)
                     {
-                        //TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(item.ot);
                         TaxCalculationList.Add(item);
                     }
                 }
+
             }
             catch (Exception ex)
             {
                 Logger.Instance.LogException(ex);
-                WindowHelper.OpenErrorDialog("Nu s-au putut citi datele");
+                WindowHelper.OpenErrorDialog(Messages.Error_LoadingData);
             }
             IsBusy = false;
+        }
+
+        private void ApplyFilter(List<TaxCalculations> existingIndicators)
+        {
+            foreach (var item in existingIndicators.ToArray())
+            {
+                TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(item.OtherData);
+                bool isValid = false;
+                isValid = otherData.Month == SelectedMonth && otherData.Year == SelectedYear && item.CompanyId == SelectedCompany.Id;
+                if (!isValid)
+                {
+                    existingIndicators.Remove(item);
+                }
+            }
+        }
+
+        private void ApplyFilter()
+        {
+            //TaxCalculations t;
+            //t.
+            //TaxCalculationList=TaxCalculationList.Where(p=>p.Month==SelectedMonth && p.
         }
 
         public void Save(object param)

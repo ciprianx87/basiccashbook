@@ -10,6 +10,14 @@
             >
     <UserControl.Resources>
         <converter:InvertVisibilityConverter x:Key="invertVisibilityConverter"/>
+        <Style TargetType="TextBlock" >
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Padding" Value="6,0,0,0"/>
+            <Setter Property="Width" Value="150"/>
+        </Style>
     </UserControl.Resources>
     <xctk:BusyIndicator IsBusy="{Binding IsBusy}" BusyContent="Se incarca datele..." >
         <Grid>
@@ -20,7 +28,33 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>           
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel  Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal"  Margin="5">
+                        <TextBlock Text="Societate"/>
+                        <ComboBox Width="100" HorizontalAlignment="Left" DisplayMemberPath="Name" 
+                      ItemsSource="{Binding Companies}" SelectedItem="{Binding SelectedCompany, Mode=TwoWay}" ></ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"  Margin="5">
+                        <TextBlock  Text="Luna:"/>
+                        <ComboBox  Width="100" HorizontalAlignment="Left" DisplayMemberPath="" 
+                      ItemsSource="{Binding Months}" SelectedItem="{Binding SelectedMonth, Mode=TwoWay}" ></ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"  Margin="5">
+                        <TextBlock  Text="An:"/>
+                        <ComboBox  Width="100" HorizontalAlignment="Left" DisplayMemberPath="" 
+                      ItemsSource="{Binding Years}" SelectedItem="{Binding SelectedYear, Mode=TwoWay}" ></ComboBox>
+                    </StackPanel>
+                    <Button Content="Filtreaza" Command="{Binding FilterCommand}" Width="150" HorizontalAlignment="Left" Margin="5"/>
+                </StackPanel>
+            </Grid>
             <DataGrid Grid.Row="2" ItemsSource="{Binding TaxCalculationList}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" MinWidth="800">
                 <DataGrid.Resources>
                     <Style TargetType="TextBlock" x:Key="StandardTextBlock" >
@@ -113,7 +147,7 @@
                                         <Button.ToolTip>
                                             <TextBlock Text="Stergere"/>
                                         </Button.ToolTip>
-                                    </Button>                                                           
+                                    </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
