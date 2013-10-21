@@ -11,5 +11,8 @@ namespace TaxCalculator.Common
         public static string DateTimeFormat = "yyyy-MM-dd hh:mm:ss";
         public static string DateTimeFormatValability = "yyyy-MM-dd HH:mm:ss";
         public static string CoinTypesKey = "CoinTypes";
+        public static List<string> AvailableMonths= new List<string>() { "Ianuarie", "Feburarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie" };
+        public static List<int> AvailableYears= new List<int>() { 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 };
+          
     }
 }
