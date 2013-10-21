@@ -11,7 +11,7 @@
         <converter:IndicatorConverter x:Key="indicatorConverter"/>
         <converter:BackgroundColorConverter x:Key="backgroundColorConverter"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid x:Name="root">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -107,6 +107,20 @@
                                               GotKeyboardFocus="TextBox_MouseDoubleClick" KeyDown="TextBox_KeyDown"/>
                                     <TextBlock Text="{Binding ValueField}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}" 
                                            Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}" Height="30" TextAlignment="Right" Padding="0,0,4,0" FocusManager.IsFocusScope="False"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn MaxWidth="100" Width="Auto" Header="Valoare Initiala" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}"
+                                        >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <Grid>
+                                <TextBlock Style="{StaticResource StandardTextBlock}" Height="30"  Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}" FocusManager.IsFocusScope="False"/>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding InitialValueField}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Path=DataContext.Rectifying,ElementName=root}"
+                                           Background="LightGray" Height="30" TextAlignment="Right" Padding="0,0,4,0" FocusManager.IsFocusScope="False"/>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>

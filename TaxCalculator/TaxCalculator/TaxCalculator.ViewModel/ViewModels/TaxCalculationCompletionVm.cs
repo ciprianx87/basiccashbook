@@ -32,6 +32,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
             indicatorRepository = new IndicatorRepository();
             taxCalculationRepository = new TaxCalculationsRepository();
+            Rectifying = Visibility.Collapsed;
         }
 
         public void ExecuteTaxCalculation(object param)
@@ -102,6 +103,20 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
         }
 
+
+        private Visibility rectifying;
+        public Visibility Rectifying
+        {
+            get { return rectifying; }
+            set
+            {
+                //if (rectifying != value)
+                {
+                    rectifying = value;
+                    this.NotifyPropertyChanged("Rectifying");
+                }
+            }
+        }
 
         public ICommand SaveCommand { get; set; }
 
@@ -191,6 +206,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                 setupModel = param as TaxCalculationSetupModel;
                 nrDecimals = setupModel.NrOfDecimals;
                 DecimalConvertor.Instance.SetNumberOfDecimals(nrDecimals);
+                Rectifying = setupModel.Rectifying ? Visibility.Visible : Visibility.Collapsed;
+                //setupModel.Rectifying = false;
                 if (setupModel.Rectifying)
                 {
 
@@ -198,7 +215,19 @@ namespace TaxCalculator.ViewModel.ViewModels
                     var selectedTaxCalculation = taxCalculationRepository.Get(setupModel.SelectedTaxCalculation.Id);
                     var completeIndicatorDbModel = VmUtils.Deserialize<CompletedIndicatorDbModel>(selectedTaxCalculation.Content);
                     List<CompletedIndicatorVm> completedIndicatorList = completeIndicatorDbModel.CompletedIndicators;
-                    TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>(completedIndicatorList.ToVmList());
+
+                    var vmList = completedIndicatorList.ToVmList();
+                    //load the previous values
+                    vmList.ForEach(p =>
+                    {
+                        if (p.Type == TaxIndicatorType.Numeric)
+                        {
+                            p.InitialValueField = p.ValueField;
+                            p.ValueField = p.ValueField;
+                        }
+                    });
+
+                    TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>(vmList);
 
                     //load the formulas from the indicators
                     var selectedIndicator = indicatorRepository.Get(selectedTaxCalculation.IndicatorId);
@@ -219,6 +248,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                                 existingVmIndicator.TypeDescription = indicator.TypeDescription;
                                 existingVmIndicator.Type = VmUtils.GetIndicatorType(indicator.TypeDescription);
                                 existingVmIndicator.Style = VmUtils.GetStyleInfo(VmUtils.GetIndicatorType(indicator.TypeDescription));
+                                //existingVmIndicator.InitialValueField = indicator.Value;
                             }
                         }
                         //also load other data (nr decimals etc)

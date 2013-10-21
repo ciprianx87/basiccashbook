@@ -47,7 +47,7 @@
         <!--<TextBlock Text="Creare Registru de casa:" Style="{DynamicResource TitleStyle}" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>-->
         <TextBlock Grid.Row="0" Text="Nume:"/>
         <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtName" Text="{Binding CompanyViewModel.Name ,ValidatesOnDataErrors=True,NotifyOnValidationError=True,ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
-                  />
+                FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}"  />
 
         <TextBlock Grid.Row="1" Text="Adresa:"/>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CompanyViewModel.Address, ValidatesOnDataErrors=True,NotifyOnValidationError=True,ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />

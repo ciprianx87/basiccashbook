@@ -216,7 +216,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         }
 
         public decimal ValueFieldNumeric { get; set; }
-
+        public string InitialValueField { get; set; }
         public TaxIndicatorStyleInfo Style { get; set; }
         public class TaxIndicatorStyleInfo
         {
