@@ -31,7 +31,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         public ICommand EditIndicatorsCommand { get; set; }
         public ICommand ViewCommand { get; set; }
         public ICommand FilterCommand { get; set; }
-
+        public ICommand ClearFiltersCommand { get; set; }
 
         public TaxCalculationListVm(bool isRectifying)
         {
@@ -44,6 +44,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             this.EditIndicatorsCommand = new DelegateCommand(EditIndicators, CanEditIndicators);
             this.ViewCommand = new DelegateCommand(View, CanView);
             this.FilterCommand = new DelegateCommand(Filter, CanFilter);
+            this.ClearFiltersCommand = new DelegateCommand(ClearFilters, CanClearFilters); 
             Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
 
             taxCalculationRepository = new TaxCalculationsRepository();
@@ -181,6 +182,18 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         #region methods
 
+       
+
+        private bool CanClearFilters(object parameter)
+        {
+            return true;
+        }
+
+        private void ClearFilters(object parameter)
+        {
+            LoadData(false);
+
+        } 
 
         private bool CanFilter(object parameter)
         {
@@ -189,7 +202,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void Filter(object parameter)
         {
-            LoadData();
+            LoadData(true);
         }
         private bool CanView(object parameter)
         {
@@ -216,18 +229,21 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             dt.Tick -= new EventHandler(dt_Tick);
             dt.Stop();
-            LoadData();
+            LoadData(false);
 
         }
 
 
-        private void LoadData()
+        private void LoadData(bool useFilters)
         {
             try
             {
                 TaxCalculationList = new ObservableCollection<TaxCalculationsViewModel>();
                 var existingIndicators = taxCalculationRepository.GetAll().Where(p => p.Rectifying == isRectifying).ToList();
-                ApplyFilter(existingIndicators);
+                if (useFilters)
+                {
+                    ApplyFilter(existingIndicators);
+                }
                 var existingIndicatorsVm = existingIndicators.ToVmList();
                 if (existingIndicatorsVm != null)
                 {
