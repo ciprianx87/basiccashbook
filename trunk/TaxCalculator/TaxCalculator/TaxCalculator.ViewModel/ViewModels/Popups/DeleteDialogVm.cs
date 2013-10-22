@@ -7,6 +7,7 @@ using TaxCalculator.Common.Mediator;
 using System.Windows.Input;
 using TaxCalculator.Data.Model;
 using TaxCalculator.ViewModel.ViewModels.Model;
+using TaxCalculator.Common;
 
 namespace TaxCalculator.ViewModel.ViewModels.Popups
 {
@@ -59,8 +60,15 @@ namespace TaxCalculator.ViewModel.ViewModels.Popups
 
         private void OK(object parameter)
         {
-            DeleteEntity();
-            Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
+            try
+            {
+                DeleteEntity();
+                Mediator.Instance.SendMessage(MediatorActionType.CloseWindow, this.Guid);
+            }
+            catch (Exception ex)
+            {
+                WindowHelper.OpenErrorDialog(Messages.CannotDeleteEntity);
+            }
         }
 
         public ICommand CancelCommand { get; set; }
