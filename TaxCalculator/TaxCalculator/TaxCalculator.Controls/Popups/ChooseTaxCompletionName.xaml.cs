@@ -25,6 +25,7 @@ namespace TaxCalculator.Controls.Popups
         public ChooseTaxCompletionName()
         {
             InitializeComponent();
+            txtName.Focus();
             Mediator.Instance.Register(MediatorActionType.SetSaveAsCallBackAction, SetSaveAsCallBackAction);
             this.Closing += new System.ComponentModel.CancelEventHandler(ChooseTaxCompletionName_Closing);
         }

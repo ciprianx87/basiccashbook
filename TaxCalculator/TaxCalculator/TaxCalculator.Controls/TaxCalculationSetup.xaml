@@ -65,7 +65,8 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"  Margin="5">
                     <TextBlock  Text="Curs Valutar:"/>
-                    <TextBox Text="{Binding ExchangeRateString,Mode=TwoWay}"/>
+                    <TextBox Text="{Binding ExchangeRateString,Mode=TwoWay}" MouseDoubleClick="TextBox_MouseDoubleClick" 
+                                              GotKeyboardFocus="TextBox_MouseDoubleClick" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"  Margin="5">
                     <TextBlock  Text="Numar Zecimale:"/>

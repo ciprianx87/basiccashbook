@@ -157,38 +157,17 @@ namespace TaxCalculator.ViewModel.ViewModels
                 }
                 else
                 {
-                    var taxIndicatorModelList = TaxIndicators.ToList().ToCompletedList();
-                    CompletedIndicatorDbModel contentModel = new CompletedIndicatorDbModel()
+                    if (setupModel.ExchangeRate != 0 && setupModel.CoinType != Constants.CoinTypeLei)
                     {
-                        CompletedIndicators = taxIndicatorModelList,
-                        PreviousIndicatorId = null
-                    };
-                    if (setupModel.Rectifying)
-                    {
-                        contentModel.PreviousIndicatorId = setupModel.SelectedTaxCalculation.Id;
+                        SaveTaxCalculationCompletion(chosenName, setupModel.CoinType, setupModel.ExchangeRate, setupModel.NrOfDecimals);
+                        SaveTaxCalculationCompletion(chosenName, Constants.CoinTypeLei, 1, setupModel.NrOfDecimals);
                     }
-                    var content = VmUtils.SerializeEntity(contentModel);
-                    TaxCalculationOtherData otherData = new TaxCalculationOtherData()
+                    else
                     {
-                        VerifiedBy = setupModel.VerifiedBy,
-                        CreatedBy = setupModel.CreatedBy,
-                        CoinType = setupModel.CoinType,
-                        ExchangeRate = setupModel.ExchangeRate,
-                        Month = setupModel.Month,
-                        NrOfDecimals = setupModel.NrOfDecimals,
-                        Name = chosenName,
-                        Year = setupModel.Year
-                    };
-                    //save the data in the DB
-                    TaxCalculations tc = new TaxCalculations()
-                    {
-                        CompanyId = setupModel.SelectedCompany.Id,
-                        IndicatorId = setupModel.SelectedIndicatorList.Id,
-                        Rectifying = setupModel.Rectifying,
-                        Content = content,
-                        OtherData = VmUtils.SerializeEntity(otherData)
-                    };
-                    taxCalculationRepository.Create(tc);
+                        SaveTaxCalculationCompletion(chosenName, setupModel.CoinType, 1, setupModel.NrOfDecimals);
+                    }
+
+                    //add the tax calculation for the selected coin also if an exchange rate is provided
                     WindowHelper.OpenInformationDialog(Messages.InfoWasSaved);
 
                 }
@@ -198,6 +177,52 @@ namespace TaxCalculator.ViewModel.ViewModels
                 Logger.Instance.LogException(ex);
                 WindowHelper.OpenErrorDialog(Messages.ErrorSavingInfo);
             }
+        }
+
+        private void SaveTaxCalculationCompletion(string chosenName, string coinType, decimal exchangeRate, byte nrOfDecimals)
+        {
+            var taxIndicatorModelList = TaxIndicators.ToList().ToCompletedList();
+            //multiply with the exchange rate
+            taxIndicatorModelList.ForEach(p =>
+            {
+                if (!string.IsNullOrEmpty(p.Value))
+                {
+                    var valueDec = DecimalConvertor.Instance.StringToDecimal(p.Value);
+                    p.Value = DecimalConvertor.Instance.DecimalToString(valueDec * exchangeRate, nrOfDecimals);
+                }
+            }
+            );
+            CompletedIndicatorDbModel contentModel = new CompletedIndicatorDbModel()
+            {
+                CompletedIndicators = taxIndicatorModelList,
+                PreviousIndicatorId = null
+            };
+            if (setupModel.Rectifying)
+            {
+                contentModel.PreviousIndicatorId = setupModel.SelectedTaxCalculation.Id;
+            }
+            var content = VmUtils.SerializeEntity(contentModel);
+            TaxCalculationOtherData otherData = new TaxCalculationOtherData()
+            {
+                VerifiedBy = setupModel.VerifiedBy,
+                CreatedBy = setupModel.CreatedBy,
+                CoinType = coinType,
+                ExchangeRate = exchangeRate,
+                Month = setupModel.Month,
+                NrOfDecimals = setupModel.NrOfDecimals,
+                Name = chosenName + " - " + coinType,
+                Year = setupModel.Year
+            };
+            //save the data in the DB
+            TaxCalculations tc = new TaxCalculations()
+            {
+                CompanyId = setupModel.SelectedCompany.Id,
+                IndicatorId = setupModel.SelectedIndicatorList.Id,
+                Rectifying = setupModel.Rectifying,
+                Content = content,
+                OtherData = VmUtils.SerializeEntity(otherData)
+            };
+            taxCalculationRepository.Create(tc);
         }
         public void SetSetupModel(object param)
         {

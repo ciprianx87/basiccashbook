@@ -21,6 +21,7 @@ namespace TaxCalculator.ViewModel
         public static string Error_LoadingData = "Eroare la incarcarea informatiei";
         public static string Error_NoTaxCalculationsSelection = "Nu exista nici un document de calcul impozit pentru datele curente (companie si lista indicatori)!";
         public static string Error_FormulaModifiedForRectification = "Lista de indicatori a fost modificata de cand s-a facut calculul initial!";
+        public static string Error_MissingFields = "Nu sunt completate toate campurile!";
 
     }
 }

@@ -31,5 +31,38 @@ namespace TaxCalculator.Controls
         {
             (this.DataContext as BaseViewModel).Dispose();
         }
+
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            //return;
+            TextBox txtBox = sender as TextBox;
+            txtBox.SelectAll();
+            e.Handled = true;
+            txtBox.Focus();
+
+        }
+
+        private void SelectivelyIgnoreMouseButton(object sender, MouseButtonEventArgs e)
+        {
+            TextBox tb = (sender as TextBox);
+            if (tb != null)
+            {
+                if (!tb.IsKeyboardFocusWithin)
+                {
+                    e.Handled = true;
+                    tb.Focus();
+                }
+            }
+        }
+
+        private void TextBox_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = (sender as TextBox);
+            if (tb != null)
+            {
+                tb.SelectAll();
+            }
+        }
     }
 }
