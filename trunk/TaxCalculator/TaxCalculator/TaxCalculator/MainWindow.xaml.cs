@@ -108,7 +108,7 @@ namespace TaxCalculator
 
         private void InitSettings()
         {
-            AppSettings.InformationPopupCloseInterval = 2000;
+            AppSettings.InformationPopupCloseInterval = 1500;
             DecimalConvertor.Instance.SetNumberOfDecimals(2);
         }
 

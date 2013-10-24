@@ -486,10 +486,17 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             return true;
         }
-
+        private bool IsValid()
+        {
+            return !string.IsNullOrEmpty(CreatedBy) && !string.IsNullOrEmpty(VerifiedBy);
+        }
         private void AddValues(object parameter)
         {
-
+            if (!IsValid())
+            {
+                WindowHelper.OpenErrorDialog(Messages.Error_MissingFields);
+                return;
+            }
             //load the selected data and navigate to the fill-in screen
             TaxCalculationSetupModel setupModel = new TaxCalculationSetupModel()
             {

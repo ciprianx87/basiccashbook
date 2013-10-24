@@ -24,6 +24,7 @@ namespace TaxCalculator.Controls.Popups
         {
             InitializeComponent();
             this.DataContext = new CreateEditIndicatorVm();
+            txtName.Focus();
         }
 
         public void Dispose()
