@@ -13,7 +13,7 @@ namespace TaxCalculator.ViewModel.Extensions
         public static List<TaxIndicator> ToModelList(this List<TaxIndicatorViewModel> list)
         {
             var taxIndicators = new List<TaxIndicator>();
-            taxIndicators.AddRange(list.Select(p => ToVm(p)));
+            taxIndicators.AddRange(list.Select(p => ToModel(p)));
             return taxIndicators;
         }
 
@@ -34,14 +34,13 @@ namespace TaxCalculator.ViewModel.Extensions
                 IndicatorFormula = item.IndicatorFormula,
                 Type = VmUtils.GetIndicatorType(item.TypeDescription),
                 Style = VmUtils.GetStyleInfo(VmUtils.GetIndicatorType(item.TypeDescription)),
-                // ValueField = item.Value
-                //IsValid=item.isv
+                InnerId = item.InnerId
             };
 
             return result;
         }
 
-        public static TaxIndicator ToVm(this TaxIndicatorViewModel item)
+        public static TaxIndicator ToModel(this TaxIndicatorViewModel item)
         {
             var result = new TaxIndicator()
             {
@@ -51,6 +50,7 @@ namespace TaxCalculator.ViewModel.Extensions
                 TypeDescription = item.TypeDescription,
                 IndicatorFormula = item.IndicatorFormula,
                 Type = VmUtils.GetIndicatorType(item.TypeDescription),
+                InnerId = item.InnerId
                 // Value = item.ValueField
             };
 
@@ -99,7 +99,8 @@ namespace TaxCalculator.ViewModel.Extensions
                 NrCrt = item.NrCrtString,
                 Description = item.Description,
                 Value = item.ValueField,
-                Type = item.Type
+                Type = item.Type,
+                InnerId = item.InnerId
             };
 
             return result;
@@ -119,7 +120,8 @@ namespace TaxCalculator.ViewModel.Extensions
                 NrCrt = string.IsNullOrEmpty(item.NrCrt) ? new Nullable<int>() : Convert.ToInt32(item.NrCrt),
                 Description = item.Description,
                 ValueField = item.Value,
-                Type = item.Type
+                Type = item.Type,
+                InnerId = item.InnerId
             };
 
             return result;

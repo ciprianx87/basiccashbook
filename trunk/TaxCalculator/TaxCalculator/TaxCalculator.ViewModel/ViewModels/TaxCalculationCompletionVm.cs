@@ -157,6 +157,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 }
                 else
                 {
+                   
                     if (setupModel.ExchangeRate != 0 && setupModel.CoinType != Constants.CoinTypeLei)
                     {
                         SaveTaxCalculationCompletion(chosenName, setupModel.CoinType, setupModel.ExchangeRate, setupModel.NrOfDecimals);

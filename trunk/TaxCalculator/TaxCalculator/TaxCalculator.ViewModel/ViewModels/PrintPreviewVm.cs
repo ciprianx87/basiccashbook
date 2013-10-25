@@ -234,15 +234,23 @@ namespace TaxCalculator.ViewModel.ViewModels
                 TaxCalculationOtherData initialOtherData = null;
                 List<CompletedIndicatorVm> initialSavedEntities = null;
                 List<PrintRow> initialPrintRowList = null;
-                if (calculation.Rectifying)
+                bool row57Completed = false;
+                var row57 = GetRowByInnerId(savedEntities, 57);
+                if (row57 != null)
                 {
-                    //load the initial data also
-                    var initialCalculation = taxCalculationRepository.Get(completedIndicatorDbModel.PreviousIndicatorId.Value);
-                    initialOtherData = VmUtils.Deserialize<TaxCalculationOtherData>(initialCalculation.OtherData);
-
-                    var initialCompletedIndicatorDbModel = VmUtils.Deserialize<CompletedIndicatorDbModel>(initialCalculation.Content);
+                    row57Completed = DecimalConvertor.Instance.StringToDecimal(row57.Value) != 0;
+                }
+                if (row57Completed)
+                {
+                    var initialCompletedIndicatorDbModel = VmUtils.Deserialize<CompletedIndicatorDbModel>(calculation.Content);
                     initialSavedEntities = initialCompletedIndicatorDbModel.CompletedIndicators;
 
+                    var row10 = GetRowByInnerId(initialSavedEntities, 10);
+                    var row27 = GetRowByInnerId(initialSavedEntities, 27);
+                    var row57Value = DecimalConvertor.Instance.StringToDecimal(row57.Value);
+                    row10.Value = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(row10.Value) + row57Value, otherData.NrOfDecimals);
+                    row27.Value = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(row27.Value) + row57Value, otherData.NrOfDecimals);
+                    
                     initialPrintRowList = initialSavedEntities.ToPrintRowList();
                     //AddExtraRows(initialPrintRowList, selectedVm.VerifiedBy, selectedVm.CreatedBy);
                     AddEmptyRows(initialPrintRowList);
@@ -250,7 +258,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
                 var printRowList = savedEntities.ToPrintRowList();
                 AddExtraRows(printRowList, selectedVm.VerifiedBy, selectedVm.CreatedBy);
-                if (calculation.Rectifying)
+                if (row57Completed)
                 {
                     PrintData.Pages = BuildPages(printRowList, initialPrintRowList);
                 }
@@ -273,12 +281,12 @@ namespace TaxCalculator.ViewModel.ViewModels
                     };
                     firstPage.FirstPage = true;
 
-                    PrintData.Pages.ForEach(p => p.RectifyingVisibility = calculation.Rectifying ? Visibility.Visible : Visibility.Collapsed);
+                    PrintData.Pages.ForEach(p => p.Version2Visibility = row57Completed ? Visibility.Visible : Visibility.Collapsed);
 
-                    if (calculation.Rectifying)
+                    if (row57Completed)
                     {
-                        firstPage.FirstPageData.InitialMonth = initialOtherData.Month;
-                        firstPage.FirstPageData.InitialYear = initialOtherData.Year.ToString();
+                        //firstPage.FirstPageData.InitialMonth = initialOtherData.Month;
+                        //firstPage.FirstPageData.InitialYear = initialOtherData.Year.ToString();
 
                     }
                 }
@@ -288,6 +296,12 @@ namespace TaxCalculator.ViewModel.ViewModels
                 Logger.Instance.Log.Error(ex);
                 WindowHelper.OpenErrorDialog(Messages.Error_LoadingData);
             }
+        }
+
+        private static CompletedIndicatorVm GetRowByInnerId(List<CompletedIndicatorVm> savedEntities, int rowInnerId)
+        {
+            var existingRow = savedEntities.FirstOrDefault(p => p.InnerId == rowInnerId);
+            return existingRow;
         }
         private void AddEmptyRows(List<PrintRow> printRowList)
         {
