@@ -6,7 +6,11 @@
         <Setter Property="FontSize" Value="30"/>
         <Setter Property="FontWeight" Value="Bold"/>
     </Style>
-    <Style TargetType="UserControl" x:Key="StandardUserControl" >
+
+    <Style TargetType="TextBlock" x:Key="SubTitleStyle" >
+        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style><Style TargetType="UserControl" x:Key="StandardUserControl" >
         <Setter Property="Background" Value="#FFF0F0F0"/>
         <Setter Property="MinWidth" Value="1100"/>
         <Setter Property="MinHeight" Value="600"/>

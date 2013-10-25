@@ -15,6 +15,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="Date Societati" Style="{DynamicResource TitleStyle}" HorizontalAlignment="Center"/>
             <Button Grid.Row="1"  Margin="0,20,0,0"  Command="{Binding CreateCommand}" Width="70" Height="60" HorizontalAlignment="Left">
                 <StackPanel Orientation="Vertical">
                     <Image Source="/TaxCalculator.Controls;component/Images/createButton.png" Stretch="Uniform"  Width="30" Height="34"/>
@@ -43,21 +44,21 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>-->
-                    <DataGridTemplateColumn MinWidth="350" Header="Nume">
+                    <DataGridTemplateColumn MinWidth="250" Header="Denumire Societate" Width="40*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding Name}" Style="{StaticResource StandardTextBlock}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="*" MinWidth="310" Header="Adresa">
+                    <DataGridTemplateColumn  MinWidth="200" Header="Adresa" Width="30*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding Address}"  Style="{StaticResource StandardTextBlock}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="*" Header="CUI">
+                    <DataGridTemplateColumn Width="30*" MinWidth="200" Header="CUI">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding CUI}"  Style="{StaticResource StandardTextBlock}"/>
