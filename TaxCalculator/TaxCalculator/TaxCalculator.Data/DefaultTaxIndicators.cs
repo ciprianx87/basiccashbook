@@ -7,9 +7,6 @@ using TaxCalculator.Data.Model;
 
 namespace TaxCalculator.Data
 {
-    public class Class1
-    {
-    }
 
     public class DefaultTaxIndicators
     {
@@ -25,14 +22,6 @@ namespace TaxCalculator.Data
                     if (string.IsNullOrEmpty(curLine))
                     {
                         //do not add any item if the line is empty
-                        //TaxIndicator ti = new TaxIndicator()
-                        //{
-                        //    NrCrtString = "",
-                        //    Description = "",
-                        //    TypeDescription = "",
-                        //    IndicatorFormula = ""
-                        //};
-                        // taxIndicators.Add(ti);
                     }
                     else
                     {
@@ -56,8 +45,13 @@ namespace TaxCalculator.Data
                         var value = parts[3];
                         if (value == "..") { value = ""; }
 
+                        int innerId = 0;
+                        if (parts.Length == 5)
+                        {
+                            innerId = Convert.ToInt32(parts[4]);
+                        }
                         int? nrCrt = null;
-                        int normalNr=0;
+                        int normalNr = 0;
                         if (int.TryParse(nr, out normalNr))
                         {
                             nrCrt = normalNr;
@@ -69,7 +63,8 @@ namespace TaxCalculator.Data
                             NrCrt = nrCrt,
                             Description = description,
                             TypeDescription = type,
-                            IndicatorFormula = value
+                            IndicatorFormula = value,
+                            InnerId = innerId
                         };
                         taxIndicators.Add(ti);
                     }

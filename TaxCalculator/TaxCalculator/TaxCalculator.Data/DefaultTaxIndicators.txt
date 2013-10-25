@@ -8,7 +8,7 @@
 7, - sold ct. 711 D,Numeric,..
 8, + sold ct. 712 C,Numeric,..
 9, - sold ct. 712 D,Numeric,..
-10,Total cheltuieli,Numeric,..
+10,Total cheltuieli,Numeric,..,10
 11, - rulaj ct.609,Numeric,..
 12, + rulaj ct.709,Numeric,..
 13,"Venituri - Cheltuieli,  sold ct. 121",Calculat,rd.(1-2-3-4+5+6-7+8-9)-rd.(10-11+12)
@@ -26,7 +26,7 @@
 24,Actiuni sociale nedeductibile din ct. 6458 (rd. 42),Calculat,rd.42
 25,Amortizare nedeductibila din ct. 6811,Numeric,..
 26,TVA nedeductibila din ct. 635,Numeric,..
-27,Cheltuieli cu donatii si subventii ct. 6582,Numeric,..
+27,Cheltuieli cu donatii si subventii ct. 6582,Numeric,..,27
 28,"Cheltuieli cu provizioane si ajustari nedeductibile din ct. 6812, 6813, 6814, 685",Numeric,..
 29,Cheltuieli cu pierderi din creante si debitori diversi din ct. 654,Numeric,..
 30,Cheltuieli cu impozit profit ct. 691,Numeric,..
@@ -64,7 +64,7 @@
 ,Calcul impozit profit ,Text,
 55,Total impozit profit datorat (rd.47),Calculat,rd.47
 56,Cheltuieli sponsorizare deductibile,Calculat,rd.54
-57,Impozit pe profit final (rd.55-rd.56),Calculat,rd.(55-56)
+57,Impozit pe profit final (rd.55-rd.56),Calculat,rd.(55-56),57
 ,Total impozit pe profit final datorat,Text,
 58,Total impozit pe porfit datorat,Calculat,rd.57
 59,              datorat cumulat trim. Precedent,Numeric,..

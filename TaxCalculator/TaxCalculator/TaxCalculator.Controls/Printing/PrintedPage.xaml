@@ -84,18 +84,18 @@
                 <Label Content="{Binding FirstPageData.CoinType,FallbackValue='LEI'}" HorizontalAlignment="Center" Style="{x:Null}"/>
             </StackPanel>
 
-            <StackPanel  Grid.Row="5"   Grid.Column="3" VerticalAlignment="Center" Visibility="{Binding RectifyingVisibility}" Margin="0,0,0,0">
+            <StackPanel  Grid.Row="5"   Grid.Column="3" VerticalAlignment="Center" Visibility="{Binding Version2Visibility}" Margin="0,0,0,0">
                 <Label Content="Perioada" HorizontalAlignment="Center"  Style="{x:Null}" Height="25" Width="100" HorizontalContentAlignment="Center"/>
             </StackPanel>
-            <StackPanel  Grid.Row="6"   Grid.Column="3" VerticalAlignment="Center" Visibility="{Binding RectifyingVisibility}">
-                <Label Content="{Binding FirstPageData.InitialMonthYear,FallbackValue='Mai 2013'}" HorizontalAlignment="Center" Style="{x:Null}"/>
+            <StackPanel  Grid.Row="6"   Grid.Column="3" VerticalAlignment="Center" Visibility="{Binding Version2Visibility}">
+                <Label Content="{Binding FirstPageData.MonthYear,FallbackValue='Mai 2013'}" HorizontalAlignment="Center" Style="{x:Null}"/>
             </StackPanel>
             
-            <StackPanel  Grid.Row="7"   Grid.Column="2" VerticalAlignment="Center" Visibility="{Binding RectifyingVisibility}">
-                <Label Content="inainte de impozit" HorizontalAlignment="Center" Style="{x:Null}" FontSize="12" Padding="0"/>
+            <StackPanel  Grid.Row="7"   Grid.Column="2" VerticalAlignment="Center" Visibility="{Binding Version2Visibility}">
+                <Label Content="inainte de impozit" HorizontalAlignment="Center" Style="{x:Null}" FontSize="11"  BorderThickness="0"/>
             </StackPanel>
-            <StackPanel  Grid.Row="7"   Grid.Column="3" VerticalAlignment="Center" Visibility="{Binding RectifyingVisibility}">
-                <Label Content="dupa impozit" HorizontalAlignment="Center" Style="{x:Null}"/>
+            <StackPanel  Grid.Row="7"   Grid.Column="3" VerticalAlignment="Center" Visibility="{Binding Version2Visibility}">
+                <Label Content="dupa impozit" HorizontalAlignment="Center" Style="{x:Null}"  FontSize="11" />
             </StackPanel>
             <!--table header-->
             <Border Grid.Row="5" Grid.RowSpan="3"   Grid.Column="0" Margin="1,0,0,0"/>
@@ -133,9 +133,9 @@
             <Border  Grid.Row="4"  Grid.Column="2"  Style="{StaticResource GrayBorder}"/>
             <Border  Grid.Row="4"  Grid.Column="3"  Style="{StaticResource GrayBorder}"/>
 
-            <Border  Grid.Row="12"  Grid.Column="0"  Style="{StaticResource GrayBorder}"/>
+            <!--<Border  Grid.Row="12"  Grid.Column="0"  Style="{StaticResource GrayBorder}"/>
             <Border  Grid.Row="12"  Grid.Column="1"  Style="{StaticResource GrayBorder}"/>
-            <Border  Grid.Row="12"  Grid.Column="2"  Style="{StaticResource GrayBorder}"/>
+            <Border  Grid.Row="12"  Grid.Column="2"  Style="{StaticResource GrayBorder}"/>-->
         </Grid>
 
         <ListBox x:Name="lstItems" Grid.Row="2" Grid.ColumnSpan="3" Margin="0,0,0,0" Background="Transparent" BorderThickness="0"  ItemsSource="{Binding Rows}" 
@@ -162,15 +162,15 @@
                         <Label Grid.Column="2" Content="{Binding Value}"  HorizontalContentAlignment="Right"  Padding="{StaticResource textPadding}"    Visibility="{Binding Type, Converter={StaticResource rowTypeToVisibilityConverter}, ConverterParameter='Calculat'}"/>
                         <Label Grid.Column="2" Content=""  HorizontalContentAlignment="Right"  Padding="{StaticResource textPadding}"    Visibility="{Binding Type, Converter={StaticResource rowTypeToVisibilityConverter}, ConverterParameter='Text'}"/>
 
-                        <Label Grid.Column="3" Visibility="{Binding DataContext.RectifyingVisibility, ElementName='root'}"  Padding="{StaticResource textPadding}">
+                        <Label Grid.Column="3" Visibility="{Binding DataContext.Version2Visibility, ElementName='root'}"  Padding="{StaticResource textPadding}">
                             <Label HorizontalAlignment="Stretch"  Content="{Binding InitialValue}"  HorizontalContentAlignment="Right"   BorderThickness="0"
                                    Visibility="{Binding Type, Converter={StaticResource rowTypeToVisibilityConverter}, ConverterParameter='Numeric'}"/>
                         </Label>
-                        <Label  Grid.Column="3" Visibility="{Binding DataContext.RectifyingVisibility, ElementName='root'}"  Padding="{StaticResource textPadding}">
+                        <Label  Grid.Column="3" Visibility="{Binding DataContext.Version2Visibility, ElementName='root'}"  Padding="{StaticResource textPadding}">
                             <Label HorizontalAlignment="Stretch"  Content="{Binding InitialValue}"  HorizontalContentAlignment="Right"   BorderThickness="0"
                                    Visibility="{Binding Type, Converter={StaticResource rowTypeToVisibilityConverter}, ConverterParameter='Calculat'}"/>
                         </Label>
-                        <Label  Grid.Column="3" Visibility="{Binding DataContext.RectifyingVisibility, ElementName='root'}"  Padding="{StaticResource textPadding}">
+                        <Label  Grid.Column="3" Visibility="{Binding DataContext.Version2Visibility, ElementName='root'}"  Padding="{StaticResource textPadding}">
                             <Label  HorizontalAlignment="Stretch" Content=""  HorizontalContentAlignment="Right"    BorderThickness="0"
                                     Visibility="{Binding Type, Converter={StaticResource rowTypeToVisibilityConverter}, ConverterParameter='Text'}"/>
                         </Label>
@@ -182,7 +182,7 @@
                         <!--<Label Grid.Column="0"/>-->
                         <Label Grid.Column="1"/>
                         <Label Grid.Column="2"/>
-                        <Label Grid.Column="3" Width="100"  Visibility="{Binding DataContext.RectifyingVisibility, ElementName='root'}"/>
+                        <Label Grid.Column="3" Width="100"  Visibility="{Binding DataContext.Version2Visibility, ElementName='root'}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

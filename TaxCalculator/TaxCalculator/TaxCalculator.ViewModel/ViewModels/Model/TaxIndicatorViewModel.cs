@@ -24,6 +24,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         }
 
        // public int? NrCrt { get; set; }
+        public int InnerId { get; set; }
 
         private int? nrCrt;
         public int? NrCrt

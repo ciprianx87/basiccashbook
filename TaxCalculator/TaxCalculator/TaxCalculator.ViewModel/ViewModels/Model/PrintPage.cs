@@ -18,7 +18,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public int PageNumber { get; set; }
         public FirstPageData FirstPageData { get; set; }
         public List<PrintRow> Rows { get; set; }
-        public Visibility RectifyingVisibility { get; set; }
+        public Visibility Version2Visibility { get; set; }
 
     }
     public class PrintRow

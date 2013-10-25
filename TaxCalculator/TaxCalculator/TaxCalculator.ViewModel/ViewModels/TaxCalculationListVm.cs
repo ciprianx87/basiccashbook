@@ -19,6 +19,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 {
     public class TaxCalculationListVm : BaseViewModel
     {
+        const string ALL = "Toate";
         ICompanyRepository companyRepository;
         ITaxCalculationsRepository taxCalculationRepository;
         DispatcherTimer dt;
@@ -44,7 +45,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             this.EditIndicatorsCommand = new DelegateCommand(EditIndicators, CanEditIndicators);
             this.ViewCommand = new DelegateCommand(View, CanView);
             this.FilterCommand = new DelegateCommand(Filter, CanFilter);
-            this.ClearFiltersCommand = new DelegateCommand(ClearFilters, CanClearFilters); 
+            this.ClearFiltersCommand = new DelegateCommand(ClearFilters, CanClearFilters);
             Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
 
             taxCalculationRepository = new TaxCalculationsRepository();
@@ -61,13 +62,16 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void LoadInitialData()
         {
-            Years = new ObservableCollection<int>(Constants.AvailableYears);
+            Years = new ObservableCollection<string>(Constants.AvailableYears.Select(p => p.ToString()));
+            Years.Insert(0, ALL);
             SelectedYear = Years[0];
             Months = new ObservableCollection<string>(Constants.AvailableMonths);
+            Months.Insert(0, ALL);
             SelectedMonth = Months[0];
             Companies = new ObservableCollection<Company>(companyRepository.GetAll());
             if (Companies.Count > 0)
             {
+                Companies.Insert(0, new Company() { Name = ALL });
                 SelectedCompany = Companies[0];
             }
             else
@@ -138,8 +142,8 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
         }
 
-        private ObservableCollection<int> years;
-        public ObservableCollection<int> Years
+        private ObservableCollection<string> years;
+        public ObservableCollection<string> Years
         {
             get { return years; }
             set
@@ -153,8 +157,8 @@ namespace TaxCalculator.ViewModel.ViewModels
         }
 
 
-        private int selectedYear;
-        public int SelectedYear
+        private string selectedYear;
+        public string SelectedYear
         {
             get { return selectedYear; }
             set
@@ -182,7 +186,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         #region methods
 
-       
+
 
         private bool CanClearFilters(object parameter)
         {
@@ -193,7 +197,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             LoadData(false);
 
-        } 
+        }
 
         private bool CanFilter(object parameter)
         {
@@ -268,7 +272,9 @@ namespace TaxCalculator.ViewModel.ViewModels
             {
                 TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(item.OtherData);
                 bool isValid = false;
-                isValid = otherData.Month == SelectedMonth && otherData.Year == SelectedYear && item.CompanyId == SelectedCompany.Id;
+                isValid = (otherData.Month == SelectedMonth || SelectedMonth == ALL) &&
+                    (otherData.Year.ToString() == SelectedYear || SelectedYear == ALL) &&
+                    (item.CompanyId == SelectedCompany.Id || SelectedCompany.Name == ALL);
                 if (!isValid)
                 {
                     existingIndicators.Remove(item);
