@@ -10,15 +10,27 @@
     <UserControl.Resources>
         <converter:IndicatorConverter x:Key="indicatorConverter"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid x:Name="root">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
-                  CanUserResizeRows="False">
+
+        <TextBlock Grid.Row="0" Text="{Binding Name}" Style="{DynamicResource SubTitleStyle}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button Grid.Row="1" Content="Inapoi" HorizontalAlignment="Left" Height="30" Width="100" Command="{Binding BackCommand}"></Button>
+        <Button Grid.Row="1" Content="Validare Formule" HorizontalAlignment="Left" Height="30" Width="100" Command="{Binding ValidateCommand}" Margin="140,0,0,0"></Button>
+        <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0"
+                  CanUserAddRows="False" MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
+                  CanUserResizeRows="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
+            <DataGrid.ContextMenu>
+                <ContextMenu x:Name="contextMenu" Opened="ContextMenu_Opened">
+                    <MenuItem Header="Adauga inainte"  Command="{Binding AddBeforeCommand}"/>
+                    <MenuItem Header="Adauga dupa" Command="{Binding AddAfterCommand}"/>
+                    <MenuItem Header="Sterge" Command="{Binding RemoveRowCommand}"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.Resources>
                 <Style TargetType="DataGridCell"  x:Key="NoFocusColumStyle">
                     <Setter Property="IsTabStop" Value="False"/>
@@ -61,7 +73,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn  MinWidth="400" Header="Indicatori">
+                <DataGridTemplateColumn  MinWidth="470" Header="Indicatori">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <DataTemplate.Resources>
@@ -70,15 +82,18 @@
                             <!---->
                             <!--Style="{StaticResource StandardTextBlock}"-->
                             <!--Style="{Binding Type, Converter={StaticResource indicatorConverter}}"-->
-                            <TextBlock Text="{Binding Description}" FontWeight="{Binding Style.FontWeight}">
-                            </TextBlock>
+                            <TextBox Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontWeight="{Binding Style.FontWeight}">
+                            </TextBox>
+                            <!--<TextBox Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandardTextBox}"  Visibility="{Binding Style.ValueFieldVisibility}"/>-->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn MinWidth="150" Header="Tip Indicatori">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding Type}" Style="{StaticResource StandardTextBlock}"/>
+                            <!--<TextBlock Text="{Binding Type}" Style="{StaticResource StandardTextBlock}"/>-->
+                            <ComboBox ItemsSource="{Binding DataContext.AvailableIndicatorTypes, ElementName=root}" SelectedValue="{Binding Type, Mode=TwoWay}" HorizontalAlignment="Stretch"
+                                      SelectionChanged="ComboBox_SelectionChanged"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -92,7 +107,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn MinWidth="250"  Width="*" Header="Mod de calcul Indicatori">
+                <DataGridTemplateColumn MinWidth="200"  Width="*" Header="Mod de calcul Indicatori">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
                             <StackPanel>

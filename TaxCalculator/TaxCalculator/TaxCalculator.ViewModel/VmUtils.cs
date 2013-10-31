@@ -48,9 +48,9 @@ namespace TaxCalculator.ViewModel
 
             return s.Select(c => checked((byte)c)).ToArray();
         }
-        public static TaxIndicatorViewModel.TaxIndicatorStyleInfo GetStyleInfo(TaxIndicatorType taxIndicatorType)
+        public static TaxIndicatorStyleInfo GetStyleInfo(TaxIndicatorType taxIndicatorType)
         {
-            TaxIndicatorViewModel.TaxIndicatorStyleInfo styleInfo = new TaxIndicatorViewModel.TaxIndicatorStyleInfo();
+            TaxIndicatorStyleInfo styleInfo = new TaxIndicatorStyleInfo();
 
             switch (taxIndicatorType)
             {

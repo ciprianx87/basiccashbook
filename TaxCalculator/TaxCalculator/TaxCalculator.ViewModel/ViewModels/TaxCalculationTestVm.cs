@@ -110,9 +110,9 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
             return hasChanged;
         }
-        private TaxIndicatorViewModel.TaxIndicatorStyleInfo GetStyleInfo(TaxIndicatorType taxIndicatorType)
+        private TaxIndicatorStyleInfo GetStyleInfo(TaxIndicatorType taxIndicatorType)
         {
-            TaxIndicatorViewModel.TaxIndicatorStyleInfo styleInfo = new TaxIndicatorViewModel.TaxIndicatorStyleInfo();
+            TaxIndicatorStyleInfo styleInfo = new TaxIndicatorStyleInfo();
 
             switch (taxIndicatorType)
             {

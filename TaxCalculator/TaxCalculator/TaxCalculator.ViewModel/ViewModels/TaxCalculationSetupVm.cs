@@ -408,7 +408,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                     SelectedCoinType = ExistingCoinTypes[0];
                 }
                 //load companies
-                Companies = new ObservableCollection<Company>(companyRepository.GetAll());
+                Companies = new ObservableCollection<Company>(companyRepository.GetAll().OrderBy(p => p.Name));
                 if (Companies.Count > 0)
                 {
                     SelectedCompany = Companies[0];

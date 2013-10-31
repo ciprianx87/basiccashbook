@@ -22,6 +22,16 @@ namespace TaxCalculator.ViewModel
         public static string Error_NoTaxCalculationsSelection = "Nu exista nici un document de calcul impozit pentru datele curente (companie si lista indicatori)!";
         public static string Error_FormulaModifiedForRectification = "Lista de indicatori a fost modificata de cand s-a facut calculul initial!";
         public static string Error_MissingFields = "Nu sunt completate toate campurile!";
+        public static string Error_EmptyFormula = "Formula goala!";
+        public static string Error_EmptyIndicatorName = "Denumire indicator goala!";
+        public static string Error_ParsingFormula = "Eroare la interpretarea formulei!";
+        public static string Error_InvalidFormula = "Formula invalida!";
+        public static string Error_InvalidIfCondition = "Conditie IF invalida. Trebuie sa contina 3 parti separate prin \";\"";
+        public static string Error_UnknownFormulaType = "Tip invalid de formula";
+        public static string Error_InvalidIndicatorsCannotSave = "Lista contine indicatori eronati. Nu se poate efectua salvarea!";
+        public static string Error_InfiniteLoopDetected = "Bucla infinita detectata";
+        public static string Error_InvalidFields="Exista campuri invalide!";
+        public static string GenerateReportType2 = "Generati calcul de impozit dupa inregistrarea impozitului?";
 
     }
 }

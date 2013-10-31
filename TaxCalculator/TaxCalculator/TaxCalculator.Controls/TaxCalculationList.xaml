@@ -39,7 +39,7 @@
                 <StackPanel  Orientation="Vertical">
                     <StackPanel Orientation="Horizontal"  Margin="5">
                         <TextBlock Text="Societate"/>
-                        <ComboBox Width="100" HorizontalAlignment="Left" DisplayMemberPath="Name" 
+                        <ComboBox Width="300" HorizontalAlignment="Left" DisplayMemberPath="Name" 
                       ItemsSource="{Binding Companies}" SelectedItem="{Binding SelectedCompany, Mode=TwoWay}" ></ComboBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"  Margin="5">
@@ -54,7 +54,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"  Margin="5">
                         <Button Content="Filtreaza" Command="{Binding FilterCommand}" Width="150" HorizontalAlignment="Left" Margin="5"/>
-                        <Button Content="Curata Filtre" Command="{Binding ClearFiltersCommand}" Width="150" HorizontalAlignment="Left" Margin="5"/>
+                        <Button Content="Curata Filtre" Command="{Binding ClearFiltersCommand}" Width="150" HorizontalAlignment="Left" Margin="5" Visibility="Collapsed"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -89,7 +89,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn MinWidth="250" Width="*" Header="Nume">
+                    <DataGridTemplateColumn MinWidth="250" Width="*" Header="Raport">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding Name}" Style="{StaticResource StandardTextBlock}"/>
@@ -104,10 +104,17 @@
                 NrOfDecimals = otherData.NrOfDecimals,
                 Rectifying = item.Rectifying,
                 VerifiedBy = otherData.VerifiedBy-->
-                    <DataGridTemplateColumn MinWidth="70" Width="*" Header="Luna">
+                    <DataGridTemplateColumn MinWidth="100" Width="100" Header="Luna">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding Month}" Style="{StaticResource StandardTextBlock}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn MinWidth="100" Width="100" Header="Anul">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock Text="{Binding Year}" Style="{StaticResource StandardTextBlock}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -125,7 +132,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="100" MinWidth="100" Header="Rectificativa?">
+                    <DataGridTemplateColumn Width="100" MinWidth="100" Header="Rectificativa">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <CheckBox IsChecked="{Binding Rectifying}" IsEnabled="False"  VerticalAlignment="Center" HorizontalAlignment="Center"/>

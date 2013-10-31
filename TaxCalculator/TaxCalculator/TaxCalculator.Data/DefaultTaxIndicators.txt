@@ -29,7 +29,7 @@
 27,Cheltuieli cu donatii si subventii ct. 6582,Numeric,..,27
 28,"Cheltuieli cu provizioane si ajustari nedeductibile din ct. 6812, 6813, 6814, 685",Numeric,..
 29,Cheltuieli cu pierderi din creante si debitori diversi din ct. 654,Numeric,..
-30,Cheltuieli cu impozit profit ct. 691,Numeric,..
+30,Cheltuieli cu impozit profit ct. 691,Numeric,..,30
 31,Total cheltuieli nedeductibile,Calculat,rd.(19+20+21+22+23+24+25+26+27+28+29+30)
 ,Cheltuieli protocol,Text,..
 32,Venituri - cheltuieli (rd.13),Calculat,rd.13

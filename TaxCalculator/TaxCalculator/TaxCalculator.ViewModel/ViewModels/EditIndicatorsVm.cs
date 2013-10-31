@@ -15,12 +15,16 @@ using System.Windows.Input;
 using TaxCalculator.Data.Interfaces;
 using TaxCalculator.Data.Repositories;
 using TaxCalculator.ViewModel.Extensions;
+using TaxCalculator.Common.Exceptions;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
-    public class TaxCalculationVm : BaseViewModel
+    public class EditIndicatorsVm : BaseViewModel
     {
 
+        public ICommand ValidateCommand { get; set; }
+        public ICommand AddAfterCommand { get; set; }
+        public ICommand RemoveRowCommand { get; set; }
         public ICommand AddBeforeCommand { get; set; }
         public ICommand SaveAsCommand { get; set; }
         public ICommand SaveCommand { get; set; }
@@ -28,22 +32,23 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         IIndicatorRepository indicatorRepository;
 
-        public TaxCalculationVm()
+        public EditIndicatorsVm()
         {
             this.AddBeforeCommand = new DelegateCommand(AddBefore, CanAddBefore);
+            this.AddAfterCommand = new DelegateCommand(AddAfter, CanAddAfter);
+            this.RemoveRowCommand = new DelegateCommand(RemoveRow, CanRemoveRow);
+            this.ValidateCommand = new DelegateCommand(Validate, CanValidate);
             this.SaveCommand = new DelegateCommand(Save, CanSave);
             this.SaveAsCommand = new DelegateCommand(SaveAs, CanSaveAs);
             this.BackCommand = new DelegateCommand(Back, CanBack);
             indicatorRepository = new IndicatorRepository();
 
-            Mediator.Instance.Register(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
             Mediator.Instance.Register(MediatorActionType.SetTaxIndicatorToEditFormula, SetTaxIndicatorToEditFormula);
 
             TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>();
 
+            LoadInitialData();
             //Tests();
-
-            ExecuteTaxCalculation(null);
         }
 
         private void AddDefaultIndicators()
@@ -58,55 +63,20 @@ namespace TaxCalculator.ViewModel.ViewModels
             t.PerformTests(TaxIndicators.ToList());
         }
 
-        public void ExecuteTaxCalculation(object param)
+
+
+        private ObservableCollection<TaxIndicatorType> availableIndicatorTypes;
+        public ObservableCollection<TaxIndicatorType> AvailableIndicatorTypes
         {
-            //return;
-            //execute this until all the values remain the same
-            bool hasChanged = true;
-            while (hasChanged)
+            get { return availableIndicatorTypes; }
+            set
             {
-                hasChanged = false;
-                var calculatedTaxIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
-                foreach (var item in calculatedTaxIndicators)
+                if (availableIndicatorTypes != value)
                 {
-                    hasChanged = ExecuteTaxCalculation(hasChanged, item);
+                    availableIndicatorTypes = value;
+                    this.NotifyPropertyChanged("AvailableIndicatorTypes");
                 }
             }
-        }
-
-
-        private bool ExecuteTaxCalculation(bool hasChanged, TaxIndicatorViewModel item)
-        {
-            TaxFormula taxFormula = null;
-            try
-            {
-                if (item.Type == TaxIndicatorType.Calculat && string.IsNullOrEmpty(item.IndicatorFormula))
-                {
-                    item.SetError("formula goala");
-                }
-                taxFormula = new TaxFormula(item.IndicatorFormula);
-            }
-            catch (Exception ex)
-            {
-                item.SetError("eroare la interpretarea formulei");
-            }
-            try
-            {
-
-                //var newValue = taxFormula.Execute(TaxIndicators.ToList());//.ToString();
-                var newValue = taxFormula.Execute(TaxIndicators.ToList()).ToString();
-                //var newValueConverted = DecimalConvertor.Instance.DecimalToString(newValue);
-                if (item.ValueField != newValue)
-                {
-                    hasChanged = true;
-                }
-                item.ValueField = newValue;
-            }
-            catch (Exception ex)
-            {
-                item.SetError("formula invalida");
-            }
-            return hasChanged;
         }
 
 
@@ -154,6 +124,60 @@ namespace TaxCalculator.ViewModel.ViewModels
         }
 
         #region methods
+
+        private bool CanRemoveRow(object parameter)
+        {
+            return true;
+        }
+
+        private void RemoveRow(object parameter)
+        {
+            if (SelectedItem != null)
+            {
+                var indexOf = TaxIndicators.IndexOf(SelectedItem);
+                var itemsToUpdate = TaxIndicators.Skip(indexOf).ToList();
+
+                TaxIndicators.Remove(SelectedItem);
+                foreach (var item in itemsToUpdate)
+                {
+                    if (item.NrCrt.HasValue)
+                    {
+                        item.NrCrt--;
+                    }
+                }
+            }
+        }
+
+        private bool CanAddAfter(object parameter)
+        {
+            return true;
+        }
+
+        private void AddAfter(object parameter)
+        {
+            if (SelectedItem != null)
+            {
+                var indexOf = TaxIndicators.IndexOf(SelectedItem);
+                int maxNrCrt = GetMaxNrCrt();
+                var itemsToUpdate = TaxIndicators.Skip(indexOf + 1).ToList();
+
+                InsertAndUpdateRows(indexOf + 1, itemsToUpdate, maxNrCrt);
+            }
+        }
+
+        public int GetMaxNrCrt()
+        {
+            if (SelectedItem == null)
+            {
+                return 0;
+            }
+            var indexOf = TaxIndicators.IndexOf(SelectedItem);
+            var previousItems = TaxIndicators.Take(indexOf + 1);
+            int maxNrCrt = 1;
+            maxNrCrt = GetMaxNrCrt(previousItems, maxNrCrt);
+            return maxNrCrt;
+        }
+
         private bool CanAddBefore(object parameter)
         {
             return true;
@@ -167,29 +191,36 @@ namespace TaxCalculator.ViewModel.ViewModels
             if (SelectedItem != null)
             {
                 var indexOf = TaxIndicators.IndexOf(SelectedItem);
-
-                var previousItems = TaxIndicators.Take(indexOf);
+                int maxNrCrt = GetMaxNrCrt();
                 var itemsToUpdate = TaxIndicators.Skip(indexOf).ToList();
 
-                int maxNrCrt = 1;
-                foreach (var item in previousItems.Reverse())
-                {
-                    if (item.NrCrt.HasValue)
-                    {
-                        maxNrCrt = item.NrCrt.Value + 1;
-                        break;
-                    }
-                }
+                InsertAndUpdateRows(indexOf, itemsToUpdate, maxNrCrt);
+            }
+        }
 
-                TaxIndicators.Insert(indexOf, GetEmptyRow(maxNrCrt));
-                foreach (var item in itemsToUpdate)
+        private void InsertAndUpdateRows(int indexOf, List<TaxIndicatorViewModel> itemsToUpdate, int maxNrCrt)
+        {
+            TaxIndicators.Insert(indexOf, GetEmptyRow(maxNrCrt));
+            foreach (var item in itemsToUpdate)
+            {
+                if (item.NrCrt.HasValue)
                 {
-                    if (item.NrCrt.HasValue)
-                    {
-                        item.NrCrt++;
-                    }
+                    item.NrCrt++;
                 }
             }
+        }
+
+        private static int GetMaxNrCrt(IEnumerable<TaxIndicatorViewModel> previousItems, int maxNrCrt)
+        {
+            foreach (var item in previousItems.Reverse())
+            {
+                if (item.NrCrt.HasValue)
+                {
+                    maxNrCrt = item.NrCrt.Value + 1;
+                    break;
+                }
+            }
+            return maxNrCrt;
         }
 
         private TaxIndicatorViewModel GetEmptyRow(int? id)
@@ -197,6 +228,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             TaxIndicatorViewModel newItem = new TaxIndicatorViewModel();
             newItem.NrCrt = id;
             newItem.Type = TaxIndicatorType.Numeric;
+            newItem.TypeDescription = newItem.Type.ToString();
             newItem.Description = "";
             newItem.IndicatorFormula = "";
             newItem.ValueFieldNumeric = 0;
@@ -211,6 +243,11 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void Save(object parameter)
         {
+            if (IsValid())
+            {
+                WindowHelper.OpenErrorDialog(Messages.Error_InvalidIndicatorsCannotSave);
+                return;
+            }
             try
             {
                 var taxIndicatorModelList = TaxIndicators.ToList().ToModelList();
@@ -223,6 +260,11 @@ namespace TaxCalculator.ViewModel.ViewModels
                 Logger.Instance.LogException(ex);
                 WindowHelper.OpenErrorDialog(Messages.ErrorSavingInfo);
             }
+        }
+
+        private bool IsValid()
+        {
+            return !ExecuteTaxCalculation(null);
         }
 
         public void SaveAsCallBackAction(Indicator newIndicator)
@@ -251,6 +293,11 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void SaveAs(object parameter)
         {
+            if (IsValid())
+            {
+                WindowHelper.OpenErrorDialog(Messages.Error_InvalidIndicatorsCannotSave);
+                return;
+            }
             try
             {
                 Action<Indicator> saveAsCallBackAction = new Action<Indicator>(SaveAsCallBackAction);
@@ -265,6 +312,109 @@ namespace TaxCalculator.ViewModel.ViewModels
         }
 
 
+        private bool CanValidate(object parameter)
+        {
+            return true;
+        }
+
+        private void Validate(object parameter)
+        {
+            ExecuteTaxCalculation(null);
+            //var calculatedIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat).ToList();
+            //foreach (var item in calculatedIndicators)
+            //{
+
+            //}
+        }
+
+        public bool ExecuteTaxCalculation(object param)
+        {
+            bool isValid = true;
+            //return;
+            //execute this until all the values remain the same
+            int executionCounter = 0;
+            bool hasChanged = true;
+            while (hasChanged)
+            {
+                executionCounter++;
+                if (executionCounter > Constants.InfiniteLoopThreshold)
+                {
+                    //probably got in an infinite loop
+                    WindowHelper.OpenErrorDialog(Messages.Error_InfiniteLoopDetected);
+                    break;
+                }
+                hasChanged = false;
+                var calculatedTaxIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
+                foreach (var item in calculatedTaxIndicators)
+                {
+                    try
+                    {
+                        hasChanged = ExecuteTaxCalculation(hasChanged, item);
+                    }
+                    catch (IndicatorFormulaException ife)
+                    {
+                        item.SetError(ife.Error);
+                        isValid = false;
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        item.SetError(Messages.Error_ParsingFormula);
+                        isValid = false;
+                        break;
+                    }
+                }
+            }
+            return isValid;
+        }
+
+
+        private bool ExecuteTaxCalculation(bool hasChanged, TaxIndicatorViewModel item)
+        {
+            hasChanged = false;
+            TaxFormula taxFormula = null;
+            //try
+            //{
+            if (item.Type == TaxIndicatorType.Calculat && string.IsNullOrEmpty(item.IndicatorFormula))
+            {
+                item.SetError(Messages.Error_EmptyFormula);
+                return hasChanged;
+            }
+            if (string.IsNullOrEmpty(item.Description))
+            {
+                item.SetError(Messages.Error_EmptyIndicatorName);
+                return hasChanged;
+            }
+            taxFormula = new TaxFormula(item.IndicatorFormula);
+            //}
+            //catch (IndicatorFormulaException ife)
+            //{
+            //    item.SetError(ife.Error);
+            //}
+            //catch (Exception ex)
+            //{
+            //    item.SetError(Messages.Error_ParsingFormula);
+            //}
+            //try
+            //{
+
+            var newValueString = DecimalConvertor.Instance.DecimalToString(taxFormula.Execute(TaxIndicators.ToList()), 0);
+            if (item.ValueField != newValueString)
+            {
+                hasChanged = true;
+            }
+            item.ValueField = newValueString;
+            //}
+            //catch (IndicatorFormulaException ife)
+            //{
+            //    item.SetError(ife.Error);
+            //}
+            //catch (Exception ex)
+            //{
+            //    item.SetError("formula invalida");
+            //}
+            return hasChanged;
+        }
         private bool CanBack(object parameter)
         {
             return true;
@@ -302,13 +452,13 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void LoadInitialData()
         {
-
+            var availableIndicators = Enum.GetValues(typeof(TaxIndicatorType)).Cast<TaxIndicatorType>().ToList();
+            AvailableIndicatorTypes = new ObservableCollection<TaxIndicatorType>(availableIndicators);
         }
 
         public override void Dispose()
         {
             base.Dispose();
-            Mediator.Instance.Unregister(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
             Mediator.Instance.Unregister(MediatorActionType.SetTaxIndicatorToEditFormula, SetTaxIndicatorToEditFormula);
 
 

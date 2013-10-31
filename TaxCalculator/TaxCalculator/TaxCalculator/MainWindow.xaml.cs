@@ -157,18 +157,21 @@ namespace TaxCalculator
 
         private void MenuItem_Companies(object sender, RoutedEventArgs e)
         {
+            HighlightMenu(menuCatalogs);
             ChangeContent(ContentTypes.CompanyList);
 
         }
 
         private void MenuItem_TaxIndicators(object sender, RoutedEventArgs e)
         {
+            HighlightMenu(menuCatalogs);
             ChangeContent(ContentTypes.TaxIndicatorList);
 
         }
 
         private void MenuItem_TaxCalculation(object sender, RoutedEventArgs e)
         {
+            HighlightMenu(menuTaxCalculation);
             ChangeContent(ContentTypes.TaxCalculationSetup);
 
         }
@@ -206,14 +209,28 @@ namespace TaxCalculator
 
         private void Report_TaxCalculation_Click(object sender, RoutedEventArgs e)
         {
+            HighlightMenu(menuReports);
             ChangeContent(ContentTypes.TaxCalculationList);
 
         }
 
         private void Report_TaxCalculation_Rectifying_Click(object sender, RoutedEventArgs e)
         {
+            HighlightMenu(menuReports);
             ChangeContent(ContentTypes.TaxCalculationListRectifying);
 
+        }
+        private void HighlightMenu(MenuItem menuItem)
+        {
+            ClearHighlights();
+            menuItem.Background = new SolidColorBrush(Colors.Gray);
+        }
+        private void ClearHighlights()
+        {
+            var menuBrush = new SolidColorBrush(Colors.Transparent);
+            menuCatalogs.Background = menuBrush;
+            menuReports.Background = menuBrush;
+            menuTaxCalculation.Background = menuBrush;
         }
     }
 }

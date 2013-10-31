@@ -44,7 +44,7 @@ namespace TaxCalculator.Controls
 
         void TaxCalculationCompletion_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-          
+
 
         }
 
@@ -98,12 +98,12 @@ namespace TaxCalculator.Controls
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return || e.Key==Key.Down)
+            if (e.Key == Key.Return || e.Key == Key.Down)
             {
                 TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Next);
                 MoveFocus(request);
             }
-            if (e.Key == Key.U)
+            if (e.Key == Key.Up)
             {
                 TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Previous);
                 MoveFocus(request);
@@ -112,7 +112,64 @@ namespace TaxCalculator.Controls
 
         private void dgTaxIndicators_GotFocus(object sender, RoutedEventArgs e)
         {
-            
+
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            int currentCounter = Convert.ToInt32((sender as TextBox).Tag);
+            if (e.Key == Key.Return || e.Key == Key.Down)
+            {
+                SelectTextBoxById(currentCounter + 1);
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Up)
+            {
+                SelectTextBoxById(currentCounter - 1);
+                e.Handled = true;
+            }
+        }
+        private void SelectTextBoxById(int id)
+        {
+            try
+            {
+                if (id < 0 || id > alltextboxes.Count)
+                {
+                    return;
+                }
+                var nextTextbox = alltextboxes.FirstOrDefault(p => p.Tag != null && p.Tag.ToString() == id.ToString());
+                if (nextTextbox != null)
+                {
+                    FocusTextBox(nextTextbox);
+                }
+            }
+            catch{}
+        }
+
+        private static void FocusTextBox(TextBox nextTextbox)
+        {
+            nextTextbox.Focus();
+            nextTextbox.SelectAll();
+        }
+
+        int counter = 1;
+        List<TextBox> alltextboxes = new List<TextBox>();
+        private void TextBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            var txtBox = (sender as TextBox);
+            if (txtBox.Tag != null && txtBox.Tag is Visibility && (Visibility)txtBox.Tag == Visibility.Visible)
+            {
+                txtBox.Tag = counter.ToString();
+                //txtBox.Text = counter.ToString();
+                if (counter == 1)
+                {
+                    //select the first textbox
+                    FocusTextBox(txtBox);
+                }
+                counter++;
+                alltextboxes.Add(txtBox);
+                
+            }
         }
 
     }
