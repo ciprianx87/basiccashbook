@@ -49,7 +49,8 @@ namespace TaxCalculator.ViewModel.Extensions
                 Description = item.Description,
                 TypeDescription = item.TypeDescription,
                 IndicatorFormula = item.IndicatorFormula,
-                Type = VmUtils.GetIndicatorType(item.TypeDescription),
+                //Type = VmUtils.GetIndicatorType(item.TypeDescription),
+                Type = item.Type,
                 InnerId = item.InnerId
                 // Value = item.ValueField
             };
@@ -78,7 +79,8 @@ namespace TaxCalculator.ViewModel.Extensions
                 Name = otherData.Name,
                 NrOfDecimals = otherData.NrOfDecimals,
                 Rectifying = item.Rectifying,
-                VerifiedBy = otherData.VerifiedBy
+                VerifiedBy = otherData.VerifiedBy,
+                Year = otherData.Year
             };
 
             return result;

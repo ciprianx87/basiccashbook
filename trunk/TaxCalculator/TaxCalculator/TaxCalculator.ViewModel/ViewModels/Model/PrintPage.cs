@@ -56,5 +56,6 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                 return string.Format("{0} {1}", InitialMonth, InitialYear);
             }
         }
+        public bool SecondTypeReport { get; set; }
     }
 }

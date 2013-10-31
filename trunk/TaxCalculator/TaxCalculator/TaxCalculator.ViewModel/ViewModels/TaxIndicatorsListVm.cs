@@ -11,6 +11,7 @@ using TaxCalculator.Common;
 using TaxCalculator.Data.Model;
 using TaxCalculator.Data.Repositories;
 using TaxCalculator.Data.Interfaces;
+using TaxCalculator.Data;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -48,6 +49,8 @@ namespace TaxCalculator.ViewModel.ViewModels
         }
 
         #region properties
+
+    
 
         private ObservableCollection<Indicator> taxIndicatorList;
         public ObservableCollection<Indicator> TaxIndicatorList
@@ -90,12 +93,19 @@ namespace TaxCalculator.ViewModel.ViewModels
             {
                 TaxIndicatorList = new ObservableCollection<Indicator>();
                 var existingIndicators = indicatorRepository.GetAll();
-                if (existingIndicators != null)
+                if (existingIndicators != null && existingIndicators.Count != 0)
                 {
-                    foreach (var item in existingIndicators)
-                    {
-                        TaxIndicatorList.Add(item);
-                    }
+                   
+                }
+                else
+                {
+                    //add a default one
+                    AddDefaultIndicator();
+                }
+                existingIndicators = indicatorRepository.GetAll();
+                foreach (var item in existingIndicators)
+                {
+                    TaxIndicatorList.Add(item);
                 }
             }
             catch (Exception ex)
@@ -106,6 +116,26 @@ namespace TaxCalculator.ViewModel.ViewModels
             IsBusy = false;
         }
 
+        private void AddDefaultIndicator()
+        {
+            var currentEntity = new Indicator();
+            currentEntity.Name = "Structura de indicatori initiala";
+            currentEntity.IsDefault = true;
+            currentEntity.Content = GetDefaultIndicators();
+            currentEntity.CreatedTimestamp = DateTime.Now;
+            var allItems = indicatorRepository.GetAll();
+            if (allItems.Count == 0)
+            {
+                //force IsDefault;
+                currentEntity.IsDefault = true;
+            }
+            indicatorRepository.Create(currentEntity);
+        }
+        private string GetDefaultIndicators()
+        {
+            var defaultIndicatorsString = VmUtils.SerializeEntity(DefaultTaxIndicators.GetDefaultIndicators());
+            return defaultIndicatorsString;
+        }
         public void Save(object param)
         {
             try
@@ -204,7 +234,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             return true;
         }
-     
+
 
         public void EditIndicators(object parameter)
         {

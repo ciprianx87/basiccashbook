@@ -11,13 +11,13 @@
             <MenuItem Header="FISIER">
                 <MenuItem Header="Iesire" Click="MenuItem_Iesire"></MenuItem>
             </MenuItem>
-            <MenuItem Header="CATALOAGE">
+            <MenuItem Header="CATALOAGE" x:Name="menuCatalogs">
                 <MenuItem Header="Date Societati" Click="MenuItem_Companies"></MenuItem>
                 <MenuItem Header="Indicatori calcul impozit profit" Click="MenuItem_TaxIndicators"></MenuItem>
             </MenuItem>
-            <MenuItem Header="CALCUL IMPOZIT PROFIT" Click="MenuItem_TaxCalculation">
+            <MenuItem Header="CALCUL IMPOZIT PROFIT" Click="MenuItem_TaxCalculation" x:Name="menuTaxCalculation">
             </MenuItem>
-            <MenuItem Header="RAPOARTE" Click="MenuItem_Reports" >
+            <MenuItem Header="RAPOARTE" Click="MenuItem_Reports" x:Name="menuReports" >
                 <MenuItem Header="Calcul impozit profit" Click="Report_TaxCalculation_Click"/>
                 <MenuItem Header="Calcul impozit profit « Rectificative »" Click="Report_TaxCalculation_Rectifying_Click"/>
             </MenuItem>

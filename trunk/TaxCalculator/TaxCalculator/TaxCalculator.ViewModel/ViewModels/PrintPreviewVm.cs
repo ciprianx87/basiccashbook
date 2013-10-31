@@ -12,6 +12,7 @@ using TaxCalculator.Common;
 using TaxCalculator.ViewModel.Extensions;
 using System.Windows.Input;
 using System.Windows;
+using TaxCalculator.ViewModel.Helper;
 
 
 namespace TaxCalculator.ViewModel.ViewModels
@@ -24,8 +25,12 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         public ICommand NextPageCommand { get; set; }
         public ICommand PreviousPageCommand { get; set; }
+        public ICommand BackCommand { get; set; }
 
         public ICommand PrintCommand { get; set; }
+
+        public ICommand ExportCommand { get; set; }
+
 
         #endregion
 
@@ -52,6 +57,8 @@ namespace TaxCalculator.ViewModel.ViewModels
             this.NextPageCommand = new DelegateCommand(NextPage, CanNextPage);
             this.PreviousPageCommand = new DelegateCommand(PreviousPage, CanPreviousPage);
             this.PrintCommand = new DelegateCommand(Print, CanPrint);
+            this.BackCommand = new DelegateCommand(Back, CanBack);
+            this.ExportCommand = new DelegateCommand(Export, CanExport);
         }
 
         private void LoadData()
@@ -164,6 +171,15 @@ namespace TaxCalculator.ViewModel.ViewModels
         #endregion
 
         #region Methods
+        private bool CanExport(object parameter)
+        {
+            return true;
+        }
+
+        private void Export(object parameter)
+        {
+            ExcelExport.ExportToExcel(PrintData);
+        }
 
         private bool CanPrint(object parameter)
         {
@@ -202,6 +218,16 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         }
 
+
+        private bool CanBack(object parameter)
+        {
+            return true;
+        }
+
+        private void Back(object parameter)
+        {
+            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.TaxCalculationList);
+        }
         private void LoadDataForCurrentPage()
         {
             if (currentPageNr > 0)
@@ -240,7 +266,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 {
                     row57Completed = DecimalConvertor.Instance.StringToDecimal(row57.Value) != 0;
                 }
-                if (row57Completed)
+                if (row57Completed && otherData.SecondTypeReport)
                 {
                     var initialCompletedIndicatorDbModel = VmUtils.Deserialize<CompletedIndicatorDbModel>(calculation.Content);
                     initialSavedEntities = initialCompletedIndicatorDbModel.CompletedIndicators;
@@ -250,7 +276,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                     var row57Value = DecimalConvertor.Instance.StringToDecimal(row57.Value);
                     row10.Value = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(row10.Value) + row57Value, otherData.NrOfDecimals);
                     row27.Value = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(row27.Value) + row57Value, otherData.NrOfDecimals);
-                    
+
                     initialPrintRowList = initialSavedEntities.ToPrintRowList();
                     //AddExtraRows(initialPrintRowList, selectedVm.VerifiedBy, selectedVm.CreatedBy);
                     AddEmptyRows(initialPrintRowList);
@@ -258,7 +284,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
                 var printRowList = savedEntities.ToPrintRowList();
                 AddExtraRows(printRowList, selectedVm.VerifiedBy, selectedVm.CreatedBy);
-                if (row57Completed)
+                if (row57Completed && otherData.SecondTypeReport)
                 {
                     PrintData.Pages = BuildPages(printRowList, initialPrintRowList);
                 }
@@ -277,11 +303,12 @@ namespace TaxCalculator.ViewModel.ViewModels
                         Cui = calculation.Company.CUI,
                         Month = selectedVm.Month,
                         Year = otherData.Year.ToString(),
-                        CoinType = otherData.CoinType
+                        CoinType = otherData.CoinType,
+                        SecondTypeReport = otherData.SecondTypeReport
                     };
                     firstPage.FirstPage = true;
 
-                    PrintData.Pages.ForEach(p => p.Version2Visibility = row57Completed ? Visibility.Visible : Visibility.Collapsed);
+                    PrintData.Pages.ForEach(p => p.Version2Visibility = row57Completed && otherData.SecondTypeReport ? Visibility.Visible : Visibility.Collapsed);
 
                     if (row57Completed)
                     {

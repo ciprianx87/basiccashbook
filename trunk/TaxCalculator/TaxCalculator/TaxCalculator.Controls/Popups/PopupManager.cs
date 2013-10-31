@@ -72,9 +72,9 @@ namespace TaxCalculator.Controls.Popups
                     case PopupType.ChooseTaxCompletionName:
                         popup = new ChooseTaxCompletionName();
                         break;
-                    //case PopupType.YesNoDialog:
-                    //    popup = new YesNoDialog();
-                    //    break;                   
+                    case PopupType.YesNoDialog:
+                        popup = new YesNoPopup();
+                        break;                   
                     default:
                         break;
                 }

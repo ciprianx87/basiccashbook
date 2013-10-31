@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using TaxCalculator.Common;
 using System.Diagnostics;
+using TaxCalculator.Common.Exceptions;
 
 namespace TaxCalculator.ViewModel.ViewModels.Model
 {
@@ -16,6 +17,14 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
     /// </summary>
     public class TaxFormula
     {
+        public List<FormulaParam> Params { get; set; }
+        public FormulaType FormulaType { get; set; }
+
+        public TaxFormula()
+        {
+            Params = new List<FormulaParam>();
+        }
+
         public TaxFormula(string formula)
             : this()
         {
@@ -24,20 +33,15 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                 this.FormulaType = Model.FormulaType.Invalid;
                 ExtractFormula(formula);
             }
+            catch (IndicatorFormulaException ife)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
-
                 throw;
             }
         }
-
-        public TaxFormula()
-        {
-            Params = new List<FormulaParam>();
-        }
-
-        public List<FormulaParam> Params { get; set; }
-        public FormulaType FormulaType { get; set; }
 
         public decimal Execute(List<TaxIndicatorViewModel> taxIndicatorList)
         {
@@ -64,7 +68,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             }
             else
             {
-                throw new Exception("unknown formula type");
+                throw new IndicatorFormulaException(Messages.Error_UnknownFormulaType);
             }
             return currentValue;
         }
@@ -172,7 +176,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             var existing = taxIndicatorList.FirstOrDefault(p => p.NrCrt == id);
             if (existing == null)
             {
-                throw new Exception("could not find taxIndicator with id " + id);
+                throw new IndicatorFormulaException("Nu s-a putut gasi indicatorul cu numarul: " + id);
             }
             return existing;
         }
@@ -318,6 +322,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             current.ForEach(p => resultedString += p.ToString());
             return resultedString;
         }
+
         private void ExtractFormula(string formula)
         {
             formula = formula.Trim().ToLower().Replace(" ", string.Empty);
@@ -343,10 +348,10 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             else if (formula.StartsWith("rd."))
             {
                 ParseValueFormula(formula);
-            }           
+            }
             else
             {
-                throw new Exception("invalid formula");
+                throw new IndicatorFormulaException(Messages.Error_InvalidFormula);
             }
         }
 
@@ -429,8 +434,8 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                                     //rd.41*16%
                                     //rd.1*2,5%
                                     secondPart = secondPart.TrimEnd('%');
-                                    decimal percentage =  DecimalConvertor.Instance.StringToDecimal(secondPart);
-                                   
+                                    decimal percentage = DecimalConvertor.Instance.StringToDecimal(secondPart);
+
                                     //if (decimal.TryParse(secondPart, out percentage))
                                     {
                                         par = new FormulaParam();
@@ -469,16 +474,20 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                                         }
                                         else
                                         {
-                                            throw new Exception(" error");
+                                            throw new IndicatorFormulaException("Eroare la interpretarea " + secondPart);
                                         }
                                     }
                                 }
                             }
                             else
                             {
-                                throw new Exception("parse error");
+                                throw new IndicatorFormulaException("Numar invalid: " + formulaParts[0]);
 
                             }
+                        }
+                        else
+                        {
+                            throw new IndicatorFormulaException("Indicator invalid: " + onlyFormula);
                         }
                         // throw new Exception("invalid formula: " + formula);
                     }
@@ -519,7 +528,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             string[] ifMembers = formula.Split(new char[] { ';' });
             if (ifMembers.Length != 3)
             {
-                throw new Exception();
+                throw new IndicatorFormulaException(Messages.Error_InvalidIfCondition);
             }
             //get the condition
             ifMembers[0] = RemoveParanthesis(ifMembers[0]);
@@ -572,15 +581,22 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             var parts = formula.Split(Constants.AllowedRdOperations);
             if (parts.Length > 0)
             {
-                nextNumber = Convert.ToInt32(parts[0]);
-                formula = formula.Remove(0, parts[0].Length);
+                if (Int32.TryParse(parts[0], out nextNumber))
+                {
+                    //nextNumber = Convert.ToInt32(parts[0]);
+                    formula = formula.Remove(0, parts[0].Length);
 
-                return nextNumber * sign;
+                    return nextNumber * sign;
+                }
+                else
+                {
+                    throw new IndicatorFormulaException("Indicator invalid: " + parts[0]);
+                }
             }
             else
             {
                 return 0;
-                throw new Exception("invalid input: " + formula);
+                //throw new Exception("invalid input: " + formula);
             }
         }
     }

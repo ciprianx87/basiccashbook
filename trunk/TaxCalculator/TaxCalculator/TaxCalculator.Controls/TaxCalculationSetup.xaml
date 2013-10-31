@@ -12,7 +12,7 @@
             <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Padding" Value="6,0,0,0"/>
-            <Setter Property="Width" Value="150"/>
+            <Setter Property="Width" Value="230"/>
         </Style>
         <Style TargetType="TextBox">
             <Setter  Property="Width" Value="150"/>
@@ -45,12 +45,12 @@
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="5">
                     <TextBlock  Text="Societate:"/>
-                    <ComboBox Width="100" HorizontalAlignment="Left" DisplayMemberPath="Name" 
+                    <ComboBox Width="300" HorizontalAlignment="Left" DisplayMemberPath="Name" 
                       ItemsSource="{Binding Companies}" SelectedItem="{Binding SelectedCompany, Mode=TwoWay}" ></ComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"  Margin="5">
-                    <TextBlock Text="Formula:"/>
-                    <ComboBox  Width="100" HorizontalAlignment="Left" DisplayMemberPath="Name" 
+                    <TextBlock Text="Structura Indicatori:"/>
+                    <ComboBox  Width="300" HorizontalAlignment="Left" DisplayMemberPath="Name" 
                       ItemsSource="{Binding TaxIndicatorLists}" SelectedItem="{Binding SelectedIndicatorList, Mode=TwoWay}" ></ComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"  Margin="5">
@@ -106,7 +106,7 @@
                     <ComboBox  Width="200" HorizontalAlignment="Left" DisplayMemberPath="Name" 
                       ItemsSource="{Binding TaxCalculationList}" SelectedItem="{Binding SelectedTaxCalculation, Mode=TwoWay}" ></ComboBox>
                 </StackPanel>
-                <Button Content="Introduceti Valori" Width="150" Height="35" HorizontalAlignment="Left" Margin="30,0,0,0" Command="{Binding AddValuesCommand}"/>
+                <Button Content="Introduceti Valori" Width="150" Height="35" HorizontalAlignment="Left" Margin="100,0,0,0" Command="{Binding AddValuesCommand}"/>
             </StackPanel>
         </Grid>
     </Grid>

@@ -12,6 +12,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public string CoinType { get; set; }
         public decimal ExchangeRate { get; set; }
         public string Month { get; set; }
+        public int Year { get; set; }
         public int NrOfDecimals { get; set; }
         public string CreatedBy { get; set; }
         public string VerifiedBy { get; set; }

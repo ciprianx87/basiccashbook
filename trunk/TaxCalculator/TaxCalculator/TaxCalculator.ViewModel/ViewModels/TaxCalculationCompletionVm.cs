@@ -20,6 +20,8 @@ namespace TaxCalculator.ViewModel.ViewModels
 {
     public class TaxCalculationCompletionVm : BaseViewModel
     {
+        public ICommand BackCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
         IIndicatorRepository indicatorRepository;
         ITaxCalculationsRepository taxCalculationRepository;
         private TaxCalculationSetupModel setupModel;
@@ -29,10 +31,17 @@ namespace TaxCalculator.ViewModel.ViewModels
             Mediator.Instance.Register(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
             Mediator.Instance.Register(MediatorActionType.SetSetupModel, SetSetupModel);
             this.SaveCommand = new DelegateCommand(Save, CanSave);
-
+            this.BackCommand = new DelegateCommand(Back, CanBack);
             indicatorRepository = new IndicatorRepository();
             taxCalculationRepository = new TaxCalculationsRepository();
             Rectifying = Visibility.Collapsed;
+        }
+
+
+        private bool IsValid()
+        {
+            //TaxIndicators[0].IsIndicatorValid
+            return true;
         }
 
         public void ExecuteTaxCalculation(object param)
@@ -41,11 +50,20 @@ namespace TaxCalculator.ViewModel.ViewModels
             {
                 return;
             }
+
             //return;
             //execute this until all the values remain the same
+            int executionCounter = 0;
             bool hasChanged = true;
             while (hasChanged)
             {
+                executionCounter++;
+                if (executionCounter > Constants.InfiniteLoopThreshold)
+                {
+                    //probably got in an infinite loop
+                    WindowHelper.OpenErrorDialog(Messages.Error_InfiniteLoopDetected);
+                    break;
+                }
                 hasChanged = false;
                 var calculatedTaxIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
                 foreach (var item in calculatedTaxIndicators)
@@ -118,7 +136,15 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
         }
 
-        public ICommand SaveCommand { get; set; }
+        private bool CanBack(object parameter)
+        {
+            return true;
+        }
+
+        private void Back(object parameter)
+        {
+            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.TaxCalculationSetup);
+        }
 
         private bool CanSave(object parameter)
         {
@@ -132,12 +158,33 @@ namespace TaxCalculator.ViewModel.ViewModels
                 if (TaxIndicators != null)
                 {
                     //perform validation
-
-                    //save with the selected name
-
-                    Action<string> saveAsCallBackAction = new Action<string>(SaveAsCallBack);
-                    Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.ChooseTaxCompletionName);
-                    Mediator.Instance.SendMessage(MediatorActionType.SetSaveAsCallBackAction, saveAsCallBackAction);
+                    if (IsValid())
+                    {
+                        //ask the user if he wants version 2, if needed
+                        bool row57Completed = false;
+                        var row57 = GetRowByInnerId(TaxIndicators.ToList(), 57);
+                        if (row57 != null)
+                        {
+                            row57Completed = DecimalConvertor.Instance.StringToDecimal(row57.ValueField) != 0;
+                        }
+                        if (row57Completed)
+                        {
+                            //ask the user and wait for the response
+                            Mediator.Instance.Register(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallback);
+                            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.YesNoDialog);
+                            Mediator.Instance.SendMessage(MediatorActionType.SetMessage, Messages.GenerateReportType2);
+                        }
+                        else
+                        {
+                            //save with the selected name
+                            isSecondTypeReport = false;
+                            PerformSave();
+                        }
+                    }
+                    else
+                    {
+                        WindowHelper.OpenErrorDialog(Messages.Error_InvalidFields);
+                    }
                 }
             }
             catch (Exception ex)
@@ -146,6 +193,47 @@ namespace TaxCalculator.ViewModel.ViewModels
                 WindowHelper.OpenErrorDialog(Messages.ErrorSavingInfo);
             }
         }
+
+        private void PerformSave()
+        {
+            Action<string> saveAsCallBackAction = new Action<string>(SaveAsCallBack);
+            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.ChooseTaxCompletionName);
+            Mediator.Instance.SendMessage(MediatorActionType.SetSaveAsCallBackAction, saveAsCallBackAction);
+        }
+        private bool isSecondTypeReport = false;
+        public void YesNoPopupResponseCallback(object param)
+        {
+            try
+            {
+                Mediator.Instance.Unregister(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallback);
+                switch ((YesNoPopupResponse)param)
+                {
+                    case YesNoPopupResponse.Yes:
+                        //save with the selected name
+                        //save as version2
+                        isSecondTypeReport = true;
+                        PerformSave();
+                        break;
+                    case YesNoPopupResponse.No:
+                        //save only as version1
+                        isSecondTypeReport = false;
+                        PerformSave();
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+                WindowHelper.OpenErrorDialog(Messages.GenericError);
+            }
+        }
+
+        private static TaxIndicatorViewModel GetRowByInnerId(List<TaxIndicatorViewModel> savedEntities, int rowInnerId)
+        {
+            var existingRow = savedEntities.FirstOrDefault(p => p.InnerId == rowInnerId);
+            return existingRow;
+        }
+
         private void SaveAsCallBack(string chosenName)
         {
             try
@@ -157,7 +245,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 }
                 else
                 {
-                   
+
                     if (setupModel.ExchangeRate != 0 && setupModel.CoinType != Constants.CoinTypeLei)
                     {
                         SaveTaxCalculationCompletion(chosenName, setupModel.CoinType, setupModel.ExchangeRate, setupModel.NrOfDecimals);
@@ -212,7 +300,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                 Month = setupModel.Month,
                 NrOfDecimals = setupModel.NrOfDecimals,
                 Name = chosenName + " - " + coinType,
-                Year = setupModel.Year
+                Year = setupModel.Year,
+                SecondTypeReport = isSecondTypeReport
             };
             //save the data in the DB
             TaxCalculations tc = new TaxCalculations()
@@ -309,6 +398,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             base.Dispose();
             Mediator.Instance.Unregister(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
             Mediator.Instance.Unregister(MediatorActionType.SetSetupModel, SetSetupModel);
+            Mediator.Instance.Unregister(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallback);
         }
 
     }

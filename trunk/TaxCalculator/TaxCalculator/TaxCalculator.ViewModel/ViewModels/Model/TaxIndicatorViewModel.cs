@@ -23,7 +23,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             Style.ValueFieldVisibility = Visibility.Visible;
         }
 
-       // public int? NrCrt { get; set; }
+        // public int? NrCrt { get; set; }
         public int InnerId { get; set; }
 
         private int? nrCrt;
@@ -55,7 +55,24 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public string Description { get; set; }
         public string TypeDescription { get; set; }
         //public string IndicatorFormula { get; set; }
-        public TaxIndicatorType Type { get; set; }
+        //public TaxIndicatorType Type { get; set; }
+
+        private TaxIndicatorType type;
+        public TaxIndicatorType Type
+        {
+            get { return type; }
+            set
+            {
+                if (type != value)
+                {
+                    type = value;
+                    TypeDescription = type.ToString();
+                    //change the style also
+                    Style = VmUtils.GetStyleInfo(type);
+                    this.NotifyPropertyChanged("Type");
+                }
+            }
+        }
 
         private string valueField;
 
@@ -91,7 +108,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                     {
                         Mediator.Instance.SendMessage(MediatorActionType.ExecuteTaxCalculation, null);
                     }
-                    NotifyPropertyChanged("ValueField");                    
+                    NotifyPropertyChanged("ValueField");
                 }
                 catch (Exception)
                 {
@@ -218,13 +235,23 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
 
         public decimal ValueFieldNumeric { get; set; }
         public string InitialValueField { get; set; }
-        public TaxIndicatorStyleInfo Style { get; set; }
-        public class TaxIndicatorStyleInfo
+        //public TaxIndicatorStyleInfo Style { get; set; }
+
+        private TaxIndicatorStyleInfo style;
+        public TaxIndicatorStyleInfo Style
         {
-            public Visibility FormulaFieldVisibility { get; set; }
-            public Visibility ValueFieldVisibility { get; set; }
-            public FontWeight FontWeight { get; set; }
+            get { return style; }
+            set
+            {
+                if (style != value)
+                {
+                    style = value;
+                    this.NotifyPropertyChanged("Style");
+                }
+            }
         }
+
+       
 
         public static TaxIndicatorViewModel FromTaxIndicator(TaxIndicator ti)
         {
@@ -242,6 +269,13 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             this.ErrorMessage = message;
             this.FormulaTextColor = new SolidColorBrush(Colors.Red);
         }
+    }
+
+    public class TaxIndicatorStyleInfo
+    {
+        public Visibility FormulaFieldVisibility { get; set; }
+        public Visibility ValueFieldVisibility { get; set; }
+        public FontWeight FontWeight { get; set; }
     }
 
 }
