@@ -17,6 +17,7 @@ using TaxCalculator.Common;
 using TaxCalculator.ViewModel.ViewModels.Model;
 using System.Printing;
 using TaxCalculator.Common.Mediator;
+using Microsoft.Win32;
 
 namespace TaxCalculator.Controls.Printing
 {

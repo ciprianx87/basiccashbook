@@ -30,8 +30,9 @@ namespace TaxCalculator.ViewModel
         public static string Error_UnknownFormulaType = "Tip invalid de formula";
         public static string Error_InvalidIndicatorsCannotSave = "Lista contine indicatori eronati. Nu se poate efectua salvarea!";
         public static string Error_InfiniteLoopDetected = "Bucla infinita detectata";
-        public static string Error_InvalidFields="Exista campuri invalide!";
+        public static string Error_InvalidFields = "Exista campuri invalide!";
         public static string GenerateReportType2 = "Generati calcul de impozit dupa inregistrarea impozitului?";
+        public static string ValidFormulas = "Formulele sunt valide";
 
     }
 }

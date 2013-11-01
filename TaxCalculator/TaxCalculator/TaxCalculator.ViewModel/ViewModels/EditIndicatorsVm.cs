@@ -191,7 +191,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             if (SelectedItem != null)
             {
                 var indexOf = TaxIndicators.IndexOf(SelectedItem);
-                int maxNrCrt = GetMaxNrCrt();
+                int maxNrCrt = GetMaxNrCrt() - 1;
                 var itemsToUpdate = TaxIndicators.Skip(indexOf).ToList();
 
                 InsertAndUpdateRows(indexOf, itemsToUpdate, maxNrCrt);
@@ -264,7 +264,22 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private bool IsValid()
         {
-            return !ExecuteTaxCalculation(null);
+            bool isValid = ExecuteTaxCalculation(null);
+            if (isValid)
+            {
+                bool hasErrors = TaxIndicators.Any(p => !string.IsNullOrEmpty(p.ErrorMessage));
+
+                if (!hasErrors)
+                {
+                    WindowHelper.OpenInformationDialog(Messages.ValidFormulas);
+                    return false;
+                }
+                else
+                {
+                    WindowHelper.OpenErrorDialog(Messages.Error_InvalidIndicatorsCannotSave);
+                }
+            }
+            return isValid;
         }
 
         public void SaveAsCallBackAction(Indicator newIndicator)
@@ -319,7 +334,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void Validate(object parameter)
         {
-            ExecuteTaxCalculation(null);
+            IsValid();
             //var calculatedIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat).ToList();
             //foreach (var item in calculatedIndicators)
             //{
@@ -341,6 +356,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 {
                     //probably got in an infinite loop
                     WindowHelper.OpenErrorDialog(Messages.Error_InfiniteLoopDetected);
+                    isValid = false;
                     break;
                 }
                 hasChanged = false;
@@ -373,18 +389,19 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             hasChanged = false;
             TaxFormula taxFormula = null;
+            item.IsIndicatorValid();
             //try
             //{
-            if (item.Type == TaxIndicatorType.Calculat && string.IsNullOrEmpty(item.IndicatorFormula))
-            {
-                item.SetError(Messages.Error_EmptyFormula);
-                return hasChanged;
-            }
-            if (string.IsNullOrEmpty(item.Description))
-            {
-                item.SetError(Messages.Error_EmptyIndicatorName);
-                return hasChanged;
-            }
+            //if (item.Type == TaxIndicatorType.Calculat && string.IsNullOrEmpty(item.IndicatorFormula))
+            //{
+            //    item.SetError(Messages.Error_EmptyFormula);
+            //    return hasChanged;
+            //}
+            //if (string.IsNullOrEmpty(item.Description))
+            //{
+            //    item.SetError(Messages.Error_EmptyIndicatorName);
+            //    return hasChanged;
+            //}
             taxFormula = new TaxFormula(item.IndicatorFormula);
             //}
             //catch (IndicatorFormulaException ife)
