@@ -162,15 +162,18 @@
                         <Label Grid.Column="2" Content="{Binding Value}"  HorizontalContentAlignment="Right"  Padding="{StaticResource textPadding}"    Visibility="{Binding Type, Converter={StaticResource rowTypeToVisibilityConverter}, ConverterParameter='Calculat'}"/>
                         <Label Grid.Column="2" Content=""  HorizontalContentAlignment="Right"  Padding="{StaticResource textPadding}"    Visibility="{Binding Type, Converter={StaticResource rowTypeToVisibilityConverter}, ConverterParameter='Text'}"/>
 
-                        <Label Grid.Column="3" Visibility="{Binding DataContext.Version2Visibility, ElementName='root'}"  Padding="{StaticResource textPadding}">
+                        <Label Grid.Column="3" Visibility="{Binding DataContext.Version2Visibility, ElementName='root'}"  Padding="{StaticResource textPadding}"
+                               HorizontalContentAlignment="Right">
                             <Label HorizontalAlignment="Stretch"  Content="{Binding InitialValue}"  HorizontalContentAlignment="Right"   BorderThickness="0"
                                    Visibility="{Binding Type, Converter={StaticResource rowTypeToVisibilityConverter}, ConverterParameter='Numeric'}"/>
                         </Label>
-                        <Label  Grid.Column="3" Visibility="{Binding DataContext.Version2Visibility, ElementName='root'}"  Padding="{StaticResource textPadding}">
+                        <Label  Grid.Column="3" Visibility="{Binding DataContext.Version2Visibility, ElementName='root'}"  Padding="{StaticResource textPadding}"
+                                HorizontalContentAlignment="Right">
                             <Label HorizontalAlignment="Stretch"  Content="{Binding InitialValue}"  HorizontalContentAlignment="Right"   BorderThickness="0"
                                    Visibility="{Binding Type, Converter={StaticResource rowTypeToVisibilityConverter}, ConverterParameter='Calculat'}"/>
                         </Label>
-                        <Label  Grid.Column="3" Visibility="{Binding DataContext.Version2Visibility, ElementName='root'}"  Padding="{StaticResource textPadding}">
+                        <Label  Grid.Column="3" Visibility="{Binding DataContext.Version2Visibility, ElementName='root'}"  Padding="{StaticResource textPadding}"
+                                HorizontalContentAlignment="Right">
                             <Label  HorizontalAlignment="Stretch" Content=""  HorizontalContentAlignment="Right"    BorderThickness="0"
                                     Visibility="{Binding Type, Converter={StaticResource rowTypeToVisibilityConverter}, ConverterParameter='Text'}"/>
                         </Label>

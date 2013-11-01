@@ -52,7 +52,23 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                 return NrCrt.ToString();
             }
         }
-        public string Description { get; set; }
+
+        private string description;
+        public string Description
+        {
+            get { return description; }
+            set
+            {
+                if (description != value)
+                {
+                    description = value;
+                    this.NotifyPropertyChanged("Description");
+                    IsIndicatorValid();
+                }
+            }
+        }
+
+        // public string Description { get; set; }
         public string TypeDescription { get; set; }
         //public string IndicatorFormula { get; set; }
         //public TaxIndicatorType Type { get; set; }
@@ -125,7 +141,6 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             set
             {
                 indicatorFormula = value;
-                this.FormulaTextColor = new SolidColorBrush(Colors.Black);
                 IsIndicatorValid();
                 NotifyPropertyChanged("IndicatorFormula");
             }
@@ -223,12 +238,21 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             {
                 message = "IndicatorFormula este obligatoriu";
             }
+            if (string.IsNullOrEmpty(Description))
+            {
+                message = Messages.Error_EmptyIndicatorName;
+            }
 
             ErrorMessage = message;
             result = string.IsNullOrEmpty(message);
-            if (!result)
+            if (result)
             {
+                this.FormulaTextColor = new SolidColorBrush(Colors.Black);
                 // WindowHelper.OpenErrorDialog(message);
+            }
+            else
+            {
+                this.FormulaTextColor = new SolidColorBrush(Colors.Red);
             }
             return result;
         }
@@ -251,7 +275,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             }
         }
 
-       
+
 
         public static TaxIndicatorViewModel FromTaxIndicator(TaxIndicator ti)
         {

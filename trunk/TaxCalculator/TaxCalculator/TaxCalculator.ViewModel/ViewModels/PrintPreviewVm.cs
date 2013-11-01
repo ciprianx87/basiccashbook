@@ -13,6 +13,7 @@ using TaxCalculator.ViewModel.Extensions;
 using System.Windows.Input;
 using System.Windows;
 using TaxCalculator.ViewModel.Helper;
+using Microsoft.Win32;
 
 
 namespace TaxCalculator.ViewModel.ViewModels
@@ -178,7 +179,24 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void Export(object parameter)
         {
-            ExcelExport.ExportToExcel(PrintData);
+            try
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.AddExtension = true;
+                //sfd.DefaultExt = ".xls";
+                sfd.Filter = "Excel File|*.xls";
+                sfd.Title = "Save an Excel File";
+                sfd.OverwritePrompt = true;
+                if (sfd.ShowDialog() == true)
+                {
+                    ExcelExport.ExportToExcel(PrintData, sfd.FileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Log.Error(ex);
+                WindowHelper.OpenErrorDialog(Messages.GenericError);
+            }
         }
 
         private bool CanPrint(object parameter)

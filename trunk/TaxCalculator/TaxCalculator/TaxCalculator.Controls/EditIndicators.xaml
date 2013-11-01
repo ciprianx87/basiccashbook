@@ -26,8 +26,8 @@
                   CanUserResizeRows="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
             <DataGrid.ContextMenu>
                 <ContextMenu x:Name="contextMenu" Opened="ContextMenu_Opened">
-                    <MenuItem Header="Adauga inainte"  Command="{Binding AddBeforeCommand}"/>
-                    <MenuItem Header="Adauga dupa" Command="{Binding AddAfterCommand}"/>
+                    <MenuItem Header="Adauga rand inainte"  Command="{Binding AddBeforeCommand}"/>
+                    <MenuItem Header="Adauga rand dupa" Command="{Binding AddAfterCommand}"/>
                     <MenuItem Header="Sterge" Command="{Binding RemoveRowCommand}"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
