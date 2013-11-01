@@ -48,5 +48,11 @@ namespace TaxCalculator.Controls
         {
             (this.DataContext as BaseViewModel).Dispose();
         }
+
+        private void ModifyCommand_Click(object sender, RoutedEventArgs e)
+        {
+            var but = (sender as Button);
+            (this.DataContext as TaxCalculationListVm).Modify(but.CommandParameter);
+        }
     }
 }

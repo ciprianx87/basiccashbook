@@ -24,7 +24,8 @@ namespace TaxCalculator.Data.Model
         TaxCalculationSetup,
         TaxCalculationCompletion,
         TaxCalculationList,
-        TaxCalculationListRectifying
+        TaxCalculationListRectifying,
+        ExistingTaxCalculationCompletion
     }
 
     public enum CashBookListType

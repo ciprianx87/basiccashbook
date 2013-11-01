@@ -78,6 +78,9 @@ namespace TaxCalculator
                 case ContentTypes.TaxCalculationCompletion:
                     contentControl.Content = new TaxCalculator.Controls.TaxCalculationCompletion();
                     break;
+                case ContentTypes.ExistingTaxCalculationCompletion:
+                    contentControl.Content = new TaxCalculator.Controls.ExistingTaxCalculationCompletion();
+                    break;
                 case ContentTypes.TaxCalculationList:
                     contentControl.Content = new TaxCalculator.Controls.TaxCalculationList(false);
                     break;

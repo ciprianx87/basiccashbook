@@ -85,6 +85,15 @@
                                             <TextBlock Text="Vizualizare"/>
                                         </Button.ToolTip>
                                     </Button>
+                                    <Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="ModifyCommand_Click" Margin="5,0,0,0"
+                                            Visibility="Collapsed">
+                                        <StackPanel>
+                                            <TextBlock Text="Modificare"/>
+                                        </StackPanel>
+                                        <Button.ToolTip>
+                                            <TextBlock Text="Modificare"/>
+                                        </Button.ToolTip>
+                                    </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -104,7 +113,7 @@
                 NrOfDecimals = otherData.NrOfDecimals,
                 Rectifying = item.Rectifying,
                 VerifiedBy = otherData.VerifiedBy-->
-                    <DataGridTemplateColumn MinWidth="100" Width="100" Header="Luna">
+                    <DataGridTemplateColumn MinWidth="130" Width="130" Header="Luna">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding Month}" Style="{StaticResource StandardTextBlock}"/>
