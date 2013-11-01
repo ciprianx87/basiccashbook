@@ -6,7 +6,7 @@ using TaxCalculator.Data.Model;
 
 namespace TaxCalculator.ViewModel.ViewModels.Model
 {
-    class TaxCalculationSetupModel
+    public class TaxCalculationSetupModel
     {
         public Company SelectedCompany { get; set; }
         public Indicator SelectedIndicatorList { get; set; }
