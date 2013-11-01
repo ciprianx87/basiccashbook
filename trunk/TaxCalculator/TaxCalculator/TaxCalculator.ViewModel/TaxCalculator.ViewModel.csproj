@@ -65,6 +65,7 @@
     <Compile Include="TaxEvaluator.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="ViewModels\CompanyListVm.cs" />
+    <Compile Include="ViewModels\ExistingTaxCalculationCompletionVm.cs" />
     <Compile Include="ViewModels\EditIndicatorsVm.cs" />
     <Compile Include="ViewModels\Model\CompletedIndicatorVm.cs" />
     <Compile Include="ViewModels\Popups\YesNoDialogVm.cs" />

@@ -34,6 +34,9 @@ namespace TaxCalculator.ViewModel.ViewModels
         public ICommand FilterCommand { get; set; }
         public ICommand ClearFiltersCommand { get; set; }
 
+        public ICommand ModifyCommand { get; set; }
+
+       
         public TaxCalculationListVm(bool isRectifying)
         {
             this.isRectifying = isRectifying;
@@ -42,6 +45,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             CreateCommand = new DelegateCommand(Create, CanCreate);
             DeleteCommand = new DelegateCommand(Delete, CanDelete);
             EditCommand = new DelegateCommand(Edit, CanEdit);
+            this.ModifyCommand = new DelegateCommand(Modify, CanModify); 
             this.EditIndicatorsCommand = new DelegateCommand(EditIndicators, CanEditIndicators);
             this.ViewCommand = new DelegateCommand(View, CanView);
             this.FilterCommand = new DelegateCommand(Filter, CanFilter);
@@ -336,6 +340,17 @@ namespace TaxCalculator.ViewModel.ViewModels
                 Logger.Instance.LogException(ex);
             }
         }
+
+        private bool CanModify(object parameter)
+        {
+            return true;
+        }
+
+        public void Modify(object parameter)
+        {
+            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.ExistingTaxCalculationCompletion);
+            Mediator.Instance.SendMessage(MediatorActionType.SetSetupModel, parameter);
+        } 
 
         public bool CanCreate(object param)
         {
