@@ -24,7 +24,9 @@ namespace TaxCalculator.ViewModel.ViewModels
         public ICommand SaveCommand { get; set; }
         IIndicatorRepository indicatorRepository;
         ITaxCalculationsRepository taxCalculationRepository;
-        private TaxCalculationSetupModel setupModel;
+
+
+
         private byte nrDecimals = 0;
         public TaxCalculationCompletionVm()
         {
@@ -35,6 +37,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             indicatorRepository = new IndicatorRepository();
             taxCalculationRepository = new TaxCalculationsRepository();
             Rectifying = Visibility.Collapsed;
+            ExchangeRateVisibility = Visibility.Collapsed;
         }
 
 
@@ -105,7 +108,19 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
             return hasChanged;
         }
-
+        private TaxCalculationSetupModel setupModel;
+        public TaxCalculationSetupModel SetupModel
+        {
+            get { return setupModel; }
+            set
+            {
+                if (setupModel != value)
+                {
+                    setupModel = value;
+                    this.NotifyPropertyChanged("SetupModel");
+                }
+            }
+        }
 
         private ObservableCollection<TaxIndicatorViewModel> taxIndicators;
         public ObservableCollection<TaxIndicatorViewModel> TaxIndicators
@@ -132,6 +147,21 @@ namespace TaxCalculator.ViewModel.ViewModels
                 {
                     rectifying = value;
                     this.NotifyPropertyChanged("Rectifying");
+                }
+            }
+        }
+
+
+        private Visibility exchangeRateVisibility;
+        public Visibility ExchangeRateVisibility
+        {
+            get { return exchangeRateVisibility; }
+            set
+            {
+                if (exchangeRateVisibility != value)
+                {
+                    exchangeRateVisibility = value;
+                    this.NotifyPropertyChanged("ExchangeRateVisibility");
                 }
             }
         }
@@ -318,7 +348,8 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             try
             {
-                setupModel = param as TaxCalculationSetupModel;
+                SetupModel = param as TaxCalculationSetupModel;
+                ExchangeRateVisibility = SetupModel.CoinType == "LEI" ? Visibility.Collapsed : Visibility.Visible;
                 nrDecimals = setupModel.NrOfDecimals;
                 DecimalConvertor.Instance.SetNumberOfDecimals(nrDecimals);
                 Rectifying = setupModel.Rectifying ? Visibility.Visible : Visibility.Collapsed;
