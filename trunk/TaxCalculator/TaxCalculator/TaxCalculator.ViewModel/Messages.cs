@@ -33,6 +33,7 @@ namespace TaxCalculator.ViewModel
         public static string Error_InvalidFields = "Exista campuri invalide!";
         public static string GenerateReportType2 = "Generati calcul de impozit dupa inregistrarea impozitului?";
         public static string ValidFormulas = "Formulele sunt valide";
+        public static string Error_ExistingCalculationForSetup = "Exista deja un calcul pentru pentru combinatia aleasa: societate/structura indicator/perioada (luna+an)";
 
     }
 }

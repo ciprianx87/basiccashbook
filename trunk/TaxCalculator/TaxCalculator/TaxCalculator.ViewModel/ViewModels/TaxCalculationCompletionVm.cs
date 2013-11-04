@@ -43,8 +43,23 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private bool IsValid()
         {
-            //TaxIndicators[0].IsIndicatorValid
-            return true;
+            bool isValid = true;
+            //return;
+            //execute this until all the values remain the same
+            foreach (var item in TaxIndicators)
+            {
+                bool currentItemValid = false;
+                try
+                {
+                    DecimalConvertor.Instance.StringToDecimal(item.ValueField);
+                }
+                catch
+                {
+                    isValid = false;
+                    break;
+                }
+            }
+            return isValid;
         }
 
         public void ExecuteTaxCalculation(object param)
