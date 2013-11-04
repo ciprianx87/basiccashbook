@@ -85,6 +85,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
                     TypeDescription = type.ToString();
                     //change the style also
                     Style = VmUtils.GetStyleInfo(type);
+                    IsIndicatorValid();
                     this.NotifyPropertyChanged("Type");
                 }
             }
