@@ -35,7 +35,9 @@ namespace TaxCalculator.Controls
         private void EditCommand_Click(object sender, RoutedEventArgs e)
         {
             var but = (sender as Button);
-            (this.DataContext as TaxCalculationListVm).Edit(but.CommandParameter);
+            (this.DataContext as TaxCalculationListVm).Modify(but.CommandParameter);
+            //var but = (sender as Button);
+            //(this.DataContext as TaxCalculationListVm).Edit(but.CommandParameter);
         }
 
         private void VizualizareCommand_Click(object sender, RoutedEventArgs e)

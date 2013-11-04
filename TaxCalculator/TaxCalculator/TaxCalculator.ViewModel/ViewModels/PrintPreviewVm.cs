@@ -327,7 +327,20 @@ namespace TaxCalculator.ViewModel.ViewModels
                     };
                     firstPage.FirstPage = true;
 
-                    PrintData.Pages.ForEach(p => p.Version2Visibility = row57Completed && otherData.SecondTypeReport ? Visibility.Visible : Visibility.Collapsed);
+                    PrintData.Pages.ForEach(p =>
+                    {
+                        p.Version2Visibility = row57Completed && otherData.SecondTypeReport ? Visibility.Visible : Visibility.Collapsed;
+                        p.LastPageVisibility = Visibility.Collapsed;
+
+                    }
+                    );
+
+                    PrintData.Pages.Last().LastPageVisibility = Visibility.Visible;
+                    PrintData.Pages.Last().LastPageData = new LastPageData()
+                    {
+                        CreatedBy = otherData.CreatedBy,
+                        VerifiedBy = otherData.VerifiedBy
+                    };
 
                     if (row57Completed)
                     {
@@ -376,6 +389,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void AddExtraRows(List<PrintRow> printRowList, string verifiedBy, string createdBy)
         {
+            return;
             AddEmptyRows(printRowList);
             AddEmptyRow(printRowList);
             AddEmptyRow(printRowList);
@@ -406,6 +420,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         int maxItemsPerPage = 47;
         int maxItemsForFirstPage = 38;
+
         private List<PrintPage> BuildPages(List<PrintRow> allEntities)
         {
             List<PrintPage> pages = new List<PrintPage>();
@@ -419,7 +434,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                     itemsPerPage = maxItemsForFirstPage;
                 }
                 var newGroup = allEntities.Take(itemsPerPage);
-                var newPrintPage = new PrintPage() { Rows = new List<PrintRow>() };
+                var newPrintPage = new PrintPage() { Rows = new List<PrintRow>(), LastPageVisibility = Visibility.Collapsed };
                 foreach (var item in newGroup)
                 {
                     newPrintPage.Rows.Add(new PrintRow()

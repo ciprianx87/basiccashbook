@@ -110,7 +110,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn MaxWidth="200" Width="Auto" Header="Valoare Initiala" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}"
+                <DataGridTemplateColumn MaxWidth="200" Width="Auto" Header="Valoare Initiala" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}" Visibility="Collapsed"
                                         >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >

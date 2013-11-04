@@ -40,8 +40,23 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private bool IsValid()
         {
-            //TaxIndicators[0].IsIndicatorValid
-            return true;
+            bool isValid = true;
+            //return;
+            //execute this until all the values remain the same
+            foreach (var item in TaxIndicators)
+            {
+                bool currentItemValid = false;
+                try
+                {
+                    DecimalConvertor.Instance.StringToDecimal(item.ValueField);
+                }
+                catch
+                {
+                    isValid = false;
+                    break;
+                }
+            }
+            return isValid;
         }
 
         public void ExecuteTaxCalculation(object param)
@@ -91,7 +106,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             try
             {
 
-                var newValueString = DecimalConvertor.Instance.DecimalToString(taxFormula.Execute(TaxIndicators.ToList()), nrDecimals);
+                var newValueString = DecimalConvertor.Instance.DecimalToString(taxFormula.Execute(TaxIndicators.ToList()));
                 //var newValue = taxFormula.Execute(TaxIndicators.ToList()).ToString();
                 if (item.ValueField != newValueString)
                 {
@@ -160,26 +175,46 @@ namespace TaxCalculator.ViewModel.ViewModels
                     //perform validation
                     if (IsValid())
                     {
+                        var taxIndicatorModelList = TaxIndicators.ToList().ToCompletedList();
+                        //multiply with the exchange rate
+                        //taxIndicatorModelList.ForEach(p =>
+                        //{
+                        //    if (!string.IsNullOrEmpty(p.Value))
+                        //    {
+                        //        var valueDec = DecimalConvertor.Instance.StringToDecimal(p.Value);
+                        //        p.Value = DecimalConvertor.Instance.DecimalToString(valueDec * initialOtherData.ExchangeRate, initialOtherData.NrOfDecimals);
+                        //    }
+                        //}
+                        //);
+                        CompletedIndicatorDbModel contentModel = new CompletedIndicatorDbModel()
+                           {
+                               CompletedIndicators = taxIndicatorModelList,
+                               PreviousIndicatorId = null
+                           };
+                        var content = VmUtils.SerializeEntity(contentModel);
+
+                        taxCalculationRepository.UpdateContent(selectedTaxCalculationVm.Id, content);
+                        WindowHelper.OpenInformationDialog(Messages.InfoWasSaved);
                         //ask the user if he wants version 2, if needed
-                        bool row57Completed = false;
-                        var row57 = GetRowByInnerId(TaxIndicators.ToList(), 57);
-                        if (row57 != null)
-                        {
-                            row57Completed = DecimalConvertor.Instance.StringToDecimal(row57.ValueField) != 0;
-                        }
-                        if (row57Completed)
-                        {
-                            //ask the user and wait for the response
-                            Mediator.Instance.Register(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallback);
-                            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.YesNoDialog);
-                            Mediator.Instance.SendMessage(MediatorActionType.SetMessage, Messages.GenerateReportType2);
-                        }
-                        else
-                        {
-                            //save with the selected name
-                            isSecondTypeReport = false;
-                            PerformSave();
-                        }
+                        //bool row57Completed = false;
+                        //var row57 = GetRowByInnerId(TaxIndicators.ToList(), 57);
+                        //if (row57 != null)
+                        //{
+                        //    row57Completed = DecimalConvertor.Instance.StringToDecimal(row57.ValueField) != 0;
+                        //}
+                        //if (row57Completed)
+                        //{
+                        //    //ask the user and wait for the response
+                        //    Mediator.Instance.Register(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallback);
+                        //    Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.YesNoDialog);
+                        //    Mediator.Instance.SendMessage(MediatorActionType.SetMessage, Messages.GenerateReportType2);
+                        //}
+                        //else
+                        //{
+                        //    //save with the selected name
+                        //    isSecondTypeReport = false;
+                        //    PerformSave();
+                        //}
                     }
                     else
                     {
@@ -314,16 +349,19 @@ namespace TaxCalculator.ViewModel.ViewModels
             };
             taxCalculationRepository.Create(tc);
         }
+        TaxCalculationsViewModel selectedTaxCalculationVm;
+        TaxCalculationOtherData initialOtherData;
         public void SetSetupModel(object param)
         {
             try
             {
-                var selectedVm = param as TaxCalculationsViewModel;
-                var calculation = taxCalculationRepository.Get(selectedVm.Id);
+                selectedTaxCalculationVm = param as TaxCalculationsViewModel;
+                var calculation = taxCalculationRepository.Get(selectedTaxCalculationVm.Id);
                 var completedIndicatorDbModel = VmUtils.Deserialize<CompletedIndicatorDbModel>(calculation.Content);
                 List<CompletedIndicatorVm> savedEntities = completedIndicatorDbModel.CompletedIndicators;
-                TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(calculation.OtherData);
+                initialOtherData = VmUtils.Deserialize<TaxCalculationOtherData>(calculation.OtherData);
 
+                DecimalConvertor.Instance.SetNumberOfDecimals(initialOtherData.NrOfDecimals);
                 var vmList = savedEntities.ToVmList();
                 //load the previous values
                 vmList.ForEach(p =>
@@ -331,7 +369,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                     if (p.Type == TaxIndicatorType.Numeric)
                     {
                         p.InitialValueField = p.ValueField;
-                        p.ValueField = p.ValueField;
+                        var valueDec = DecimalConvertor.Instance.StringToDecimal(p.ValueField);
+                        p.ValueField = DecimalConvertor.Instance.DecimalToString(valueDec * initialOtherData.ExchangeRate, initialOtherData.NrOfDecimals);
                     }
                 });
                 TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>(vmList);

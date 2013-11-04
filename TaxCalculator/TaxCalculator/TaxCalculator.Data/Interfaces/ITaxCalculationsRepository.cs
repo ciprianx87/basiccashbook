@@ -13,5 +13,7 @@ namespace TaxCalculator.Data.Interfaces
         void Create(TaxCalculations entity);
         void Delete(Int64 id);
         List<TaxCalculations> GetAll();
+
+        void UpdateContent(long p, string content);
     }
 }

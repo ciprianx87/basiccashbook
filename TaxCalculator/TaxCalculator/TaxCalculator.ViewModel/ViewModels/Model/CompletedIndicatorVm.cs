@@ -13,6 +13,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public string Value { get; set; }
         public TaxIndicatorType Type { get; set; }
         public int InnerId { get; set; }
+        public string IndicatorFormula { get; set; }
 
     }
    public class CompletedIndicatorDbModel

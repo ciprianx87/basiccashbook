@@ -111,11 +111,26 @@ namespace TaxCalculator.ViewModel.Helper
                 er.EntireColumn.ColumnWidth = 20;
                 er = workSheet.get_Range("D:D", System.Type.Missing);
                 er.EntireColumn.ColumnWidth = 20;
+
+                //add the last rows
+                row += 3;
+                workSheet.Cells[row, "B"] = "INTOCMIT,";
+                row++;
+                workSheet.Cells[row, "B"].HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                workSheet.Cells[row, "B"] = printModel.Pages.Last().LastPageData.CreatedBy;
+                workSheet.Cells[row, "B"].HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+
+                row++;
+                workSheet.Cells[row, "C"] = "VERIFICAT,";
+                workSheet.Cells[row, "C"].HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                row++;
+                workSheet.Cells[row, "C"] = printModel.Pages.Last().LastPageData.VerifiedBy;
+                workSheet.Cells[row, "C"].HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
                 // Apply some predefined styles for data to look nicely :)
                 //workSheet.Range["A1"].AutoFormat(Microsoft.Office.Interop.Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic1);
 
                 // Define filename
-               // string fileName = string.Format(@"{0}\ExcelData.xls", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
+                // string fileName = string.Format(@"{0}\ExcelData.xls", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
 
                 // Save this data as a file
                 workSheet.SaveAs(fileName);
@@ -158,7 +173,7 @@ namespace TaxCalculator.ViewModel.Helper
             }
         }
 
-        private static void AlignToCenter(Microsoft.Office.Interop.Excel._Worksheet workSheet,int rowNr, string column)
+        private static void AlignToCenter(Microsoft.Office.Interop.Excel._Worksheet workSheet, int rowNr, string column)
         {
             workSheet.Cells[rowNr, column].HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
         }
