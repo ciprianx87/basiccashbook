@@ -119,5 +119,16 @@ namespace TaxCalculator.Data.Repositories
                 return list;
             }
         }
+
+
+        public void UpdateContent(long id, string content)
+        {
+            using (var context = GetContext())
+            {
+                var entity = context.TaxCalculations.FirstOrDefault(p => p.Id == id);
+                entity.Content = content;
+                Commit(context);
+            }
+        }
     }
 }

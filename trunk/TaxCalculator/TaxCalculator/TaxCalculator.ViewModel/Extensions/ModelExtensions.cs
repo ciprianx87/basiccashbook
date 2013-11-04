@@ -102,7 +102,8 @@ namespace TaxCalculator.ViewModel.Extensions
                 Description = item.Description,
                 Value = item.ValueField,
                 Type = item.Type,
-                InnerId = item.InnerId
+                InnerId = item.InnerId,
+                IndicatorFormula=item.IndicatorFormula
             };
 
             return result;
@@ -123,7 +124,9 @@ namespace TaxCalculator.ViewModel.Extensions
                 Description = item.Description,
                 ValueField = item.Value,
                 Type = item.Type,
-                InnerId = item.InnerId
+                InnerId = item.InnerId,
+                Style = VmUtils.GetStyleInfo(item.Type),
+                IndicatorFormula = item.IndicatorFormula
             };
 
             return result;

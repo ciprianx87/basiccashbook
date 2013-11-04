@@ -85,15 +85,15 @@
                                             <TextBlock Text="Vizualizare"/>
                                         </Button.ToolTip>
                                     </Button>
-                                    <Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="ModifyCommand_Click" Margin="5,0,0,0"
-                                            Visibility="Collapsed">
+                                    <!--<Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="ModifyCommand_Click" Margin="5,0,0,0"
+                                            Visibility="Visible">
                                         <StackPanel>
                                             <TextBlock Text="Modificare"/>
                                         </StackPanel>
                                         <Button.ToolTip>
                                             <TextBlock Text="Modificare"/>
                                         </Button.ToolTip>
-                                    </Button>
+                                    </Button>-->
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -165,6 +165,14 @@
                                         </StackPanel>
                                         <Button.ToolTip>
                                             <TextBlock Text="Stergere"/>
+                                        </Button.ToolTip>
+                                    </Button>
+                                    <Button CommandParameter="{Binding}" Width="30" Height="20" Click="EditCommand_Click">
+                                        <StackPanel>
+                                            <Image Source="/TaxCalculator.Controls;component/Images/editButton.png"  Stretch="Uniform"  Width="30" Height="15"/>
+                                        </StackPanel>
+                                        <Button.ToolTip>
+                                            <TextBlock Text="Editare"/>
                                         </Button.ToolTip>
                                     </Button>
                                 </StackPanel>

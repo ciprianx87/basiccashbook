@@ -205,25 +205,44 @@ namespace TaxCalculator.ViewModel.ViewModels
                     //perform validation
                     if (IsValid())
                     {
-                        //ask the user if he wants version 2, if needed
-                        bool row57Completed = false;
-                        var row57 = GetRowByInnerId(TaxIndicators.ToList(), 57);
-                        if (row57 != null)
+                        if (savedTaxCalculation == null)
                         {
-                            row57Completed = DecimalConvertor.Instance.StringToDecimal(row57.ValueField) != 0;
-                        }
-                        if (row57Completed)
-                        {
-                            //ask the user and wait for the response
-                            Mediator.Instance.Register(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallback);
-                            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.YesNoDialog);
-                            Mediator.Instance.SendMessage(MediatorActionType.SetMessage, Messages.GenerateReportType2);
+                            //ask the user if he wants version 2, if needed
+                            bool row57Completed = false;
+                            var row57 = GetRowByInnerId(TaxIndicators.ToList(), 57);
+                            if (row57 != null)
+                            {
+                                row57Completed = DecimalConvertor.Instance.StringToDecimal(row57.ValueField) != 0;
+                            }
+                            if (row57Completed)
+                            {
+                                //ask the user and wait for the response
+                                Mediator.Instance.Register(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallback);
+                                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.YesNoDialog);
+                                Mediator.Instance.SendMessage(MediatorActionType.SetMessage, Messages.GenerateReportType2);
+                            }
+                            else
+                            {
+
+                                //save with the selected name
+                                isSecondTypeReport = false;
+                                PerformSave();
+                            }
                         }
                         else
                         {
-                            //save with the selected name
-                            isSecondTypeReport = false;
-                            PerformSave();
+                            //just update
+                            var taxIndicatorModelList = TaxIndicators.ToList().ToCompletedList();
+
+                            CompletedIndicatorDbModel contentModel = new CompletedIndicatorDbModel()
+                            {
+                                CompletedIndicators = taxIndicatorModelList,
+                                PreviousIndicatorId = null
+                            };
+                            var content = VmUtils.SerializeEntity(contentModel);
+
+                            taxCalculationRepository.UpdateContent(savedTaxCalculation.Id, content);
+                            WindowHelper.OpenInformationDialog(Messages.InfoWasSaved);
                         }
                     }
                     else
@@ -358,7 +377,10 @@ namespace TaxCalculator.ViewModel.ViewModels
                 OtherData = VmUtils.SerializeEntity(otherData)
             };
             taxCalculationRepository.Create(tc);
+            savedTaxCalculation = tc;
         }
+
+        TaxCalculations savedTaxCalculation;
         public void SetSetupModel(object param)
         {
             try
