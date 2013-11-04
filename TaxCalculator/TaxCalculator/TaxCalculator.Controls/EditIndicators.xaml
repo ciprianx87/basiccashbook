@@ -91,8 +91,11 @@
                 <DataGridTemplateColumn MinWidth="150" Header="Tip Indicatori">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
+                            <!--{Binding DataContext.AvailableIndicatorTypes, ElementName=root}-->
+                            <!--{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay, Path=DataContext, UpdateSourceTrigger=PropertyChanged}'-->
                             <!--<TextBlock Text="{Binding Type}" Style="{StaticResource StandardTextBlock}"/>-->
-                            <ComboBox ItemsSource="{Binding DataContext.AvailableIndicatorTypes, ElementName=root}" SelectedValue="{Binding Type, Mode=TwoWay}" HorizontalAlignment="Stretch"
+                            <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Mode=OneWay,
+                                Path=DataContext.AvailableIndicatorTypes, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Type, Mode=TwoWay}" HorizontalAlignment="Stretch"
                                       SelectionChanged="ComboBox_SelectionChanged"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

@@ -260,6 +260,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         TaxCalculationsViewModel selectedVm;
         public void SetReportData(object param)
         {
+            Logger.Instance.Log.Debug("set report data");
             selectedVm = param as TaxCalculationsViewModel;
             LoadInitialData();
             LoadDataForCurrentPage();

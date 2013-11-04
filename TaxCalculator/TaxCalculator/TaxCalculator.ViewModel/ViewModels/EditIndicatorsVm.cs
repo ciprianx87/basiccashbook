@@ -243,7 +243,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void Save(object parameter)
         {
-            if (IsValid())
+            if (!IsValid())
             {
                 WindowHelper.OpenErrorDialog(Messages.Error_InvalidIndicatorsCannotSave);
                 return;
@@ -271,13 +271,19 @@ namespace TaxCalculator.ViewModel.ViewModels
 
                 if (!hasErrors)
                 {
-                    WindowHelper.OpenInformationDialog(Messages.ValidFormulas);
-                    return false;
+                    //WindowHelper.OpenInformationDialog(Messages.ValidFormulas);
+                    return true;
                 }
                 else
                 {
-                    WindowHelper.OpenErrorDialog(Messages.Error_InvalidIndicatorsCannotSave);
+                    return false;
+                    //WindowHelper.OpenErrorDialog(Messages.Error_InvalidIndicatorsCannotSave);
                 }
+            }
+            else
+            {
+                return false;
+                //WindowHelper.OpenErrorDialog(Messages.Error_InvalidIndicatorsCannotSave);
             }
             return isValid;
         }
@@ -308,7 +314,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void SaveAs(object parameter)
         {
-            if (IsValid())
+            if (!IsValid())
             {
                 WindowHelper.OpenErrorDialog(Messages.Error_InvalidIndicatorsCannotSave);
                 return;
@@ -334,7 +340,15 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void Validate(object parameter)
         {
-            IsValid();
+            bool isValid = IsValid();
+            if (isValid)
+            {
+                WindowHelper.OpenInformationDialog(Messages.ValidFormulas);
+            }
+            else
+            {
+                WindowHelper.OpenErrorDialog(Messages.Error_InvalidIndicatorsCannotSave);
+            }
             //var calculatedIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat).ToList();
             //foreach (var item in calculatedIndicators)
             //{
