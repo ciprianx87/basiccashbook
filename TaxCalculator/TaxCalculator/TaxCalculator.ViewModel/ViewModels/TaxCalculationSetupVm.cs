@@ -497,6 +497,24 @@ namespace TaxCalculator.ViewModel.ViewModels
                 WindowHelper.OpenErrorDialog(Messages.Error_MissingFields);
                 return;
             }
+            //verify if the company/indicatorl list /month/year combination already exist
+            //get all the calculations for this company and indicator list
+
+            var existingCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && p.IndicatorId == SelectedIndicatorList.Id).ToList();
+            if (existingCalculations != null && existingCalculations.Count > 0)
+            {
+                foreach (var item in existingCalculations)
+                {
+
+                    TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(item.OtherData);
+                    if (otherData.Month == SelectedMonth && otherData.Year == SelectedYear)
+                    {
+                        WindowHelper.OpenErrorDialog(Messages.Error_ExistingCalculationForSetup);
+                        return;
+                    }
+                }
+            }
+           
             //load the selected data and navigate to the fill-in screen
             TaxCalculationSetupModel setupModel = new TaxCalculationSetupModel()
             {

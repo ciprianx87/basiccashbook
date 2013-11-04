@@ -376,24 +376,26 @@ namespace TaxCalculator.ViewModel.ViewModels
         private void AddExtraRows(List<PrintRow> printRowList, string verifiedBy, string createdBy)
         {
             AddEmptyRows(printRowList);
-            //AddEmptyRow(printRowList);
-            ////add created by
-            //printRowList.Add(new PrintRow()
-            //{
-            //    Value = "INTOCMIT,"
-            //});
-            //printRowList.Add(new PrintRow()
-            //{
-            //    Value = createdBy
-            //});
-            ////add empty row
-            //AddEmptyRow(printRowList);
+            AddEmptyRow(printRowList);
+            AddEmptyRow(printRowList);
+            AddEmptyRow(printRowList);
+            //add created by
+            printRowList.Add(new PrintRow()
+            {
+                Value = "INTOCMIT,"
+            });
+            printRowList.Add(new PrintRow()
+            {
+                Value = createdBy
+            });
+            //add empty row
+            AddEmptyRow(printRowList);
 
-            ////add verified by
-            //printRowList.Add(new PrintRow()
-            //{
-            //    Description = "VERIFICAT, " + verifiedBy
-            //});
+            //add verified by
+            printRowList.Add(new PrintRow()
+            {
+                Description = "VERIFICAT, " + verifiedBy
+            });
         }
 
         private static void AddEmptyRow(List<PrintRow> printRowList)
