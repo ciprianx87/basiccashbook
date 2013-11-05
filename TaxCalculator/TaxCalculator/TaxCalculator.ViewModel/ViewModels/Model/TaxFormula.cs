@@ -514,7 +514,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
 
             //remove the if
             formula = formula.Remove(0, 2);
-            formula = formula.Replace("c", "rd.");
+            //formula = formula.Replace("c", "rd.");
 
             if (formula.StartsWith("(") && formula.EndsWith(")"))
             {

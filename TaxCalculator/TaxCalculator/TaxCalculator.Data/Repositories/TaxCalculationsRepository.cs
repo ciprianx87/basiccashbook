@@ -16,7 +16,7 @@ namespace TaxCalculator.Data.Repositories
         {
             using (var context = GetContext())
             {
-                var existingCompany = context.TaxCalculations.Include(p=>p.Company).FirstOrDefault(p => p.Id == id);
+                var existingCompany = context.TaxCalculations.Include(p=>p.Company).Include(p=>p.Indicator).FirstOrDefault(p => p.Id == id);
                 return existingCompany;
             }
         }

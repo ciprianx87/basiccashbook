@@ -36,7 +36,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         public ICommand ModifyCommand { get; set; }
 
-       
+
         public TaxCalculationListVm(bool isRectifying)
         {
             this.isRectifying = isRectifying;
@@ -45,7 +45,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             CreateCommand = new DelegateCommand(Create, CanCreate);
             DeleteCommand = new DelegateCommand(Delete, CanDelete);
             EditCommand = new DelegateCommand(Edit, CanEdit);
-            this.ModifyCommand = new DelegateCommand(Modify, CanModify); 
+            this.ModifyCommand = new DelegateCommand(Modify, CanModify);
             this.EditIndicatorsCommand = new DelegateCommand(EditIndicators, CanEditIndicators);
             this.ViewCommand = new DelegateCommand(View, CanView);
             this.FilterCommand = new DelegateCommand(Filter, CanFilter);
@@ -348,9 +348,30 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         public void Modify(object parameter)
         {
-            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.ExistingTaxCalculationCompletion);
-            Mediator.Instance.SendMessage(MediatorActionType.SetSetupModel, parameter);
-        } 
+            //Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.ExistingTaxCalculationCompletion);
+            //Mediator.Instance.SendMessage(MediatorActionType.SetSetupModel, parameter);
+            var paramCalculation = parameter as TaxCalculationsViewModel;
+            var selectedCalculation = taxCalculationRepository.Get(paramCalculation.Id);
+            TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(selectedCalculation.OtherData);
+            TaxCalculationSetupModel setupModel = new TaxCalculationSetupModel()
+            {
+                CoinType = otherData.CoinType,
+                ExchangeRate = otherData.ExchangeRate,
+                Month = otherData.Month,
+                NrOfDecimals = (byte)otherData.NrOfDecimals,
+                Rectifying = selectedCalculation.Rectifying,
+                SelectedCompany = selectedCalculation.Company,
+                SelectedIndicatorList = selectedCalculation.Indicator,
+                VerifiedBy = otherData.VerifiedBy,
+                CreatedBy = otherData.CreatedBy,
+                Year = otherData.Year,
+                SelectedTaxCalculation = null,
+                CompletedTaxIndicatorId = selectedCalculation.Id
+            };
+
+            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.TaxCalculationCompletion);
+            Mediator.Instance.SendMessage(MediatorActionType.SetSetupModel, setupModel);
+        }
 
         public bool CanCreate(object param)
         {
