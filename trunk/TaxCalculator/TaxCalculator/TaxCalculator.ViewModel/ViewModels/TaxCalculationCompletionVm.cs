@@ -232,17 +232,19 @@ namespace TaxCalculator.ViewModel.ViewModels
                         else
                         {
                             //just update
-                            var taxIndicatorModelList = TaxIndicators.ToList().ToCompletedList();
 
-                            CompletedIndicatorDbModel contentModel = new CompletedIndicatorDbModel()
-                            {
-                                CompletedIndicators = taxIndicatorModelList,
-                                PreviousIndicatorId = null
-                            };
-                            var content = VmUtils.SerializeEntity(contentModel);
+                            SaveAsCallBack(savedChosenName);
+                            //var taxIndicatorModelList = TaxIndicators.ToList().ToCompletedList();
 
-                            taxCalculationRepository.UpdateContent(savedTaxCalculation.Id, content);
-                            WindowHelper.OpenInformationDialog(Messages.InfoWasSaved);
+                            //CompletedIndicatorDbModel contentModel = new CompletedIndicatorDbModel()
+                            //{
+                            //    CompletedIndicators = taxIndicatorModelList,
+                            //    PreviousIndicatorId = null
+                            //};
+                            //var content = VmUtils.SerializeEntity(contentModel);
+
+                            //taxCalculationRepository.UpdateContent(savedTaxCalculation.Id, content);
+                            //WindowHelper.OpenInformationDialog(Messages.InfoWasSaved);
                         }
                     }
                     else
@@ -297,27 +299,27 @@ namespace TaxCalculator.ViewModel.ViewModels
             var existingRow = savedEntities.FirstOrDefault(p => p.InnerId == rowInnerId);
             return existingRow;
         }
-
+        string savedChosenName;
         private void SaveAsCallBack(string chosenName)
         {
             try
             {
+                savedChosenName = chosenName;
                 //canceled was pressed
-                if (string.IsNullOrEmpty(chosenName))
+                if (string.IsNullOrEmpty(savedChosenName))
                 {
 
                 }
                 else
-                {
-
+                {                  
                     if (setupModel.ExchangeRate != 0 && setupModel.CoinType != Constants.CoinTypeLei)
                     {
-                        SaveTaxCalculationCompletion(chosenName, setupModel.CoinType, setupModel.ExchangeRate, setupModel.NrOfDecimals);
-                        SaveTaxCalculationCompletion(chosenName, Constants.CoinTypeLei, 1, setupModel.NrOfDecimals);
+                        //SaveTaxCalculationCompletion(savedChosenName, setupModel.CoinType, setupModel.ExchangeRate, setupModel.NrOfDecimals);
+                        SaveTaxCalculationCompletion(savedChosenName, Constants.CoinTypeLei, 1, setupModel.NrOfDecimals);
                     }
                     else
                     {
-                        SaveTaxCalculationCompletion(chosenName, setupModel.CoinType, 1, setupModel.NrOfDecimals);
+                        SaveTaxCalculationCompletion(savedChosenName, setupModel.CoinType, 1, setupModel.NrOfDecimals);
                     }
 
                     //add the tax calculation for the selected coin also if an exchange rate is provided
@@ -376,8 +378,15 @@ namespace TaxCalculator.ViewModel.ViewModels
                 Content = content,
                 OtherData = VmUtils.SerializeEntity(otherData)
             };
-            taxCalculationRepository.Create(tc);
-            savedTaxCalculation = tc;
+            if (savedTaxCalculation == null)
+            {
+                taxCalculationRepository.Create(tc);
+                savedTaxCalculation = tc;
+            }
+            else
+            {
+                taxCalculationRepository.UpdateContent(savedTaxCalculation.Id, content);
+            }
         }
 
         TaxCalculations savedTaxCalculation;
