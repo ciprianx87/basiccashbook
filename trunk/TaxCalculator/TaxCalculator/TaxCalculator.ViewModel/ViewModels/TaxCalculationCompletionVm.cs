@@ -311,7 +311,8 @@ namespace TaxCalculator.ViewModel.ViewModels
 
                 }
                 else
-                {                  
+                {
+                    //savedChosenName = savedChosenName + " - " + coinType;
                     if (setupModel.ExchangeRate != 0 && setupModel.CoinType != Constants.CoinTypeLei)
                     {
                         //SaveTaxCalculationCompletion(savedChosenName, setupModel.CoinType, setupModel.ExchangeRate, setupModel.NrOfDecimals);
@@ -365,7 +366,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 ExchangeRate = exchangeRate,
                 Month = setupModel.Month,
                 NrOfDecimals = setupModel.NrOfDecimals,
-                Name = chosenName + " - " + coinType,
+                Name = chosenName,
                 Year = setupModel.Year,
                 SecondTypeReport = isSecondTypeReport
             };
@@ -460,6 +461,26 @@ namespace TaxCalculator.ViewModel.ViewModels
                             p.ValueField = "0";
                         }
                     });
+                    //if a load was performed, load all the data
+                    if (setupModel.CompletedTaxIndicatorId != 0)
+                    {
+                        var completed = taxCalculationRepository.Get(setupModel.CompletedTaxIndicatorId);
+                        savedTaxCalculation = completed;
+                        TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(completed.OtherData);
+                        savedChosenName = otherData.Name;
+                        var completeIndicatorDbModel = VmUtils.Deserialize<CompletedIndicatorDbModel>(completed.Content);
+                        vmList.ForEach(p =>
+                        {
+                            if (p.NrCrt.HasValue)
+                            {
+                                var existing = completeIndicatorDbModel.CompletedIndicators.First(i => i.NrCrt == p.NrCrt.Value.ToString());
+                                if (existing != null)
+                                {
+                                    p.ValueField = existing.Value;
+                                }
+                            }
+                        });
+                    }
                     TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>(vmList);
                     ExecuteTaxCalculation(null);
                 }

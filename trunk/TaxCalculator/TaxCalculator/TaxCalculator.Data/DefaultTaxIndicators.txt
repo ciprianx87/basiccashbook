@@ -35,7 +35,7 @@
 32,Venituri - cheltuieli (rd.13),Calculat,rd.13
 33,Impozit profit (rd. 30),Calculat,rd.30
 34,Cheltuieli protocol din ct. 623,Numeric,..
-35,Baza calcul cheltuieli protocol ,Calculat,rd. (32+33+34-15-16)
+35,Baza calcul cheltuieli protocol ,Calculat,rd.(32+33+34-15-16)
 36,2% admise conform legii (rd. 35*2%),Calculat,IF(rd.35*2%>0;rd.35*2%;0)
 37,Cheltueili nedeductibile protocol,Calculat,IF(rd.34-rd.36>0;rd.34-rd.36;0)
 ,Cheltuieli sociale,Text,..
@@ -58,9 +58,9 @@
 49,3/1000 din CA,Calculat,rd.48*3/1000
 50,Impozit pe profit (rd.44),Calculat,rd.47
 51,20/100 din Impozit pe profit,Calculat,rd.47*20/100
-52,Cheltuieli sponsorizare admise,Calculat,IF((C49>C51);C49;C51)
+52,Cheltuieli sponsorizare admise,Calculat,IF((rd.49>rd.51);rd.49;rd.51)
 53,Cheltuieli sponsorizare efective,Numeric,..
-54,Cheltuieli sponsorizare deductibile,Calculat,IF(C52<C53;C52;C53)
+54,Cheltuieli sponsorizare deductibile,Calculat,IF(rd.52<rd.53;rd.52;rd.53)
 ,Calcul impozit profit ,Text,
 55,Total impozit profit datorat (rd.47),Calculat,rd.47
 56,Cheltuieli sponsorizare deductibile,Calculat,rd.54

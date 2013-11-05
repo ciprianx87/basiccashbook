@@ -12,6 +12,7 @@ using TaxCalculator.Data.Model;
 using TaxCalculator.Data.Repositories;
 using TaxCalculator.Data.Interfaces;
 using TaxCalculator.Data;
+using TaxCalculator.ViewModel.ViewModels.Model;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -50,7 +51,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         #region properties
 
-    
+
 
         private ObservableCollection<Indicator> taxIndicatorList;
         public ObservableCollection<Indicator> TaxIndicatorList
@@ -95,7 +96,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 var existingIndicators = indicatorRepository.GetAll();
                 if (existingIndicators != null && existingIndicators.Count != 0)
                 {
-                   
+
                 }
                 else
                 {
@@ -239,8 +240,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         public void EditIndicators(object parameter)
         {
             Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.EditIndicators);
-            Mediator.Instance.SendMessage(MediatorActionType.SetTaxIndicatorToEditFormula, parameter);
-
+            Mediator.Instance.SendMessage(MediatorActionType.SetTaxIndicatorToEditFormula, parameter);           
         }
 
         public override void Dispose()

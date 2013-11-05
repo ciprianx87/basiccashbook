@@ -52,11 +52,11 @@ namespace TaxCalculator.Controls
                 //verify the item with the inner id 30 instead of the value (in case multiple rows are added)
                 //what to do when the row was deleted?
                 //int rd30Position=da
-                if (maxNrCrt > 30)
-                {
-                    contextMenu.IsOpen = false;
-                    e.Handled = true;
-                }
+                //if (maxNrCrt > 30)
+                //{
+                //    contextMenu.IsOpen = false;
+                //    e.Handled = true;
+                //}
             }
         }
 

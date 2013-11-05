@@ -16,7 +16,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -66,7 +66,8 @@
                     </StackPanel>
                 </StackPanel>
             </Grid>
-            <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
+            <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" 
+                      MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
                   CanUserResizeRows="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" GotFocus="dgTaxIndicators_GotFocus"
                   VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Standard">
                 <DataGrid.Resources>

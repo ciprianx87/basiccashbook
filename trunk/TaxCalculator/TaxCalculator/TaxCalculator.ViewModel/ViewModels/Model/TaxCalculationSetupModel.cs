@@ -19,5 +19,6 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public string CreatedBy { get; set; }
         public int Year { get; set; }
         public TaxCalculationSelection SelectedTaxCalculation { get; set; }
+        public Int64 CompletedTaxIndicatorId { get; set; }
     }
 }
