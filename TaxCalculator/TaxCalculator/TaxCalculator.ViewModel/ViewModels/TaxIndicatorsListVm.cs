@@ -119,7 +119,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         private void AddDefaultIndicator()
         {
             var currentEntity = new Indicator();
-            currentEntity.Name = "Structura de indicatori initiala";
+            currentEntity.Name = "Structura initiala de indicatori";
             currentEntity.IsDefault = true;
             currentEntity.Content = GetDefaultIndicators();
             currentEntity.CreatedTimestamp = DateTime.Now;

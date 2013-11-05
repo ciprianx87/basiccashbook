@@ -164,7 +164,9 @@
                                 <Grid>
                                     <TextBlock Style="{StaticResource StandardTextBlock}" Height="30"  Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}" FocusManager.IsFocusScope="False"/>
                                     <StackPanel>
-                                        <TextBlock Text="{Binding InitialValueField}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Path=DataContext.Rectifying,ElementName=root}"
+                                        <!--{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}},-->
+                                        <TextBlock Text="{Binding InitialValueField}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, 
+                                            Path=DataContext.Rectifying}"
                                            Background="LightGray" Height="30" TextAlignment="Right" Padding="0,0,4,0" FocusManager.IsFocusScope="False"/>
                                     </StackPanel>
                                 </Grid>
