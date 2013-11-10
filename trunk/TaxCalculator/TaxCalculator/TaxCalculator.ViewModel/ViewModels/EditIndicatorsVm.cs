@@ -16,6 +16,7 @@ using TaxCalculator.Data.Interfaces;
 using TaxCalculator.Data.Repositories;
 using TaxCalculator.ViewModel.Extensions;
 using TaxCalculator.Common.Exceptions;
+using System.Diagnostics;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -162,6 +163,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                 var itemsToUpdate = TaxIndicators.Skip(indexOf + 1).ToList();
 
                 InsertAndUpdateRows(indexOf + 1, itemsToUpdate, maxNrCrt);
+                UpdateItemsInFormula(maxNrCrt);
+
             }
         }
 
@@ -195,6 +198,82 @@ namespace TaxCalculator.ViewModel.ViewModels
                 var itemsToUpdate = TaxIndicators.Skip(indexOf).ToList();
 
                 InsertAndUpdateRows(indexOf, itemsToUpdate, maxNrCrt);
+                UpdateItemsInFormula(maxNrCrt);
+            }
+        }
+        private void UpdateItemsInFormula(int startingNumber)
+        {
+            var calculatedIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
+            int maxIntem = calculatedIndicators.Max(p => p.NrCrt).Value;
+            for (int i = maxIntem; i >= startingNumber; i--)
+            {
+                int nextNr = i;
+
+                var itemToReplace = "rd." + nextNr;
+                string nextItem = "rd." + (nextNr + 1);
+                foreach (var item in calculatedIndicators)
+                {
+                    try
+                    {
+                        //get all the matches
+                        //replace with new values
+                        var formulaLower = item.IndicatorFormula.ToLower();
+                        if (formulaLower.Contains(itemToReplace))
+                        {
+                            Debug.WriteLine(string.Format("replacing {0} with {1}", itemToReplace, nextItem));
+                            item.IndicatorFormula = formulaLower.Replace(itemToReplace, nextItem);
+                        }
+                        else if (formulaLower.Contains(nextNr.ToString()))
+                        {
+                            string nextNrString = nextNr.ToString();
+
+                            var noSpaces = formulaLower.Trim().Replace(" ", string.Empty);
+                            int indexOf = noSpaces.IndexOf(nextNrString);
+                            bool isValidNumber = true;
+                            List<char> invalidChars = new List<char>() { '*', '%' };
+                            if (indexOf > 0)
+                            {
+                                char prevChar = noSpaces[indexOf - 1];
+                                if (invalidChars.Contains(prevChar) || char.IsNumber(prevChar))
+                                {
+                                    isValidNumber = false;
+                                }
+                            }
+                            if (indexOf < noSpaces.Length - nextNrString.Length)
+                            {
+                                char nextChar = noSpaces[indexOf + nextNrString.Length];
+                                if (invalidChars.Contains(nextChar) || char.IsNumber(nextChar))
+                                {
+                                    isValidNumber = false;
+                                }
+                            }
+                            if (isValidNumber)
+                            {
+                                Debug.WriteLine(string.Format("replacing {0} with {1}", nextNr, (nextNr + 1)));
+
+                                item.IndicatorFormula = formulaLower.Replace(nextNr.ToString(), (nextNr + 1).ToString());
+                            }
+                        }
+                        //TaxFormula tf = new TaxFormula(item.IndicatorFormula);
+                        //if (tf.FormulaType == FormulaType.Value)
+                        //{
+                        //    foreach (var param in tf.Params)
+                        //    {
+                        //        if (param.ParamType == ParamType.RowData)
+                        //        {
+                        //            var rowData = (param.ParamData as RowData);
+                        //            if (rowData.NrCrt > startingNumber)
+                        //            {
+                        //                rowData.NrCrt++;
+                        //            }
+                        //        }
+                        //    }
+                        //}
+                    }
+                    catch
+                    {
+                    }
+                }
             }
         }
 
