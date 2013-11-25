@@ -34,9 +34,11 @@ namespace TaxCalculator.ViewModel.Extensions
                 IndicatorFormula = item.IndicatorFormula,
                 Type = VmUtils.GetIndicatorType(item.TypeDescription),
                 Style = VmUtils.GetStyleInfo(VmUtils.GetIndicatorType(item.TypeDescription)),
-                InnerId = item.InnerId
+                InnerId = item.InnerId,
+                InitialNrCrt = item.InitialNrCrt,
+                InitialType = item.InitialType
             };
-
+            result.UpdateEnabledState();
             return result;
         }
 
@@ -51,9 +53,12 @@ namespace TaxCalculator.ViewModel.Extensions
                 IndicatorFormula = item.IndicatorFormula,
                 //Type = VmUtils.GetIndicatorType(item.TypeDescription),
                 Type = item.Type,
-                InnerId = item.InnerId
+                InnerId = item.InnerId,
+                InitialNrCrt = item.InitialNrCrt,
+                InitialType = item.InitialType
                 // Value = item.ValueField
             };
+            
 
             return result;
         }
@@ -103,7 +108,7 @@ namespace TaxCalculator.ViewModel.Extensions
                 Value = item.ValueField,
                 Type = item.Type,
                 InnerId = item.InnerId,
-                IndicatorFormula=item.IndicatorFormula
+                IndicatorFormula = item.IndicatorFormula
             };
 
             return result;

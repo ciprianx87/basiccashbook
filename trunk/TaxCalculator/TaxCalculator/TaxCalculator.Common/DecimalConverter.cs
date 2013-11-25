@@ -60,9 +60,13 @@ namespace TaxCalculator.Common
 
             CultureInfo ci = new CultureInfo("ro-RO");
             format = "N" + nrDecimals;
+            //CS removed this to allow formatting numbers with 0 decimals with thousands separator
             if (nrDecimals == 0)
             {
                 format = "0";
+                //var conv = string.Format(ci, "{0:n0}", number);
+                //return conv;
+                //format = "{0:0.0}";
             }
             var converted = number.ToString(format, ci);
             return converted;

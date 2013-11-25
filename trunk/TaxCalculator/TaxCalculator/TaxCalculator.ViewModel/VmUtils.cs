@@ -51,7 +51,7 @@ namespace TaxCalculator.ViewModel
         public static TaxIndicatorStyleInfo GetStyleInfo(TaxIndicatorType taxIndicatorType)
         {
             TaxIndicatorStyleInfo styleInfo = new TaxIndicatorStyleInfo();
-
+            styleInfo.NrCrtVisibility = Visibility.Visible;
             switch (taxIndicatorType)
             {
 
@@ -64,6 +64,7 @@ namespace TaxCalculator.ViewModel
                     styleInfo.FontWeight = FontWeights.Bold;
                     styleInfo.FormulaFieldVisibility = Visibility.Collapsed;
                     styleInfo.ValueFieldVisibility = Visibility.Collapsed;
+                    styleInfo.NrCrtVisibility = Visibility.Collapsed;
                     break;
                 case TaxIndicatorType.Calculat:
                     styleInfo.FontWeight = FontWeights.Bold;

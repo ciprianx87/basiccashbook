@@ -16,6 +16,8 @@ namespace TaxCalculator.Data.Model
         public TaxIndicatorType Type { get; set; }
         public string Value { get; set; }
         public int InnerId { get; set; }
+        public int? InitialNrCrt { get; set; }
+        public string InitialType { get; set; }
     }
 
     public enum TaxIndicatorType

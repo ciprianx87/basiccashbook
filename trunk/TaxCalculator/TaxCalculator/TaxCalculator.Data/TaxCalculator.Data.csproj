@@ -63,6 +63,9 @@
     <Compile Include="Repositories\IndicatorRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DefaultTaxIndicators old.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DefaultTaxIndicators.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

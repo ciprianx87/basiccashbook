@@ -21,10 +21,92 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             Style.FontWeight = FontWeights.Normal;
             Style.FormulaFieldVisibility = Visibility.Visible;
             Style.ValueFieldVisibility = Visibility.Visible;
+
+        }
+
+        private bool typeEnabled;
+        public bool TypeEnabled
+        {
+            get { return typeEnabled; }
+            set
+            {
+                if (typeEnabled != value)
+                {
+                    typeEnabled = value;
+                    this.NotifyPropertyChanged("TypeEnabled");
+                }
+            }
+        }
+
+
+        private string initialType;
+        public string InitialType
+        {
+            get { return initialType; }
+            set
+            {
+                if (initialType != value)
+                {
+                    initialType = value;
+                    this.NotifyPropertyChanged("InitialType");
+
+
+                }
+            }
+        }
+
+        private bool indicatorFormulaEnabled;
+        public bool IndicatorFormulaEnabled
+        {
+            get { return indicatorFormulaEnabled; }
+            set
+            {
+                if (indicatorFormulaEnabled != value)
+                {
+                    indicatorFormulaEnabled = value;
+                    this.NotifyPropertyChanged("IndicatorFormulaEnabled");
+                }
+            }
+        }
+
+        List<int> fixedItems = new List<int>() { 24, 27, 33 };
+        public void UpdateEnabledState()
+        {
+            if (InitialType.ToLower() == "text")
+            {
+                TypeEnabled = false;
+            }
+            else
+            {
+                TypeEnabled = true;
+            }
+
+            IndicatorFormulaEnabled = true;
+            if (NrCrt.HasValue && fixedItems.Contains(NrCrt.Value))
+            {
+                TypeEnabled = false;
+                IndicatorFormulaEnabled = false;
+            }
+
+
         }
 
         // public int? NrCrt { get; set; }
-        public int InnerId { get; set; }
+        public int? InitialNrCrt { get; set; }
+
+        private int innerId;
+        public int InnerId
+        {
+            get { return innerId; }
+            set
+            {
+                if (innerId != value)
+                {
+                    innerId = value;
+                    //this.NotifyPropertyChanged("InnerId");
+                }
+            }
+        }
 
         private int? nrCrt;
         public int? NrCrt
@@ -81,13 +163,27 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             {
                 if (type != value)
                 {
+                    UpdateNrCrt(type, value);
                     type = value;
                     TypeDescription = type.ToString();
                     //change the style also
                     Style = VmUtils.GetStyleInfo(type);
                     IsIndicatorValid();
+
                     this.NotifyPropertyChanged("Type");
                 }
+            }
+        }
+
+        private void UpdateNrCrt(TaxIndicatorType previous, TaxIndicatorType current)
+        {
+            if (current == TaxIndicatorType.Text)
+            {
+                NrCrt = null;
+            }
+            else if (previous == TaxIndicatorType.Text)
+            {
+                NrCrt = InitialNrCrt;
             }
         }
 
@@ -301,6 +397,8 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public Visibility FormulaFieldVisibility { get; set; }
         public Visibility ValueFieldVisibility { get; set; }
         public FontWeight FontWeight { get; set; }
+        public Visibility NrCrtVisibility { get; set; }
+
     }
 
 }

@@ -208,13 +208,13 @@ namespace TaxCalculator.ViewModel.ViewModels
                         if (savedTaxCalculation == null)
                         {
                             //ask the user if he wants version 2, if needed
-                            bool row57Completed = false;
-                            var row57 = GetRowByInnerId(TaxIndicators.ToList(), 57);
-                            if (row57 != null)
+                            bool row66Completed = false;
+                            var row66 = GetRowByInnerId(TaxIndicators.ToList(), 66);
+                            if (row66 != null)
                             {
-                                row57Completed = DecimalConvertor.Instance.StringToDecimal(row57.ValueField) != 0;
+                                row66Completed = DecimalConvertor.Instance.StringToDecimal(row66.ValueField) != 0;
                             }
-                            if (row57Completed)
+                            if (row66Completed)
                             {
                                 //ask the user and wait for the response
                                 Mediator.Instance.Register(MediatorActionType.YesNoPopupResponse, YesNoPopupResponseCallback);

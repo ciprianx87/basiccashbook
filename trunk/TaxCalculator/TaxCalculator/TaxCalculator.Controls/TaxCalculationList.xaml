@@ -141,7 +141,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="100" MinWidth="100" Header="Rectificativa">
+                    <DataGridTemplateColumn Width="100" MinWidth="100" Header="Rectificativa" Visibility="Collapsed">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <CheckBox IsChecked="{Binding Rectifying}" IsEnabled="False"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
