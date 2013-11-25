@@ -48,7 +48,10 @@ namespace TaxCalculator.Data
                         int innerId = 0;
                         if (parts.Length == 5)
                         {
-                            innerId = Convert.ToInt32(parts[4]);
+                            if (!string.IsNullOrEmpty(parts[4]))
+                            {
+                                innerId = Convert.ToInt32(parts[4]);
+                            }
                         }
                         int? nrCrt = null;
                         int normalNr = 0;
@@ -58,13 +61,23 @@ namespace TaxCalculator.Data
                         }
 
                         description = description.Replace('@', ',');
+                        if (string.IsNullOrEmpty(type))
+                        {
+                            type = "Text";
+                        }
+                        if (string.IsNullOrEmpty(description))
+                        {
+                            description = " ";
+                        }
                         TaxIndicator ti = new TaxIndicator()
                         {
                             NrCrt = nrCrt,
                             Description = description,
                             TypeDescription = type,
                             IndicatorFormula = value,
-                            InnerId = innerId
+                            InnerId = innerId,
+                            InitialNrCrt = nrCrt,
+                            InitialType = type
                         };
                         taxIndicators.Add(ti);
                     }

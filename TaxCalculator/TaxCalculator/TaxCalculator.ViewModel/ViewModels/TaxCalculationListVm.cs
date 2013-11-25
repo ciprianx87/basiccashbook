@@ -247,7 +247,16 @@ namespace TaxCalculator.ViewModel.ViewModels
             try
             {
                 TaxCalculationList = new ObservableCollection<TaxCalculationsViewModel>();
-                var existingIndicators = taxCalculationRepository.GetAll().Where(p => p.Rectifying == isRectifying).ToList();
+                List<TaxCalculations> existingIndicators = null;
+                if (isRectifying)
+                {
+                    existingIndicators = taxCalculationRepository.GetAll().Where(p => p.Rectifying == isRectifying).ToList();
+                }
+                else
+                {
+                    existingIndicators = taxCalculationRepository.GetAll().ToList();
+                }
+
                 if (useFilters)
                 {
                     ApplyFilter(existingIndicators);

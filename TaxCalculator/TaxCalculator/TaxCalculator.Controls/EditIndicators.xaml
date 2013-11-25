@@ -26,9 +26,9 @@
                   CanUserResizeRows="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
             <DataGrid.ContextMenu>
                 <ContextMenu x:Name="contextMenu" Opened="ContextMenu_Opened">
-                    <MenuItem Header="Adauga rand inainte"  Command="{Binding AddBeforeCommand}"/>
+                    <!--<MenuItem Header="Adauga rand inainte"  Command="{Binding AddBeforeCommand}"/>
                     <MenuItem Header="Adauga rand dupa" Command="{Binding AddAfterCommand}"/>
-                    <MenuItem Header="Sterge" Command="{Binding RemoveRowCommand}"/>
+                    <MenuItem Header="Sterge" Command="{Binding RemoveRowCommand}"/>-->
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Resources>
@@ -69,7 +69,9 @@
                     </DataGridTemplateColumn.HeaderTemplate>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding NrCrtString}" Style="{StaticResource StandardTextBlock}" Focusable="False" IsHitTestVisible="False" />
+                            <TextBlock Text="{Binding NrCrtString}" Style="{StaticResource StandardTextBlock}"
+                                       Focusable="False" IsHitTestVisible="False" 
+                                       Visibility="{Binding Style.NrCrtVisibility}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -96,7 +98,7 @@
                             <!--<TextBlock Text="{Binding Type}" Style="{StaticResource StandardTextBlock}"/>-->
                             <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Mode=OneWay,
                                 Path=DataContext.AvailableIndicatorTypes, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Type, Mode=TwoWay}" HorizontalAlignment="Stretch"
-                                      SelectionChanged="ComboBox_SelectionChanged"/>
+                                      SelectionChanged="ComboBox_SelectionChanged" IsEnabled="{Binding TypeEnabled}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -117,7 +119,7 @@
                                 <!--<TextBlock Text="{Binding IndicatorFormula}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}"/>-->
                                 <TextBox Text="{Binding Path=IndicatorFormula, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                     ValidatesOnDataErrors=true, NotifyOnValidationError=true}"  Style="{StaticResource StandardTextBox}"
-                                         Visibility="{Binding Style.FormulaFieldVisibility}" Foreground="{Binding FormulaTextColor}">
+                                         Visibility="{Binding Style.FormulaFieldVisibility}" Foreground="{Binding FormulaTextColor}" IsEnabled="{Binding IndicatorFormulaEnabled}">
                                     <TextBox.ToolTip>
                                         <TextBlock Text="{Binding ErrorMessage}" FontWeight="Bold" Foreground="Red"/>
                                     </TextBox.ToolTip>

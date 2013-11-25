@@ -146,6 +146,14 @@ namespace TaxCalculator.ViewModel.ViewModels
                         item.NrCrt--;
                     }
                 }
+                int maxNrCrt = 0;
+                //maxNrCrt = GetMaxNrCrt(itemsToUpdate, maxNrCrt);
+                var firstItem = itemsToUpdate.FirstOrDefault(p => p.NrCrt.HasValue);
+                if (firstItem != null)
+                {
+                    maxNrCrt = firstItem.NrCrt.Value;
+                    // UpdateItemsInFormulaDelete(maxNrCrt, -1);
+                }
             }
         }
 
@@ -163,7 +171,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 var itemsToUpdate = TaxIndicators.Skip(indexOf + 1).ToList();
 
                 InsertAndUpdateRows(indexOf + 1, itemsToUpdate, maxNrCrt);
-                UpdateItemsInFormula(maxNrCrt);
+                // UpdateItemsInFormula(maxNrCrt, 1);
 
             }
         }
@@ -198,19 +206,22 @@ namespace TaxCalculator.ViewModel.ViewModels
                 var itemsToUpdate = TaxIndicators.Skip(indexOf).ToList();
 
                 InsertAndUpdateRows(indexOf, itemsToUpdate, maxNrCrt);
-                UpdateItemsInFormula(maxNrCrt);
+                // UpdateItemsInFormula(maxNrCrt, 1);
             }
         }
-        private void UpdateItemsInFormula(int startingNumber)
+        private void UpdateItemsInFormula(int startingNumber, int valueDif)
         {
             var calculatedIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
             int maxIntem = calculatedIndicators.Max(p => p.NrCrt).Value;
-            for (int i = maxIntem; i >= startingNumber; i--)
+            int start = maxIntem;
+            int end = startingNumber;
+            int increment = -1;
+            for (int i = start; i >= end; i = i + increment)
             {
                 int nextNr = i;
 
                 var itemToReplace = "rd." + nextNr;
-                string nextItem = "rd." + (nextNr + 1);
+                string nextItem = "rd." + (nextNr + valueDif);
                 foreach (var item in calculatedIndicators)
                 {
                     try
@@ -249,9 +260,9 @@ namespace TaxCalculator.ViewModel.ViewModels
                             }
                             if (isValidNumber)
                             {
-                                Debug.WriteLine(string.Format("replacing {0} with {1}", nextNr, (nextNr + 1)));
+                                Debug.WriteLine(string.Format("replacing {0} with {1}", nextNr, (nextNr + valueDif)));
 
-                                item.IndicatorFormula = formulaLower.Replace(nextNr.ToString(), (nextNr + 1).ToString());
+                                item.IndicatorFormula = formulaLower.Replace(nextNr.ToString(), (nextNr + valueDif).ToString());
                             }
                         }
                         //TaxFormula tf = new TaxFormula(item.IndicatorFormula);
@@ -277,6 +288,86 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
         }
 
+        private void UpdateItemsInFormulaDelete(int startingNumber, int valueDif)
+        {
+            var calculatedIndicators = TaxIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
+            int maxIntem = calculatedIndicators.Max(p => p.NrCrt).Value;
+            int start = maxIntem;
+            int end = startingNumber;
+            int increment = +1;
+            for (int i = startingNumber; i < maxIntem; i = i + increment)
+            {
+                int nextNr = i;
+
+                var itemToReplace = "rd." + nextNr;
+                string nextItem = "rd." + (nextNr + valueDif);
+                foreach (var item in calculatedIndicators)
+                {
+                    try
+                    {
+                        //get all the matches
+                        //replace with new values
+                        var formulaLower = item.IndicatorFormula.ToLower();
+                        if (formulaLower.Contains(itemToReplace))
+                        {
+                            Debug.WriteLine(string.Format("replacing {0} with {1}", itemToReplace, nextItem));
+                            item.IndicatorFormula = formulaLower.Replace(itemToReplace, nextItem);
+                        }
+                        else if (formulaLower.Contains(nextNr.ToString()))
+                        {
+                            string nextNrString = nextNr.ToString();
+
+                            var noSpaces = formulaLower.Trim().Replace(" ", string.Empty);
+                            int indexOf = noSpaces.IndexOf(nextNrString);
+                            bool isValidNumber = true;
+                            List<char> invalidChars = new List<char>() { '*', '%' };
+                            if (indexOf > 0)
+                            {
+                                char prevChar = noSpaces[indexOf - 1];
+                                if (invalidChars.Contains(prevChar) || char.IsNumber(prevChar))
+                                {
+                                    isValidNumber = false;
+                                }
+                            }
+                            if (indexOf < noSpaces.Length - nextNrString.Length)
+                            {
+                                char nextChar = noSpaces[indexOf + nextNrString.Length];
+                                if (invalidChars.Contains(nextChar) || char.IsNumber(nextChar))
+                                {
+                                    isValidNumber = false;
+                                }
+                            }
+                            if (isValidNumber)
+                            {
+                                Debug.WriteLine(string.Format("replacing {0} with {1}", nextNr, (nextNr + valueDif)));
+                                formulaLower = string.Format("{0}@{1}@{2}", formulaLower.Substring(0, indexOf), nextNrString, formulaLower.Substring(indexOf + nextNrString.Length, formulaLower.Length - indexOf + nextNrString.Length - 1));
+
+                                //item.IndicatorFormula = formulaLower.Replace(nextNr.ToString(), (nextNr + valueDif).ToString());
+                                item.IndicatorFormula = formulaLower.Replace("@" + nextNr.ToString() + "@", (nextNr + valueDif).ToString());
+                            }
+                        }
+                        //TaxFormula tf = new TaxFormula(item.IndicatorFormula);
+                        //if (tf.FormulaType == FormulaType.Value)
+                        //{
+                        //    foreach (var param in tf.Params)
+                        //    {
+                        //        if (param.ParamType == ParamType.RowData)
+                        //        {
+                        //            var rowData = (param.ParamData as RowData);
+                        //            if (rowData.NrCrt > startingNumber)
+                        //            {
+                        //                rowData.NrCrt++;
+                        //            }
+                        //        }
+                        //    }
+                        //}
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+        }
         private void InsertAndUpdateRows(int indexOf, List<TaxIndicatorViewModel> itemsToUpdate, int maxNrCrt)
         {
             TaxIndicators.Insert(indexOf, GetEmptyRow(maxNrCrt));

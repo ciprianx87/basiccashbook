@@ -279,22 +279,22 @@ namespace TaxCalculator.ViewModel.ViewModels
                 TaxCalculationOtherData initialOtherData = null;
                 List<CompletedIndicatorVm> initialSavedEntities = null;
                 List<PrintRow> initialPrintRowList = null;
-                bool row57Completed = false;
-                var row57 = GetRowByInnerId(savedEntities, 57);
-                if (row57 != null)
+                bool row66Completed = false;
+                var row66 = GetRowByInnerId(savedEntities, 66);
+                if (row66 != null)
                 {
-                    row57Completed = DecimalConvertor.Instance.StringToDecimal(row57.Value) != 0;
+                    row66Completed = DecimalConvertor.Instance.StringToDecimal(row66.Value) != 0;
                 }
-                if (row57Completed && otherData.SecondTypeReport)
+                if (row66Completed && otherData.SecondTypeReport)
                 {
                     var initialCompletedIndicatorDbModel = VmUtils.Deserialize<CompletedIndicatorDbModel>(calculation.Content);
                     initialSavedEntities = initialCompletedIndicatorDbModel.CompletedIndicators;
 
                     var row10 = GetRowByInnerId(initialSavedEntities, 10);
-                    var row27 = GetRowByInnerId(initialSavedEntities, 27);
-                    var row57Value = DecimalConvertor.Instance.StringToDecimal(row57.Value);
-                    row10.Value = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(row10.Value) + row57Value, otherData.NrOfDecimals);
-                    row27.Value = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(row27.Value) + row57Value, otherData.NrOfDecimals);
+                    var row30 = GetRowByInnerId(initialSavedEntities, 30);
+                    var row66Value = DecimalConvertor.Instance.StringToDecimal(row66.Value);
+                    row10.Value = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(row10.Value) + row66Value, otherData.NrOfDecimals);
+                    row30.Value = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(row30.Value) + row66Value, otherData.NrOfDecimals);
 
                     initialPrintRowList = initialSavedEntities.ToPrintRowList();
                     //AddExtraRows(initialPrintRowList, selectedVm.VerifiedBy, selectedVm.CreatedBy);
@@ -302,8 +302,9 @@ namespace TaxCalculator.ViewModel.ViewModels
                 }
 
                 var printRowList = savedEntities.ToPrintRowList();
-                AddExtraRows(printRowList, selectedVm.VerifiedBy, selectedVm.CreatedBy);
-                if (row57Completed && otherData.SecondTypeReport)
+                //AddExtraRows(printRowList, selectedVm.VerifiedBy, selectedVm.CreatedBy);
+                AddEmptyRows(printRowList);
+                if (row66Completed && otherData.SecondTypeReport)
                 {
                     PrintData.Pages = BuildPages(printRowList, initialPrintRowList);
                 }
@@ -329,7 +330,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
                     PrintData.Pages.ForEach(p =>
                     {
-                        p.Version2Visibility = row57Completed && otherData.SecondTypeReport ? Visibility.Visible : Visibility.Collapsed;
+                        p.Version2Visibility = row66Completed && otherData.SecondTypeReport ? Visibility.Visible : Visibility.Collapsed;
                         p.LastPageVisibility = Visibility.Collapsed;
 
                     }
@@ -342,7 +343,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                         VerifiedBy = otherData.VerifiedBy
                     };
 
-                    if (row57Completed)
+                    if (row66Completed)
                     {
                         //firstPage.FirstPageData.InitialMonth = initialOtherData.Month;
                         //firstPage.FirstPageData.InitialYear = initialOtherData.Year.ToString();
