@@ -28,8 +28,6 @@ namespace TaxCalculator.ViewModel.ViewModels
         private int exchangeRateDefaultNrOfDecimals = 2;
         public TaxCalculationSetupVm()
         {
-
-            Mediator.Instance.Register(MediatorActionType.RefreshCoinTypes, RefreshCoinTypes);
             this.CreateCoinTypeCommand = new DelegateCommand(CreateCoinType, CanCreateCoinType);
             this.AddValuesCommand = new DelegateCommand(AddValues, CanAddValues);
             settingsRepository = new SettingsRepository();
@@ -194,76 +192,6 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
         }
 
-        private ObservableCollection<string> existingCoinTypes;
-        public ObservableCollection<string> ExistingCoinTypes
-        {
-            get { return existingCoinTypes; }
-            set
-            {
-                if (existingCoinTypes != value)
-                {
-                    existingCoinTypes = value;
-                    this.NotifyPropertyChanged("ExistingCoinTypes");
-                }
-            }
-        }
-
-
-        private string selectedCoinType;
-        public string SelectedCoinType
-        {
-            get { return selectedCoinType; }
-            set
-            {
-                if (selectedCoinType != value)
-                {
-                    selectedCoinType = value;
-                    this.NotifyPropertyChanged("SelectedCoinType");
-                }
-            }
-        }
-
-
-        private string exchangeRateString;
-        public string ExchangeRateString
-        {
-            get { return exchangeRateString; }
-            set
-            {
-                if (exchangeRateString != value)
-                {
-                    exchangeRateString = value;
-
-                    exchangeRateString = Utils.PrepareForConversion(value);
-                    if (!string.IsNullOrEmpty(exchangeRateString))
-                    {
-                        ExchangeRate = DecimalConvertor.Instance.StringToDecimal(exchangeRateString);
-                    }
-                    exchangeRateString = DecimalConvertor.Instance.DecimalToString(ExchangeRate, exchangeRateDefaultNrOfDecimals);
-                    this.NotifyPropertyChanged("ExchangeRateString");
-                }
-            }
-        }
-
-        private decimal exchangeRate;
-        public decimal ExchangeRate
-        {
-            get { return exchangeRate; }
-            set
-            {
-                if (value == 0)
-                {
-                    exchangeRate = 0;
-                    ExchangeRateString = "0";
-                }
-                else if (exchangeRate != value)
-                {
-                    exchangeRate = value;
-                    this.NotifyPropertyChanged("ExchangeRate");
-                    ExchangeRateString = DecimalConvertor.Instance.DecimalToString(ExchangeRate, exchangeRateDefaultNrOfDecimals);
-                }
-            }
-        }
 
 
         private string createdBy;
@@ -362,24 +290,6 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         #region methods
 
-        public void RefreshCoinTypes(object param)
-        {
-            string previouslySelectedCointType = SelectedCoinType;
-            ExistingCoinTypes = new ObservableCollection<string>();
-            VmUtils.ExtractCoinTypes(settingsRepository, ExistingCoinTypes);
-            if (ExistingCoinTypes.Count > 0)
-            {
-                if (ExistingCoinTypes.Contains(previouslySelectedCointType))
-                {
-                    SelectedCoinType = previouslySelectedCointType;
-                }
-                else
-                {
-                    SelectedCoinType = ExistingCoinTypes[0];
-                }
-            }
-        }
-
         private bool CanCreateCoinType(object parameter)
         {
             return true;
@@ -398,15 +308,8 @@ namespace TaxCalculator.ViewModel.ViewModels
             AvailableNrOfDecimals = new ObservableCollection<byte>() { 0, 1, 2 };
             Months = new ObservableCollection<string>(Constants.AvailableMonths);
             SelectedMonth = Months[0];
-            ExchangeRateString = "0";
             try
             {
-                ExistingCoinTypes = new ObservableCollection<string>();
-                VmUtils.ExtractCoinTypes(settingsRepository, ExistingCoinTypes);
-                if (ExistingCoinTypes.Count > 0)
-                {
-                    SelectedCoinType = ExistingCoinTypes[0];
-                }
                 //load companies
                 Companies = new ObservableCollection<Company>(companyRepository.GetAll().OrderBy(p => p.Name));
                 if (Companies.Count > 0)
@@ -520,8 +423,9 @@ namespace TaxCalculator.ViewModel.ViewModels
             //load the selected data and navigate to the fill-in screen
             TaxCalculationSetupModel setupModel = new TaxCalculationSetupModel()
             {
-                CoinType = SelectedCoinType,
-                ExchangeRate = ExchangeRate,
+                //CS: removed coin type and exchange rate
+                CoinType = "LEI",
+                ExchangeRate = 0,
                 Month = SelectedMonth,
                 NrOfDecimals = SelectedNrOfDecimals,
                 Rectifying = Rectifying,
