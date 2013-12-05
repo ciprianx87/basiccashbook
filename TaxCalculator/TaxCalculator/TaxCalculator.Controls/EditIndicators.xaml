@@ -23,14 +23,8 @@
         <Button Grid.Row="1" Content="Validare Formule" HorizontalAlignment="Left" Height="30" Width="100" Command="{Binding ValidateCommand}" Margin="140,0,0,0"></Button>
         <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0"
                   CanUserAddRows="False" MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
-                  CanUserResizeRows="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
-            <DataGrid.ContextMenu>
-                <ContextMenu x:Name="contextMenu" Opened="ContextMenu_Opened">
-                    <!--<MenuItem Header="Adauga rand inainte"  Command="{Binding AddBeforeCommand}"/>
-                    <MenuItem Header="Adauga rand dupa" Command="{Binding AddAfterCommand}"/>
-                    <MenuItem Header="Sterge" Command="{Binding RemoveRowCommand}"/>-->
-                </ContextMenu>
-            </DataGrid.ContextMenu>
+                  CanUserResizeRows="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" 
+                    VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Standard">           
             <DataGrid.Resources>
                 <Style TargetType="DataGridCell"  x:Key="NoFocusColumStyle">
                     <Setter Property="IsTabStop" Value="False"/>
@@ -84,7 +78,10 @@
                             <!---->
                             <!--Style="{StaticResource StandardTextBlock}"-->
                             <!--Style="{Binding Type, Converter={StaticResource indicatorConverter}}"-->
-                            <TextBox Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontWeight="{Binding Style.FontWeight}">
+                            <TextBox Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontWeight="{Binding Style.FontWeight}"
+                                     PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton" MouseDoubleClick="TextBox_MouseDoubleClick" 
+                                              GotKeyboardFocus="TextBox_MouseDoubleClick" KeyDown="TextBox_KeyDown" PreviewKeyDown="TextBox_PreviewKeyDown" Loaded="TextBox_Loaded"
+                                      Tag="{Binding TypeEnabled}">
                             </TextBox>
                             <!--<TextBox Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandardTextBox}"  Visibility="{Binding Style.ValueFieldVisibility}"/>-->
                         </DataTemplate>

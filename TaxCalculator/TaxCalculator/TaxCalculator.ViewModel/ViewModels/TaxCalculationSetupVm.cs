@@ -389,10 +389,13 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             return true;
         }
+
         private bool IsValid()
         {
-            return !string.IsNullOrEmpty(CreatedBy) && !string.IsNullOrEmpty(VerifiedBy);
+            //CS: removed created and verified by mandatory field check
+            return true;
         }
+
         private void AddValues(object parameter)
         {
             if (!IsValid())
@@ -460,42 +463,8 @@ namespace TaxCalculator.ViewModel.ViewModels
             string result = null;
             switch (columnName)
             {
-                case "CreatedBy":
-                    if (string.IsNullOrWhiteSpace(CreatedBy))
-                    {
-                        result = "Camp obligatoriu";
-                    }
+                default:
                     break;
-                case "VerifiedBy":
-                    if (string.IsNullOrEmpty(VerifiedBy))
-                    {
-                        result = "Camp obligatoriu";
-                    }
-                    break;
-                //case "TotalPayment":
-                //    if (TotalPayment < 0)
-                //    {
-                //        result = "Campul trebuie sa fie pozitiv";
-                //    }
-                //    break;
-                //case "DailyCashing":
-                //    if (DailyCashing < 0 && DailyCashingActive)
-                //    {
-                //        result = "Campul trebuie sa fie pozitiv";
-                //    }
-                //    break;
-                //case "TotalBalance":
-                //    if (TotalBalance < 0 && TotalBalanceActive)
-                //    {
-                //        result = "Campul trebuie sa fie pozitiv";
-                //    }
-                //    break;
-                //case "TotalCashing":
-                //    if (TotalCashing < 0 && TotalCashingActive)
-                //    {
-                //        result = "Campul trebuie sa fie pozitiv";
-                //    }
-                //    break;
             }
 
             return result;
