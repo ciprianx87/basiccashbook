@@ -415,7 +415,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                     {
                         if (p.Type == TaxIndicatorType.Numeric)
                         {
-                            p.InitialValueField = p.ValueField;
+                            var initValue = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(p.ValueField));
+                            p.InitialValueField = initValue;
                             p.ValueField = p.ValueField;
                         }
                     });

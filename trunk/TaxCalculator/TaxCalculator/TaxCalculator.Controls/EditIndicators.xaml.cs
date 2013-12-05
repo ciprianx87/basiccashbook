@@ -50,15 +50,119 @@ namespace TaxCalculator.Controls
             {
                 int maxNrCrt = dataContext.GetMaxNrCrt();
                 //verify the item with the inner id 30 instead of the value (in case multiple rows are added)
-                //what to do when the row was deleted?
-                //int rd30Position=da
-                //if (maxNrCrt > 30)
-                //{
-                //    contextMenu.IsOpen = false;
-                //    e.Handled = true;
-                //}
+                //what to do when the row was deleted?                
             }
         }
 
+
+        #region textbox arrow navigation
+        private void TextBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            var txtBox = (sender as TextBox);
+            //if (txtBox.Tag != null && txtBox.Tag is bool && (bool)txtBox.Tag == true)
+            {
+                txtBox.Tag = counter.ToString();
+                //txtBox.Text = counter.ToString();
+                if (counter == 1)
+                {
+                    //select the first textbox
+                    FocusTextBox(txtBox);
+                }
+                counter++;
+                alltextboxes.Add(txtBox);
+
+            }
+        }
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return || e.Key == Key.Down)
+            {
+                TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Next);
+                MoveFocus(request);
+            }
+            if (e.Key == Key.Up)
+            {
+                TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Previous);
+                MoveFocus(request);
+            }
+        }
+
+        private void dgTaxIndicators_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            int currentCounter = Convert.ToInt32((sender as TextBox).Tag);
+            if (e.Key == Key.Return || e.Key == Key.Down)
+            {
+                SelectTextBoxById(currentCounter + 1);
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Up)
+            {
+                SelectTextBoxById(currentCounter - 1);
+                e.Handled = true;
+            }
+        }
+        private void SelectTextBoxById(int id)
+        {
+            try
+            {
+                if (id < 0 || id > alltextboxes.Count)
+                {
+                    return;
+                }
+                var nextTextbox = alltextboxes.FirstOrDefault(p => p.Tag != null && p.Tag.ToString() == id.ToString());
+                if (nextTextbox != null)
+                {
+                    FocusTextBox(nextTextbox);
+                }
+            }
+            catch { }
+        }
+
+        private static void FocusTextBox(TextBox nextTextbox)
+        {
+            nextTextbox.Focus();
+            nextTextbox.SelectAll();
+        }
+
+        int counter = 1;
+        List<TextBox> alltextboxes = new List<TextBox>();
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            //return;
+            TextBox txtBox = sender as TextBox;
+            txtBox.SelectAll();
+            e.Handled = true;
+            txtBox.Focus();
+
+        }
+
+        private void SelectivelyIgnoreMouseButton(object sender, MouseButtonEventArgs e)
+        {
+            TextBox tb = (sender as TextBox);
+            if (tb != null)
+            {
+                if (!tb.IsKeyboardFocusWithin)
+                {
+                    e.Handled = true;
+                    tb.Focus();
+                }
+            }
+        }
+
+        private void TextBox_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = (sender as TextBox);
+            if (tb != null)
+            {
+                tb.SelectAll();
+            }
+        }
+        #endregion
     }
 }

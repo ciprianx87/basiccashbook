@@ -66,7 +66,7 @@
 58,3/1000 din CA,Calculat,rd.57*3/1000
 59,Impozit pe profit (rd.56),Calculat,rd.56
 60,20/100 din Impozit pe profit,Calculat,rd.59*20/100
-61,Cheltuieli sponsorizare admise,Calculat,IF((rd.58>rd.60);rd.58;rd.60)
+61,Cheltuieli sponsorizare admise,Calculat,IF((rd.58>rd.60);rd.60;rd.58)
 62,Cheltuieli sponsorizare efective,Numeric,..
 63,Cheltuieli sponsorizare deductibile,Calculat,IF(rd.61<rd.62;rd.61;rd.62)
 ,Calcul impozit profit,Text,
