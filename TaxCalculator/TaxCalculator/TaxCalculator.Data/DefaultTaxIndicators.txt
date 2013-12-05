@@ -76,4 +76,4 @@
 ,Total impozit pe profit final datorat,,
 67,Total impozit pe porfit datorat,Calculat,rd.66
 68,              datorat cumulat trim. Precedent,Numeric,..
-69,              diferenta de inregistrat,Calculat,rd.(67-68)
+69,              diferenta de inregistrat,Calculat,rd.(67-68),69
