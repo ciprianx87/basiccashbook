@@ -184,7 +184,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 SaveFileDialog sfd = new SaveFileDialog();
                 sfd.AddExtension = true;
                 //sfd.DefaultExt = ".xls";
-                sfd.Filter = "Excel File|*.xls";
+                sfd.Filter = "Excel File (2003)|*.xls|Excel File (2007)|*.xlsx";
                 sfd.Title = "Save an Excel File";
                 sfd.OverwritePrompt = true;
                 if (sfd.ShowDialog() == true)

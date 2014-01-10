@@ -258,8 +258,14 @@ namespace TaxCalculator.ViewModel.ViewModels
                 }
 
                 if (useFilters)
-                {
+                {                  
                     ApplyFilter(existingIndicators);
+                    if (existingIndicators == null || existingIndicators.Count == 0)
+                    {
+                        //inform the user that no reports exist
+                        WindowHelper.OpenInformationDialog(Messages.Error_NoReportsForFilters);
+                        return;
+                    }
                 }
                 var existingIndicatorsVm = existingIndicators.ToVmList();
                 if (existingIndicatorsVm != null)
@@ -375,7 +381,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                 CreatedBy = otherData.CreatedBy,
                 Year = otherData.Year,
                 SelectedTaxCalculation = null,
-                CompletedTaxIndicatorId = selectedCalculation.Id
+                CompletedTaxIndicatorId = selectedCalculation.Id,
+                BackToReports = true
             };
 
             Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.TaxCalculationCompletion);

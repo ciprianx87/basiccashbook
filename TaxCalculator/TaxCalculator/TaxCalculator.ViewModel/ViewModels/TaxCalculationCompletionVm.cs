@@ -188,7 +188,14 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void Back(object parameter)
         {
-            Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.TaxCalculationSetup);
+            if (setupModel.BackToReports)
+            {
+                Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.TaxCalculationList);
+            }
+            else
+            {
+                Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.TaxCalculationSetup);
+            }
         }
 
         private bool CanSave(object parameter)
