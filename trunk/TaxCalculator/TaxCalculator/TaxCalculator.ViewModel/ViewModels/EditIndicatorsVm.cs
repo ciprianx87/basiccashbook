@@ -437,7 +437,9 @@ namespace TaxCalculator.ViewModel.ViewModels
             bool isValid = ExecuteTaxCalculation(null);
             if (isValid)
             {
-                bool hasErrors = TaxIndicators.Any(p => !string.IsNullOrEmpty(p.ErrorMessage));
+                List<int> allowedIds = new List<int>() { 18, 19, 20, 34, 35, 36, 37, 38, 39 };
+                bool hasErrors = TaxIndicators.Any(p => !string.IsNullOrEmpty(p.ErrorMessage) && (p.NrCrt.HasValue && !allowedIds.Contains(p.NrCrt.Value)));
+
 
                 if (!hasErrors)
                 {

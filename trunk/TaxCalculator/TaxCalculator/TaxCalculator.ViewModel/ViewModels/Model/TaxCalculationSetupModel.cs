@@ -8,6 +8,10 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
 {
     public class TaxCalculationSetupModel
     {
+        public TaxCalculationSetupModel()
+        {
+            BackToReports = false;
+        }
         public Company SelectedCompany { get; set; }
         public Indicator SelectedIndicatorList { get; set; }
         public decimal ExchangeRate { get; set; }
@@ -20,5 +24,6 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public int Year { get; set; }
         public TaxCalculationSelection SelectedTaxCalculation { get; set; }
         public Int64 CompletedTaxIndicatorId { get; set; }
+        public bool BackToReports { get; set; }
     }
 }
