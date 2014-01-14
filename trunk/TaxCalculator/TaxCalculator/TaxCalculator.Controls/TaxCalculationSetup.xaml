@@ -88,7 +88,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"  Margin="5" Visibility="{Binding TaxCalculationSelectionVisible}">
                     <TextBlock  Text="Lista Documente:"/>
-                    <ComboBox  Width="200" HorizontalAlignment="Left" DisplayMemberPath="Name" 
+                    <ComboBox  Width="300" HorizontalAlignment="Left" DisplayMemberPath="Name" 
                       ItemsSource="{Binding TaxCalculationList}" SelectedItem="{Binding SelectedTaxCalculation, Mode=TwoWay}" ></ComboBox>
                 </StackPanel>
                 <Button Content="Introduceti Valori" Width="150" Height="35" HorizontalAlignment="Left" Margin="6,0,0,0" Command="{Binding AddValuesCommand}"/>

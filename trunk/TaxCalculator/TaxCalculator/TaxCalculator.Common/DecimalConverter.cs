@@ -63,7 +63,16 @@ namespace TaxCalculator.Common
             //CS removed this to allow formatting numbers with 0 decimals with thousands separator
             if (nrDecimals == 0)
             {
-                format = "0";
+                format = "N1";
+                //hack to allow 0 values for decimals to be used
+                //round so that a number like this 21.9, will be turned into 22, and then the decimal part will be removed
+                number = Math.Round(number, 0);
+                var conv = number.ToString(format, ci);
+                if (conv.Contains(','))
+                {
+                    conv = conv.Remove(conv.Length - 2, 2);
+                }
+                return conv;
                 //var conv = string.Format(ci, "{0:n0}", number);
                 //return conv;
                 //format = "{0:0.0}";

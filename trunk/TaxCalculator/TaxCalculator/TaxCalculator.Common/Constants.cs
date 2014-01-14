@@ -15,5 +15,8 @@ namespace TaxCalculator.Common
         public static List<int> AvailableYears = new List<int>() { 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 };
         public static string CoinTypeLei = "LEI";
         public static int InfiniteLoopThreshold = 700;
+
+        public static string LastSetupValueKey = "LastSetupValue";
+
     }
 }

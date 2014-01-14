@@ -141,7 +141,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="100" MinWidth="100" Header="Rectificativa" Visibility="Collapsed">
+                    <DataGridTemplateColumn Width="100" MinWidth="100" Header="Rectificativa" Visibility="Visible">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <CheckBox IsChecked="{Binding Rectifying}" IsEnabled="False"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -167,7 +167,7 @@
                                             <TextBlock Text="Stergere"/>
                                         </Button.ToolTip>
                                     </Button>
-                                    <Button CommandParameter="{Binding}" Width="30" Height="20" Click="EditCommand_Click">
+                                    <Button CommandParameter="{Binding}" Width="30" Height="20" Click="EditCommand_Click" Visibility="{Binding Rectifying, Converter={StaticResource invertVisibilityConverter}}">
                                         <StackPanel>
                                             <Image Source="/TaxCalculator.Controls;component/Images/editButton.png"  Stretch="Uniform"  Width="30" Height="15"/>
                                         </StackPanel>
