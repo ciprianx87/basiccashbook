@@ -13,6 +13,7 @@ using TaxCalculator.Common.Mediator;
 using TaxCalculator.Data.Model;
 using TaxCalculator.ViewModel.ViewModels.Model;
 using System.Windows;
+using Newtonsoft.Json;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -34,8 +35,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             companyRepository = new CompanyRepository();
             indicatorRepository = new IndicatorRepository();
             taxCalculationsRepository = new TaxCalculationsRepository();
-            CreatedBy = "";
-            VerifiedBy = "";
+
             Rectifying = false;
             LoadData();
         }
@@ -144,6 +144,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                     selectedCompany = value;
                     this.NotifyPropertyChanged("SelectedCompany");
                     LoadTaxCalculations();
+                    ExtractLastSetupValues();
                 }
             }
         }
@@ -303,6 +304,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void LoadData()
         {
+
             Years = new ObservableCollection<int>(Constants.AvailableYears);
             SelectedYear = Years[0];
             AvailableNrOfDecimals = new ObservableCollection<byte>() { 0, 1, 2 };
@@ -310,6 +312,18 @@ namespace TaxCalculator.ViewModel.ViewModels
             SelectedMonth = Months[0];
             try
             {
+                //load indicators list
+                TaxIndicatorLists = new ObservableCollection<Indicator>(indicatorRepository.GetAll());
+                if (TaxIndicatorLists.Count > 0)
+                {
+                    SelectIndicator();
+                }
+                else
+                {
+                    //error message
+                    WindowHelper.OpenErrorDialog(Messages.Error_NoTaxIndicatorList);
+                }
+
                 //load companies
                 Companies = new ObservableCollection<Company>(companyRepository.GetAll().OrderBy(p => p.Name));
                 if (Companies.Count > 0)
@@ -321,27 +335,57 @@ namespace TaxCalculator.ViewModel.ViewModels
                     //error message
                     WindowHelper.OpenErrorDialog(Messages.Error_NoCompanies);
                 }
-
-                //load indicators list
-                TaxIndicatorLists = new ObservableCollection<Indicator>(indicatorRepository.GetAll());
-                if (TaxIndicatorLists.Count > 0)
-                {
-                    SelectedIndicatorList = TaxIndicatorLists.FirstOrDefault(p => p.IsDefault);
-                    if (SelectedIndicatorList == null)
-                    {
-                        SelectedIndicatorList = TaxIndicatorLists[0];
-                    }
-                }
-                else
-                {
-                    //error message
-                    WindowHelper.OpenErrorDialog(Messages.Error_NoTaxIndicatorList);
-                }
             }
             catch (Exception ex)
             {
                 Logger.Instance.LogException(ex);
                 WindowHelper.OpenErrorDialog(Messages.Error_LoadingData);
+            }
+        }
+
+        private void SelectIndicator()
+        {
+            SelectedIndicatorList = TaxIndicatorLists.FirstOrDefault(p => p.IsDefault);
+            if (SelectedIndicatorList == null)
+            {
+                SelectedIndicatorList = TaxIndicatorLists[0];
+            }
+        }
+
+        private void ExtractLastSetupValues()
+        {
+            try
+            {
+                if (selectedCompany != null)
+                {
+                    //automatically select the indicator
+                    SelectIndicator();
+
+                    CreatedBy = "";
+                    VerifiedBy = "";
+
+                    string settingKey = Constants.LastSetupValueKey + selectedCompany.Id;
+                    //load created and verified by for company id
+                    var setting = settingsRepository.GetSetting(settingKey);
+                    if (setting != null)
+                    {
+                        LastSetupValue setupValue = VmUtils.Deserialize<LastSetupValue>(setting);
+                        CreatedBy = setupValue.CreatedBy;
+                        VerifiedBy = setupValue.VerifiedBy;
+                        if (setupValue.IndicatorListId != 0)
+                        {
+                            var newSelectedIndicatorList = TaxIndicatorLists.FirstOrDefault(p => p.Id == setupValue.IndicatorListId);
+                            if (newSelectedIndicatorList != null)
+                            {
+                                SelectedIndicatorList = newSelectedIndicatorList;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
             }
         }
 
@@ -423,6 +467,9 @@ namespace TaxCalculator.ViewModel.ViewModels
                 }
             }
 
+            //save the last filled in values
+            SaveLastSetupValues();
+
             //load the selected data and navigate to the fill-in screen
             TaxCalculationSetupModel setupModel = new TaxCalculationSetupModel()
             {
@@ -442,6 +489,30 @@ namespace TaxCalculator.ViewModel.ViewModels
 
             Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.TaxCalculationCompletion);
             Mediator.Instance.SendMessage(MediatorActionType.SetSetupModel, setupModel);
+        }
+
+        private void SaveLastSetupValues()
+        {
+            try
+            {
+                if (selectedCompany != null)
+                {
+                    LastSetupValue setupValue = new LastSetupValue()
+                    {
+                        CreatedBy = CreatedBy,
+                        VerifiedBy = VerifiedBy,
+                        IndicatorListId = SelectedIndicatorList != null ? SelectedIndicatorList.Id : 0
+                    };
+                    string serializedSetupValue = VmUtils.SerializeEntity(setupValue);
+                    string settingKey = Constants.LastSetupValueKey + selectedCompany.Id;
+                    //load created and verified by for company id
+                    settingsRepository.AddOrUpdateSetting(settingKey, serializedSetupValue); ;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
         }
         #endregion
 

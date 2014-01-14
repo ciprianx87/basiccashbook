@@ -115,6 +115,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 {
                     hasChanged = true;
                 }
+                newValueString = newValueString.Replace(".", string.Empty);
                 item.ValueField = newValueString;
             }
             catch (Exception ex)
