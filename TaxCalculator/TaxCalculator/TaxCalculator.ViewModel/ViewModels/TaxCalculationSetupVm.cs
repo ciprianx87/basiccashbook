@@ -451,7 +451,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             //get all the calculations for this company and indicator list
             if (!Rectifying)
             {
-                var existingCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && p.IndicatorId == SelectedIndicatorList.Id).ToList();
+                var existingCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && p.IndicatorId == SelectedIndicatorList.Id && !p.Rectifying).ToList();
                 if (existingCalculations != null && existingCalculations.Count > 0)
                 {
                     foreach (var item in existingCalculations)

@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows;
 using TaxCalculator.ViewModel.Helper;
 using Microsoft.Win32;
+using System.Globalization;
 
 
 namespace TaxCalculator.ViewModel.ViewModels
@@ -184,12 +185,35 @@ namespace TaxCalculator.ViewModel.ViewModels
                 SaveFileDialog sfd = new SaveFileDialog();
                 sfd.AddExtension = true;
                 //sfd.DefaultExt = ".xls";
-                sfd.Filter = "Excel File (2003)|*.xls|Excel File (2007)|*.xlsx";
-                sfd.Title = "Save an Excel File";
-                sfd.OverwritePrompt = true;
-                if (sfd.ShowDialog() == true)
+                //get excel version
+                Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+                double tVersion = 0;
+                if (double.TryParse(excel.Version, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture,out tVersion))
                 {
-                    ExcelExport.ExportToExcel(PrintData, sfd.FileName);
+                    string filter = "";
+                    // 12 is the first version with .xlsx extension
+                    //http://stackoverflow.com/questions/2914643/determine-excel-version-culture-via-microsoft-office-interop-excel
+                    if (tVersion > 11.5)
+                    {
+                        filter = "Excel File (2007)|*.xlsx";
+                    }
+                    else
+                    {
+                        filter = "Excel File (2003)|*.xls";
+                    }
+
+                    sfd.Filter = filter;
+                    sfd.Title = "Save an Excel File";
+
+                    sfd.OverwritePrompt = true;
+                    if (sfd.ShowDialog() == true)
+                    {
+                        ExcelExport.ExportToExcel(PrintData, sfd.FileName);
+                    }
+                }
+                else
+                {
+                    //excel is not installed
                 }
             }
             catch (Exception ex)

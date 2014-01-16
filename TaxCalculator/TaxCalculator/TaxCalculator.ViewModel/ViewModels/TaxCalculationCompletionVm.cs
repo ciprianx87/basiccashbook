@@ -324,11 +324,11 @@ namespace TaxCalculator.ViewModel.ViewModels
                     if (setupModel.ExchangeRate != 0 && setupModel.CoinType != Constants.CoinTypeLei)
                     {
                         //SaveTaxCalculationCompletion(savedChosenName, setupModel.CoinType, setupModel.ExchangeRate, setupModel.NrOfDecimals);
-                        SaveTaxCalculationCompletion(savedChosenName, Constants.CoinTypeLei, 1, setupModel.NrOfDecimals);
+                        SaveTaxCalculationCompletion(savedChosenName, Constants.CoinTypeLei, 1, nrDecimals);
                     }
                     else
                     {
-                        SaveTaxCalculationCompletion(savedChosenName, setupModel.CoinType, 1, setupModel.NrOfDecimals);
+                        SaveTaxCalculationCompletion(savedChosenName, setupModel.CoinType, 1, nrDecimals);
                     }
 
                     //add the tax calculation for the selected coin also if an exchange rate is provided
@@ -343,7 +343,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
         }
 
-        private void SaveTaxCalculationCompletion(string chosenName, string coinType, decimal exchangeRate, byte nrOfDecimals)
+        private void SaveTaxCalculationCompletion(string chosenName, string coinType, decimal exchangeRate, int nrOfDecimals)
         {
             var taxIndicatorModelList = TaxIndicators.ToList().ToCompletedList();
             //multiply with the exchange rate
@@ -373,7 +373,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 CoinType = coinType,
                 ExchangeRate = exchangeRate,
                 Month = setupModel.Month,
-                NrOfDecimals = setupModel.NrOfDecimals,
+                NrOfDecimals = nrOfDecimals,
                 Name = chosenName,
                 Year = setupModel.Year,
                 SecondTypeReport = isSecondTypeReport
@@ -411,9 +411,14 @@ namespace TaxCalculator.ViewModel.ViewModels
                 //setupModel.Rectifying = false;
                 if (setupModel.Rectifying)
                 {
+                    //load the old nr of decimals
 
                     //load the selected calculation
                     var selectedTaxCalculation = taxCalculationRepository.Get(setupModel.SelectedTaxCalculation.Id);
+                    var otherData = VmUtils.Deserialize<TaxCalculationOtherData>(selectedTaxCalculation.OtherData);
+                    nrDecimals = (byte)otherData.NrOfDecimals;
+                    DecimalConvertor.Instance.SetNumberOfDecimals(nrDecimals);
+
                     var completeIndicatorDbModel = VmUtils.Deserialize<CompletedIndicatorDbModel>(selectedTaxCalculation.Content);
                     List<CompletedIndicatorVm> completedIndicatorList = completeIndicatorDbModel.CompletedIndicators;
 
@@ -423,9 +428,19 @@ namespace TaxCalculator.ViewModel.ViewModels
                     {
                         if (p.Type == TaxIndicatorType.Numeric)
                         {
-                            var initValue = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(p.ValueField));
-                            p.InitialValueField = initValue;
-                            p.ValueField = p.ValueField;
+                            //var initValue = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(p.ValueField));
+                            //initValue = initValue.Replace(".", string.Empty);
+                            //p.InitialValueField = initValue;
+                            p.InitialValueField = p.ValueField;
+                            //p.ValueField = p.ValueField;
+                        }
+                        else if (p.Type == TaxIndicatorType.Calculat)
+                        {
+                            //var initValue = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(p.ValueField));
+                            //initValue = initValue.Replace(".", string.Empty);
+                            //p.InitialValueField = initValue;
+                            p.InitialValueField = p.ValueField;
+                            //p.ValueField = p.ValueField;
                         }
                     });
 
@@ -485,6 +500,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                                 var existing = completeIndicatorDbModel.CompletedIndicators.First(i => i.NrCrt == p.NrCrt.Value.ToString());
                                 if (existing != null)
                                 {
+                                    //existing.Value = existing.Value.Replace(",", string.Empty);
+                                    existing.Value = existing.Value.Replace(".", string.Empty);
                                     p.ValueField = existing.Value;
                                 }
                             }

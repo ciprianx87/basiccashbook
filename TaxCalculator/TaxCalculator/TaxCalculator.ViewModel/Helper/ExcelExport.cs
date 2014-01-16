@@ -5,6 +5,8 @@ using System.Text;
 using TaxCalculator.ViewModel.ViewModels.Model;
 using System.Diagnostics;
 using Microsoft.Office.Interop.Excel;
+using System.Threading;
+using System.Globalization;
 
 namespace TaxCalculator.ViewModel.Helper
 {
@@ -12,6 +14,8 @@ namespace TaxCalculator.ViewModel.Helper
     {
         public static void ExportToExcel(PrintDataModel printModel, string fileName)
         {
+            var OriginalCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             // Load Excel application
             Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
 
@@ -47,11 +51,13 @@ namespace TaxCalculator.ViewModel.Helper
                 if (isSecondTypeReport)
                 {
                     row++;
+                    workSheet.Cells[4, "C"] = "Rectificativa";
                     workSheet.Cells[5, "D"] = "Perioada";
                     workSheet.Cells[6, "D"] = firstPage.FirstPageData.MonthYear;
                     SetBold(workSheet, 5, "D");
                     SetBold(workSheet, 6, "D");
 
+                    AlignToCenter(workSheet, 4, "C");
                     AlignToCenter(workSheet, 5, "D");
                     AlignToCenter(workSheet, 6, "D");
 
@@ -66,17 +72,23 @@ namespace TaxCalculator.ViewModel.Helper
                 {
                     allPageData.AddRange(page.Rows);
                 }
+               // for (int i = 0; i < gvExportExcel.Rows.Count; i++) 
+
                 //remove the title--replace it with something else
                 allPageData.RemoveAt(0);
                 foreach (var page in allPageData)
                 {
                     workSheet.Cells[row, "A"] = page.NrCrt;
                     workSheet.Cells[row, "B"] = page.Description;
-                    workSheet.Cells[row, "C"] = page.Value;
+                    workSheet.Cells[row, "C"] = GetExcelStyleValue(page.Value);
+                    //set column format to text
+                    //workSheet.Range["C" + row].NumberFormat = "@";               
+
                     if (page.Type == Data.Model.TaxIndicatorType.Calculat)
                     {
                         var range = workSheet.Range["B" + row];
                         range.Font.Bold = true;
+                        AlignToRight(workSheet, row, "C");
                     }
                     if (page.Type == Data.Model.TaxIndicatorType.Text)
                     {
@@ -85,33 +97,31 @@ namespace TaxCalculator.ViewModel.Helper
                         SetTextStyle(workSheet, row, "B");
                         SetTextStyle(workSheet, row, "C");
                         AlignToCenter(workSheet, row, "B");
-                        //range.HorizontalAlignment=
                     }
-
+                    if (page.Type == Data.Model.TaxIndicatorType.Numeric)
+                    {
+                        AlignToRight(workSheet, row, "C");
+                    }
                     if (isSecondTypeReport)
                     {
                         //2nd type report
-                        workSheet.Cells[row, "D"] = page.InitialValue;
+                        AlignToRight(workSheet, row, "D");
+                        workSheet.Cells[row, "D"] = GetExcelStyleValue(page.InitialValue);
                     }
                     row++;
-                }
-                //set column width
-                //var column = workSheet.Columns["A"];
-                //column.ColumnWidth = 10;
-                //column = workSheet.Columns["B"];
-                //column.ColumnWidth = 10;
-                //column = workSheet.Columns["C"];
-                //column.ColumnWidth = 20;
+                }             
 
                 Range er = workSheet.get_Range("A:A", System.Type.Missing);
                 er.EntireColumn.ColumnWidth = 10;
                 er = workSheet.get_Range("B:B", System.Type.Missing);
                 er.EntireColumn.ColumnWidth = 80;
                 er = workSheet.get_Range("C:C", System.Type.Missing);
+                er.NumberFormat = "@";
                 er.EntireColumn.ColumnWidth = 20;
                 er = workSheet.get_Range("D:D", System.Type.Missing);
                 er.EntireColumn.ColumnWidth = 20;
 
+                er.NumberFormat = "@";
                 //add the last rows
                 row += 3;
                 workSheet.Cells[row, "B"] = "INTOCMIT,";
@@ -170,12 +180,24 @@ namespace TaxCalculator.ViewModel.Helper
 
                 }
                 catch { }
+                finally
+                {
+                    Thread.CurrentThread.CurrentCulture = OriginalCulture;
+                }
             }
         }
-
+        private static string GetExcelStyleValue(string value)
+        {
+            return "=\"" + value + "\"";
+        }
         private static void AlignToCenter(Microsoft.Office.Interop.Excel._Worksheet workSheet, int rowNr, string column)
         {
             workSheet.Cells[rowNr, column].HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+        }
+
+        private static void AlignToRight(Microsoft.Office.Interop.Excel._Worksheet workSheet, int rowNr, string column)
+        {
+            workSheet.Cells[rowNr, column].HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
         }
 
         private static void SetBold(Microsoft.Office.Interop.Excel._Worksheet workSheet, int row, string columnName)
@@ -201,6 +223,7 @@ namespace TaxCalculator.ViewModel.Helper
             range.Font.Bold = true;
             range.Font.Underline = true;
             range.Font.Name = "Times New Roman";
+
         }
     }
 }

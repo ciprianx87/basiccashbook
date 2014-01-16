@@ -123,6 +123,7 @@ namespace TaxCalculator.ViewModel.Extensions
 
         public static TaxIndicatorViewModel ToVm(this CompletedIndicatorVm item)
         {
+           if (item.Value!=null) item.Value = item.Value.Replace(".", string.Empty);
             var result = new TaxIndicatorViewModel()
             {
                 NrCrt = string.IsNullOrEmpty(item.NrCrt) ? new Nullable<int>() : Convert.ToInt32(item.NrCrt),
@@ -133,7 +134,7 @@ namespace TaxCalculator.ViewModel.Extensions
                 Style = VmUtils.GetStyleInfo(item.Type),
                 IndicatorFormula = item.IndicatorFormula
             };
-
+            //result.ValueField=
             return result;
         }
 
