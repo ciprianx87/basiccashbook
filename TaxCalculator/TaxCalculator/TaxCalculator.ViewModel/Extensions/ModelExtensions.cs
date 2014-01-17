@@ -5,6 +5,7 @@ using System.Text;
 using TaxCalculator.ViewModel.ViewModels.Model;
 using TaxCalculator.Data.Model;
 using System.Windows;
+using TaxCalculator.Common;
 
 namespace TaxCalculator.ViewModel.Extensions
 {
@@ -58,7 +59,7 @@ namespace TaxCalculator.ViewModel.Extensions
                 InitialType = item.InitialType
                 // Value = item.ValueField
             };
-            
+
 
             return result;
         }
@@ -85,7 +86,8 @@ namespace TaxCalculator.ViewModel.Extensions
                 NrOfDecimals = otherData.NrOfDecimals,
                 Rectifying = item.Rectifying,
                 VerifiedBy = otherData.VerifiedBy,
-                Year = otherData.Year
+                Year = otherData.Year,
+                LastModifiedDate = otherData.LastModifiedDate == DateTime.MinValue ? "" : Utils.DateTimeToString(otherData.LastModifiedDate)
             };
 
             return result;
@@ -123,7 +125,7 @@ namespace TaxCalculator.ViewModel.Extensions
 
         public static TaxIndicatorViewModel ToVm(this CompletedIndicatorVm item)
         {
-           if (item.Value!=null) item.Value = item.Value.Replace(".", string.Empty);
+            if (item.Value != null) item.Value = item.Value.Replace(".", string.Empty);
             var result = new TaxIndicatorViewModel()
             {
                 NrCrt = string.IsNullOrEmpty(item.NrCrt) ? new Nullable<int>() : Convert.ToInt32(item.NrCrt),

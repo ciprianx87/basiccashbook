@@ -148,6 +148,13 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    <DataGridTemplateColumn MinWidth="180" Width="180" Header="Data ultimei salvari" Visibility="Visible">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <TextBlock Text="{Binding LastModifiedDate}" Style="{StaticResource StandardTextBlock}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <!--<DataGridTemplateColumn Width="70" MinWidth="70" Header="Valid?">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
@@ -167,7 +174,8 @@
                                             <TextBlock Text="Stergere"/>
                                         </Button.ToolTip>
                                     </Button>
-                                    <Button CommandParameter="{Binding}" Width="30" Height="20" Click="EditCommand_Click" Visibility="{Binding Rectifying, Converter={StaticResource invertVisibilityConverter}}">
+                                    <!--Visibility="{Binding Rectifying, Converter={StaticResource invertVisibilityConverter}}"-->
+                                    <Button CommandParameter="{Binding}" Width="30" Height="20" Click="EditCommand_Click" >
                                         <StackPanel>
                                             <Image Source="/TaxCalculator.Controls;component/Images/editButton.png"  Stretch="Uniform"  Width="30" Height="15"/>
                                         </StackPanel>

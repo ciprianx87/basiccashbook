@@ -258,7 +258,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 }
 
                 if (useFilters)
-                {                  
+                {
                     ApplyFilter(existingIndicators);
                     if (existingIndicators == null || existingIndicators.Count == 0)
                     {
@@ -374,13 +374,15 @@ namespace TaxCalculator.ViewModel.ViewModels
                 ExchangeRate = otherData.ExchangeRate,
                 Month = otherData.Month,
                 NrOfDecimals = (byte)otherData.NrOfDecimals,
-                Rectifying = selectedCalculation.Rectifying,
+                //Rectifying = selectedCalculation.Rectifying,
+                //always treat this as rectifying=false when editing it
+                Rectifying = false,
                 SelectedCompany = selectedCalculation.Company,
                 SelectedIndicatorList = selectedCalculation.Indicator,
                 VerifiedBy = otherData.VerifiedBy,
                 CreatedBy = otherData.CreatedBy,
                 Year = otherData.Year,
-                SelectedTaxCalculation = null,
+                SelectedTaxCalculation = new TaxCalculationSelection() { Id = selectedCalculation.Id },
                 CompletedTaxIndicatorId = selectedCalculation.Id,
                 BackToReports = true
             };

@@ -14,6 +14,6 @@ namespace TaxCalculator.Data.Interfaces
         void Delete(Int64 id);
         List<TaxCalculations> GetAll();
 
-        void UpdateContent(long p, string content);
+        void UpdateContent(long id, string content, string otherData);
     }
 }

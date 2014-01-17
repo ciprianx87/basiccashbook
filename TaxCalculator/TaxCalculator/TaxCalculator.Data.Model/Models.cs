@@ -47,6 +47,7 @@ namespace TaxCalculator.Data.Model
         public string VerifiedBy { get; set; }
         public int Year { get; set; }
         public bool SecondTypeReport { get; set; }
+        public DateTime LastModifiedDate { get; set; }
     }
     public class TaxCalculationSelection
     {

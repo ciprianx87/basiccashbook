@@ -60,7 +60,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn MinWidth="350" Width="*" Header="Structuri Inidcatori">
+                    <DataGridTemplateColumn MinWidth="350" Width="*" Header="Structura indicatori">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <TextBlock Text="{Binding Name}" Style="{StaticResource StandardTextBlock}"/>

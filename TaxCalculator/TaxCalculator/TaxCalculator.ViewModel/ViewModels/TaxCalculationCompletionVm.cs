@@ -376,7 +376,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                 NrOfDecimals = nrOfDecimals,
                 Name = chosenName,
                 Year = setupModel.Year,
-                SecondTypeReport = isSecondTypeReport
+                SecondTypeReport = isSecondTypeReport,
+                LastModifiedDate = DateTime.Now,
             };
             //save the data in the DB
             TaxCalculations tc = new TaxCalculations()
@@ -394,7 +395,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
             else
             {
-                taxCalculationRepository.UpdateContent(savedTaxCalculation.Id, content);
+                taxCalculationRepository.UpdateContent(savedTaxCalculation.Id, content, tc.OtherData);
             }
         }
 

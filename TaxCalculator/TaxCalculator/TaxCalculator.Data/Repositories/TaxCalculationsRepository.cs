@@ -16,7 +16,7 @@ namespace TaxCalculator.Data.Repositories
         {
             using (var context = GetContext())
             {
-                var existingCompany = context.TaxCalculations.Include(p=>p.Company).Include(p=>p.Indicator).FirstOrDefault(p => p.Id == id);
+                var existingCompany = context.TaxCalculations.Include(p => p.Company).Include(p => p.Indicator).FirstOrDefault(p => p.Id == id);
                 return existingCompany;
             }
         }
@@ -121,12 +121,13 @@ namespace TaxCalculator.Data.Repositories
         }
 
 
-        public void UpdateContent(long id, string content)
+        public void UpdateContent(long id, string content, string otherData)
         {
             using (var context = GetContext())
             {
                 var entity = context.TaxCalculations.FirstOrDefault(p => p.Id == id);
                 entity.Content = content;
+                entity.OtherData = otherData;
                 Commit(context);
             }
         }
