@@ -17,5 +17,6 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public string CreatedBy { get; set; }
         public string VerifiedBy { get; set; }
         public bool Rectifying { get; set; }
+        public string LastModifiedDate { get; set; }
     }
 }

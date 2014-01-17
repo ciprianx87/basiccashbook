@@ -401,7 +401,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 //load existing tax calculations
                 if (SelectedCompany != null && SelectedIndicatorList != null)
                 {
-                    List<TaxCalculations> existingTaxCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && p.IndicatorId == SelectedIndicatorList.Id && !p.Rectifying).ToList();
+                    List<TaxCalculations> existingTaxCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && p.IndicatorId == SelectedIndicatorList.Id ).ToList();
                     if (existingTaxCalculations != null && existingTaxCalculations.Count > 0)
                     {
                         foreach (var item in existingTaxCalculations)

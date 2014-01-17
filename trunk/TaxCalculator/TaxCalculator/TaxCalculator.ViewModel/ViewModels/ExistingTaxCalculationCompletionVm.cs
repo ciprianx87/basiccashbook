@@ -193,7 +193,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                            };
                         var content = VmUtils.SerializeEntity(contentModel);
 
-                        taxCalculationRepository.UpdateContent(selectedTaxCalculationVm.Id, content);
+                        taxCalculationRepository.UpdateContent(selectedTaxCalculationVm.Id, content, "");
                         WindowHelper.OpenInformationDialog(Messages.InfoWasSaved);
                         //ask the user if he wants version 2, if needed
                         //bool row57Completed = false;
@@ -336,7 +336,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                 NrOfDecimals = setupModel.NrOfDecimals,
                 Name = chosenName + " - " + coinType,
                 Year = setupModel.Year,
-                SecondTypeReport = isSecondTypeReport
+                SecondTypeReport = isSecondTypeReport,
+                LastModifiedDate = DateTime.Now
             };
             //save the data in the DB
             TaxCalculations tc = new TaxCalculations()
