@@ -48,6 +48,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DbHelper.cs" />
     <Compile Include="DecimalConverter.cs" />
+    <Compile Include="Exceptions\DeleteEntityException.cs" />
     <Compile Include="Exceptions\DuplicateEntityNameException.cs" />
     <Compile Include="Exceptions\IndicatorFormulaException.cs" />
     <Compile Include="Logger.cs" />

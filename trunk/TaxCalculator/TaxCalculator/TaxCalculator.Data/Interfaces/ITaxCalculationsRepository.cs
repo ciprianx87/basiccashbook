@@ -15,5 +15,6 @@ namespace TaxCalculator.Data.Interfaces
         List<TaxCalculations> GetAll();
 
         void UpdateContent(long id, string content, string otherData);
+        void UpdateOtherData(long id, string otherData);
     }
 }

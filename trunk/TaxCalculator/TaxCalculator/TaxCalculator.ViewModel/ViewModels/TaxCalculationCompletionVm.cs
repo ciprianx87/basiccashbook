@@ -213,7 +213,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                     //perform validation
                     if (IsValid())
                     {
-                        if (savedTaxCalculation == null)
+                        //always test for v2, in edit and create mode
+                        //if (savedTaxCalculation == null)
                         {
                             //ask the user if he wants version 2, if needed
                             bool row69Completed = false;
@@ -237,23 +238,23 @@ namespace TaxCalculator.ViewModel.ViewModels
                                 PerformSave();
                             }
                         }
-                        else
-                        {
-                            //just update
+                        //else
+                        //{
+                        //    //just update
 
-                            SaveAsCallBack(savedChosenName);
-                            //var taxIndicatorModelList = TaxIndicators.ToList().ToCompletedList();
+                        //    SaveAsCallBack(savedChosenName);
+                        //    //var taxIndicatorModelList = TaxIndicators.ToList().ToCompletedList();
 
-                            //CompletedIndicatorDbModel contentModel = new CompletedIndicatorDbModel()
-                            //{
-                            //    CompletedIndicators = taxIndicatorModelList,
-                            //    PreviousIndicatorId = null
-                            //};
-                            //var content = VmUtils.SerializeEntity(contentModel);
+                        //    //CompletedIndicatorDbModel contentModel = new CompletedIndicatorDbModel()
+                        //    //{
+                        //    //    CompletedIndicators = taxIndicatorModelList,
+                        //    //    PreviousIndicatorId = null
+                        //    //};
+                        //    //var content = VmUtils.SerializeEntity(contentModel);
 
-                            //taxCalculationRepository.UpdateContent(savedTaxCalculation.Id, content);
-                            //WindowHelper.OpenInformationDialog(Messages.InfoWasSaved);
-                        }
+                        //    //taxCalculationRepository.UpdateContent(savedTaxCalculation.Id, content);
+                        //    //WindowHelper.OpenInformationDialog(Messages.InfoWasSaved);
+                        //}
                     }
                     else
                     {
@@ -270,9 +271,18 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void PerformSave()
         {
-            Action<string> saveAsCallBackAction = new Action<string>(SaveAsCallBack);
-            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.ChooseTaxCompletionName);
-            Mediator.Instance.SendMessage(MediatorActionType.SetSaveAsCallBackAction, saveAsCallBackAction);
+            //if the current calculation is null,ask for the new name, else just save over the other
+            if (savedTaxCalculation == null)
+            {
+                Action<string> saveAsCallBackAction = new Action<string>(SaveAsCallBack);
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.ChooseTaxCompletionName);
+                Mediator.Instance.SendMessage(MediatorActionType.SetSaveAsCallBackAction, saveAsCallBackAction);
+            }
+            else
+            {
+                TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(savedTaxCalculation.OtherData);
+                SaveAsCallBack(otherData.Name);
+            }
         }
         private bool isSecondTypeReport = false;
         public void YesNoPopupResponseCallback(object param)
