@@ -27,6 +27,7 @@ namespace TaxCalculator.Controls.Popups
             InitializeComponent();
             txtName.Focus();
             Mediator.Instance.Register(MediatorActionType.SetSaveAsCallBackAction, SetSaveAsCallBackAction);
+            Mediator.Instance.Register(MediatorActionType.NameChangeSetDefaultName, NameChangeSetDefaultName);
             this.Closing += new System.ComponentModel.CancelEventHandler(ChooseTaxCompletionName_Closing);
         }
 
@@ -44,6 +45,7 @@ namespace TaxCalculator.Controls.Popups
             if (string.IsNullOrEmpty(txtName.Text))
             {
                 WindowHelper.OpenErrorDialog("Va rugam completati numele!");
+                return;
             }
             saveAsCallBackAction(txtName.Text);
             CloseWindow();
@@ -53,6 +55,12 @@ namespace TaxCalculator.Controls.Popups
         public void SetSaveAsCallBackAction(object param)
         {
             saveAsCallBackAction = param as Action<string>;
+        }
+
+        public void NameChangeSetDefaultName(object param)
+        {
+            txtName.Text = param != null ? param.ToString() : "";
+            txtName.CaretIndex = int.MaxValue;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -69,6 +77,7 @@ namespace TaxCalculator.Controls.Popups
         public void Dispose()
         {
             Mediator.Instance.Unregister(MediatorActionType.SetSaveAsCallBackAction, SetSaveAsCallBackAction);
+            Mediator.Instance.Unregister(MediatorActionType.NameChangeSetDefaultName, NameChangeSetDefaultName);
 
         }
     }

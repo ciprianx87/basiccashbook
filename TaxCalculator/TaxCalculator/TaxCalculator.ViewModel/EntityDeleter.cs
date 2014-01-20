@@ -6,6 +6,7 @@ using TaxCalculator.Data.Model;
 using TaxCalculator.Data.Repositories;
 using TaxCalculator.Data.Interfaces;
 using TaxCalculator.ViewModel.ViewModels.Model;
+using TaxCalculator.Common.Exceptions;
 
 namespace TaxCalculator.ViewModel
 {
@@ -35,8 +36,15 @@ namespace TaxCalculator.ViewModel
 
         private static void DeleteIndicator(Indicator entity)
         {
-            IIndicatorRepository repository = new IndicatorRepository();
-            repository.Delete(entity.Id);
+            try
+            {
+                IIndicatorRepository repository = new IndicatorRepository();
+                repository.Delete(entity.Id);
+            }
+            catch (Exception ex)
+            {
+                throw new DeleteEntityException<Indicator>();
+            }
         }
 
         private static void DeleteTaxCalculation(TaxCalculationsViewModel entity)

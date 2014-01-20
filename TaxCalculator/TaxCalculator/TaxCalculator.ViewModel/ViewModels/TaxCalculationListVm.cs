@@ -36,6 +36,9 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         public ICommand ModifyCommand { get; set; }
 
+        public ICommand ChangeReportNameCommand { get; set; }
+
+
 
         public TaxCalculationListVm(bool isRectifying)
         {
@@ -50,6 +53,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             this.ViewCommand = new DelegateCommand(View, CanView);
             this.FilterCommand = new DelegateCommand(Filter, CanFilter);
             this.ClearFiltersCommand = new DelegateCommand(ClearFilters, CanClearFilters);
+            this.ChangeReportNameCommand = new DelegateCommand(ChangeReportName, CanChangeReportName);
             Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
 
             taxCalculationRepository = new TaxCalculationsRepository();
@@ -186,6 +190,37 @@ namespace TaxCalculator.ViewModel.ViewModels
         }
 
 
+        private TaxCalculationsViewModel selectedTaxCalculation;
+        public TaxCalculationsViewModel SelectedTaxCalculation
+        {
+            get { return selectedTaxCalculation; }
+            set
+            {
+                if (selectedTaxCalculation != value)
+                {
+                    selectedTaxCalculation = value;
+                    this.NotifyPropertyChanged("SelectedTaxCalculation");
+                    ChooseNameEnabled = value != null ? true : false;
+                }
+            }
+        }
+
+        private bool chooseNameEnabled;
+        public bool ChooseNameEnabled
+        {
+            get { return chooseNameEnabled; }
+            set
+            {
+                if (chooseNameEnabled != value)
+                {
+                    chooseNameEnabled = value;
+                    this.NotifyPropertyChanged("ChooseNameEnabled");
+                }
+            }
+        }
+
+
+
         #endregion
 
         #region methods
@@ -223,6 +258,50 @@ namespace TaxCalculator.ViewModel.ViewModels
             Mediator.Instance.SendMessage(MediatorActionType.SetReportData, parameter);
         }
 
+        private bool CanChangeReportName(object parameter)
+        {
+            return true;
+        }
+        TaxCalculationsViewModel selTaxCalc = null;
+        private void ChangeReportName(object parameter)
+        {
+            if (SelectedTaxCalculation != null)
+            {
+                selTaxCalc = SelectedTaxCalculation;
+                Action<string> saveAsCallBackAction = new Action<string>(SaveAsCallBack);
+                Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.ChooseTaxCompletionName);
+                Mediator.Instance.SendMessage(MediatorActionType.SetSaveAsCallBackAction, saveAsCallBackAction);
+                Mediator.Instance.SendMessage(MediatorActionType.NameChangeSetDefaultName, SelectedTaxCalculation.Name);
+            }
+        }
+
+        private void SaveAsCallBack(string chosenName)
+        {
+            try
+            {
+                //canceled was pressed
+                if (string.IsNullOrEmpty(chosenName))
+                {
+
+                }
+                else
+                {
+                    var currentTaxCalc = existingIndicators.FirstOrDefault(p => p.Id == selTaxCalc.Id);
+                    TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(currentTaxCalc.OtherData);
+                    otherData.Name = chosenName;
+                    var serializedOtherData = VmUtils.SerializeEntity(otherData);
+                    taxCalculationRepository.UpdateOtherData(currentTaxCalc.Id, serializedOtherData);
+
+                    RefreshList(null);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+                WindowHelper.OpenErrorDialog(Messages.ErrorSavingInfo);
+            }
+        }
+
         public void RefreshList(object param)
         {
             IsBusy = true;
@@ -241,13 +320,13 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         }
 
-
+        List<TaxCalculations> existingIndicators = null;
         private void LoadData(bool useFilters)
         {
             try
             {
                 TaxCalculationList = new ObservableCollection<TaxCalculationsViewModel>();
-                List<TaxCalculations> existingIndicators = null;
+                existingIndicators = new List<TaxCalculations>();
                 if (isRectifying)
                 {
                     existingIndicators = taxCalculationRepository.GetAll().Where(p => p.Rectifying == isRectifying).ToList();

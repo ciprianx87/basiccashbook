@@ -12,204 +12,17 @@
         <converter:BackgroundColorConverter x:Key="backgroundColorConverter"/>
     </UserControl.Resources>
     <!--<ScrollViewer VerticalScrollBarVisibility="Visible">-->
-        <Grid x:Name="root">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Button Grid.Row="0" Content="Inapoi" HorizontalAlignment="Left" Height="40" Width="100" Command="{Binding BackCommand}"/>
-            <Grid Grid.Row="1">
-                <StackPanel >
-                    <StackPanel.Resources>
-                        <Style TargetType="TextBlock" >
-                            <Setter Property="TextAlignment" Value="Left"/>
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                            <Setter Property="VerticalAlignment" Value="Stretch"/>
-                            <Setter Property="FontSize" Value="12"/>
-                            <Setter Property="Padding" Value="6,0,0,0"/>
-                            <Setter Property="Width" Value="230"/>
-                        </Style>
-                    </StackPanel.Resources>
-                    <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="1">
-                        <TextBlock  Text="Societate:"/>
-                        <TextBlock Text="{Binding SetupModel.SelectedCompany.Name}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="1">
-                        <TextBlock Text="Structura Indicatori:"/>
-                        <TextBlock Text="{Binding SetupModel.SelectedIndicatorList.Name}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="1">
-                        <TextBlock  Text="Moneda:"/>
-                        <TextBlock Text="{Binding SetupModel.CoinType}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="1" Visibility="{Binding ExchangeRateVisibility}">
-                        <TextBlock  Text="Curs Valutar:"/>
-                        <TextBlock Text="{Binding SetupModel.ExchangeRate}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="1">
-                        <TextBlock  Text="Luna:"/>
-                        <TextBlock Text="{Binding SetupModel.Month}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"  Margin="1">
-                        <TextBlock  Text="An:"/>
-                        <TextBlock Text="{Binding SetupModel.Year}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal"  Margin="1">
-                        <TextBlock  Text="Rectificativa:"/>
-                        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center"
-                              IsChecked="{Binding SetupModel.Rectifying, Mode=TwoWay}" IsEnabled="False" Margin="6,0,0,0">
-                        </CheckBox>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-            <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" 
-                      MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
-                  CanUserResizeRows="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" GotFocus="dgTaxIndicators_GotFocus"
-                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Standard">
-                <DataGrid.Resources>
-                    <Style TargetType="DataGridCell"  x:Key="NoFocusColumStyle">
-                        <Setter Property="IsTabStop" Value="False"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="Black"/>
-                    </Style>
-                    <Style TargetType="TextBlock" x:Key="StandardTextBlock" >
-                        <Setter Property="TextAlignment" Value="Left"/>
-                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                        <Setter Property="VerticalAlignment" Value="Stretch"/>
-                        <Setter Property="FontSize" Value="18"/>
-                        <Setter Property="Padding" Value="6,0,0,0"/>
-                    </Style>
-                    <Style TargetType="TextBox"  x:Key="StandardTextBox" >
-                        <Setter Property="TextAlignment" Value="Left"/>
-                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                        <Setter Property="FontSize" Value="18"/>
-                    </Style>
-                </DataGrid.Resources>
-                <DataGrid.Columns>
-                    <!--CellStyle="{StaticResource NoFocusColumStyle}"-->
-                    <DataGridTemplateColumn MinWidth="50" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}" >
-                        <DataGridTemplateColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <StackPanel.Resources>
-                                        <Style TargetType="TextBlock"  >
-                                            <Setter Property="TextAlignment" Value="Center"/>
-                                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                                        </Style>
-                                    </StackPanel.Resources>
-                                    <TextBlock Text="Nr." TextAlignment="Center" FontSize="12"/>
-                                    <TextBlock Text="Crt." HorizontalAlignment="Stretch" FontSize="12" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.HeaderTemplate>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate >
-                                <!--Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}"-->
-                                <TextBlock Text="{Binding NrCrtString}" Style="{StaticResource StandardTextBlock}" Focusable="False" IsHitTestVisible="False" 
-                                   />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn  MinWidth="400" Header="Indicatori" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate >
-                                <DataTemplate.Resources>
-
-                                </DataTemplate.Resources>
-                                <!---->
-                            <!--Style="{StaticResource StandardTextBlock}"-->
-                                <!--Style="{Binding Type, Converter={StaticResource indicatorConverter}}"-->
-                                <!-- Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}"-->
-                                <TextBlock Text="{Binding Description}" FontWeight="{Binding Style.FontWeight}" 
-                                      >
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn MinWidth="150" Header="Tip Indicatori"  Visibility="Collapsed" >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate >
-                                <TextBlock Text="{Binding Type}" Style="{StaticResource StandardTextBlock}" Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn MinWidth="200"  Width="200" Header="Valoare" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate >
-                                <Grid>
-                                    <TextBlock Style="{StaticResource StandardTextBlock}" Height="30"  Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}" FocusManager.IsFocusScope="False"/>
-                                    <StackPanel>
-                                        <TextBox  Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Style="{StaticResource StandardTextBox}" 
-                                          Visibility="{Binding Style.ValueFieldVisibility}" GotFocus="TextBox_GotFocus" HorizontalContentAlignment="Right" 
-                                              TextAlignment="Right" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton" MouseDoubleClick="TextBox_MouseDoubleClick" 
-                                              GotKeyboardFocus="TextBox_MouseDoubleClick" KeyDown="TextBox_KeyDown" PreviewKeyDown="TextBox_PreviewKeyDown" Loaded="TextBox_Loaded"
-                                              Tag="{Binding Style.ValueFieldVisibility}" />
-                                        <TextBlock Text="{Binding ValueField}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}" 
-                                           Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}" Height="30" TextAlignment="Right" Padding="0,0,4,0" FocusManager.IsFocusScope="False"/>
-                                    </StackPanel>
-                                </Grid>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn MaxWidth="200" MinWidth="200"  Width="200"   Header="Valoare Initiala" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}"
-                                        >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate >
-                                <Grid>
-                                    <TextBlock Style="{StaticResource StandardTextBlock}" Height="30"  Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}" FocusManager.IsFocusScope="False"/>
-                                    <StackPanel>
-                                        <!--{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}},-->
-                                        <TextBlock Text="{Binding InitialValueField}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, 
-                                            Path=DataContext.Rectifying}"
-                                           Background="LightGray" Height="30" TextAlignment="Right" Padding="0,0,4,0" FocusManager.IsFocusScope="False"/>
-                                    </StackPanel>
-                                </Grid>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn MinWidth="250"  Width="*" Header="Mod de calcul Indicatori"  Visibility="Collapsed" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate >
-                                <StackPanel>
-                                    <!--<TextBlock Text="{Binding IndicatorFormula}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}"/>-->
-                                    <TextBox Text="{Binding Path=IndicatorFormula, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
-                                    ValidatesOnDataErrors=true, NotifyOnValidationError=true}"  Style="{StaticResource StandardTextBox}"
-                                         Visibility="{Binding Style.FormulaFieldVisibility}" Foreground="{Binding FormulaTextColor}">
-                                        <TextBox.ToolTip>
-                                            <TextBlock Text="{Binding ErrorMessage}" FontWeight="Bold" Foreground="Red"/>
-                                        </TextBox.ToolTip>
-                                    </TextBox>
-                                    <!--<TextBox Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandardTextBox}"  Visibility="{Binding Style.ValueFieldVisibility}"/>-->
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="60" Header="Eroare"  CellStyle="{StaticResource NoFocusColumStyle}" FocusManager.IsFocusScope="False"  Visibility="Collapsed"  >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate >
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock  Margin="0,0,10,0" Width="60"  Focusable="False" Text="!" FontWeight="Bold" Foreground="Red" Visibility="{Binding ErrorVisible}" VerticalAlignment="Center" FocusManager.IsFocusScope="False">                                         
-                                            <TextBlock.ToolTip>
-                                                <TextBlock Text="{Binding ErrorMessage}" FontWeight="Bold" Foreground="Red"/>
-                                            </TextBlock.ToolTip>
-                                        </TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-                <DataGrid.Items>
-
-                </DataGrid.Items>
-            </DataGrid>
-            <StackPanel Grid.Row="3" Margin="0,15,0,0">
+    <Grid x:Name="root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Content="Inapoi" HorizontalAlignment="Left" Height="40" Width="100" Command="{Binding BackCommand}"/>
+        <Grid Grid.Row="1">
+            <StackPanel >
                 <StackPanel.Resources>
                     <Style TargetType="TextBlock" >
                         <Setter Property="TextAlignment" Value="Left"/>
@@ -220,18 +33,206 @@
                         <Setter Property="Width" Value="230"/>
                     </Style>
                 </StackPanel.Resources>
-                <StackPanel Orientation="Horizontal"  Margin="1">
-                    <TextBlock  Text="Intocmit:"/>
-                    <TextBlock Text="{Binding SetupModel.CreatedBy}"/>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="1">
+                    <TextBlock  Text="Societate:"/>
+                    <TextBlock Text="{Binding SetupModel.SelectedCompany.Name}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"  Margin="1">
-                    <TextBlock  Text="Verificat:"/>
-                    <TextBlock Text="{Binding SetupModel.VerifiedBy}"/>
+                    <TextBlock Text="Structura Indicatori:"/>
+                    <TextBlock Text="{Binding SetupModel.SelectedIndicatorList.Name}"/>
                 </StackPanel>
-            </StackPanel>
-            <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Button  Content="Salvare" Command="{Binding SaveCommand}" VerticalAlignment="Center" Width="100"  Height="30"></Button>
+                <StackPanel Orientation="Horizontal"  Margin="1">
+                    <TextBlock  Text="Moneda:"/>
+                    <TextBlock Text="{Binding SetupModel.CoinType}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"  Margin="1" Visibility="{Binding ExchangeRateVisibility}">
+                    <TextBlock  Text="Curs Valutar:"/>
+                    <TextBlock Text="{Binding SetupModel.ExchangeRate}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"  Margin="1">
+                    <TextBlock  Text="Luna:"/>
+                    <TextBlock Text="{Binding SetupModel.Month}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"  Margin="1">
+                    <TextBlock  Text="An:"/>
+                    <TextBlock Text="{Binding SetupModel.Year}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"  Margin="1">
+                    <TextBlock  Text="Rectificativa:"/>
+                    <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center"
+                              IsChecked="{Binding SetupModel.Rectifying, Mode=TwoWay}" IsEnabled="False" Margin="6,0,0,0">
+                    </CheckBox>
+                </StackPanel>
             </StackPanel>
         </Grid>
+        <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" 
+                      MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
+                  CanUserResizeRows="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" GotFocus="dgTaxIndicators_GotFocus"
+                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Standard">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridCell"  x:Key="NoFocusColumStyle">
+                    <Setter Property="IsTabStop" Value="False"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Style>
+                <Style TargetType="TextBlock" x:Key="StandardTextBlock" >
+                    <Setter Property="TextAlignment" Value="Left"/>
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalAlignment" Value="Stretch"/>
+                    <Setter Property="FontSize" Value="18"/>
+                    <Setter Property="Padding" Value="6,0,0,0"/>
+                </Style>
+                <Style TargetType="TextBox"  x:Key="StandardTextBox" >
+                    <Setter Property="TextAlignment" Value="Left"/>
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="FontSize" Value="18"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <!--CellStyle="{StaticResource NoFocusColumStyle}"-->
+                <DataGridTemplateColumn MinWidth="50" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}" >
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <StackPanel.Resources>
+                                    <Style TargetType="TextBlock"  >
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <TextBlock Text="Nr." TextAlignment="Center" FontSize="12"/>
+                                <TextBlock Text="Crt." HorizontalAlignment="Stretch" FontSize="12" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <!--Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}"-->
+                            <TextBlock Text="{Binding NrCrtString}" Style="{StaticResource StandardTextBlock}" Focusable="False" IsHitTestVisible="False" 
+                                   />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  MinWidth="400" Header="Indicatori" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <DataTemplate.Resources>
+
+                            </DataTemplate.Resources>
+                            <!---->
+                            <!--Style="{StaticResource StandardTextBlock}"-->
+                            <!--Style="{Binding Type, Converter={StaticResource indicatorConverter}}"-->
+                            <!-- Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}"-->
+                            <!--<TextBox Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" FontWeight="{Binding Style.FontWeight}" 
+                                      />-->
+                            <TextBlock Text="{Binding Path=Description}" FontWeight="{Binding Style.FontWeight}" 
+                                      />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn MinWidth="150" Header="Tip Indicatori"  Visibility="Collapsed" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock Text="{Binding Type}" Style="{StaticResource StandardTextBlock}" Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn MinWidth="200"  Width="200" Header="Valoare" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <Grid>
+                                <TextBlock Style="{StaticResource StandardTextBlock}" Height="30"  Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}" FocusManager.IsFocusScope="False"/>
+                                <StackPanel>
+                                    <TextBox  Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Style="{StaticResource StandardTextBox}" 
+                                          Visibility="{Binding Style.ValueFieldVisibility}" GotFocus="TextBox_GotFocus" HorizontalContentAlignment="Right" 
+                                              TextAlignment="Right" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton" MouseDoubleClick="TextBox_MouseDoubleClick" 
+                                              GotKeyboardFocus="TextBox_MouseDoubleClick" KeyDown="TextBox_KeyDown" PreviewKeyDown="TextBox_PreviewKeyDown" Loaded="TextBox_Loaded"
+                                              Tag="{Binding Style.ValueFieldVisibility}" />
+                                    <TextBlock Text="{Binding ValueField}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}" 
+                                           Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}" Height="30" TextAlignment="Right" Padding="0,0,4,0" FocusManager.IsFocusScope="False"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn MaxWidth="200" MinWidth="200"  Width="200"   Header="Valoare Initiala" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}"
+                                        >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <Grid>
+                                <TextBlock Style="{StaticResource StandardTextBlock}" Height="30"  Background="{Binding Type, Converter={StaticResource backgroundColorConverter}}" FocusManager.IsFocusScope="False"/>
+                                <StackPanel>
+                                    <!--{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}},-->
+                                    <TextBlock Text="{Binding InitialValueField}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, 
+                                            Path=DataContext.Rectifying}"
+                                           Background="LightGray" Height="30" TextAlignment="Right" Padding="0,0,4,0" FocusManager.IsFocusScope="False"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn MinWidth="250"  Width="*" Header="Mod de calcul Indicatori"  Visibility="Collapsed" FocusManager.IsFocusScope="False" CellStyle="{StaticResource NoFocusColumStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <StackPanel>
+                                <!--<TextBlock Text="{Binding IndicatorFormula}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}"/>-->
+                                <TextBox Text="{Binding Path=IndicatorFormula, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                    ValidatesOnDataErrors=true, NotifyOnValidationError=true}"  Style="{StaticResource StandardTextBox}"
+                                         Visibility="{Binding Style.FormulaFieldVisibility}" Foreground="{Binding FormulaTextColor}">
+                                    <TextBox.ToolTip>
+                                        <TextBlock Text="{Binding ErrorMessage}" FontWeight="Bold" Foreground="Red"/>
+                                    </TextBox.ToolTip>
+                                </TextBox>
+                                <!--<TextBox Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandardTextBox}"  Visibility="{Binding Style.ValueFieldVisibility}"/>-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="60" Header="Eroare"  CellStyle="{StaticResource NoFocusColumStyle}" FocusManager.IsFocusScope="False"  Visibility="Collapsed"  >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock  Margin="0,0,10,0" Width="60"  Focusable="False" Text="!" FontWeight="Bold" Foreground="Red" Visibility="{Binding ErrorVisible}" VerticalAlignment="Center" FocusManager.IsFocusScope="False">                                         
+                                            <TextBlock.ToolTip>
+                                                <TextBlock Text="{Binding ErrorMessage}" FontWeight="Bold" Foreground="Red"/>
+                                            </TextBlock.ToolTip>
+                                        </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.Items>
+
+            </DataGrid.Items>
+        </DataGrid>
+        <StackPanel Grid.Row="3" Margin="0,15,0,0">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock" >
+                    <Setter Property="TextAlignment" Value="Left"/>
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalAlignment" Value="Stretch"/>
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="Padding" Value="6,0,0,0"/>
+                    <Setter Property="Width" Value="230"/>
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel Orientation="Horizontal"  Margin="1">
+                <TextBlock  Text="Intocmit:"/>
+                <TextBlock Text="{Binding SetupModel.CreatedBy}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"  Margin="1">
+                <TextBlock  Text="Verificat:"/>
+                <TextBlock Text="{Binding SetupModel.VerifiedBy}"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button  Content="Salvare" Command="{Binding SaveCommand}" VerticalAlignment="Center" Width="100"  Height="30"></Button>
+        </StackPanel>
+    </Grid>
     <!--</ScrollViewer>-->
 </UserControl>

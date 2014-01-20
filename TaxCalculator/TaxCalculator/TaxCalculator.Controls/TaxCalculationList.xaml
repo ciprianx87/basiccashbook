@@ -56,9 +56,12 @@
                         <Button Content="Filtreaza" Command="{Binding FilterCommand}" Width="150" HorizontalAlignment="Left" Margin="5"/>
                         <Button Content="Curata Filtre" Command="{Binding ClearFiltersCommand}" Width="150" HorizontalAlignment="Left" Margin="5" Visibility="Collapsed"/>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal"  Margin="5">
+                        <Button Content="Schimba denumire raport" Command="{Binding ChangeReportNameCommand}" IsEnabled="{Binding ChooseNameEnabled}" Width="150" HorizontalAlignment="Left" Margin="5"/>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
-            <DataGrid Grid.Row="2" ItemsSource="{Binding TaxCalculationList}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" MinWidth="800">
+            <DataGrid Grid.Row="2" ItemsSource="{Binding TaxCalculationList}" SelectedItem="{Binding SelectedTaxCalculation,Mode=TwoWay}" AutoGenerateColumns="False" Margin="0,15,0,0" CanUserAddRows="False" MinWidth="800">
                 <DataGrid.Resources>
                     <Style TargetType="TextBlock" x:Key="StandardTextBlock" >
                         <Setter Property="TextAlignment" Value="Center"/>
