@@ -17,6 +17,7 @@ namespace TaxCalculator.Common
         public static int InfiniteLoopThreshold = 700;
 
         public static string LastSetupValueKey = "LastSetupValue";
+        public static string LastSetupValueEntireScreenKey = "LastSetupValueEntireScreen";
 
     }
 }

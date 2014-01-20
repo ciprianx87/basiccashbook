@@ -139,7 +139,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             get { return selectedCompany; }
             set
             {
-                if (selectedCompany != value)
+                //if (selectedCompany != value)
                 {
                     selectedCompany = value;
                     this.NotifyPropertyChanged("SelectedCompany");
@@ -329,6 +329,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 if (Companies.Count > 0)
                 {
                     SelectedCompany = Companies[0];
+                    ExtractLastSetupValuesEntireScreen();
                 }
                 else
                 {
@@ -389,6 +390,55 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
         }
 
+
+        private void ExtractLastSetupValuesEntireScreen()
+        {
+            try
+            {
+                if (selectedCompany != null)
+                {
+                    //automatically select the indicator
+                    SelectIndicator();
+
+                 
+
+                    string settingKey = Constants.LastSetupValueEntireScreenKey;
+                    //load created and verified by for company id
+                    var setting = settingsRepository.GetSetting(settingKey);
+                    if (setting != null)
+                    {
+                        CreatedBy = "";
+                        VerifiedBy = "";
+                        SelectedMonth = "";
+                        LastSetupValueEntireScreen setupValue = VmUtils.Deserialize<LastSetupValueEntireScreen>(setting);
+                        CreatedBy = setupValue.CreatedBy;
+                        VerifiedBy = setupValue.VerifiedBy;
+                        SelectedMonth = setupValue.Month;
+                        SelectedYear = setupValue.Year;
+                        SelectedNrOfDecimals = setupValue.NrDecimals;
+
+                        if (setupValue.CompanyId != 0)
+                        {
+                            SelectedCompany = Companies.FirstOrDefault(p => p.Id == setupValue.CompanyId);
+                        }
+                        if (setupValue.IndicatorListId != 0)
+                        {
+                            var newSelectedIndicatorList = TaxIndicatorLists.FirstOrDefault(p => p.Id == setupValue.IndicatorListId);
+                            if (newSelectedIndicatorList != null)
+                            {
+                                SelectedIndicatorList = newSelectedIndicatorList;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
+        }
+
+
         private void LoadTaxCalculations()
         {
             if (!Rectifying)
@@ -401,7 +451,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 //load existing tax calculations
                 if (SelectedCompany != null && SelectedIndicatorList != null)
                 {
-                    List<TaxCalculations> existingTaxCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && p.IndicatorId == SelectedIndicatorList.Id ).ToList();
+                    List<TaxCalculations> existingTaxCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && p.IndicatorId == SelectedIndicatorList.Id).ToList();
                     if (existingTaxCalculations != null && existingTaxCalculations.Count > 0)
                     {
                         foreach (var item in existingTaxCalculations)
@@ -470,6 +520,9 @@ namespace TaxCalculator.ViewModel.ViewModels
             //save the last filled in values
             SaveLastSetupValues();
 
+            //save all the last values
+            SaveLastSetupValuesEntireScreen();
+
             //load the selected data and navigate to the fill-in screen
             TaxCalculationSetupModel setupModel = new TaxCalculationSetupModel()
             {
@@ -505,8 +558,36 @@ namespace TaxCalculator.ViewModel.ViewModels
                     };
                     string serializedSetupValue = VmUtils.SerializeEntity(setupValue);
                     string settingKey = Constants.LastSetupValueKey + selectedCompany.Id;
-                    //load created and verified by for company id
+                    //save created and verified by for company id
                     settingsRepository.AddOrUpdateSetting(settingKey, serializedSetupValue); ;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+            }
+        }
+
+        private void SaveLastSetupValuesEntireScreen()
+        {
+            try
+            {
+
+                if (selectedCompany != null)
+                {
+                    LastSetupValueEntireScreen setupValue = new LastSetupValueEntireScreen()
+                    {
+                        CreatedBy = CreatedBy,
+                        VerifiedBy = VerifiedBy,
+                        IndicatorListId = SelectedIndicatorList != null ? SelectedIndicatorList.Id : 0,
+                        CompanyId = selectedCompany.Id,
+                        Month = SelectedMonth,
+                        Year = SelectedYear,
+                        NrDecimals = SelectedNrOfDecimals,
+                    };
+                    string serializedSetupValue = VmUtils.SerializeEntity(setupValue);
+                    string settingKey = Constants.LastSetupValueEntireScreenKey;
+                    settingsRepository.AddOrUpdateSetting(settingKey, serializedSetupValue);
                 }
             }
             catch (Exception ex)
