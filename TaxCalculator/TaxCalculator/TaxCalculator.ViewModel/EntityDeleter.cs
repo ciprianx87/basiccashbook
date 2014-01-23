@@ -30,8 +30,15 @@ namespace TaxCalculator.ViewModel
 
         private static void DeleteCompany(Company entity)
         {
-            ICompanyRepository repository = new CompanyRepository();
-            repository.Delete(entity.Id);
+            try
+            {
+                ICompanyRepository repository = new CompanyRepository();
+                repository.Delete(entity.Id);
+            }
+            catch (Exception ex)
+            {
+                throw new DeleteEntityException<Company>();
+            }
         }
 
         private static void DeleteIndicator(Indicator entity)

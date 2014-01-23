@@ -9,6 +9,7 @@ namespace TaxCalculator.Common
     {
         public static char[] AllowedRdOperations = new char[] { '-', '+' };
         public static string DateTimeFormat = "yyyy-MM-dd hh:mm:ss";
+        public static string DateFormat = "dd-MM-yyyy";
         public static string DateTimeFormatValability = "yyyy-MM-dd HH:mm:ss";
         public static string CoinTypesKey = "CoinTypes";
         public static List<string> AvailableMonths = new List<string>() { "Ianuarie", "Feburarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie" };
