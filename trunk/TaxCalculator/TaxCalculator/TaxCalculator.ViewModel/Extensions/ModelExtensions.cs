@@ -87,7 +87,7 @@ namespace TaxCalculator.ViewModel.Extensions
                 Rectifying = item.Rectifying,
                 VerifiedBy = otherData.VerifiedBy,
                 Year = otherData.Year,
-                LastModifiedDate = otherData.LastModifiedDate == DateTime.MinValue ? "" : Utils.DateTimeToString(otherData.LastModifiedDate)
+                LastModifiedDate = otherData.LastModifiedDate == DateTime.MinValue ? "" : Utils.DateTimeToStringDateOnly(otherData.LastModifiedDate)
             };
 
             return result;

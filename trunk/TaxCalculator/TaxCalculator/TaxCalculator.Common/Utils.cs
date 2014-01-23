@@ -43,7 +43,7 @@ namespace TaxCalculator.Common
 
         public static string DateTimeToStringDateOnly(DateTime date)
         {
-            return date.ToString("dd.MM.yyyy");
+            return date.ToString(Constants.DateFormat);
         }
 
         public static string PrepareForConversion(string decimalString)

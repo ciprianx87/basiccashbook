@@ -8,6 +8,7 @@ namespace TaxCalculator.ViewModel
     public static class Messages
     {
         public static string Error_CannotDeleteIndicatorStructure = "Structura de indicatori s-a folosit si nu poate fi stearsa!";
+        public static string Error_CannotDeleteCompany = "Societatea nu poate fi stearsa!";
         public static string CannotDeleteEntity = "Entitatea nu a putut fi stearsa!";
         public static string CannotDeleteCashBookEntry = "Intrarea nu a putut fi stearsa!";
         public static string GenericError = "Ne pare rau, a intervenit o eroare";

@@ -70,6 +70,10 @@ namespace TaxCalculator.ViewModel.ViewModels.Popups
             {
                 WindowHelper.OpenErrorDialog(Messages.Error_CannotDeleteIndicatorStructure);
             }
+            catch (DeleteEntityException<Company> dec)
+            {
+                WindowHelper.OpenErrorDialog(Messages.Error_CannotDeleteCompany);
+            }
             catch (Exception ex)
             {
                 WindowHelper.OpenErrorDialog(Messages.CannotDeleteEntity);

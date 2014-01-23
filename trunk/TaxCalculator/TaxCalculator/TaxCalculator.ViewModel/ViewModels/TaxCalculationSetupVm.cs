@@ -400,7 +400,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                     //automatically select the indicator
                     SelectIndicator();
 
-                 
+
 
                     string settingKey = Constants.LastSetupValueEntireScreenKey;
                     //load created and verified by for company id
@@ -457,13 +457,23 @@ namespace TaxCalculator.ViewModel.ViewModels
                         foreach (var item in existingTaxCalculations)
                         {
                             TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(item.OtherData);
-                            TaxCalculationList.Add(new TaxCalculationSelection()
+                            if (otherData.Month == SelectedMonth && otherData.Year == SelectedYear)
                             {
-                                Id = item.Id,
-                                Name = otherData.Name
-                            });
+                                TaxCalculationList.Add(new TaxCalculationSelection()
+                                {
+                                    Id = item.Id,
+                                    Name = otherData.Name
+                                });
+                            }
                         }
-                        SelectedTaxCalculation = TaxCalculationList[0];
+                        if (TaxCalculationList != null && TaxCalculationList.Count > 0)
+                        {
+                            SelectedTaxCalculation = TaxCalculationList[0];
+                        }
+                        else
+                        {
+                            WindowHelper.OpenErrorDialog(Messages.Error_NoTaxCalculationsSelection);
+                        }
                     }
                     else
                     {

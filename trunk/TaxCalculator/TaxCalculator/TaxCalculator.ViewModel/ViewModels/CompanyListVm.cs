@@ -11,6 +11,7 @@ using TaxCalculator.Common;
 using TaxCalculator.Data.Model;
 using TaxCalculator.Data.Repositories;
 using TaxCalculator.Data.Interfaces;
+using TaxCalculator.Common.Exceptions;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
