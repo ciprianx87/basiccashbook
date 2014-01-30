@@ -54,6 +54,7 @@ namespace TaxCalculator.Common.Mediator
         InformationModal,
         CreateOrEditCompany,
         CreateOrEditIndicator,
-        ChooseTaxCompletionName
+        ChooseTaxCompletionName,
+        Rules
     }
 }

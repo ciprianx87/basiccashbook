@@ -104,6 +104,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
             catch (Exception ex)
             {
+                //item.SetError(Constants.RulesText);
                 item.SetError("eroare la interpretarea formulei");
             }
             try

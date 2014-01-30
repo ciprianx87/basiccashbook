@@ -19,6 +19,7 @@ using Microsoft.Win32;
 using System.Diagnostics;
 using TaxCalculator.Common;
 using System.IO;
+using TaxCalculator.Data;
 
 namespace TaxCalculator
 {
@@ -113,6 +114,7 @@ namespace TaxCalculator
         {
             AppSettings.InformationPopupCloseInterval = 1500;
             DecimalConvertor.Instance.SetNumberOfDecimals(2);
+            Constants.RulesText = RulesHelper.GetRulesText();
         }
 
         private void InitCulture()
@@ -234,6 +236,13 @@ namespace TaxCalculator
             menuCatalogs.Background = menuBrush;
             menuReports.Background = menuBrush;
             menuTaxCalculation.Background = menuBrush;
+        }
+
+        private void Rules_Click(object sender, RoutedEventArgs e)
+        {
+            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.Rules);
+            Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, Constants.RulesText);
+
         }
     }
 }

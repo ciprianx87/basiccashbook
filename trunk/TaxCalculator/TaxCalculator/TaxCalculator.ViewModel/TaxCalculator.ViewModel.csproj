@@ -69,6 +69,7 @@
     <Compile Include="ViewModels\EditIndicatorsVm.cs" />
     <Compile Include="ViewModels\Model\CompletedIndicatorVm.cs" />
     <Compile Include="ViewModels\Model\LastSetupValue.cs" />
+    <Compile Include="ViewModels\Popups\RulesPopupVm.cs" />
     <Compile Include="ViewModels\Popups\YesNoDialogVm.cs" />
     <Compile Include="ViewModels\PrintPreviewVm.cs" />
     <Compile Include="ViewModels\Model\PrintPage.cs" />

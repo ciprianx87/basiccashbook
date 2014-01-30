@@ -1,8 +1,9 @@
-﻿Reguli de scriere a formulelor:
- - Randurile pot fi scrise in urmatoarele forme:
+﻿- Randurile pot fi scrise in urmatoarele forme:
     - rd.1 + rd.2 - rd.3 +..
-	- rd.(1+2-3+..)
- - Pentru specificarea unui singur rand se foloseste "rd.X", unde X este egal cu numarul randului
+    - rd.(1+2-3+..)
+
+ - Pentru specificarea unui singur rand se foloseste "rd.X", unde X este egal cu numarul randului iar semnul "." este obligatoriu intre rd si numarul randului. 
+
  - Conditiile se scriu in forma: 
     - IF(conditie;valoare pentru adevarat; valoare pentru fals)
 	- Exemplu:

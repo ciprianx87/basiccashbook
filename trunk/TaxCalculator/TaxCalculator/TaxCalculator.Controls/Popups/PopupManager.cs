@@ -74,7 +74,10 @@ namespace TaxCalculator.Controls.Popups
                         break;
                     case PopupType.YesNoDialog:
                         popup = new YesNoPopup();
-                        break;                   
+                        break;
+                    case PopupType.Rules:
+                        popup = new RulesPopup(true);
+                        break;    
                     default:
                         break;
                 }
