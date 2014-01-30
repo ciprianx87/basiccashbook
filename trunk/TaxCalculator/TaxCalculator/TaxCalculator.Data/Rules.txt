@@ -1,0 +1,12 @@
+﻿Reguli de scriere a formulelor:
+ - Randurile pot fi scrise in urmatoarele forme:
+    - rd.1 + rd.2 - rd.3 +..
+	- rd.(1+2-3+..)
+ - Pentru specificarea unui singur rand se foloseste "rd.X", unde X este egal cu numarul randului
+ - Conditiile se scriu in forma: 
+    - IF(conditie;valoare pentru adevarat; valoare pentru fals)
+	- Exemplu:
+	- IF(rd.44>0;rd.44*2%;0)
+		- daca randul 44 este mai mare ca 0, atunci valoarea randului curent este egala cu rd.44*2%, altfel este egala cu 0
+	- IF(rd.43-rd.45>0;rd.43-rd.45;0)
+	- IF(rd.21-rd.52<0;-(rd.21-rd.52);0)
