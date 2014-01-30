@@ -61,12 +61,16 @@
     <Compile Include="Repositories\TaxCalculationsRepository.cs" />
     <Compile Include="Repositories\SettingsRepository.cs" />
     <Compile Include="Repositories\IndicatorRepository.cs" />
+    <Compile Include="RulesHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DefaultTaxIndicators old.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DefaultTaxIndicators.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Rules.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

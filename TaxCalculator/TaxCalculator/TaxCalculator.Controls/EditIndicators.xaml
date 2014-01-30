@@ -147,6 +147,7 @@
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button  Content="Salvare" Command="{Binding SaveCommand}" VerticalAlignment="Center" Width="100"  Height="30"></Button>
             <Button  Content="Salvare ca" Command="{Binding SaveAsCommand}" VerticalAlignment="Center" Width="100" Height="30" Margin="100,0,0,0"></Button>
+            <Button  Content="Reguli scriere formule" Command="{Binding RulesCommand}" VerticalAlignment="Center" Width="130" Height="30" Margin="100,0,0,0"></Button>
         </StackPanel>
     </Grid>
 </UserControl>

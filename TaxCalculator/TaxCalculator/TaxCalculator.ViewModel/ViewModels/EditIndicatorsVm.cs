@@ -31,6 +31,9 @@ namespace TaxCalculator.ViewModel.ViewModels
         public ICommand SaveCommand { get; set; }
         public ICommand BackCommand { get; set; }
 
+        public ICommand RulesCommand { get; set; }
+
+        
         IIndicatorRepository indicatorRepository;
 
         public EditIndicatorsVm()
@@ -42,6 +45,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             this.SaveCommand = new DelegateCommand(Save, CanSave);
             this.SaveAsCommand = new DelegateCommand(SaveAs, CanSaveAs);
             this.BackCommand = new DelegateCommand(Back, CanBack);
+            this.RulesCommand = new DelegateCommand(Rules, CanRules); 
             indicatorRepository = new IndicatorRepository();
 
             Mediator.Instance.Register(MediatorActionType.SetTaxIndicatorToEditFormula, SetTaxIndicatorToEditFormula);
@@ -576,46 +580,14 @@ namespace TaxCalculator.ViewModel.ViewModels
             hasChanged = false;
             TaxFormula taxFormula = null;
             item.IsIndicatorValid();
-            //try
-            //{
-            //if (item.Type == TaxIndicatorType.Calculat && string.IsNullOrEmpty(item.IndicatorFormula))
-            //{
-            //    item.SetError(Messages.Error_EmptyFormula);
-            //    return hasChanged;
-            //}
-            //if (string.IsNullOrEmpty(item.Description))
-            //{
-            //    item.SetError(Messages.Error_EmptyIndicatorName);
-            //    return hasChanged;
-            //}
             taxFormula = new TaxFormula(item.IndicatorFormula);
-            //}
-            //catch (IndicatorFormulaException ife)
-            //{
-            //    item.SetError(ife.Error);
-            //}
-            //catch (Exception ex)
-            //{
-            //    item.SetError(Messages.Error_ParsingFormula);
-            //}
-            //try
-            //{
-
             var newValueString = DecimalConvertor.Instance.DecimalToString(taxFormula.Execute(TaxIndicators.ToList()), 0);
             if (item.ValueField != newValueString)
             {
                 hasChanged = true;
             }
             item.ValueField = newValueString;
-            //}
-            //catch (IndicatorFormulaException ife)
-            //{
-            //    item.SetError(ife.Error);
-            //}
-            //catch (Exception ex)
-            //{
-            //    item.SetError("formula invalida");
-            //}
+
             return hasChanged;
         }
         private bool CanBack(object parameter)
@@ -628,6 +600,17 @@ namespace TaxCalculator.ViewModel.ViewModels
             Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.TaxIndicatorList);
 
         }
+
+        private bool CanRules(object parameter)
+        {
+            return true;
+        }
+
+        private void Rules(object parameter)
+        {
+            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.Rules);
+            Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, Constants.RulesText);
+        } 
 
         Indicator currentTaxIndicator;
         public void SetTaxIndicatorToEditFormula(object param)
