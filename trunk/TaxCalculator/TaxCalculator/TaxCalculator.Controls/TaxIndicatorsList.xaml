@@ -48,7 +48,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <StackPanel Orientation="Horizontal">
-                                    <Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="EditIndicatorsCommand_Click" Margin="5,0,0,0">
+                                    <Button CommandParameter="{Binding}" Width="Auto" Height="20" Click="EditIndicatorsCommand_Click" Margin="5,0,0,0"
+                                            Visibility="{Binding IsDefault, Converter={StaticResource invertVisibilityConverter}}">
                                         <StackPanel>
                                             <TextBlock Text="Editeaza Formule"/>
                                         </StackPanel>
@@ -86,7 +87,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Margin="0,0,10,0" CommandParameter="{Binding}" Width="30" Height="20"  Click="DeleteCommand_Click">
+                                    <Button Margin="0,0,10,0" CommandParameter="{Binding}" Width="30" Height="20"  Click="DeleteCommand_Click" 
+                                           Visibility="{Binding IsDefault, Converter={StaticResource invertVisibilityConverter}}" >
                                         <StackPanel>
                                             <Image Source="/TaxCalculator.Controls;component/Images/deleteButton.png" Stretch="Uniform"  Width="30" Height="15"/>
                                         </StackPanel>
@@ -94,7 +96,7 @@
                                             <TextBlock Text="Stergere"/>
                                         </Button.ToolTip>
                                     </Button>
-                                    <Button CommandParameter="{Binding}" Width="30" Height="20" Click="EditCommand_Click">
+                                    <Button CommandParameter="{Binding}" Width="30" Height="20" Click="EditCommand_Click" Visibility="{Binding IsDefault, Converter={StaticResource invertVisibilityConverter}}">
                                         <StackPanel>
                                             <Image Source="/TaxCalculator.Controls;component/Images/editButton.png"  Stretch="Uniform"  Width="30" Height="15"/>
                                         </StackPanel>

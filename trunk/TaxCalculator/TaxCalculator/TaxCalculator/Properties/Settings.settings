@@ -1,7 +1,12 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TaxCalculator.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DocumentationFileName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Documentation\Documentatie Calcul impozit profit.doc</Value>
+    </Setting>
+    <Setting Name="RulesFileName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Documentation\INDICATORI SI REGULI DE SCRIERE A FORMULELOR.docx</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
