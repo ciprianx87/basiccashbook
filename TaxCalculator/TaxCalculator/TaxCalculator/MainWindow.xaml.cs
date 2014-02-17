@@ -45,7 +45,7 @@ namespace TaxCalculator
             PopupManager.Instance.Init();
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
             ChangeContent(ContentTypes.TaxCalculationList);
-            version = "1.0.22 demo";
+            version = "1.0.1 demo";
             CheckAppValidity();
 
             //CheckAppRegistrationStatus();
@@ -134,6 +134,11 @@ namespace TaxCalculator
 
         private void Help_Click(object sender, RoutedEventArgs e)
         {
+            OpenWordDocument(Properties.Settings.Default.DocumentationFileName);
+        }
+
+        private static void OpenWordDocument(string fileName)
+        {
             try
             {
                 using (var regWord = Registry.ClassesRoot.OpenSubKey("Word.Application"))
@@ -144,7 +149,7 @@ namespace TaxCalculator
                     }
                     else
                     {
-                        //Process.Start(Properties.Settings.Default.DocumentationFileName);
+                        Process.Start(fileName);
                     }
                 }
             }
@@ -182,11 +187,6 @@ namespace TaxCalculator
         }
 
         private void MenuItem_Reports(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void About_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -240,8 +240,15 @@ namespace TaxCalculator
 
         private void Rules_Click(object sender, RoutedEventArgs e)
         {
-            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.Rules);
-            Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, Constants.RulesText);
+            OpenWordDocument(Properties.Settings.Default.RulesFileName);
+            //Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.Rules);
+            //Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, Constants.RulesText);
+
+        }
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            string iconInfo = "Icoanele au fost preluate de pe http://www.iconfinder.com/iconsets/finance_icons#readme";
+            MessageBox.Show(string.Format("Versiune: {0} {1}{2}{3}", version, Environment.NewLine, Environment.NewLine, iconInfo));
 
         }
     }
