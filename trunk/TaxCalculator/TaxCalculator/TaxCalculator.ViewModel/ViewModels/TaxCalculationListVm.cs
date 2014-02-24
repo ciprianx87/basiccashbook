@@ -65,7 +65,29 @@ namespace TaxCalculator.ViewModel.ViewModels
                 return;
             }
             RefreshList(null);
+            RemainingDays = CurrentRemainingDaysMessage;
 
+        }
+
+        private string remainingDays;
+        public string RemainingDays
+        {
+            get { return remainingDays; }
+            set
+            {
+                if (remainingDays != value)
+                {
+                    remainingDays = value;
+                    this.NotifyPropertyChanged("RemainingDays");
+                }
+            }
+        }
+
+        public static string CurrentRemainingDaysMessage = "";
+        public void SetRemainingDays(object param)
+        {
+            RemainingDays = "Zile ramase: " + param;
+            CurrentRemainingDaysMessage = RemainingDays;
         }
 
         private void LoadInitialData()

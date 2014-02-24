@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2E501362-227D-45A6-9441-621EFBEACBFA}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TaxCalculator.Setup", "TaxCalculator.Setup\TaxCalculator.Setup.vdproj", "{1D94B551-EA3D-4F89-9D4B-D0261B580350}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = TaxCalculator.vsmdi
@@ -107,6 +109,12 @@ Global
 		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3F1E13AA-4AB1-4FBF-BFA9-62B601B6D9A4}.Release|x86.ActiveCfg = Release|Any CPU
+		{1D94B551-EA3D-4F89-9D4B-D0261B580350}.Debug|Any CPU.ActiveCfg = Debug
+		{1D94B551-EA3D-4F89-9D4B-D0261B580350}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{1D94B551-EA3D-4F89-9D4B-D0261B580350}.Debug|x86.ActiveCfg = Debug
+		{1D94B551-EA3D-4F89-9D4B-D0261B580350}.Release|Any CPU.ActiveCfg = Release
+		{1D94B551-EA3D-4F89-9D4B-D0261B580350}.Release|Mixed Platforms.ActiveCfg = Release
+		{1D94B551-EA3D-4F89-9D4B-D0261B580350}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

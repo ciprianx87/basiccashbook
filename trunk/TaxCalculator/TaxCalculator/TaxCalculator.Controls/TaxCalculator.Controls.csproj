@@ -78,6 +78,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Popups\RegistrationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Popups\RulesPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -169,6 +173,9 @@
     <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="ExistingTaxCalculationCompletion.xaml.cs">
       <DependentUpon>ExistingTaxCalculationCompletion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Popups\RegistrationDialog.xaml.cs">
+      <DependentUpon>RegistrationDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Popups\RulesPopup.xaml.cs">
       <DependentUpon>RulesPopup.xaml</DependentUpon>
@@ -277,6 +284,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\CalculimpozitIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CalculimpozitIconT.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

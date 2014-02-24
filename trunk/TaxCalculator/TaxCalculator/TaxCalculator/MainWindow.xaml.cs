@@ -20,14 +20,17 @@ using System.Diagnostics;
 using TaxCalculator.Common;
 using System.IO;
 using TaxCalculator.Data;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace TaxCalculator
-{
+{        
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool isFullVersion;
         private string version;
         public MainWindow()
         {
@@ -37,6 +40,9 @@ namespace TaxCalculator
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            isFullVersion =true;
+            version = "1.0.1 demo";
+
             XmlConfigurator.Configure();
             Logger.Instance.Log.Debug("application start");
 
@@ -44,12 +50,13 @@ namespace TaxCalculator
             InitSettings();
             PopupManager.Instance.Init();
             Mediator.Instance.Register(MediatorActionType.SetMainContent, ChangeContent);
+
+            CopyDBIfNeeded();
+
             ChangeContent(ContentTypes.TaxCalculationList);
-            version = "1.0.1 demo";
-            CheckAppValidity();
+            AppHelpers.CheckApplicationValidity(isFullVersion, Dispatcher);
 
             //CheckAppRegistrationStatus();
-            CopyDBIfNeeded();
         }
 
         private void ChangeContent(object contentType)
@@ -127,10 +134,7 @@ namespace TaxCalculator
             DbHelper.CopyDBIfNeeded("TaxCalculatorEmpty.sdf", "TaxCalculator.sdf", "Resources", "Database");
         }
 
-        private void CheckAppValidity()
-        {
 
-        }
 
         private void Help_Click(object sender, RoutedEventArgs e)
         {
