@@ -1,0 +1,82 @@
+Nr. Crt.,Indicatori,Tip indicator,Mod de calcul indicatori
+,CALCUL IMPOZIT PROFIT,Text,..
+1,Total venituri,Numeric,..
+2, - rulaj ct. 709,Numeric,..
+3, - rulaj ct. 711,Numeric,..
+4, - rulaj ct. 712,Numeric,..
+5, + rulaj ct. 609,Numeric,..
+6, + sold ct. 711 C,Numeric,..
+7, - sold ct. 711 D,Numeric,..
+8, + sold ct. 712 C,Numeric,..
+9, - sold ct. 712 D,Numeric,..
+10,Total cheltuieli,Numeric,..
+11, - rulaj ct.609,Numeric,..
+12, + rulaj ct.709,Numeric,..
+13,"Venituri - Cheltuieli,  sold ct. 121",Calculat,"rd.(1-2-3-4+5+6-7+8-9)
+-rd.(10-11+12)"
+14,Cheltuieli nedeductibile (rd. 40),Calculat,rd.40
+15,Venituri din provizioane si ajustari neipozabile ct. 781,Numeric,..,
+16,Venituri din ajustari financiare neimpozabile ct. 786,Numeric,..,
+17,Alte venituri neimpozabile,Numeric,..,
+18,Rezerva legala,Numeric,,
+19,,Numeric,,
+20,,Numeric,,
+21,Total baza de impozitare ,Calculat,rd.(13+14-15-16-17-18-19-20),
+,Cheltuieli nedeductibile,Text,..,
+22,Cheltuieli deplasare din ct. 625,Numeric,..,
+23,Amenzi si penalitati din ct. 6581,Numeric,..,
+24,Cheltuieli protocol din ct. 623 (rd. 46),Calculat,rd.46,"se blocheaza, fara posibilitatea de stergere/modificare"
+25,Alte cheltuieli nedeductibile din ct. 6588,Numeric,..,
+26,Combustibil nedeductibil din ct. 6022,Numeric,..,
+27,Actiuni sociale nedeductibile din ct. 6458 (rd. 51),Calculat,rd.51,"se blocheaza, fara posibilitatea de stergere/modificare"
+28,Amortizare nedeductibila din ct. 6811,Numeric,..,
+29,TVA nedeductibila din ct. 635,Numeric,..,
+30,Cheltuieli cu donatii si subventii ct. 6582,Numeric,..,
+31,"Cheltuieli cu provizioane si ajustari nedeductibile din ct. 6812, 6813, 6814, 685",Numeric,..,
+32,Cheltuieli cu pierderi din creante si debitori diversi din ct. 654,Numeric,..,
+33,Cheltuieli cu impozit profit ct. 691,Numeric,..,"se blocheaza, fara posibilitatea de stergere/modificare"
+34,,,,
+35,,,,
+36,,,,
+37,,,,
+38,,,,
+39,,,,
+40,Total cheltuieli nedeductibile,Calculat,rd.(22+23+24+25+26+27+28+29+30+31+32+33+34+35+36+37+38+39),
+,Cheltuieli protocol,Text,..,
+41,Venituri - cheltuieli (rd.13),Calculat,rd.13,
+42,Impozit profit (rd. 33),Calculat,rd.33,"acest indicator ce poate modifica automat de sistem, daca randul 33 de mai sus primeste al numar curent"
+43,Cheltuieli protocol din ct. 623,Numeric,..,
+44,Baza calcul cheltuieli protocol ,Calculat,rd. (41+42+43-15-16-17-19-20),
+45,2% admise conform legii (rd. 35*2%),Calculat,IF(rd.44*2%>0;rd.44*2%;0)
+46,Cheltueili nedeductibile protocol,Calculat,IF(rd.42-rd.45>0;rd.42-rd.45;0)
+,Cheltuieli sociale,Text,..
+47,Fondul de salarii - rulaj D ct. 641,Numeric,..
+48,Actiuni sociale - rulaj D ct. 6458,Numeric,..
+49,Baza calcul cheltuieli sociale (rd. 47),Calculat,rd.47
+50,2% admise conform legii (rd.49*2%),Calculat,IF(rd.49*2%>0;rd.49*2%;0)
+51,Cheltuieli nedeductibile sociale,Calculat,IF(rd.48-rd.50>0;rd.48-rd.50;0)
+,Pierdere fiscala,Text,..
+52,Pierderea fiscala din perioadele precedente,Numeric,..
+53,Pierderea fiscala curenta,Calculat,IF(rd.21-rd.52<0;-(rd.21-rd.51);0)
+,Calcul impozit 16% ,Text,..
+54,Baza impozitare (rd.21-rd.54),Calculat,IF(rd.21-rd54.>0;rd.21-rd.54;0)
+55,Impozit calculat 16% (rd.55*16%),Calculat,rd.54*16%
+,Impozit pe profit datorat,,
+56,Impozit datorat,Calculat,rd.55
+,,,
+,Cheltuieli sponsorizare,,
+57,Cifra de afaceri,Numeric,..
+58,3/1000 din CA,Calculat,rd.57*3/1000
+59,Impozit pe profit (rd.56),Calculat,rd.56
+60,20/100 din Impozit pe profit,Calculat,rd.59*20/100
+61,Cheltuieli sponsorizare admise,Calculat,IF((rd.58>C60);C58;C60)
+62,Cheltuieli sponsorizare efective,Numeric,..
+63,Cheltuieli sponsorizare deductibile,Calculat,IF(rd.61<rd.62;rd.61;rd.62)
+,Calcul impozit profit ,,
+64,Total impozit profit datorat (rd.56),Calculat,rd.56
+65,Cheltuieli sponsorizare deductibile,Calculat,rd.63
+66,Impozit pe profit final (rd.64-rd.65),Calculat,rd.(64-65)
+,Total impozit pe profit final datorat,,
+67,Total impozit pe porfit datorat,Calculat,rd.67
+68,              datorat cumulat trim. Precedent,Numeric,..
+69,              diferenta de inregistrat,Calculat,rd.(67-68)
