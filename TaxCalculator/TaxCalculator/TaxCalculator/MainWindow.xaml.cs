@@ -41,7 +41,7 @@ namespace TaxCalculator
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             isFullVersion = true;
-            version = "1.0.1 demo";
+            version = "1.0.1 full";
 
             XmlConfigurator.Configure();
             Logger.Instance.Log.Debug("application start");

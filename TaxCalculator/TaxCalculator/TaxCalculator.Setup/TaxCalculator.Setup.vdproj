@@ -15,32 +15,8 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_03AFD35E37D848D684709DB65E541743"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_070494EA54BC468DB28D9A850FC3046F"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0D9D640F38BE4F2B83B99A7371B2EB8A"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_12423BB0D7E4BC0079E6FEF41C5A42E6"
-        "OwnerKey" = "8:_A8A9577CB0E844698EC0646B5C641406"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_12423BB0D7E4BC0079E6FEF41C5A42E6"
-        "OwnerKey" = "8:_EB8FD48800874E9285D570E3CA7E4CFD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -51,44 +27,38 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_35AADE520659C2E8D64C57256DC19197"
-        "OwnerKey" = "8:_38BA9B31ED803A20D88B9F30B1FB2099"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_35AADE520659C2E8D64C57256DC19197"
-        "OwnerKey" = "8:_EB8FD48800874E9285D570E3CA7E4CFD"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_35AADE520659C2E8D64C57256DC19197"
-        "OwnerKey" = "8:_A8A9577CB0E844698EC0646B5C641406"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_367A930A8ECE4178915CDA22DF69C4F9"
+        "MsmKey" = "8:_1B5C8C41DBB2410C83B4F20F2B1492DF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_38BA9B31ED803A20D88B9F30B1FB2099"
-        "OwnerKey" = "8:_B87F3F700499063FFD5E814D37D533CC"
+        "MsmKey" = "8:_1C41534A04E0E3B088EFE4F9C6C1D238"
+        "OwnerKey" = "8:_47A6BB225AF2C3072EE9DCD34E3B520B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_38BA9B31ED803A20D88B9F30B1FB2099"
-        "OwnerKey" = "8:_EB8FD48800874E9285D570E3CA7E4CFD"
+        "MsmKey" = "8:_1C41534A04E0E3B088EFE4F9C6C1D238"
+        "OwnerKey" = "8:_1B5C8C41DBB2410C83B4F20F2B1492DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_38BA9B31ED803A20D88B9F30B1FB2099"
-        "OwnerKey" = "8:_A8A9577CB0E844698EC0646B5C641406"
+        "MsmKey" = "8:_3089CD39D8AA45E28A8F980421CAC0B7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3D958F421AD1399FE54117B42B6FA9F8"
+        "OwnerKey" = "8:_E4DA8A4CBDC1B171FB839FF5EE433206"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3D958F421AD1399FE54117B42B6FA9F8"
+        "OwnerKey" = "8:_1B5C8C41DBB2410C83B4F20F2B1492DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -105,8 +75,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_6555A41CB8964CB7863B7E47ADD417B4"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_47A6BB225AF2C3072EE9DCD34E3B520B"
+        "OwnerKey" = "8:_3D958F421AD1399FE54117B42B6FA9F8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_47A6BB225AF2C3072EE9DCD34E3B520B"
+        "OwnerKey" = "8:_1B5C8C41DBB2410C83B4F20F2B1492DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -123,14 +99,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_85468BB051EE302DADE2F30967D88952"
-        "OwnerKey" = "8:_A8A9577CB0E844698EC0646B5C641406"
+        "MsmKey" = "8:_83819F3F90F78E774F8AB78A6679EEEF"
+        "OwnerKey" = "8:_1B5C8C41DBB2410C83B4F20F2B1492DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_85468BB051EE302DADE2F30967D88952"
-        "OwnerKey" = "8:_EB8FD48800874E9285D570E3CA7E4CFD"
+        "MsmKey" = "8:_83819F3F90F78E774F8AB78A6679EEEF"
+        "OwnerKey" = "8:_3D958F421AD1399FE54117B42B6FA9F8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -147,7 +123,37 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A8A9577CB0E844698EC0646B5C641406"
+        "MsmKey" = "8:_95E502F1F51A80F43CC4810C60BED156"
+        "OwnerKey" = "8:_3D958F421AD1399FE54117B42B6FA9F8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_95E502F1F51A80F43CC4810C60BED156"
+        "OwnerKey" = "8:_1B5C8C41DBB2410C83B4F20F2B1492DF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_95E502F1F51A80F43CC4810C60BED156"
+        "OwnerKey" = "8:_E4DA8A4CBDC1B171FB839FF5EE433206"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_95E502F1F51A80F43CC4810C60BED156"
+        "OwnerKey" = "8:_47A6BB225AF2C3072EE9DCD34E3B520B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B01E9FD8645C4F06A834C171EC7B7A7D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B6733A5E55A34D9686133D11BE2B18C4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -159,74 +165,38 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B87F3F700499063FFD5E814D37D533CC"
-        "OwnerKey" = "8:_85468BB051EE302DADE2F30967D88952"
+        "MsmKey" = "8:_D1E29EDC0D01719D8E3603FF066C50AA"
+        "OwnerKey" = "8:_1B5C8C41DBB2410C83B4F20F2B1492DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B87F3F700499063FFD5E814D37D533CC"
-        "OwnerKey" = "8:_EB8FD48800874E9285D570E3CA7E4CFD"
+        "MsmKey" = "8:_D1E29EDC0D01719D8E3603FF066C50AA"
+        "OwnerKey" = "8:_47A6BB225AF2C3072EE9DCD34E3B520B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B87F3F700499063FFD5E814D37D533CC"
-        "OwnerKey" = "8:_A8A9577CB0E844698EC0646B5C641406"
+        "MsmKey" = "8:_D1E29EDC0D01719D8E3603FF066C50AA"
+        "OwnerKey" = "8:_3D958F421AD1399FE54117B42B6FA9F8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C557D8F20EB533B3FF0AF7A6B4CF81F1"
-        "OwnerKey" = "8:_B87F3F700499063FFD5E814D37D533CC"
+        "MsmKey" = "8:_D1E29EDC0D01719D8E3603FF066C50AA"
+        "OwnerKey" = "8:_E4DA8A4CBDC1B171FB839FF5EE433206"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C557D8F20EB533B3FF0AF7A6B4CF81F1"
-        "OwnerKey" = "8:_EB8FD48800874E9285D570E3CA7E4CFD"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C557D8F20EB533B3FF0AF7A6B4CF81F1"
-        "OwnerKey" = "8:_A8A9577CB0E844698EC0646B5C641406"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C557D8F20EB533B3FF0AF7A6B4CF81F1"
-        "OwnerKey" = "8:_85468BB051EE302DADE2F30967D88952"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C557D8F20EB533B3FF0AF7A6B4CF81F1"
-        "OwnerKey" = "8:_38BA9B31ED803A20D88B9F30B1FB2099"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CED7DF714C25426E9D6A80529A6657E3"
+        "MsmKey" = "8:_DB17234833D74294991FC48C6A7B353F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_DF62553561FA7365C4713BCEAB4457B0"
-        "OwnerKey" = "8:_A8A9577CB0E844698EC0646B5C641406"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DF62553561FA7365C4713BCEAB4457B0"
-        "OwnerKey" = "8:_EB8FD48800874E9285D570E3CA7E4CFD"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DF62553561FA7365C4713BCEAB4457B0"
-        "OwnerKey" = "8:_B87F3F700499063FFD5E814D37D533CC"
+        "MsmKey" = "8:_E4DA8A4CBDC1B171FB839FF5EE433206"
+        "OwnerKey" = "8:_1B5C8C41DBB2410C83B4F20F2B1492DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -237,8 +207,38 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_EB8FD48800874E9285D570E3CA7E4CFD"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_E910CA49575942B16C8D192FA84C47BD"
+        "OwnerKey" = "8:_1B5C8C41DBB2410C83B4F20F2B1492DF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E94FF9C4917EE432D55FD5EF04CB6576"
+        "OwnerKey" = "8:_E910CA49575942B16C8D192FA84C47BD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E94FF9C4917EE432D55FD5EF04CB6576"
+        "OwnerKey" = "8:_3D958F421AD1399FE54117B42B6FA9F8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E94FF9C4917EE432D55FD5EF04CB6576"
+        "OwnerKey" = "8:_E4DA8A4CBDC1B171FB839FF5EE433206"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E94FF9C4917EE432D55FD5EF04CB6576"
+        "OwnerKey" = "8:_D1E29EDC0D01719D8E3603FF066C50AA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E94FF9C4917EE432D55FD5EF04CB6576"
+        "OwnerKey" = "8:_1B5C8C41DBB2410C83B4F20F2B1492DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -255,62 +255,26 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_F25248F71C627D54F975E1E95FBA1F35"
-        "OwnerKey" = "8:_A8A9577CB0E844698EC0646B5C641406"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F25248F71C627D54F975E1E95FBA1F35"
-        "OwnerKey" = "8:_EB8FD48800874E9285D570E3CA7E4CFD"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F25248F71C627D54F975E1E95FBA1F35"
-        "OwnerKey" = "8:_38BA9B31ED803A20D88B9F30B1FB2099"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F25248F71C627D54F975E1E95FBA1F35"
-        "OwnerKey" = "8:_B87F3F700499063FFD5E814D37D533CC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F25248F71C627D54F975E1E95FBA1F35"
-        "OwnerKey" = "8:_85468BB051EE302DADE2F30967D88952"
+        "MsmKey" = "8:_F578434395974F76B721DBE681F48738"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_927D7176E77C43E1A6B4BAF6ED488359"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_EB8FD48800874E9285D570E3CA7E4CFD"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_EB8FD48800874E9285D570E3CA7E4CFD"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_12423BB0D7E4BC0079E6FEF41C5A42E6"
+        "OwnerKey" = "8:_1B5C8C41DBB2410C83B4F20F2B1492DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_F22AFC2F1AC14CE4B87AFECB8723C2E9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_927D7176E77C43E1A6B4BAF6ED488359"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -328,79 +292,55 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_12423BB0D7E4BC0079E6FEF41C5A42E6"
+        "OwnerKey" = "8:_E4DA8A4CBDC1B171FB839FF5EE433206"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A8A9577CB0E844698EC0646B5C641406"
+        "OwnerKey" = "8:_3D958F421AD1399FE54117B42B6FA9F8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_85468BB051EE302DADE2F30967D88952"
+        "OwnerKey" = "8:_47A6BB225AF2C3072EE9DCD34E3B520B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B87F3F700499063FFD5E814D37D533CC"
+        "OwnerKey" = "8:_1C41534A04E0E3B088EFE4F9C6C1D238"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_38BA9B31ED803A20D88B9F30B1FB2099"
+        "OwnerKey" = "8:_95E502F1F51A80F43CC4810C60BED156"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_35AADE520659C2E8D64C57256DC19197"
+        "OwnerKey" = "8:_83819F3F90F78E774F8AB78A6679EEEF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C557D8F20EB533B3FF0AF7A6B4CF81F1"
+        "OwnerKey" = "8:_D1E29EDC0D01719D8E3603FF066C50AA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B87F3F700499063FFD5E814D37D533CC"
+        "OwnerKey" = "8:_E910CA49575942B16C8D192FA84C47BD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_85468BB051EE302DADE2F30967D88952"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DF62553561FA7365C4713BCEAB4457B0"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F25248F71C627D54F975E1E95FBA1F35"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F25248F71C627D54F975E1E95FBA1F35"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A8A9577CB0E844698EC0646B5C641406"
+        "OwnerKey" = "8:_E94FF9C4917EE432D55FD5EF04CB6576"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -411,7 +351,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\TaxCalculator.Setup-full.msi"
+        "OutputFilename" = "8:Debug\\TaxCalculator.Setup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -465,19 +405,6 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
-                "Items"
-                {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
-                    {
-                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
-                    }
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
-                    {
-                    "Name" = "8:Windows Installer 3.1"
-                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
-                    }
-                }
             }
         }
     }
@@ -508,46 +435,6 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_03AFD35E37D848D684709DB65E541743"
-            {
-            "SourcePath" = "8:..\\TaxCalculator.Controls\\Images\\CalculimpozitIconT.ico"
-            "TargetName" = "8:CalculimpozitIconT.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_A6D3BA5AD8B442D8A657587A9E128EB3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_070494EA54BC468DB28D9A850FC3046F"
-            {
-            "SourcePath" = "8:..\\TaxCalculator\\Documentation\\INDICATORI SI REGULI DE SCRIERE A FORMULELOR.docx"
-            "TargetName" = "8:INDICATORI SI REGULI DE SCRIERE A FORMULELOR.docx"
-            "Tag" = "8:"
-            "Folder" = "8:_9264863101FA4A569ED6B720488CC613"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0D9D640F38BE4F2B83B99A7371B2EB8A"
             {
             "SourcePath" = "8:..\\TaxCalculator\\sqlceer35EN.dll"
@@ -566,37 +453,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_12423BB0D7E4BC0079E6FEF41C5A42E6"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CashBook.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_12423BB0D7E4BC0079E6FEF41C5A42E6"
-                    {
-                    "Name" = "8:CashBook.Common.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:CashBook.Common.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_9264863101FA4A569ED6B720488CC613"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_12E0D318E7A141CF80B79BE9A8F0F757"
@@ -630,14 +486,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_35AADE520659C2E8D64C57256DC19197"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1C41534A04E0E3B088EFE4F9C6C1D238"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_35AADE520659C2E8D64C57256DC19197"
+                    "_1C41534A04E0E3B088EFE4F9C6C1D238"
                     {
                     "Name" = "8:EntityFramework.dll"
                     "Attributes" = "3:512"
@@ -661,12 +517,12 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_367A930A8ECE4178915CDA22DF69C4F9"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3089CD39D8AA45E28A8F980421CAC0B7"
             {
-            "SourcePath" = "8:..\\TaxCalculator.Data\\Rules.txt"
-            "TargetName" = "8:Rules.txt"
+            "SourcePath" = "8:..\\TaxCalculator\\Documentation\\INDICATORI SI REGULI DE SCRIERE A FORMULELOR.docx"
+            "TargetName" = "8:INDICATORI SI REGULI DE SCRIERE A FORMULELOR.docx"
             "Tag" = "8:"
-            "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
+            "Folder" = "8:_9264863101FA4A569ED6B720488CC613"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -681,20 +537,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_38BA9B31ED803A20D88B9F30B1FB2099"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3D958F421AD1399FE54117B42B6FA9F8"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:TaxCalculator.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:TaxCalculator.ViewModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_38BA9B31ED803A20D88B9F30B1FB2099"
+                    "_3D958F421AD1399FE54117B42B6FA9F8"
                     {
-                    "Name" = "8:TaxCalculator.Data.dll"
+                    "Name" = "8:TaxCalculator.ViewModel.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:TaxCalculator.Data.dll"
+            "SourcePath" = "8:TaxCalculator.ViewModel.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
@@ -752,12 +608,23 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6555A41CB8964CB7863B7E47ADD417B4"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_47A6BB225AF2C3072EE9DCD34E3B520B"
             {
-            "SourcePath" = "8:..\\TaxCalculator\\Documentation\\Documentatie Calcul impozit profit.doc"
-            "TargetName" = "8:Documentatie Calcul impozit profit.doc"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:TaxCalculator.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_47A6BB225AF2C3072EE9DCD34E3B520B"
+                    {
+                    "Name" = "8:TaxCalculator.Data.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:TaxCalculator.Data.dll"
+            "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_9264863101FA4A569ED6B720488CC613"
+            "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -769,7 +636,7 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7813FEECED6199E7C1C13EDF02D19E8C"
@@ -823,20 +690,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_85468BB051EE302DADE2F30967D88952"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_83819F3F90F78E774F8AB78A6679EEEF"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:TaxCalculator.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_85468BB051EE302DADE2F30967D88952"
+                    "_83819F3F90F78E774F8AB78A6679EEEF"
                     {
-                    "Name" = "8:TaxCalculator.Controls.dll"
+                    "Name" = "8:Newtonsoft.Json.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:TaxCalculator.Controls.dll"
+            "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
@@ -905,65 +772,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B6ED577E633A49C897D2941994BC3FC7"
-            {
-            "SourcePath" = "8:..\\TaxCalculator\\sqlceca35.dll"
-            "TargetName" = "8:sqlceca35.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B87F3F700499063FFD5E814D37D533CC"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:TaxCalculator.ViewModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_B87F3F700499063FFD5E814D37D533CC"
-                    {
-                    "Name" = "8:TaxCalculator.ViewModel.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:TaxCalculator.ViewModel.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C557D8F20EB533B3FF0AF7A6B4CF81F1"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_95E502F1F51A80F43CC4810C60BED156"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:TaxCalculator.Data.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_C557D8F20EB533B3FF0AF7A6B4CF81F1"
+                    "_95E502F1F51A80F43CC4810C60BED156"
                     {
                     "Name" = "8:TaxCalculator.Data.Model.dll"
                     "Attributes" = "3:512"
@@ -987,7 +803,98 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CED7DF714C25426E9D6A80529A6657E3"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B01E9FD8645C4F06A834C171EC7B7A7D"
+            {
+            "SourcePath" = "8:..\\TaxCalculator.Data\\Rules.txt"
+            "TargetName" = "8:Rules.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B6733A5E55A34D9686133D11BE2B18C4"
+            {
+            "SourcePath" = "8:..\\TaxCalculator.Controls\\Images\\CalculimpozitIconT.ico"
+            "TargetName" = "8:CalculimpozitIconT.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_A6D3BA5AD8B442D8A657587A9E128EB3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B6ED577E633A49C897D2941994BC3FC7"
+            {
+            "SourcePath" = "8:..\\TaxCalculator\\sqlceca35.dll"
+            "TargetName" = "8:sqlceca35.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D1E29EDC0D01719D8E3603FF066C50AA"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:TaxCalculator.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_D1E29EDC0D01719D8E3603FF066C50AA"
+                    {
+                    "Name" = "8:TaxCalculator.Common.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:TaxCalculator.Common.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DB17234833D74294991FC48C6A7B353F"
             {
             "SourcePath" = "8:..\\TaxCalculator.Data\\DefaultTaxIndicators.txt"
             "TargetName" = "8:DefaultTaxIndicators.txt"
@@ -1007,20 +914,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DF62553561FA7365C4713BCEAB4457B0"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E4DA8A4CBDC1B171FB839FF5EE433206"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:TaxCalculator.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_DF62553561FA7365C4713BCEAB4457B0"
+                    "_E4DA8A4CBDC1B171FB839FF5EE433206"
                     {
-                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Name" = "8:TaxCalculator.Controls.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Newtonsoft.Json.dll"
+            "SourcePath" = "8:TaxCalculator.Controls.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
@@ -1056,6 +963,68 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E910CA49575942B16C8D192FA84C47BD"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:CashBook.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_E910CA49575942B16C8D192FA84C47BD"
+                    {
+                    "Name" = "8:CashBook.Common.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:CashBook.Common.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E94FF9C4917EE432D55FD5EF04CB6576"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E94FF9C4917EE432D55FD5EF04CB6576"
+                    {
+                    "Name" = "8:log4net.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:log4net.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EC0DD19AECC04A5D95819974EF8B68C6"
@@ -1109,23 +1078,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F25248F71C627D54F975E1E95FBA1F35"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F578434395974F76B721DBE681F48738"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:TaxCalculator.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_F25248F71C627D54F975E1E95FBA1F35"
-                    {
-                    "Name" = "8:TaxCalculator.Common.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:TaxCalculator.Common.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:..\\TaxCalculator\\Documentation\\Documentatie Calcul impozit profit.doc"
+            "TargetName" = "8:Documentatie Calcul impozit profit.doc"
             "Tag" = "8:"
-            "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
+            "Folder" = "8:_9264863101FA4A569ED6B720488CC613"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1137,7 +1095,7 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
         }
@@ -1170,7 +1128,7 @@
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_9264863101FA4A569ED6B720488CC613"
                     {
                     "Name" = "8:Documentation"
-                    "AlwaysCreate" = "11:TRUE"
+                    "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
                     "Property" = "8:_2653A0CE350C4850B315D399D6C8895A"
@@ -1181,7 +1139,7 @@
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_A6D3BA5AD8B442D8A657587A9E128EB3"
                     {
                     "Name" = "8:Images"
-                    "AlwaysCreate" = "11:TRUE"
+                    "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
                     "Property" = "8:_C59E2AECEA0646E788464833204FCA47"
@@ -1229,15 +1187,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Calcul Impozit"
-        "ProductCode" = "8:{29FF1059-5F26-48FA-8974-C327953558DD}"
-        "PackageCode" = "8:{92F94526-B110-4FA8-BE6B-77F4A05257B4}"
+        "ProductCode" = "8:{0C87281C-61E2-4C8F-8006-6A9CC6C824C3}"
+        "PackageCode" = "8:{F06561A5-5E99-46F0-8691-4931A295A321}"
         "UpgradeCode" = "8:{EC66E3A6-EA02-4B40-8F25-A853D83C08E8}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.3"
+        "ProductVersion" = "8:1.0.1"
         "Manufacturer" = "8:Microsoft"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1358,10 +1316,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_EB8FD48800874E9285D570E3CA7E4CFD"
+            "Target" = "8:_1B5C8C41DBB2410C83B4F20F2B1492DF"
             "Folder" = "8:_F48B0CC29F8843CA882298D79406DC00"
             "WorkingFolder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
-            "Icon" = "8:_03AFD35E37D848D684709DB65E541743"
+            "Icon" = "8:_B6733A5E55A34D9686133D11BE2B18C4"
             "Feature" = "8:"
             }
         }
@@ -1763,7 +1721,35 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_8AC1A287AC6A46E7BCEBE67F64132410"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_1B5C8C41DBB2410C83B4F20F2B1492DF"
+            {
+            "SourcePath" = "8:..\\TaxCalculator\\obj\\x86\\Debug\\TaxCalculator.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{A676AC44-47A6-4286-94F6-3068D0DFA270}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_64E08EC170624E9B8D13CB25B37E6966"
             {
             "SourcePath" = "8:"
             "TargetName" = "8:"
@@ -1785,62 +1771,6 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:ContentFiles"
-            "OutputProjectGuid" = "8:{A676AC44-47A6-4286-94F6-3068D0DFA270}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A8A9577CB0E844698EC0646B5C641406"
-            {
-            "SourcePath" = "8:..\\TaxCalculator\\obj\\x86\\Debug\\TaxCalculator.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_9264863101FA4A569ED6B720488CC613"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{A676AC44-47A6-4286-94F6-3068D0DFA270}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_EB8FD48800874E9285D570E3CA7E4CFD"
-            {
-            "SourcePath" = "8:..\\TaxCalculator\\obj\\x86\\Debug\\TaxCalculator.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3894DA0A92B64EE3A2EF87943C8C19A7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{A676AC44-47A6-4286-94F6-3068D0DFA270}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
