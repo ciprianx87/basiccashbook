@@ -5,6 +5,7 @@ using System.Text;
 
 namespace TaxCalculator.Data.Model
 {
+   
     public enum ContentTypes
     {
         CashBook,

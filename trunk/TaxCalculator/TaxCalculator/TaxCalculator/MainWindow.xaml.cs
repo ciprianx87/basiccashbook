@@ -24,7 +24,7 @@ using System.Threading;
 using System.Windows.Threading;
 
 namespace TaxCalculator
-{        
+{
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -40,7 +40,7 @@ namespace TaxCalculator
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            isFullVersion =true;
+            isFullVersion = true;
             version = "1.0.1 demo";
 
             XmlConfigurator.Configure();
