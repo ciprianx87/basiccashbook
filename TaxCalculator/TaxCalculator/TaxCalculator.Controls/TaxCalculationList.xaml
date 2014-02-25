@@ -37,7 +37,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                </Grid.RowDefinitions>               
                 <StackPanel  Orientation="Vertical">
                     <StackPanel Orientation="Horizontal"  Margin="5">
                         <TextBlock Text="Societate"/>

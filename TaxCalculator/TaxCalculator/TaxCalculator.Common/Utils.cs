@@ -6,19 +6,11 @@ using System.Diagnostics;
 
 namespace TaxCalculator.Common
 {
+   
+
     public static class Utils
     {
-        public static int GeneratePairedKey(string initialKey)
-        {
-            string constantKey = "CashRegister2013";
-            int hash = 23;
-            hash = hash * 2 + initialKey.GetHashCode();
-            hash = hash * 3 + constantKey.GetHashCode();
-            hash = Math.Abs(hash);
-            Debug.WriteLine("generated paired key: " + hash);
-            return hash;
-
-        }
+       
 
         public static DateTime DateTimeToDay(DateTime date)
         {

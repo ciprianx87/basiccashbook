@@ -55,6 +55,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             this.ClearFiltersCommand = new DelegateCommand(ClearFilters, CanClearFilters);
             this.ChangeReportNameCommand = new DelegateCommand(ChangeReportName, CanChangeReportName);
             Mediator.Instance.Register(MediatorActionType.RefreshList, RefreshList);
+            Mediator.Instance.Register(MediatorActionType.SetRemainingDays, SetRemainingDays);
 
             taxCalculationRepository = new TaxCalculationsRepository();
             companyRepository = new CompanyRepository();
@@ -533,6 +534,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         public override void Dispose()
         {
             Mediator.Instance.Unregister(MediatorActionType.RefreshList, RefreshList);
+            Mediator.Instance.Unregister(MediatorActionType.SetRemainingDays, SetRemainingDays);
             base.Dispose();
         }
 

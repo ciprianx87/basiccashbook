@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>CalculimpozitIcon.ico</ApplicationIcon>
+    <ApplicationIcon>CalculimpozitIconT.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -112,6 +112,7 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <Resource Include="CalculimpozitIcon.ico" />
+    <Resource Include="CalculimpozitIconT.ico" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -129,6 +130,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\CashBook\CashBook.Common\CashBook.Common.csproj">
+      <Project>{1C683AE9-2318-4693-B048-55EF3B64A37B}</Project>
+      <Name>CashBook.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaxCalculator.Common\TaxCalculator.Common.csproj">
       <Project>{D45D4BA8-A500-442D-8EBC-151C62296804}</Project>
       <Name>TaxCalculator.Common</Name>

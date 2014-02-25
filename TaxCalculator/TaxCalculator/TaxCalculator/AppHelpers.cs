@@ -57,7 +57,7 @@ namespace TaxCalculator
                 Logger.Instance.Log.Debug("motherBoardId is not empty " + motherBoardId);
             }
             Logger.Instance.Log.Debug("motherBoardId4: " + motherBoardId);
-            int mbHash = Utils.GeneratePairedKey(motherBoardId);
+            int mbHash = CashBook.Common.Utils.GeneratePairedKey(motherBoardId, CashBook.Common.Utils.ApplicationType.TaxCalculator);
             //Logger.Instance.Log.Debug("mbHash: " + mbHash);
             if (string.IsNullOrEmpty(existingHashKey))
             {
