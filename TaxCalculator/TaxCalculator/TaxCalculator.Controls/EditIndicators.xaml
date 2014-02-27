@@ -19,12 +19,15 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="{Binding Name}" Style="{DynamicResource SubTitleStyle}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Button Grid.Row="1" Content="Inapoi" HorizontalAlignment="Left" Height="30" Width="100" Command="{Binding BackCommand}"></Button>
-        <Button Grid.Row="1" Content="Validare Formule" HorizontalAlignment="Left" Height="30" Width="100" Command="{Binding ValidateCommand}" Margin="140,0,0,0"></Button>
+        <Button Grid.Row="1" Content="Inapoi" HorizontalAlignment="Left" Height="30" Width="100" 
+                Command="{Binding BackCommand}"></Button>
+        <Button Grid.Row="1" Content="Validare Formule" HorizontalAlignment="Left" Height="30" Width="100" 
+                Command="{Binding ValidateCommand}" Margin="140,0,0,0" IsEnabled="{Binding EditEnabled}"></Button>
         <DataGrid Grid.Row="2" x:Name="dgTaxIndicators" ItemsSource="{Binding TaxIndicators}" AutoGenerateColumns="False" Margin="0,15,0,0"
                   CanUserAddRows="False" MinWidth="1050" HorizontalAlignment="Stretch" CanUserSortColumns="False" CanUserReorderColumns="False"
                   CanUserResizeRows="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" 
-                    VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Standard">           
+                    VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Standard"
+                 >
             <DataGrid.Resources>
                 <Style TargetType="DataGridCell"  x:Key="NoFocusColumStyle">
                     <Setter Property="IsTabStop" Value="False"/>
@@ -65,7 +68,9 @@
                         <DataTemplate >
                             <TextBlock Text="{Binding NrCrtString}" Style="{StaticResource StandardTextBlock}"
                                        Focusable="False" IsHitTestVisible="False" 
-                                       Visibility="{Binding Style.NrCrtVisibility}" />
+                                       Visibility="{Binding Style.NrCrtVisibility}" 
+                                      IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Mode=OneWay,
+                                Path=DataContext.EditEnabled, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -75,15 +80,13 @@
                             <DataTemplate.Resources>
 
                             </DataTemplate.Resources>
-                            <!---->
-                            <!--Style="{StaticResource StandardTextBlock}"-->
-                            <!--Style="{Binding Type, Converter={StaticResource indicatorConverter}}"-->
                             <TextBox Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontWeight="{Binding Style.FontWeight}"
                                      PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton" MouseDoubleClick="TextBox_MouseDoubleClick" 
                                               GotKeyboardFocus="TextBox_MouseDoubleClick" KeyDown="TextBox_KeyDown" PreviewKeyDown="TextBox_PreviewKeyDown" Loaded="TextBox_Loaded"
-                                      Tag="{Binding TypeEnabled}">
+                                      Tag="{Binding TypeEnabled}"
+                                      IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Mode=OneWay,
+                                Path=DataContext.EditEnabled, UpdateSourceTrigger=PropertyChanged}">
                             </TextBox>
-                            <!--<TextBox Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandardTextBox}"  Visibility="{Binding Style.ValueFieldVisibility}"/>-->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -93,16 +96,22 @@
                             <!--{Binding DataContext.AvailableIndicatorTypes, ElementName=root}-->
                             <!--{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay, Path=DataContext, UpdateSourceTrigger=PropertyChanged}'-->
                             <!--<TextBlock Text="{Binding Type}" Style="{StaticResource StandardTextBlock}"/>-->
-                            <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Mode=OneWay,
+                            <StackPanel IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Mode=OneWay,
+                                Path=DataContext.EditEnabled, UpdateSourceTrigger=PropertyChanged}"
+                                        VerticalAlignment="Center" >
+                                <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Mode=OneWay,
                                 Path=DataContext.AvailableIndicatorTypes, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Type, Mode=TwoWay}" HorizontalAlignment="Stretch"
-                                      SelectionChanged="ComboBox_SelectionChanged" IsEnabled="{Binding TypeEnabled}"/>
+                                      SelectionChanged="ComboBox_SelectionChanged" IsEnabled="{Binding TypeEnabled}"
+                                          VerticalAlignment="Center"/>
+                            </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn MinWidth="100"  Width="100" Header="Valoare" Visibility="Collapsed">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <StackPanel>
+                            <StackPanel IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Mode=OneWay,
+                                Path=DataContext.EditEnabled, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBox Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandardTextBox}"  Visibility="{Binding Style.ValueFieldVisibility}"/>
                                 <TextBlock Text="{Binding ValueField}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}"/>
                             </StackPanel>
@@ -112,8 +121,8 @@
                 <DataGridTemplateColumn MinWidth="200"  Width="*" Header="Mod de calcul Indicatori">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <StackPanel>
-                                <!--<TextBlock Text="{Binding IndicatorFormula}" Style="{StaticResource StandardTextBlock}" Visibility="{Binding Style.FormulaFieldVisibility}"/>-->
+                            <StackPanel IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Mode=OneWay,
+                                Path=DataContext.EditEnabled, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBox Text="{Binding Path=IndicatorFormula, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                     ValidatesOnDataErrors=true, NotifyOnValidationError=true}"  Style="{StaticResource StandardTextBox}"
                                          Visibility="{Binding Style.FormulaFieldVisibility}" Foreground="{Binding FormulaTextColor}" IsEnabled="{Binding IndicatorFormulaEnabled}">
@@ -121,7 +130,6 @@
                                         <TextBlock Text="{Binding ErrorMessage}" FontWeight="Bold" Foreground="Red"/>
                                     </TextBox.ToolTip>
                                 </TextBox>
-                                <!--<TextBox Text="{Binding Path=ValueField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandardTextBox}"  Visibility="{Binding Style.ValueFieldVisibility}"/>-->
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -129,7 +137,8 @@
                 <DataGridTemplateColumn Width="60" Header="Eroare"  CellStyle="{StaticResource NoFocusColumStyle}" FocusManager.IsFocusScope="False"   >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate >
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Mode=OneWay,
+                                Path=DataContext.EditEnabled, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBlock  Margin="0,0,10,0" Width="60"  Focusable="False" Text="!" FontWeight="Bold" Foreground="Red" Visibility="{Binding ErrorVisible}" VerticalAlignment="Center">                                         
                                             <TextBlock.ToolTip>
                                                 <TextBlock Text="{Binding ErrorMessage}" FontWeight="Bold" Foreground="Red"/>
@@ -145,8 +154,10 @@
             </DataGrid.Items>
         </DataGrid>
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,30,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button  Content="Salvare" Command="{Binding SaveCommand}" VerticalAlignment="Center" Width="100"  Height="30"></Button>
-            <Button  Content="Salvare ca" Command="{Binding SaveAsCommand}" VerticalAlignment="Center" Width="100" Height="30" Margin="100,0,0,0"></Button>
+            <Button  Content="Salvare" Command="{Binding SaveCommand}" VerticalAlignment="Center" Width="100"
+                     Height="30" IsEnabled="{Binding EditEnabled}"></Button>
+            <Button  Content="Salvare ca" Command="{Binding SaveAsCommand}" VerticalAlignment="Center" Width="100"
+                     Height="30" Margin="100,0,0,0" IsEnabled="{Binding EditEnabled}"></Button>
             <Button  Content="Reguli scriere formule" Command="{Binding RulesCommand}" VerticalAlignment="Center" Width="130" Height="30" Margin="100,0,0,0"></Button>
         </StackPanel>
     </Grid>

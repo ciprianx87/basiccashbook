@@ -17,6 +17,7 @@ using TaxCalculator.Data.Repositories;
 using TaxCalculator.ViewModel.Extensions;
 using TaxCalculator.Common.Exceptions;
 using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -33,7 +34,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         public ICommand RulesCommand { get; set; }
 
-        
+
         IIndicatorRepository indicatorRepository;
 
         public EditIndicatorsVm()
@@ -45,9 +46,10 @@ namespace TaxCalculator.ViewModel.ViewModels
             this.SaveCommand = new DelegateCommand(Save, CanSave);
             this.SaveAsCommand = new DelegateCommand(SaveAs, CanSaveAs);
             this.BackCommand = new DelegateCommand(Back, CanBack);
-            this.RulesCommand = new DelegateCommand(Rules, CanRules); 
+            this.RulesCommand = new DelegateCommand(Rules, CanRules);
             indicatorRepository = new IndicatorRepository();
 
+            EditEnabled = true;
             Mediator.Instance.Register(MediatorActionType.SetTaxIndicatorToEditFormula, SetTaxIndicatorToEditFormula);
 
             TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>();
@@ -99,6 +101,19 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
         }
 
+        private bool editEnabled;
+        public bool EditEnabled
+        {
+            get { return editEnabled; }
+            set
+            {
+                if (editEnabled != value)
+                {
+                    editEnabled = value;
+                    this.NotifyPropertyChanged("EditEnabled");
+                }
+            }
+        }
         private ObservableCollection<TaxIndicatorViewModel> taxIndicators;
         public ObservableCollection<TaxIndicatorViewModel> TaxIndicators
         {
@@ -608,9 +623,31 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void Rules(object parameter)
         {
-            Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.Rules);
-            Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, Constants.RulesText);
-        } 
+            OpenWordDocument(Constants.RulesFileName);
+        }
+
+        private static void OpenWordDocument(string fileName)
+        {
+            try
+            {
+                using (var regWord = Registry.ClassesRoot.OpenSubKey("Word.Application"))
+                {
+                    if (regWord == null)
+                    {
+                        MessageBox.Show("Trebuie sa aveti instalat Office Word pentru a putea deschide acest document");
+                    }
+                    else
+                    {
+                        Process.Start(fileName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Nu s-a putut deschide documentul");
+                Logger.Instance.LogException(ex);
+            }
+        }
 
         Indicator currentTaxIndicator;
         public void SetTaxIndicatorToEditFormula(object param)
@@ -630,6 +667,10 @@ namespace TaxCalculator.ViewModel.ViewModels
                 {
                     var dbIndicators = VmUtils.Deserialize<List<TaxIndicator>>(currentTaxIndicator.Content);
                     TaxIndicators = new ObservableCollection<TaxIndicatorViewModel>(dbIndicators.ToVmList());
+                }
+                if (currentTaxIndicator.IsDefault)
+                {
+                    EditEnabled = false;
                 }
             }
         }
