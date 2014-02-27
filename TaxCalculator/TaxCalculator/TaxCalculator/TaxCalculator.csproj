@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>CalculimpozitIconT.ico</ApplicationIcon>
+    <ApplicationIcon>CalculimpozitIconT2.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -113,6 +113,7 @@
     <None Include="app.config" />
     <Resource Include="CalculimpozitIcon.ico" />
     <Resource Include="CalculimpozitIconT.ico" />
+    <Resource Include="CalculimpozitIconT2.ico" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
