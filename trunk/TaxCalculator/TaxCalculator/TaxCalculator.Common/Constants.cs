@@ -27,5 +27,7 @@ namespace TaxCalculator.Common
         public static int RemainingDays { get; set; }
         public static string KeyFilename = "C86D883A-7B72-4F49-9871-4EBA439036F9.tc";
         public static string SerialKeyFilename = "C86D883A-7B72-4F49-9871-4EBA439036F8.tc";
+        public static string RulesFileName = "";
+        public static string DocumentationFileName = "";
     }
 }

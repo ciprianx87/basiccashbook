@@ -42,7 +42,9 @@ namespace TaxCalculator
         {
             isFullVersion = true;
             version = "1.0.1 full";
-
+            //load settings
+            Constants.DocumentationFileName = Properties.Settings.Default.DocumentationFileName;
+            Constants.RulesFileName = Properties.Settings.Default.RulesFileName;
             XmlConfigurator.Configure();
             Logger.Instance.Log.Debug("application start");
 
@@ -138,7 +140,7 @@ namespace TaxCalculator
 
         private void Help_Click(object sender, RoutedEventArgs e)
         {
-            OpenWordDocument(Properties.Settings.Default.DocumentationFileName);
+            OpenWordDocument(Constants.DocumentationFileName);
         }
 
         private static void OpenWordDocument(string fileName)
@@ -244,7 +246,7 @@ namespace TaxCalculator
 
         private void Rules_Click(object sender, RoutedEventArgs e)
         {
-            OpenWordDocument(Properties.Settings.Default.RulesFileName);
+            OpenWordDocument(Constants.RulesFileName);
             //Mediator.Instance.SendMessage(MediatorActionType.OpenWindow, PopupType.Rules);
             //Mediator.Instance.SendMessage(MediatorActionType.SetInformationPopupMessage, Constants.RulesText);
 
