@@ -41,7 +41,7 @@ namespace TaxCalculator
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             isFullVersion = true;
-            version = "1.0.1 full";
+            version = "1.0.3 full";
             //load settings
             Constants.DocumentationFileName = Properties.Settings.Default.DocumentationFileName;
             Constants.RulesFileName = Properties.Settings.Default.RulesFileName;
@@ -253,7 +253,7 @@ namespace TaxCalculator
         }
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            string iconInfo = "Icoanele au fost preluate de pe http://www.iconfinder.com/iconsets/finance_icons#readme";
+            string iconInfo = "Icoanele au fost preluate de pe http://www.iconarchive.com/show/3d-cartoon-icons-by-hopstarter/Axialis-Icon-Workshop-icon.html";
             MessageBox.Show(string.Format("Versiune: {0} {1}{2}{3}", version, Environment.NewLine, Environment.NewLine, iconInfo));
 
         }
