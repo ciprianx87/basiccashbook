@@ -283,19 +283,7 @@
     <Resource Include="Images\editButton.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\CalculimpozitIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\CalculimpozitIconT.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\CalculimpozitIconT.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\CalculimpozitIconT2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\CalculimpozitIconT2.ico" />
+    <Resource Include="Images\icon tax.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
