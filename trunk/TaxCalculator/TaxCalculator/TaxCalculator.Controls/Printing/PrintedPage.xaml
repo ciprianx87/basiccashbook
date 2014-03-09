@@ -98,9 +98,9 @@
             <StackPanel  Grid.Row="7"   Grid.Column="3" VerticalAlignment="Center" Visibility="{Binding Version2Visibility}">
                 <Label Content="dupa impozit" HorizontalAlignment="Center" Style="{x:Null}"  FontSize="11" />
             </StackPanel>
-            <StackPanel  Grid.Row="3"   Grid.Column="2" VerticalAlignment="Center" Visibility="{Binding Version2Visibility}">
+            <!--<StackPanel  Grid.Row="3"   Grid.Column="2" VerticalAlignment="Center" Visibility="{Binding Version2Visibility}">
                 <Label Content="Rectificativa" HorizontalAlignment="Center" Style="{x:Null}"  FontSize="11" />
-            </StackPanel>
+            </StackPanel>-->
             <!--table header-->
             <Border Grid.Row="5" Grid.RowSpan="3"   Grid.Column="0" Margin="1,0,0,0"/>
             <Border Grid.Row="5" Grid.RowSpan="3"   Grid.Column="1"/>
@@ -217,7 +217,7 @@
                     <ListBoxItem Height="20">21</ListBoxItem>-->
             </ListBox.Items>
         </ListBox>
-        <Grid Grid.Row="2" Visibility="{Binding LastPageVisibility}" VerticalAlignment="Top">
+        <Grid Grid.Row="2" Visibility="{Binding LastPageVisibility}" VerticalAlignment="Top" Margin="0,-700,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
