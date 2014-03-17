@@ -95,7 +95,6 @@
     <Compile Include="ViewModels\Model\TaxFormula.cs" />
     <Compile Include="ViewModels\Model\TaxIndicatorViewModel.cs" />
     <Compile Include="ViewModels\TaxCalculationVm.cs" />
-    <Compile Include="ViewModels\XTaxIndicatorListVm.cs" />
     <Compile Include="VmUtils.cs" />
   </ItemGroup>
   <ItemGroup>
