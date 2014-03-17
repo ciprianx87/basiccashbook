@@ -70,9 +70,9 @@ namespace TaxCalculator
                 case ContentTypes.TaxIndicatorList:
                     contentControl.Content = new TaxCalculator.Controls.TaxIndicatorsList();
                     break;
-                case ContentTypes.TaxCalculation:
-                    contentControl.Content = new TaxCalculator.Controls.TaxCalculation();
-                    break;
+                //case ContentTypes.TaxCalculation:
+                //    contentControl.Content = new TaxCalculator.Controls.TaxCalculation();
+                //    break;
                 case ContentTypes.TaxCalculationTest:
                     contentControl.Content = new TaxCalculator.Controls.TaxCalculationTest();
                     break;
@@ -205,7 +205,7 @@ namespace TaxCalculator
 
         private void TestDefault_Click(object sender, RoutedEventArgs e)
         {
-            ChangeContent(ContentTypes.TaxCalculation);
+            //ChangeContent(ContentTypes.TaxCalculation);
         }
         private void Exit()
         {
