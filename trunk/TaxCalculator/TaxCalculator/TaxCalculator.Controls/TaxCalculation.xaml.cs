@@ -24,7 +24,7 @@ namespace TaxCalculator.Controls
         public TaxCalculation()
         {
             InitializeComponent();
-            this.DataContext = new TaxCalculationVm();
+            //this.DataContext = new TaxCalculationVm();
             //dgTaxIndicators.ItemsSource = new List<object>() { 1 };
         }
 
