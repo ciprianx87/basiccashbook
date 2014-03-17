@@ -136,7 +136,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
             catch (DuplicateEntityNameException dcne)
             {
-                WindowHelper.OpenErrorDialog("Exista deja un indicator cu acelasi nume!");
+                WindowHelper.OpenErrorDialog("Exista(sau a existat) un indicator cu acelasi nume!");
             }
             catch (Exception ex)
             {

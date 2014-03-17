@@ -304,7 +304,6 @@ namespace TaxCalculator.ViewModel.ViewModels
 
         private void LoadData()
         {
-
             Years = new ObservableCollection<int>(Constants.AvailableYears);
             SelectedYear = Years[0];
             AvailableNrOfDecimals = new ObservableCollection<byte>() { 0, 1, 2 };
@@ -312,8 +311,11 @@ namespace TaxCalculator.ViewModel.ViewModels
             SelectedMonth = Months[0];
             try
             {
+                var existingIndicators = indicatorRepository.GetAll();
+                //do not show the hidden ones
+                VmUtils.RemoveHiddenIndicators(existingIndicators);
                 //load indicators list
-                TaxIndicatorLists = new ObservableCollection<Indicator>(indicatorRepository.GetAll());
+                TaxIndicatorLists = new ObservableCollection<Indicator>(existingIndicators);
                 if (TaxIndicatorLists.Count > 0)
                 {
                     SelectIndicator();

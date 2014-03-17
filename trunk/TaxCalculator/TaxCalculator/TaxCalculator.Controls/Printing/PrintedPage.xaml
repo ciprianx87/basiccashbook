@@ -35,6 +35,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid ShowGridLines="False" x:Name="grdHeader" Grid.Row="0" Visibility="{Binding FirstPage, Converter={StaticResource visibilityConverter}, FallbackValue='Visible'}"
               Width="645" HorizontalAlignment="Left">
@@ -233,6 +234,7 @@
             <Label Grid.Row="3" Content="{Binding LastPageData.VerifiedBy}" HorizontalAlignment="Right" Style="{x:Null}" FontSize="11"  BorderThickness="0"/>
             <!--</StackPanel>-->
         </Grid>
-           
+        <Label Grid.Row="3"  Content="DID-Calcul impozit profit" HorizontalContentAlignment="Right" VerticalAlignment="Bottom"
+                FontWeight="Light"   Padding="0"  BorderThickness="0" Margin="0,0,0,-25"/>
     </Grid>
 </UserControl>

@@ -19,6 +19,7 @@ namespace TaxCalculator.Common
 
         public static string LastSetupValueKey = "LastSetupValue";
         public static string LastSetupValueEntireScreenKey = "LastSetupValueEntireScreen";
+        public static string IndicatorVisibilityKey = "IndicatorVisibility";
 
         public static string RulesText = "";
 

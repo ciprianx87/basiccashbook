@@ -6,6 +6,7 @@ using TaxCalculator.Data.Interfaces;
 using TaxCalculator.Data.Model;
 using TaxCalculator.Common.Exceptions;
 using System.Data.Entity;
+using TaxCalculator.Common;
 
 namespace TaxCalculator.Data.Repositories
 {
@@ -126,6 +127,44 @@ namespace TaxCalculator.Data.Repositories
             {
                 var list = context.Indicators.ToList();
                 return list;
+            }
+        }
+
+
+        public void EditWithHide(Indicator entity)
+        {
+            lock (syncObj)
+            {
+                using (var context = GetContext())
+                {
+
+                    var existingIndicator = context.Indicators.FirstOrDefault(p => p.Id == entity.Id);
+                    if (existingIndicator == null)
+                    {
+                        throw new Exception("invalid Indicator id: " + entity.Id);
+                    }
+                    else
+                    {
+                        //set the values for the new entity as the current one
+                        //create a new entity
+
+                        Indicator newEntity = new Indicator()
+                        {
+                            Id = DbIdHelper.GetNextID(),
+                            Name = entity.Name,
+                            Content = entity.Content,
+                            CreatedTimestamp = entity.CreatedTimestamp,
+                            IsDefault = entity.IsDefault
+                        };
+                        context.Indicators.AddObject(newEntity);
+                        //SetAllIndicatorsDefaultValue(context, entity);
+                        //hide the current entity
+                        //add an entry in the settings file
+
+
+                        base.Commit(context);
+                    }
+                }
             }
         }
     }

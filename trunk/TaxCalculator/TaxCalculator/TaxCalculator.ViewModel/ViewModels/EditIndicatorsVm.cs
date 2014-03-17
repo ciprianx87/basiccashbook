@@ -18,6 +18,7 @@ using TaxCalculator.ViewModel.Extensions;
 using TaxCalculator.Common.Exceptions;
 using System.Diagnostics;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -36,6 +37,7 @@ namespace TaxCalculator.ViewModel.ViewModels
 
 
         IIndicatorRepository indicatorRepository;
+        ISettingsRepository settingsRepository;
 
         public EditIndicatorsVm()
         {
@@ -48,6 +50,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             this.BackCommand = new DelegateCommand(Back, CanBack);
             this.RulesCommand = new DelegateCommand(Rules, CanRules);
             indicatorRepository = new IndicatorRepository();
+            settingsRepository = new SettingsRepository();
 
             EditEnabled = true;
             Mediator.Instance.Register(MediatorActionType.SetTaxIndicatorToEditFormula, SetTaxIndicatorToEditFormula);
@@ -439,9 +442,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
             try
             {
-                var taxIndicatorModelList = TaxIndicators.ToList().ToModelList();
-                currentTaxIndicator.Content = VmUtils.SerializeEntity(taxIndicatorModelList);
-                indicatorRepository.Edit(currentTaxIndicator);
+                PerformSave();
                 WindowHelper.OpenInformationDialog(Messages.InfoWasSaved);
             }
             catch (Exception ex)
@@ -449,6 +450,33 @@ namespace TaxCalculator.ViewModel.ViewModels
                 Logger.Instance.LogException(ex);
                 WindowHelper.OpenErrorDialog(Messages.ErrorSavingInfo);
             }
+        }
+
+        private void PerformSave()
+        {
+            var taxIndicatorModelList = TaxIndicators.ToList().ToModelList();
+            currentTaxIndicator.Content = VmUtils.SerializeEntity(taxIndicatorModelList);
+            indicatorRepository.EditWithHide(currentTaxIndicator);
+
+            //update the setting with the visibility information
+            var existingVisibilityInfoString = settingsRepository.GetSetting(Constants.IndicatorVisibilityKey);
+            List<IndicatorVisibilityModel> existingData = new List<IndicatorVisibilityModel>();
+            if (!string.IsNullOrEmpty(existingVisibilityInfoString))
+            {
+                existingData = JsonConvert.DeserializeObject<List<IndicatorVisibilityModel>>(existingVisibilityInfoString);
+                var existingEntry = existingData.FirstOrDefault(p => p.IndicatorId == currentTaxIndicator.Id);
+                if (existingEntry == null)
+                {
+                    existingData.Add(new IndicatorVisibilityModel() { IndicatorId = currentTaxIndicator.Id, Hidden = true });
+                }
+            }
+            else
+            {
+                existingData.Add(new IndicatorVisibilityModel() { IndicatorId = currentTaxIndicator.Id, Hidden = true });
+            }
+            var serializedData = JsonConvert.SerializeObject(existingData);
+            settingsRepository.AddOrUpdateSetting(Constants.IndicatorVisibilityKey, serializedData);
+
         }
 
         private bool IsValid()

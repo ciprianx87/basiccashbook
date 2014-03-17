@@ -9,6 +9,7 @@ using TaxCalculator.Data.Model;
 using System.Collections.ObjectModel;
 using TaxCalculator.Data.Interfaces;
 using TaxCalculator.Common;
+using TaxCalculator.Data.Repositories;
 
 namespace TaxCalculator.ViewModel
 {
@@ -124,6 +125,23 @@ namespace TaxCalculator.ViewModel
             }
             settingsRepository.AddOrUpdateSetting(Constants.CoinTypesKey, coinTypesString);
         }
+        public static void RemoveHiddenIndicators(List<Indicator> existingIndicators)
+        {
+            List<IndicatorVisibilityModel> existingData = new List<IndicatorVisibilityModel>();
 
+            var existingVisibilityInfoString = new SettingsRepository().GetSetting(Constants.IndicatorVisibilityKey);
+            if (!string.IsNullOrEmpty(existingVisibilityInfoString))
+            {
+                existingData = JsonConvert.DeserializeObject<List<IndicatorVisibilityModel>>(existingVisibilityInfoString);
+                foreach (var item in existingData)
+                {
+                    var existing = existingIndicators.FirstOrDefault(p => p.Id == item.IndicatorId);
+                    if (existing != null)
+                    {
+                        existingIndicators.Remove(existing);
+                    }
+                }
+            }
+        }
     }
 }

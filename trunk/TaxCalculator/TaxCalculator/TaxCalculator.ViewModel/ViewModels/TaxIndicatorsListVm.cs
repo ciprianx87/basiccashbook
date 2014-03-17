@@ -13,6 +13,7 @@ using TaxCalculator.Data.Repositories;
 using TaxCalculator.Data.Interfaces;
 using TaxCalculator.Data;
 using TaxCalculator.ViewModel.ViewModels.Model;
+using Newtonsoft.Json;
 
 namespace TaxCalculator.ViewModel.ViewModels
 {
@@ -104,6 +105,9 @@ namespace TaxCalculator.ViewModel.ViewModels
                     AddDefaultIndicator();
                 }
                 existingIndicators = indicatorRepository.GetAll();
+                //do not show the hidden ones
+                VmUtils.RemoveHiddenIndicators(existingIndicators);
+
                 foreach (var item in existingIndicators)
                 {
                     TaxIndicatorList.Add(item);
@@ -240,7 +244,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         public void EditIndicators(object parameter)
         {
             Mediator.Instance.SendMessage(MediatorActionType.SetMainContent, ContentTypes.EditIndicators);
-            Mediator.Instance.SendMessage(MediatorActionType.SetTaxIndicatorToEditFormula, parameter);           
+            Mediator.Instance.SendMessage(MediatorActionType.SetTaxIndicatorToEditFormula, parameter);
         }
 
         public override void Dispose()
