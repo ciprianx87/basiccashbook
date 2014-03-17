@@ -13,5 +13,6 @@ namespace TaxCalculator.Data.Interfaces
         void Create(Indicator entity);
         void Delete(Int64 id);
         List<Indicator> GetAll();
+        void EditWithHide(Indicator entity);
     }
 }
