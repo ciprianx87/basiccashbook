@@ -500,6 +500,11 @@
             "AssemblyAsmDisplayName" = "8:EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_1C41534A04E0E3B088EFE4F9C6C1D238"
+                    {
+                    "Name" = "8:EntityFramework.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:EntityFramework.dll"
             "TargetName" = "8:"
@@ -546,6 +551,11 @@
             "AssemblyAsmDisplayName" = "8:TaxCalculator.ViewModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_3D958F421AD1399FE54117B42B6FA9F8"
+                    {
+                    "Name" = "8:TaxCalculator.ViewModel.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:TaxCalculator.ViewModel.dll"
             "TargetName" = "8:"
@@ -592,6 +602,11 @@
             "AssemblyAsmDisplayName" = "8:TaxCalculator.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_47A6BB225AF2C3072EE9DCD34E3B520B"
+                    {
+                    "Name" = "8:TaxCalculator.Data.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:TaxCalculator.Data.dll"
             "TargetName" = "8:"
@@ -689,6 +704,11 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_83819F3F90F78E774F8AB78A6679EEEF"
+                    {
+                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
@@ -766,6 +786,11 @@
             "AssemblyAsmDisplayName" = "8:TaxCalculator.Data.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_95E502F1F51A80F43CC4810C60BED156"
+                    {
+                    "Name" = "8:TaxCalculator.Data.Model.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:TaxCalculator.Data.Model.dll"
             "TargetName" = "8:"
@@ -832,6 +857,11 @@
             "AssemblyAsmDisplayName" = "8:TaxCalculator.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_D1E29EDC0D01719D8E3603FF066C50AA"
+                    {
+                    "Name" = "8:TaxCalculator.Common.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:TaxCalculator.Common.dll"
             "TargetName" = "8:"
@@ -878,6 +908,11 @@
             "AssemblyAsmDisplayName" = "8:TaxCalculator.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_E4DA8A4CBDC1B171FB839FF5EE433206"
+                    {
+                    "Name" = "8:TaxCalculator.Controls.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:TaxCalculator.Controls.dll"
             "TargetName" = "8:"
@@ -924,6 +959,11 @@
             "AssemblyAsmDisplayName" = "8:CashBook.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
+                    "_E910CA49575942B16C8D192FA84C47BD"
+                    {
+                    "Name" = "8:CashBook.Common.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:CashBook.Common.dll"
             "TargetName" = "8:"
@@ -950,6 +990,11 @@
             "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_E94FF9C4917EE432D55FD5EF04CB6576"
+                    {
+                    "Name" = "8:log4net.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:log4net.dll"
             "TargetName" = "8:"
@@ -1129,15 +1174,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Calcul Impozit"
-        "ProductCode" = "8:{14CE9919-7A74-4833-9D9B-7F74728BE4D3}"
-        "PackageCode" = "8:{C2D1BD1B-E0FF-48D9-9CAD-E8CE5F2B74C8}"
+        "ProductCode" = "8:{E8CFF844-B5D7-429C-97F9-9DE282A5D3B5}"
+        "PackageCode" = "8:{5A0882DE-686A-4667-98A2-E6E4A8EA7BE6}"
         "UpgradeCode" = "8:{EC66E3A6-EA02-4B40-8F25-A853D83C08E8}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.3"
+        "ProductVersion" = "8:1.0.5"
         "Manufacturer" = "8:Microsoft"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
