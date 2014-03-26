@@ -7,6 +7,7 @@ using TaxCalculator.Data.Repositories;
 using TaxCalculator.Data.Interfaces;
 using TaxCalculator.ViewModel.ViewModels.Model;
 using TaxCalculator.Common.Exceptions;
+using TaxCalculator.Common;
 
 namespace TaxCalculator.ViewModel
 {
@@ -53,6 +54,8 @@ namespace TaxCalculator.ViewModel
                 throw new DeleteEntityException<Indicator>();
             }
         }
+
+    
 
         private static void DeleteTaxCalculation(TaxCalculationsViewModel entity)
         {

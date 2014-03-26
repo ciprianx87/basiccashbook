@@ -456,7 +456,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             var taxIndicatorModelList = TaxIndicators.ToList().ToModelList();
             currentTaxIndicator.Content = VmUtils.SerializeEntity(taxIndicatorModelList);
-            indicatorRepository.EditWithHide(currentTaxIndicator);
+            long newId = indicatorRepository.EditWithHide(currentTaxIndicator);
 
             //update the setting with the visibility information
             var existingVisibilityInfoString = settingsRepository.GetSetting(Constants.IndicatorVisibilityKey);
@@ -477,6 +477,25 @@ namespace TaxCalculator.ViewModel.ViewModels
             var serializedData = JsonConvert.SerializeObject(existingData);
             settingsRepository.AddOrUpdateSetting(Constants.IndicatorVisibilityKey, serializedData);
 
+            UpdateSettings(currentTaxIndicator.Id, newId);
+
+        }
+
+        private static void UpdateSettings(long initialIndicatorId, long newIndicatorId)
+        {
+            ISettingsRepository settingsRepository = new SettingsRepository();
+            var allSettings = settingsRepository.GetAll().ToList();
+            var setupValueSettings = allSettings.Where(p => p.Key.StartsWith(Constants.LastSetupValueKey) && p.Key != Constants.LastSetupValueEntireScreenKey).ToList();
+            foreach (var item in setupValueSettings)
+            {
+                LastSetupValue setupValue = VmUtils.Deserialize<LastSetupValue>(item.Value);
+                if (setupValue.IndicatorListId == initialIndicatorId)
+                {
+                    setupValue.IndicatorListId = newIndicatorId;
+                    string serializedSetupValue = VmUtils.SerializeEntity(setupValue);
+                    settingsRepository.AddOrUpdateSetting(item.Key, serializedSetupValue);
+                }
+            }
         }
 
         private bool IsValid()

@@ -8,9 +8,8 @@ namespace TaxCalculator.Data.Interfaces
 {
     public interface ISettingsRepository
     {
-
         string GetSetting(string key);
-
         void AddOrUpdateSetting(string key, string value);
+        List<Settings> GetAll();
     }
 }
