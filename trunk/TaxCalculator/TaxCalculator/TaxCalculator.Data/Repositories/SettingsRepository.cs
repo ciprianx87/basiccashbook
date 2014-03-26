@@ -49,5 +49,14 @@ namespace TaxCalculator.Data.Repositories
                 context.SaveChanges();
             }
         }
+
+
+        public List<Settings> GetAll()
+        {
+            using (var context = GetContext())
+            {
+                return context.Settings.ToList();
+            }
+        }
     }
 }

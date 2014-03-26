@@ -21,7 +21,6 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public Visibility Version2Visibility { get; set; }
         public Visibility LastPageVisibility { get; set; }
         public LastPageData LastPageData { get; set; }
-
     }
     public class PrintRow
     {
@@ -59,6 +58,7 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
             }
         }
         public bool SecondTypeReport { get; set; }
+        public bool Rectifying { get; set; }
     }
 
     public class LastPageData

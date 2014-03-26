@@ -131,7 +131,7 @@ namespace TaxCalculator.Data.Repositories
         }
 
 
-        public void EditWithHide(Indicator entity)
+        public long EditWithHide(Indicator entity)
         {
             lock (syncObj)
             {
@@ -163,6 +163,7 @@ namespace TaxCalculator.Data.Repositories
 
 
                         base.Commit(context);
+                        return newEntity.Id;
                     }
                 }
             }

@@ -188,7 +188,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 //get excel version
                 Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
                 double tVersion = 0;
-                if (double.TryParse(excel.Version, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture,out tVersion))
+                if (double.TryParse(excel.Version, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out tVersion))
                 {
                     string filter = "";
                     // 12 is the first version with .xlsx extension
@@ -348,7 +348,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                         Month = selectedVm.Month,
                         Year = otherData.Year.ToString(),
                         CoinType = otherData.CoinType,
-                        SecondTypeReport = otherData.SecondTypeReport
+                        SecondTypeReport = otherData.SecondTypeReport,
+                        Rectifying = selectedVm.Rectifying
                     };
                     firstPage.FirstPage = true;
 
@@ -356,7 +357,6 @@ namespace TaxCalculator.ViewModel.ViewModels
                     {
                         p.Version2Visibility = row69Completed && otherData.SecondTypeReport ? Visibility.Visible : Visibility.Collapsed;
                         p.LastPageVisibility = Visibility.Collapsed;
-
                     }
                     );
 

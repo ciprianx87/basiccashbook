@@ -571,7 +571,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                     string serializedSetupValue = VmUtils.SerializeEntity(setupValue);
                     string settingKey = Constants.LastSetupValueKey + selectedCompany.Id;
                     //save created and verified by for company id
-                    settingsRepository.AddOrUpdateSetting(settingKey, serializedSetupValue); ;
+                    settingsRepository.AddOrUpdateSetting(settingKey, serializedSetupValue);
                 }
             }
             catch (Exception ex)
