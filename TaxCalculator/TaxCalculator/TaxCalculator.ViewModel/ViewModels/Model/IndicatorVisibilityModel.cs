@@ -10,4 +10,9 @@ namespace TaxCalculator.ViewModel.ViewModels.Model
         public long IndicatorId { get; set; }
         public bool Hidden { get; set; }
     }
+
+    internal class IndicatorRelationships
+    {
+        public List<List<long>> IndicatorStructureRelationships { get; set; }
+    }
 }
