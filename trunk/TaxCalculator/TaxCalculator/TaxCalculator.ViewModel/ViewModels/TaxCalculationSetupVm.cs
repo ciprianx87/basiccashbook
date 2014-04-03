@@ -453,7 +453,11 @@ namespace TaxCalculator.ViewModel.ViewModels
                 //load existing tax calculations
                 if (SelectedCompany != null && SelectedIndicatorList != null)
                 {
-                    List<TaxCalculations> existingTaxCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && p.IndicatorId == SelectedIndicatorList.Id).ToList();
+                    //get the old versions of the indicator
+                    var validIndicatorList = GetValidIndicatorList();
+
+                    //List<TaxCalculations> existingTaxCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && p.IndicatorId == SelectedIndicatorList.Id).ToList();
+                    List<TaxCalculations> existingTaxCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && validIndicatorList.Contains(p.IndicatorId)).ToList();
                     if (existingTaxCalculations != null && existingTaxCalculations.Count > 0)
                     {
                         foreach (var item in existingTaxCalculations)
@@ -464,7 +468,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                                 TaxCalculationList.Add(new TaxCalculationSelection()
                                 {
                                     Id = item.Id,
-                                    Name = otherData.Name
+                                    Name = otherData.Name,
+                                    InitialIndicatorId = item.IndicatorId
                                 });
                             }
                         }
@@ -491,6 +496,23 @@ namespace TaxCalculator.ViewModel.ViewModels
             }
         }
 
+        private List<long> GetValidIndicatorList()
+        {
+            List<long> validIndicatorList = new List<long>() { SelectedIndicatorList.Id };
+            var existingInfoString = settingsRepository.GetSetting(Constants.IndicatorRelationshipsKey);
+            if (!string.IsNullOrEmpty(existingInfoString))
+            {
+                IndicatorRelationships existingData = JsonConvert.DeserializeObject<IndicatorRelationships>(existingInfoString);
+                var existingEntry =
+                    existingData.IndicatorStructureRelationships.FirstOrDefault(p => p.Contains(SelectedIndicatorList.Id));
+                if (existingEntry != null)
+                {
+                    validIndicatorList = existingEntry;
+                }
+            }
+            return validIndicatorList;
+        }
+
         private bool CanAddValues(object parameter)
         {
             return true;
@@ -513,12 +535,13 @@ namespace TaxCalculator.ViewModel.ViewModels
             //get all the calculations for this company and indicator list
             if (!Rectifying)
             {
-                var existingCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && p.IndicatorId == SelectedIndicatorList.Id && !p.Rectifying).ToList();
+                var validIndicatorList = GetValidIndicatorList();
+                //var existingCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && p.IndicatorId == SelectedIndicatorList.Id && !p.Rectifying).ToList();
+                var existingCalculations = taxCalculationsRepository.GetAll().Where(p => p.CompanyId == SelectedCompany.Id && validIndicatorList.Contains(p.IndicatorId) && !p.Rectifying).ToList();
                 if (existingCalculations != null && existingCalculations.Count > 0)
                 {
                     foreach (var item in existingCalculations)
                     {
-
                         TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(item.OtherData);
                         if (otherData.Month == SelectedMonth && otherData.Year == SelectedYear)
                         {
@@ -534,7 +557,15 @@ namespace TaxCalculator.ViewModel.ViewModels
 
             //save all the last values
             SaveLastSetupValuesEntireScreen();
-
+            Indicator oldIndicator = null;
+            if (SelectedTaxCalculation != null)
+            {
+                oldIndicator = indicatorRepository.Get(SelectedTaxCalculation.InitialIndicatorId);
+            }
+            else
+            {
+                oldIndicator = SelectedIndicatorList;
+            }
             //load the selected data and navigate to the fill-in screen
             TaxCalculationSetupModel setupModel = new TaxCalculationSetupModel()
             {
@@ -545,7 +576,8 @@ namespace TaxCalculator.ViewModel.ViewModels
                 NrOfDecimals = SelectedNrOfDecimals,
                 Rectifying = Rectifying,
                 SelectedCompany = SelectedCompany,
-                SelectedIndicatorList = SelectedIndicatorList,
+                //SelectedIndicatorList = SelectedIndicatorList,
+                SelectedIndicatorList = oldIndicator,
                 VerifiedBy = VerifiedBy,
                 CreatedBy = CreatedBy,
                 Year = SelectedYear,

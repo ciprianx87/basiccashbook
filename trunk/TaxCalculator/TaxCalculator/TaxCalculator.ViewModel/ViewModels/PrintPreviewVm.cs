@@ -42,6 +42,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         {
             InitializeCommands();
             Mediator.Instance.Register(MediatorActionType.SetReportData, SetReportData);
+            Mediator.Instance.Register(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
 
             indicatorRepository = new IndicatorRepository();
             taxCalculationRepository = new TaxCalculationsRepository();
@@ -299,7 +300,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 var completedIndicatorDbModel = VmUtils.Deserialize<CompletedIndicatorDbModel>(calculation.Content);
                 List<CompletedIndicatorVm> savedEntities = completedIndicatorDbModel.CompletedIndicators;
                 TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(calculation.OtherData);
-
+                
                 TaxCalculationOtherData initialOtherData = null;
                 List<CompletedIndicatorVm> initialSavedEntities = null;
                 List<PrintRow> initialPrintRowList = null;
@@ -319,6 +320,14 @@ namespace TaxCalculator.ViewModel.ViewModels
                     var row69Value = DecimalConvertor.Instance.StringToDecimal(row69.Value);
                     row10.Value = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(row10.Value) + row69Value, otherData.NrOfDecimals);
                     row33.Value = DecimalConvertor.Instance.DecimalToString(DecimalConvertor.Instance.StringToDecimal(row33.Value) + row69Value, otherData.NrOfDecimals);
+
+                    //execute the formulas after the values have been updated
+
+                    //convert to taxIndicatorViewModel
+                    nrDecimals = otherData.NrOfDecimals;
+                    CompletedIndicators = initialSavedEntities.ToTaxIndicatorViewModel();
+                    ExecuteTaxCalculation(null);
+                    initialSavedEntities = CompletedIndicators.ToCompletedIndicatorVm();
 
                     initialPrintRowList = initialSavedEntities.ToPrintRowList();
                     //AddExtraRows(initialPrintRowList, selectedVm.VerifiedBy, selectedVm.CreatedBy);
@@ -381,6 +390,76 @@ namespace TaxCalculator.ViewModel.ViewModels
                 WindowHelper.OpenErrorDialog(Messages.Error_LoadingData);
             }
         }
+
+        #region execute calculation
+
+        private List<TaxIndicatorViewModel> CompletedIndicators;
+        private int nrDecimals = 0;
+        public void ExecuteTaxCalculation(object param)
+        {
+            if (CompletedIndicators == null)
+            {
+                return;
+            }
+
+            //return;
+            //execute this until all the values remain the same
+            int executionCounter = 0;
+            bool hasChanged = true;
+            while (hasChanged)
+            {
+                executionCounter++;
+                if (executionCounter > Constants.InfiniteLoopThreshold)
+                {
+                    //probably got in an infinite loop
+                    WindowHelper.OpenErrorDialog(Messages.Error_InfiniteLoopDetected);
+                    break;
+                }
+                hasChanged = false;
+                var calculatedTaxIndicators = CompletedIndicators.Where(p => p.Type == TaxIndicatorType.Calculat);
+                foreach (var item in calculatedTaxIndicators)
+                {
+                    hasChanged = ExecuteTaxCalculation(hasChanged, item);
+                }
+            }
+        }
+
+        private bool ExecuteTaxCalculation(bool hasChanged, TaxIndicatorViewModel item)
+        {
+            TaxFormula taxFormula = null;
+            try
+            {
+                if (string.IsNullOrEmpty(item.IndicatorFormula))
+                {
+                    //item.SetError("formula goala");
+                }
+                taxFormula = new TaxFormula(item.IndicatorFormula);
+            }
+            catch (Exception ex)
+            {
+                //item.SetError(Constants.RulesText);
+               // item.SetError("eroare la interpretarea formulei");
+            }
+            try
+            {
+
+                var newValueString = DecimalConvertor.Instance.DecimalToString(taxFormula.Execute(CompletedIndicators.ToList()), nrDecimals);
+                //var newValue = taxFormula.Execute(TaxIndicators.ToList()).ToString();
+                if (item.ValueField != newValueString)
+                {
+                    hasChanged = true;
+                }
+                newValueString = newValueString.Replace(".", string.Empty);
+                item.ValueField = newValueString;
+            }
+            catch (Exception ex)
+            {
+                item.SetError("formula invalida");
+            }
+            return hasChanged;
+        }
+
+        #endregion
 
         private static CompletedIndicatorVm GetRowByInnerId(List<CompletedIndicatorVm> savedEntities, int rowInnerId)
         {
@@ -526,6 +605,7 @@ namespace TaxCalculator.ViewModel.ViewModels
         public override void Dispose()
         {
             Mediator.Instance.Unregister(MediatorActionType.SetReportData, SetReportData);
+            Mediator.Instance.Unregister(MediatorActionType.ExecuteTaxCalculation, ExecuteTaxCalculation);
             base.Dispose();
         }
 

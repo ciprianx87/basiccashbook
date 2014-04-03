@@ -159,5 +159,42 @@ namespace TaxCalculator.ViewModel.Extensions
             resultedList.AddRange(list.Select(p => p.ToPrintRow()));
             return resultedList;
         }
+
+        public static List<TaxIndicatorViewModel> ToTaxIndicatorViewModel(this List<CompletedIndicatorVm> list)
+        {
+            var result = new List<TaxIndicatorViewModel>();
+            foreach (var item in list)
+            {
+                result.Add(new TaxIndicatorViewModel()
+                {
+                    IndicatorFormula = item.IndicatorFormula,
+                    IndicatorFormulaEnabled = true,
+                    Type = item.Type,
+                    ValueField = item.Value,
+                    NrCrt = !string.IsNullOrEmpty(item.NrCrt) ? Convert.ToInt32(item.NrCrt) : (int?)null,
+                    Description = item.Description,
+                    InnerId = item.InnerId
+                });
+            }
+            return result;
+        }
+
+        public static List<CompletedIndicatorVm> ToCompletedIndicatorVm(this List<TaxIndicatorViewModel> list)
+        {
+            var result = new List<CompletedIndicatorVm>();
+            foreach (var item in list)
+            {
+                result.Add(new CompletedIndicatorVm()
+                {
+                    IndicatorFormula = item.IndicatorFormula,
+                    Type = item.Type,
+                    Value = item.ValueField,
+                    NrCrt = item.NrCrtString,
+                    Description = item.Description,
+                    InnerId = item.InnerId
+                });
+            }
+            return result;
+        }
     }
 }

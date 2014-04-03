@@ -459,6 +459,39 @@ namespace TaxCalculator.ViewModel.ViewModels
             long newId = indicatorRepository.EditWithHide(currentTaxIndicator);
 
             //update the setting with the visibility information
+            HideIndicators();
+
+
+            //update the list of existing indicator relationships
+            var existingInfoString = settingsRepository.GetSetting(Constants.IndicatorRelationshipsKey);
+            IndicatorRelationships existingData = null;
+            if (!string.IsNullOrEmpty(existingInfoString))
+            {
+                existingData = JsonConvert.DeserializeObject<IndicatorRelationships>(existingInfoString);
+                var existingEntry = existingData.IndicatorStructureRelationships.FirstOrDefault(p => p.Contains(currentTaxIndicator.Id));
+                if (existingEntry != null)
+                {
+                    existingEntry.Add(newId);
+                }
+                else
+                {
+                    existingData.IndicatorStructureRelationships.Add(new List<long>() { newId, currentTaxIndicator.Id });
+                }
+            }
+            else
+            {
+                existingData = new IndicatorRelationships() {IndicatorStructureRelationships = new List<List<long>>()};
+                existingData.IndicatorStructureRelationships.Add(new List<long>() {newId, currentTaxIndicator.Id});
+            }
+            var serializedData = JsonConvert.SerializeObject(existingData);
+            settingsRepository.AddOrUpdateSetting(Constants.IndicatorRelationshipsKey, serializedData);
+
+            UpdateSettings(currentTaxIndicator.Id, newId);
+
+        }
+
+        private void HideIndicators()
+        {
             var existingVisibilityInfoString = settingsRepository.GetSetting(Constants.IndicatorVisibilityKey);
             List<IndicatorVisibilityModel> existingData = new List<IndicatorVisibilityModel>();
             if (!string.IsNullOrEmpty(existingVisibilityInfoString))
@@ -467,18 +500,15 @@ namespace TaxCalculator.ViewModel.ViewModels
                 var existingEntry = existingData.FirstOrDefault(p => p.IndicatorId == currentTaxIndicator.Id);
                 if (existingEntry == null)
                 {
-                    existingData.Add(new IndicatorVisibilityModel() { IndicatorId = currentTaxIndicator.Id, Hidden = true });
+                    existingData.Add(new IndicatorVisibilityModel() {IndicatorId = currentTaxIndicator.Id, Hidden = true});
                 }
             }
             else
             {
-                existingData.Add(new IndicatorVisibilityModel() { IndicatorId = currentTaxIndicator.Id, Hidden = true });
+                existingData.Add(new IndicatorVisibilityModel() {IndicatorId = currentTaxIndicator.Id, Hidden = true});
             }
             var serializedData = JsonConvert.SerializeObject(existingData);
             settingsRepository.AddOrUpdateSetting(Constants.IndicatorVisibilityKey, serializedData);
-
-            UpdateSettings(currentTaxIndicator.Id, newId);
-
         }
 
         private static void UpdateSettings(long initialIndicatorId, long newIndicatorId)
