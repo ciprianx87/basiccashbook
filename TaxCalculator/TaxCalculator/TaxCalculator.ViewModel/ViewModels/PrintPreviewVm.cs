@@ -300,7 +300,7 @@ namespace TaxCalculator.ViewModel.ViewModels
                 var completedIndicatorDbModel = VmUtils.Deserialize<CompletedIndicatorDbModel>(calculation.Content);
                 List<CompletedIndicatorVm> savedEntities = completedIndicatorDbModel.CompletedIndicators;
                 TaxCalculationOtherData otherData = VmUtils.Deserialize<TaxCalculationOtherData>(calculation.OtherData);
-                
+
                 TaxCalculationOtherData initialOtherData = null;
                 List<CompletedIndicatorVm> initialSavedEntities = null;
                 List<PrintRow> initialPrintRowList = null;
@@ -325,6 +325,17 @@ namespace TaxCalculator.ViewModel.ViewModels
 
                     //convert to taxIndicatorViewModel
                     nrDecimals = otherData.NrOfDecimals;
+                    DecimalConvertor.Instance.SetNumberOfDecimals(nrDecimals);
+                    //remove the dots "." from the value field because they are converted into commans and the number is interpreted as a lower number
+                    //ValueField from TaxIndicatorViewModel
+                    initialSavedEntities.ForEach(p =>
+                    {
+                        if (!string.IsNullOrEmpty(p.Value))
+                        {
+                            p.Value = p.Value.Replace(".", string.Empty);
+                        }
+                    }
+                        );
                     CompletedIndicators = initialSavedEntities.ToTaxIndicatorViewModel();
                     ExecuteTaxCalculation(null);
                     initialSavedEntities = CompletedIndicators.ToCompletedIndicatorVm();
@@ -438,7 +449,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             catch (Exception ex)
             {
                 //item.SetError(Constants.RulesText);
-               // item.SetError("eroare la interpretarea formulei");
+                // item.SetError("eroare la interpretarea formulei");
             }
             try
             {
