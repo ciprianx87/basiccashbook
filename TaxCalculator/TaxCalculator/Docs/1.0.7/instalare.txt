@@ -1,0 +1,23 @@
+In cazul in care la listare aplicatia se inchide este necesar sa instalati urmatoarele programe:
+
+1. de la http://www.microsoft.com/en-us/download/details.aspx?id=3988 , programul msxml6_SDK.msi. In cazul in care nu se reuseste aceasta instalare, se pot incerca urmatoarele: 
+	- msxml6.msi pentru un sistem de operare pe 32 biti
+	- msxml6_x64.msi pentru un sistem de operare pe 64 biti
+2. de la http://www.microsoft.com/en-us/download/details.aspx?id=11816
+     	-pentru  windows Vista, in functie de tipul sistemului de operare (32 sau 64 biti): 
+		- XPSEP Vista 32 bit.msu (32 bit)
+		- XPSEP Vista 64 bit.msu (32 bit)
+	-pentru  windows XP sau Windows Server in functie de tipul sistemului de operare (32 sau 64 biti): 
+		- XPSEP XP and Server 2003 32 bit.msi (32 bit)
+		- XPSEP XP and Server 2003 64 bit.msi (32 bit)
+
+
+In cazul in care la listare nu apare fereastra de selectie a imprimantei, instalati din folderul hotfix urmatoarele aplicatii:
+	- pentru sistem de operare pe 32 biti: msxml6_x86
+	- pentru sistem de operare pe 64 biti: msxml6_x64
+
+
+In cazul in care la prima pornire a aplicatiei se incearca adaugarea unei societati si este afisat un mesaj de eroare ca nu s-a putut adauga societatea, instalati din folderul hotfix urmatoarele aplicatii:
+	- pentru sistem de operare pe 32 biti: SSCERuntime_x86-ENU
+	- pentru sistem de operare pe 64 biti: SSCERuntime_x64-ENU
+
