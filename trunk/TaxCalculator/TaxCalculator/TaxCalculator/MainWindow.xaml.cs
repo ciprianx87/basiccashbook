@@ -41,7 +41,7 @@ namespace TaxCalculator
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             isFullVersion = true;
-            version = "1.0.6 full";
+            version = "1.0.7 full";
             //load settings
             Constants.DocumentationFileName = Properties.Settings.Default.DocumentationFileName;
             Constants.RulesFileName = Properties.Settings.Default.RulesFileName;
