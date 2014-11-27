@@ -2,10 +2,11 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True"
-        Title="Stergere" Height="220" Width="500">
+        Title="Generator Serial" Height="250" Width="500">
     <Border CornerRadius="10" BorderThickness="1" BorderBrush="Black" >
         <Grid Background="Transparent" Margin="10,10,0,0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -17,6 +18,11 @@
             <TextBox FontSize="24" Grid.Row="1" Text="" Width="300" HorizontalAlignment="Left" x:Name="txtSerialNumber"/>
             <TextBlock FontSize="16" Grid.Row="2" Text="Codul generat:" />
             <TextBox FontSize="24" Grid.Row="3" Text="" Width="300" HorizontalAlignment="Left" x:Name="txtGeneratedKey" IsReadOnly="True"/>
+
+            <TextBlock FontSize="16" Grid.Row="4" Text="Tipul Aplicatiei:" />
+            <ComboBox Grid.Row="4" Margin="130,0,0,0" HorizontalAlignment="Left" x:Name="cmbAppType" Width="150"></ComboBox>
+            
+
 
             <StackPanel Grid.Row="5" HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button Content="Genereaza" Width="90" FontSize="16" Command="{Binding OKCommand}" Margin="10,10,10,10" Click="Genereaza_Click"></Button>
