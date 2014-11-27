@@ -29,12 +29,14 @@ namespace CashBook.SerialGenerator
         {
             this.Loaded -= YesNoDialog_Loaded;
             bool res = this.Activate();
-            this.Topmost = true;          
+            this.Topmost = true;
+            cmbAppType.ItemsSource = new List<string>() { "Registru de casa", "Calcul Impozit" };
+            cmbAppType.SelectedIndex = 0;
         }
 
         public void Dispose()
         {
-           
+
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -46,7 +48,8 @@ namespace CashBook.SerialGenerator
         private void Genereaza_Click(object sender, RoutedEventArgs e)
         {
             string enteredKey = txtSerialNumber.Text;
-            int pairedKey = CashBook.Common.Utils.GeneratePairedKey(enteredKey);
+            CashBook.Common.Utils.ApplicationType appType = cmbAppType.SelectedIndex == 0 ? CashBook.Common.Utils.ApplicationType.CashBook : Common.Utils.ApplicationType.TaxCalculator;
+            int pairedKey = CashBook.Common.Utils.GeneratePairedKey(enteredKey, appType);
             txtGeneratedKey.Text = pairedKey.ToString();
         }
         private void Exit()

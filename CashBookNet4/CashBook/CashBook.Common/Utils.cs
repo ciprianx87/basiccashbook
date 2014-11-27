@@ -9,9 +9,19 @@ namespace CashBook.Common
 {
     public static class Utils
     {
-        public static int GeneratePairedKey(string initialKey)
+        public enum ApplicationType : byte
+        {
+            CashBook = 1,
+            TaxCalculator = 2
+        }
+
+        public static int GeneratePairedKey(string initialKey, ApplicationType appType)
         {
             string constantKey = "CashRegister2013";
+            if (appType == ApplicationType.TaxCalculator)
+            {
+                constantKey = "TaxCalculator2014";
+            }
             int hash = 23;
             hash = hash * 2 + initialKey.GetHashCode();
             hash = hash * 3 + constantKey.GetHashCode();
