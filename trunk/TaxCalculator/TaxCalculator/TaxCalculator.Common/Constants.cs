@@ -7,13 +7,21 @@ namespace TaxCalculator.Common
 {
     public static class Constants
     {
+        static Constants()
+        {
+            AvailableYears = new List<int>();
+            for (int i = 2014; i <= 2050; i++)
+            {
+                AvailableYears.Add(i);
+            }
+        }
         public static char[] AllowedRdOperations = new char[] { '-', '+' };
         public static string DateTimeFormat = "yyyy-MM-dd hh:mm:ss";
         public static string DateFormat = "dd-MM-yyyy";
         public static string DateTimeFormatValability = "yyyy-MM-dd HH:mm:ss";
         public static string CoinTypesKey = "CoinTypes";
         public static List<string> AvailableMonths = new List<string>() { "Ianuarie", "Feburarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie" };
-        public static List<int> AvailableYears = new List<int>() { 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 };
+        public static List<int> AvailableYears;
         public static string CoinTypeLei = "LEI";
         public static int InfiniteLoopThreshold = 700;
 
