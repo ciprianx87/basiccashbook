@@ -48,16 +48,20 @@ namespace TaxCalculator.ViewModel.Helper
                 AlignToCenter(workSheet, 6, "C");
 
                 int row = 7;
+
+                if (firstPage.FirstPageData.Rectifying)
+                {
+                    workSheet.Cells[4, "C"] = "Rectificativa";
+                    AlignToCenter(workSheet, 4, "C");
+                }
                 if (isSecondTypeReport)
                 {
-                    row++;
-                    workSheet.Cells[4, "C"] = "Rectificativa";
+                    row++;                   
                     workSheet.Cells[5, "D"] = "Perioada";
                     workSheet.Cells[6, "D"] = firstPage.FirstPageData.MonthYear;
                     SetBold(workSheet, 5, "D");
                     SetBold(workSheet, 6, "D");
 
-                    AlignToCenter(workSheet, 4, "C");
                     AlignToCenter(workSheet, 5, "D");
                     AlignToCenter(workSheet, 6, "D");
 
@@ -72,7 +76,7 @@ namespace TaxCalculator.ViewModel.Helper
                 {
                     allPageData.AddRange(page.Rows);
                 }
-               // for (int i = 0; i < gvExportExcel.Rows.Count; i++) 
+                // for (int i = 0; i < gvExportExcel.Rows.Count; i++) 
 
                 //remove the title--replace it with something else
                 allPageData.RemoveAt(0);
@@ -109,7 +113,7 @@ namespace TaxCalculator.ViewModel.Helper
                         workSheet.Cells[row, "D"] = GetExcelStyleValue(page.InitialValue);
                     }
                     row++;
-                }             
+                }
 
                 Range er = workSheet.get_Range("A:A", System.Type.Missing);
                 er.EntireColumn.ColumnWidth = 10;
