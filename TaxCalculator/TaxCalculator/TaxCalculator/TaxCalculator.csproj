@@ -134,8 +134,8 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CashBook\CashBook.Common\CashBook.Common.csproj">
-      <Project>{1C683AE9-2318-4693-B048-55EF3B64A37B}</Project>
+    <ProjectReference Include="..\..\..\CashBookNet4\CashBook\CashBook.Common\CashBook.Common.csproj">
+      <Project>{1c683ae9-2318-4693-b048-55ef3b64a37b}</Project>
       <Name>CashBook.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\TaxCalculator.Common\TaxCalculator.Common.csproj">

@@ -232,6 +232,7 @@ namespace TaxCalculator.ViewModel.ViewModels
             {
                 Logger.Instance.LogException(ex);
                 WindowHelper.OpenErrorDialog(Messages.GenericError);
+                Mediator.Instance.SendMessage(MediatorActionType.RefreshList, null);
             }
         }
 

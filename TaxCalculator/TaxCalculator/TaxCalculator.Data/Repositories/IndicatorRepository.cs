@@ -35,12 +35,13 @@ namespace TaxCalculator.Data.Repositories
                     }
                     else
                     {
+
                         //get companies with the same name but different id
-                        var existingEntity = context.Indicators.FirstOrDefault(p => p.Name == entity.Name && p.Id != entity.Id);
-                        if (existingEntity != null)
-                        {
-                            throw new DuplicateEntityNameException();
-                        }
+                        //var existingEntity = context.Indicators.FirstOrDefault(p => p.Name == entity.Name && p.Id != entity.Id);
+                        //if (existingEntity != null)
+                        //{
+                        //    throw new DuplicateEntityNameException();
+                        //}
                         SetAllIndicatorsDefaultValue(context, entity);
 
                         existingIndicator.Name = entity.Name;
